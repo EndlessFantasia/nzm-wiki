@@ -52,7 +52,7 @@ export function PerkHoverPreview({
       <CatalogLink
         ref={anchorRef}
         href={href}
-        className="group block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d1ac69]"
+        className="group block rounded-lg focus-visible:outline-none focus-visible:underline focus-visible:decoration-[#d1ac69] focus-visible:underline-offset-4"
         aria-describedby={isOpen ? tooltipId : undefined}
         onMouseEnter={showHoverPreview}
         onMouseLeave={hidePreview}

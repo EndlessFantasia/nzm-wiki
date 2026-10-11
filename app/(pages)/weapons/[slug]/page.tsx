@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { WeaponAttenuationChart } from "@/components/WeaponAttenuationChart";
 import { WeaponDetailCard } from "@/components/WeaponCard";
+import { WeaponExclusivePerks } from "@/components/WeaponExclusivePerks";
 import { WeaponDetailProvider } from "@/components/WeaponDetailContext";
 import { WeaponModeDiff as WeaponModeDiffTable } from "@/components/WeaponModeDiff";
 import { WeaponEffectValuesPanel } from "@/components/FireRateCatalog";
@@ -15,6 +16,7 @@ import {
 } from "@/lib/weapon-consumers";
 import { mdxComponents, TableOfContents } from "@/lib/mdx-components";
 import { mdxOptions } from "@/lib/mdx-options";
+import { getAllPerks } from "@/lib/perks";
 import {
   getResolvedWeaponBySlug,
   getResolvedWeaponDocument,
@@ -85,12 +87,19 @@ export default async function WeaponDetailPage({
       ? PAGE_WIDTH_CLASSES[pageWidth]
       : "max-w-3xl";
   const customStyle = customWidth ? { maxWidth: pageWidth } : undefined;
+  const exclusivePerks = (
+    <WeaponExclusivePerks
+      weaponName={document.weapon.title}
+      perks={getAllPerks()}
+    />
+  );
 
   const WeaponSkillForWeapon = ({ children }: { children: ReactNode }) => (
     <>
       <WeaponSkill>{children}</WeaponSkill>
       <WeaponAttenuationChart />
       <WeaponEffectValuesPanel slug={weapon.slug} />
+      {exclusivePerks}
       {hasWeaponModeDiff && tdWeapon ? (
         <WeaponModeDiffTable lcWeapon={document.weapon} tdWeapon={tdWeapon} />
       ) : null}
@@ -126,7 +135,10 @@ export default async function WeaponDetailPage({
       >
         <WeaponDetailCard />
         {!hasWeaponSkill && (
-          <WeaponEffectValuesPanel slug={weapon.slug} />
+          <>
+            <WeaponEffectValuesPanel slug={weapon.slug} />
+            {exclusivePerks}
+          </>
         )}
         {document.content.trim() && (
           <article className="prose prose-lg prose-invert mt-8 max-w-none">
