@@ -37,15 +37,26 @@ test("online exclusives link to encoded detail URLs without an empty disclosure"
   assert.doesNotMatch(markup, /<details|未上线插件/);
 });
 
-test("offline-only and mixed sections keep unreleased perks in a closed disclosure", () => {
+test("offline-only and mixed sections share one list and gray only offline icons", () => {
   const offline = { ...PERK, itemId: "offline", collectModItem: 0 as const };
   for (const perks of [[offline], [PERK, offline]]) {
     const markup = render(perks);
     assert.match(markup, /专属插件/);
-    assert.match(markup, /未上线插件（1）/);
-    assert.match(markup, /<details\b[^>]*>/);
-    assert.doesNotMatch(markup, /<details\b[^>]*\bopen(?:[= >])/);
-    assert.match(markup.split("<details")[1], /冷焰爆破/);
+    assert.doesNotMatch(markup, /<details|<summary/);
+    assert.equal((markup.match(/<ul\b/g) ?? []).length, 1);
+    assert.equal((markup.match(/<li\b/g) ?? []).length, perks.length);
+    const items = markup.split("<li").slice(1);
+    for (let index = 0; index < perks.length; index++) {
+      const image = items[index].match(/<img\b[^>]*>/)?.[0];
+      assert.ok(image);
+      if (perks[index].collectModItem === 0) {
+        assert.match(image, /grayscale opacity-50/);
+        assert.match(items[index], /sr-only[^>]*>（未上线）/);
+      } else {
+        assert.doesNotMatch(image, /grayscale|opacity-50/);
+      }
+      assert.match(items[index], /<a\b[^>]*href="\/perks\//);
+    }
   }
 });
 
