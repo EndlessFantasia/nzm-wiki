@@ -8,7 +8,7 @@ import { getNumSkillValue, resolveWeaponSkills } from "../../lib/num-skill-data"
 import { parseWeaponDataLock } from "../../lib/weapon-data-lock";
 import { createWeaponResolver } from "../../lib/weapon-resolver";
 import historicalRows from "./fixtures/pre-s4-migration-rows.json";
-import { currentSkillCorrections, s4HeaderChanges, s4SkillChanges } from "./s4-migration-review";
+import { currentSkillCorrections, s4SkillChanges } from "./s4-migration-review";
 import { inventoryLegacyWeapon, migrateWeaponSource, reviewedBodyChanges, type MigrationBaseline } from "./migrate";
 
 const root = process.cwd();
@@ -20,6 +20,7 @@ const lock = structuredClone(currentLock);
 Object.assign(lock.rows["skill-pve"], historicalRows.rows["skill-pve"]);
 Object.assign(lock.rows["numerical-lc"], historicalRows.rows["numerical-lc"]);
 const historicalResolver = createWeaponResolver(lock);
+const gpRows = Object.fromEntries(Object.entries(lock.rows["gp-active-skill"]).map(([key, row]) => [key, row.raw]));
 const historicalSkills = (data: unknown, slug: string, mode: "lc" | "td") =>
   historicalResolver.resolveWeapon(data, { slug, expectedTable: mode }).skills ?? [];
 const directory = path.join(root, "data/weapons");
@@ -40,12 +41,12 @@ test("S4 changes retain historical row evidence and current corrections are expl
   assert.equal(currentLock.rows["numerical-lc"]["lc:121300473_1"], undefined);
 });
 
-test("migration baseline covers every weapon, including empty skill inventories", () => {
+test("migration baseline retains the original weapon inventory without blocking new weapons", () => {
   assert.equal(baseline.version, 1);
   const files = readdirSync(directory).filter((file) => file.endsWith(".mdx")).map((file) => file.slice(0, -4)).sort();
-  assert.equal(files.length, 121);
-  assert.deepEqual(baseline.weapons.map((weapon) => weapon.slug).sort(), files);
-  assert.equal(new Set(baseline.weapons.map((weapon) => weapon.slug)).size, files.length);
+  assert.equal(baseline.weapons.length, 121);
+  assert.ok(baseline.weapons.every(weapon => files.includes(weapon.slug)));
+  assert.equal(new Set(baseline.weapons.map((weapon) => weapon.slug)).size, baseline.weapons.length);
   assert.deepEqual(baseline.expectedBodyChanges, reviewedBodyChanges);
   assert.deepEqual(baseline.expectedChanges, [{ slug: "天鹅之舞", skillId: "active-1", parameter: "panel_duration", before: 15, after: 12, evidence: "docs/architecture/weapon-skill-duration-evidence.md#天鹅之舞" }], "only independently audited corrections may change published values");
 });
@@ -82,14 +83,10 @@ test("重新迁移时PVE同名持续参数冲突不能改变原值", () => {
 });
 
 for (const previous of baseline.weapons) {
-  test(`${previous.slug}: LC/TD all skill properties and full prose match recorded baseline`, () => {
-    const currentSource = readFileSync(path.join(directory, `${previous.slug}.mdx`), "utf8");
-    const currentData = matter(currentSource).data;
-    let source = currentSource.replace(/\r\n/g, "\n");
-    for (const change of s4HeaderChanges.filter((entry) => entry.slug === previous.slug)) {
-      assert.equal(source.split(change.after).length, 2, change.reason);
-      source = source.replace(change.after, change.before);
-    }
+  test(`${previous.slug}: frozen migration replay preserves LC/TD skill properties and full prose`, () => {
+    assert.equal(typeof previous.originalHeader, "string");
+    const restoredSource = previous.originalHeader! + previous.body;
+    const source = migrateWeaponSource(restoredSource, previous.slug, lock, gpRows, []).source;
     const { data, content } = matter(source);
     const { skills, ...retained } = data;
     assert.ok(Array.isArray(skills));
@@ -110,7 +107,6 @@ for (const previous of baseline.weapons) {
     const restoredHeader = sourceWithoutSkills.slice(0, sourceWithoutSkills.length - content.length);
     assert.equal(typeof previous.originalHeader, "string");
     assert.equal(restoredHeader.replace(/\r\n/g, "\n"), previous.originalHeader!.replace(/\r\n/g, "\n"));
-    const restoredSource = previous.originalHeader! + previous.body;
     assert.equal(createHash("sha256").update(restoredSource).digest("hex"), previous.sha256);
     const reinventory = inventoryLegacyWeapon(restoredSource, previous.slug, lock);
     assert.deepEqual(reinventory, previous, "baseline freezes original resolver output and props");
@@ -118,19 +114,6 @@ for (const previous of baseline.weapons) {
 
     for (const mode of previous.frontmatter.game_modes as Array<"lc" | "td">) {
       const resolved = historicalSkills(data, previous.slug, mode);
-      const currentResolved = resolveWeaponSkills(currentData, previous.slug, mode);
-      const expectedCurrent = structuredClone(resolved);
-      for (const change of s4SkillChanges.filter((entry) => entry.slug === previous.slug)) {
-        const skill = expectedCurrent.find((entry) => entry.id === change.skillId)!;
-        assert.equal(skill.parameters[change.parameter], change.before);
-        skill.parameters[change.parameter] = change.after;
-      }
-      for (const correction of currentSkillCorrections.filter((entry) => entry.slug === previous.slug)) {
-        const skill = expectedCurrent.find((entry) => entry.id === correction.skillId)!;
-        assert.equal(skill.parameters[correction.parameter], correction.before);
-        skill.parameters[correction.parameter] = correction.after;
-      }
-      assert.deepEqual(currentResolved, expectedCurrent, "only separately reviewed S4 changes may alter current skill output");
       const visible = resolved.filter((skill) => skill.display);
       assert.deepEqual(visible.map((skill) => skill.id), previous.skills.map((skill) => skill.id));
       for (const legacy of previous.skills) {
@@ -139,8 +122,7 @@ for (const previous of baseline.weapons) {
         const expected = legacy.expectedByMode[mode]!;
         for (const field of ["name", "icon", "tag"] as const) assert.equal(actual[field], expected[field], `${mode}:${legacy.id}.${field}`);
         for (const field of ["duration", "cooldown", "count"] as const) {
-          const change = baseline.expectedChanges.find((entry) => entry.slug === previous.slug && entry.skillId === legacy.id && entry.parameter === field);
-          assert.equal(actual.parameters[field], change?.after ?? expected[field], `${mode}:${legacy.id}.${field}`);
+          assert.equal(actual.parameters[field], expected[field], `${mode}:${legacy.id}.${field}`);
         }
       }
       for (const actual of resolved.filter((skill) => skill.kind === "active")) {
@@ -148,10 +130,32 @@ for (const previous of baseline.weapons) {
         assert.equal(actual.parameters.count, previous.activeSkillByMode[mode]?.count);
         assert.equal(actual.gameSkillId, previous.frontmatter.active_skill_id);
         assert.equal(actual.parameters.blocking, previous.frontmatter.skill_blocking);
-        const change = baseline.expectedChanges.find((entry) => entry.slug === previous.slug && entry.skillId === actual.id && entry.parameter === "panel_duration");
-        assert.equal(actual.parameters.panel_duration, change?.after ?? previous.frontmatter.skill_duration);
+        assert.equal(actual.parameters.panel_duration, previous.frontmatter.skill_duration);
       }
       if (Number(previous.frontmatter.active_skill_id) > 0) assert.ok(resolved.some((skill) => skill.kind === "active"));
+    }
+  });
+
+  test(`${previous.slug}: current skill output retains reviewed parameters independently of prose`, () => {
+    const data = matter(readFileSync(path.join(directory, `${previous.slug}.mdx`), "utf8")).data;
+    for (const mode of data.game_modes as Array<"lc" | "td">) {
+      const resolved = resolveWeaponSkills(data, previous.slug, mode);
+      const expected = structuredClone(historicalSkills(data, previous.slug, mode));
+      for (const change of [...s4SkillChanges, ...currentSkillCorrections].filter(entry => entry.slug === previous.slug)) {
+        const skill = expected.find(entry => entry.id === change.skillId)!;
+        assert.equal(skill.parameters[change.parameter], change.before);
+        skill.parameters[change.parameter] = change.after;
+      }
+      assert.deepEqual(resolved, expected, "only reviewed table changes may alter current skill output");
+      for (const legacy of previous.skills) {
+        const skill = resolved.find(entry => entry.id === legacy.id)!;
+        assert.ok(skill, `missing ${legacy.id}`);
+        for (const field of ["name", "icon", "tag"] as const) assert.equal(skill[field], legacy.expectedByMode[mode]![field]);
+        for (const field of ["duration", "cooldown", "count"] as const) {
+          const change = [...baseline.expectedChanges, ...s4SkillChanges, ...currentSkillCorrections].findLast(entry => entry.slug === previous.slug && entry.skillId === legacy.id && entry.parameter === field);
+          assert.equal(skill.parameters[field], change?.after ?? legacy.expectedByMode[mode]![field], `${mode}:${legacy.id}.${field}`);
+        }
+      }
     }
   });
 }

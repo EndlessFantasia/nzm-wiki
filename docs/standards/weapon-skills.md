@@ -83,7 +83,7 @@ pnpm test:num-skills
 
 `num-modifier:check`（dev/build 使用）包含技能索引校验。它检查全量技能声明、每个可见技能的唯一正文引用、Num 关系完整性和投影新鲜度。
 
-首次迁移基线为 `data/weapon-skill-migration-baseline.json`，保存 121 份旧 header/body、SHA、两种模式有效参数。`scripts/num-skills/migration.test.ts` 对所有武器比较姓名、图标、标签、正文、充能、层数、持续与阻回，只有显式修正账本允许差异。**历史迁移回放必须保持全部原 CD，能源之影固定验收 45 秒；迁移本身造成的任何 CD 变化均失败。** 新增武器或主动改变既有内容后，应独立审查并更新迁移回归策略，不能重新生成基线掩盖差异。
+首次迁移基线为 `data/weapon-skill-migration-baseline.json`，保存 121 份旧 header/body、SHA、两种模式有效参数。`scripts/num-skills/migration.test.ts` 从冻结的旧源码重新执行迁移，检查原始 SHA、header/body 可逆性、技能身份与全部有效参数；日常正文和无关 frontmatter 编辑不与历史文本比较。当前 MDX 单独检查技能姓名、图标、标签、持续、充能和层数，已审查参数变化由修正账本声明；组件引用及来源关联由技能投影校验覆盖。**历史迁移回放必须保持全部原 CD，能源之影固定验收 45 秒；迁移本身造成的任何 CD 变化均失败。** 新增武器由当前技能协议校验覆盖，不需要扩写历史迁移基线，也不能重新生成基线掩盖差异。
 
 持续时间同样必须保持迁移前展示值，不允许把 PVE 同名参数与旧值的差异自动加入迁移白名单。字段名和 Tag 只能证明参数类型，不能证明技能逻辑实际消费它。新数值需要独立审计生效链路，不能以“存在于 Lock”代替验证。
 
@@ -91,7 +91,7 @@ pnpm test:num-skills
 
 2026-09-22刷新正式包后，历史迁移与当前赛季分开验收。`scripts/num-skills/fixtures/pre-s4-migration-rows.json` 从提交 `7ee79b59b0193ee9c80c616e3ea2fc05acb84558` 的旧 Weapon Lock 摘录两行：炼狱蝎王 `skill-pve/5104101_1` 与樱之殇 `numerical-lc/lc:121300473_1`，保留原表来源哈希，并记录旧 Lock 完整SHA-256。测试仅在内存克隆中恢复这些行，以回放历史技能输出；这不是完整旧伤害数据集，不作为当前页面输入，也不依赖本地 refs 或运行时 Git。
 
-`scripts/num-skills/s4-migration-review.ts` 独立记录本次变更：炼狱蝎王所选PVE行 `ChargeNeedTime` 曾从30变为40，现由当前修正账本恢复为30秒，LC/TD同步显示30秒；能源之影仍45秒。樱之殇轻击3的LC行缺失后仅保留TD来源；猪猪捏捏乐显式选择已核对的Prototype行。测试先逐项核对历史变更与当前修正，再仅在测试字符串中逆向恢复这两项header修改，继续执行原始header、正文、SHA及全部旧技能断言；当前技能输出另与历史输出叠加已审查变更和当前修正进行完整比较。原迁移基线不修改，后续未知变化仍失败。
+`scripts/num-skills/s4-migration-review.ts` 独立记录本次变更：炼狱蝎王所选PVE行 `ChargeNeedTime` 曾从30变为40，现由当前修正账本恢复为30秒，LC/TD同步显示30秒；能源之影仍45秒。樱之殇轻击3的LC行缺失后仅保留TD来源；猪猪捏捏乐显式选择已核对的Prototype行。测试逐项核对历史变更与当前修正，冻结源码直接回放原始迁移；当前技能输出另与历史行解析结果叠加已审查变更和当前修正进行完整比较。原迁移基线不修改，后续未知参数变化仍失败。
 
 ## 持续时间冲突记录
 
