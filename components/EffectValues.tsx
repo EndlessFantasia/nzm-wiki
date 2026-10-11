@@ -47,7 +47,7 @@ function DetailEffect({
   const matchingRelations = relations.filter(relation => relation.modifierTypeId === facetId);
 
   return (
-    <div className="detail-inset grid gap-3 rounded border border-white/10 bg-black/10 px-3 py-3 sm:grid-cols-[9rem_minmax(0,1fr)_auto] sm:items-center">
+    <div className="detail-inset grid gap-3 rounded-lg border border-white/10 bg-black/10 px-3 py-3 sm:grid-cols-[9rem_minmax(0,1fr)_auto] sm:items-center">
       <p className="text-sm font-medium text-zinc-200">{effect.label}</p>
       <div className="flex min-w-0 flex-wrap gap-x-4 gap-y-1.5">
         {effect.stages.map((stage) => (

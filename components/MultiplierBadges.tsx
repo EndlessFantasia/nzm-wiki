@@ -178,7 +178,7 @@ export function MultiplierProviderRows({
             id={placementSource?.anchor}
             className={
               framed
-                ? "detail-inset grid gap-3 rounded border border-white/10 bg-black/10 px-3 py-3 sm:grid-cols-[minmax(9rem,1fr)_auto] sm:items-center"
+                ? "detail-inset grid gap-3 rounded-lg border border-white/10 bg-black/10 px-3 py-3 sm:grid-cols-[minmax(9rem,1fr)_auto] sm:items-center"
                 : "flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between"
             }
           >
