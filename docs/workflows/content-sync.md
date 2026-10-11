@@ -14,7 +14,7 @@ pnpm sync
 
 1. `pnpm overlimit project`：更新当前及已发布预览的超限跨页关联。
 2. `pnpm num-modifier:project`：从已有 Lock、语义与来源目录更新属性和乘区运行时投影。
-3. `pnpm num-skills:project`：更新武器技能索引及输入哈希；必须在属性投影更新后执行。
+3. `pnpm num-skills:project`：更新武器技能索引；必须在属性投影更新后执行。普通正文修改不使技能索引失效，技能数据变化才需要更新。
 4. 依次执行 `overlimit check`、`perks:check`、`weapon-data:check`、`num-modifier:check`、`multiplier-index:check`、`weapon-mode-diff:check`。
 5. `pnpm index`：更新搜索索引与武器统计。
 6. 运行 `scripts/generate-sitemap.ts` 更新站点地图。

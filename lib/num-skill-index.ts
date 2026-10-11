@@ -20,7 +20,6 @@ export type IndexedSkillVariant = IndexedSkillVariantBase & (
 
 export interface NumSkillIndex {
   schema_version: 1;
-  provenance: { files: { path: string; sha256: string }[] };
   skills: IndexedWeaponSkill[];
   variants: IndexedSkillVariant[];
 }

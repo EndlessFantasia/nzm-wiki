@@ -1,6 +1,5 @@
 import fs from "node:fs";
 import path from "node:path";
-import { createHash } from "node:crypto";
 import { pathToFileURL } from "node:url";
 import matter from "gray-matter";
 import { numSkillDefinitionsSchema, skillVariantReferenceSchema, type NumSkillDefinition, type ResolvedSkillVariant } from "../../lib/num-skill";
@@ -97,14 +96,8 @@ export function projectSkillVariants(
 
 export function createSkillIndex(): NumSkillIndex {
   const root = process.cwd();
-  const files = new Set([
-    "data/num-skill-lock.json", "data/num-skill-variants.json", "data/weapon-data-lock.json",
-    "data/modifier-providers.json", "data/modifier-index-runtime.json", "config/content-version.json",
-    "data/perk-preview/preview.json",
-  ]);
   const skills: IndexedWeaponSkill[] = [];
   for (const file of collectMdx(path.join(root, "data/weapons"))) {
-    files.add(path.relative(root, file).replaceAll("\\", "/"));
     const { data, content } = matter(fs.readFileSync(file, "utf8"));
     if (!Object.hasOwn(data, "skills")) throw new Error(`${file}: missing migrated skills field`);
     const definitions = numSkillDefinitionsSchema.parse(data.skills);
@@ -122,7 +115,6 @@ export function createSkillIndex(): NumSkillIndex {
   for (const file of collectMdx(path.join(root, "data/perks"))) {
     const { data } = matter(fs.readFileSync(file, "utf8"));
     if (data.skill_variants === undefined) continue;
-    files.add(path.relative(root, file).replaceAll("\\", "/"));
     if (data.draft === true) continue;
     const slug = path.relative(path.join(root, "data/perks"), file).replaceAll("\\", "/").replace(/\.mdx$/, "");
     variants.push(...projectSkillVariants(resolvePerkSkillVariants(data.skill_variants, data.season), {
@@ -147,11 +139,6 @@ export function createSkillIndex(): NumSkillIndex {
   }
   return {
     schema_version: 1,
-    provenance: { files: [...files].sort().map(file => ({
-      path: file,
-      // Git checkouts may use CRLF on Windows and LF in CI; hash the same text.
-      sha256: createHash("sha256").update(fs.readFileSync(path.join(root, file), "utf8").replace(/\r\n/g, "\n")).digest("hex"),
-    })) },
     skills,
     variants,
   };
@@ -165,7 +152,7 @@ export function writeSkillIndex() {
 
 export function checkSkillIndex() {
   const expected = JSON.stringify(createSkillIndex());
-  if (!fs.existsSync(SKILL_INDEX_PATH) || JSON.stringify(JSON.parse(fs.readFileSync(SKILL_INDEX_PATH, "utf8"))) !== expected) throw new Error("Num skill index is stale; run the Num skill project write command");
+  if (!fs.existsSync(SKILL_INDEX_PATH) || JSON.stringify(JSON.parse(fs.readFileSync(SKILL_INDEX_PATH, "utf8"))) !== expected) throw new Error("Num skill index is stale; run pnpm num-skills:project");
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {

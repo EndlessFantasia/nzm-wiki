@@ -6,26 +6,52 @@ import type { NumSkillDefinition, ResolvedSkillVariant } from "../../lib/num-ski
 import { parseModifierProviderRegistry } from "../../lib/modifier-provider-registry";
 import { checkSkillIndex, createSkillIndex, projectSkillVariants, validateSkillMarkup, validateSkillProviders } from "./project";
 
-test("skill index is identical for LF and CRLF checkouts and still detects content changes", (t) => {
+test("skill index ignores prose, unrelated weapon metadata and checkout line endings", (t) => {
+  const snapshot = createSkillIndex();
   const readFile = fs.readFileSync;
   function project(lineEnding: string, changeContent = false) {
     const read = t.mock.method(fs, "readFileSync", (...args: Parameters<typeof fs.readFileSync>) => {
       const content = readFile(...args);
       if (typeof args[0] !== "string" || !/\.(mdx|json)$/.test(args[0])) return content;
+      if (args[0].endsWith("num-skill-index.json")) return JSON.stringify(snapshot);
       let text = content.toString().replace(/\r\n/g, "\n").replace(/\n/g, lineEnding);
-      if (changeContent && args[0].endsWith("Bully.mdx")) text += `${lineEnding}<!-- changed -->${lineEnding}`;
+      if (changeContent && args[0].endsWith("Bully.mdx")) {
+        text = text.replace("accuracy: 75", "accuracy: 76").replace("召唤一台无人机", "召唤无人机");
+        text += `${lineEnding}<!-- changed -->${lineEnding}`;
+      }
       return typeof content === "string" ? text : Buffer.from(text);
     });
     try {
-      if (changeContent) assert.throws(() => checkSkillIndex(), /index is stale/);
-      else checkSkillIndex();
+      checkSkillIndex();
       return createSkillIndex();
     }
     finally { read.mock.restore(); }
   }
   const lf = project("\n");
   assert.deepEqual(project("\r\n"), lf);
-  assert.notDeepEqual(project("\n", true).provenance, lf.provenance);
+  assert.deepEqual(project("\n", true), lf);
+  assert.deepEqual(project("\r\n", true), lf);
+});
+
+test("skill index still rejects changed skill parameters and invalid body references", (t) => {
+  const snapshot = createSkillIndex();
+  const readFile = fs.readFileSync;
+  for (const [before, after, error] of [
+    ["literal: -1", "literal: 5", /index is stale/],
+    ['<ActiveSkill skill="active-1">', '<ActiveSkill skill="missing">', /missing or hidden skill/],
+  ] as const) {
+    const read = t.mock.method(fs, "readFileSync", (...args: Parameters<typeof fs.readFileSync>) => {
+      const content = readFile(...args);
+      if (typeof args[0] !== "string") return content;
+      if (args[0].endsWith("num-skill-index.json")) return JSON.stringify(snapshot);
+      if (!args[0].endsWith("Bully.mdx")) return content;
+      const text = content.toString().replace(before, after);
+      assert.notEqual(text, content.toString());
+      return typeof content === "string" ? text : Buffer.from(text);
+    });
+    try { assert.throws(() => checkSkillIndex(), error); }
+    finally { read.mock.restore(); }
+  }
 });
 
 const active: NumSkillDefinition = { id: "active", kind: "active", name: "力场", icon: "/icon.png", game_skill_id: 1001 };
@@ -92,7 +118,7 @@ test("explicit current and preview fixtures stay isolated without configured pre
   };
   const currentContext = { ...context, perkSlug: "slot-4/强化", channel: "current" };
   const query = createSkillIndexQueries({
-    schema_version: 1, provenance: { files: [] }, skills: [base],
+    schema_version: 1, skills: [base],
     variants: [...projectSkillVariants([current], currentContext, [base]), ...projectSkillVariants([replacement], context, [base])],
   });
   assert.equal(query.getSkillVariantsForWeapon("test", "lc", "active", "current").length, 1);
@@ -102,7 +128,7 @@ test("explicit current and preview fixtures stay isolated without configured pre
 
 test("reverse queries retain both modes and diagnose broken index relationships", () => {
   const index: NumSkillIndex = {
-    schema_version: 1, provenance: { files: [] },
+    schema_version: 1,
     skills: [base, { ...base, mode: "td", parameters: { cooldown: 50 } }],
     variants: projectSkillVariants([replacement], context, [base]),
   };
@@ -128,7 +154,7 @@ test("generic replacement stays one edge and only applies to real active skills"
   assert.equal(projected.length, 1);
   assert.ok("scope" in projected[0]);
   assert.equal("weaponSlug" in projected[0], false);
-  const query = createSkillIndexQueries({ schema_version: 1, provenance: { files: [] }, skills: [base, { ...base, id: "passive", kind: "passive" }], variants: projected });
+  const query = createSkillIndexQueries({ schema_version: 1, skills: [base, { ...base, id: "passive", kind: "passive" }], variants: projected });
   assert.equal(query.getSkillVariantsForWeapon("test", "lc", "active", "s4-preview").length, 1);
   for (const args of [["missing"], ["test", "td"], ["test", "lc", "passive"], ["test", "lc", "active", "current"]] as const) {
     assert.equal(query.getSkillVariantsForWeapon(...args).length, 0);
@@ -140,7 +166,7 @@ test("generic replacement stays one edge and only applies to real active skills"
 test("modify keeps skill identity and replace must change it", () => {
   const modified: ResolvedSkillVariant = { ...replacement, reference: { weapon_slug: "test", base_skill: "active", variant: "modified", operation: "modify" }, skill: { ...replacement.skill, gameSkillId: 1001, provenance: {} } };
   const variants = projectSkillVariants([modified], context, [base]);
-  const index: NumSkillIndex = { schema_version: 1, provenance: { files: [] }, skills: [base], variants };
+  const index: NumSkillIndex = { schema_version: 1, skills: [base], variants };
   assert.equal(createSkillIndexQueries(index).getSkillVariantsForWeapon("test").length, 1);
   assert.throws(() => projectSkillVariants([{ ...modified, skill: replacement.skill }], context, [base]), /base/);
   assert.throws(() => createSkillIndexQueries({ ...index, variants: [{ ...variants[0], operation: "replace" }] }), /base/);
