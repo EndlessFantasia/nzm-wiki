@@ -92,7 +92,7 @@ export default async function TDWeaponDetailPage({
       <WeaponAttenuationChart />
       <MultiplierProviderPanel
         source={{ type: "weapon", slug: weapon.slug }}
-        className="not-prose mt-4 rounded-lg border border-zinc-700 bg-zinc-900/60"
+        className="not-prose mt-4 rounded-xl border border-zinc-700 bg-zinc-900/60"
       />
       {hasWeaponModeDiff && lcWeapon ? (
         <WeaponModeDiffTable lcWeapon={lcWeapon} tdWeapon={document.weapon} />
@@ -131,7 +131,7 @@ export default async function TDWeaponDetailPage({
         {!hasWeaponSkill && (
           <MultiplierProviderPanel
             source={{ type: "weapon", slug: weapon.slug }}
-            className="mt-4 rounded-lg border border-zinc-700 bg-zinc-900/60"
+            className="mt-4 rounded-xl border border-zinc-700 bg-zinc-900/60"
           />
         )}
         {document.content.trim() && (

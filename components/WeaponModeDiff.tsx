@@ -113,7 +113,7 @@ export function WeaponModeDiff({
       <h2 className="mb-3 text-lg font-semibold text-white">
         猎场 / 塔防数值差异
       </h2>
-      <div className="overflow-x-auto rounded-lg border border-zinc-700">
+      <div className="overflow-x-auto rounded-xl border border-zinc-700">
         <table className="w-full min-w-[34rem] text-sm">
           <thead className="bg-zinc-800/80 text-zinc-300">
             <tr>

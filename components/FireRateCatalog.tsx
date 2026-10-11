@@ -199,7 +199,7 @@ export function WeaponEffectValuesPanel({ slug }: { slug: string }) {
       effects={effects}
       relations={getProviderRelationsForSource({ type: "weapon", slug })}
       title="效果数值"
-      className="not-prose mt-4"
+      className="not-prose mt-4 rounded-xl!"
     />
   );
 }
