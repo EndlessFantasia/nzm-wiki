@@ -50,6 +50,12 @@ export default function RootLayout({
     <html lang="zh-CN" suppressHydrationWarning>
       <head>
         <script
+          dangerouslySetInnerHTML={{
+            __html:
+              'if (window.location.hostname.toLowerCase() === "nzmwiki.vincentzyu233.cn") { window.location.replace("https://nzm-wiki.com" + window.location.pathname + window.location.search + window.location.hash); }',
+          }}
+        />
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({

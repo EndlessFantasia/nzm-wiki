@@ -13,6 +13,7 @@ import {
   Zap,
 } from "lucide-react";
 import { getAssetPath } from "@/lib/path";
+import { IcpFilingNotice } from "@/components/IcpFilingNotice";
 
 const GITHUB_FORK = "https://github.com/lostlightll/nzm-wiki";
 
@@ -73,7 +74,7 @@ function NavCard({ href, icon, title }: NavCardProps) {
 
 export default function Home() {
   return (
-    <main className="home-page h-[calc(100dvh-3.5rem)] overflow-hidden bg-background px-4">
+    <main className="home-page relative h-[calc(100dvh-3.5rem)] overflow-hidden bg-background px-4">
       <div className="home-shell relative mx-auto flex h-full w-full max-w-md flex-col items-center justify-center xl:-left-8 2xl:-left-14">
         {/* Logo 和标题 */}
         <div className="home-header flex shrink-0 flex-col items-center text-center">
@@ -172,6 +173,7 @@ export default function Home() {
             <kbd className="rounded border border-zinc-600 bg-zinc-800 px-1.5 py-0.5 font-mono text-zinc-300">Ctrl Shift P</kbd>
           </span>
         </div>
+        <IcpFilingNotice />
       </div>
     </main>
   );
