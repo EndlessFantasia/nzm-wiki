@@ -28,3 +28,9 @@ pnpm sync
 新增的数值引用如果尚未被 Lock 覆盖，需按对应数据维护流程审查并补充。插件预览编辑完成后，仍需显式执行 `pnpm perks:project --channel preview` 发布本地快照，再执行 `pnpm sync`；日常同步不会重新解析或覆盖已发布预览。
 
 此命令不代替代码测试、生产构建或任务对应的专项审计。
+
+## 静态构建
+
+`pnpm build` 不移动源码或 `public/` 目录。`next.config.ts` 根据发布状态选择复合 `pageExtensions`，规则集中在 `scripts/static-build-config.ts`：`page.dev.tsx` / `route.dev.ts` 只在开发环境成为路由，其他条件路由分别使用 `overlimit.tsx`、`overlimit-preview.tsx`、`perk-preview.tsx`、`build-guide.tsx`、`s4-talent.tsx` 后缀。新增开发专用路由应使用 `dev.ts` / `dev.tsx` 后缀。
+
+生产类型检查使用 `tsconfig.build.json` 排除 `.next/dev` 内的开发路由类型，避免开发与静态导出规则不同导致旧类型报错。Next 自动清理生产输出与类型并保留 `.next/cache`，构建脚本不再删除整个 `.next`。S4 天赋为草稿时，只在导出完成后裁剪 `out/webp/images/season-talents/s4`，本地原始资源保留。

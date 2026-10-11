@@ -38,7 +38,7 @@ test("published cards and damage are complete projections, not current perk join
   assert.deepEqual(getAllOverlimitCards(), rawCatalog.cards);
   assert.deepEqual(links, projectOverlimitLinks(catalog));
   assert.equal(getOverlimitCardById("missing"), undefined);
-  for (const file of ["lib/overlimit.ts", "lib/overlimit-cards.ts", "app/(pages)/overlimit/[id]/page.tsx"]) {
+  for (const file of ["lib/overlimit.ts", "lib/overlimit-cards.ts", "app/(pages)/overlimit/[id]/page.overlimit.tsx"]) {
     const source = fs.readFileSync(file, "utf8");
     assert.doesNotMatch(source, /from ["'][^"']*(?:\/perks|perk-preview-damage|\/num-modifier-data|\/independent-damage)["']/);
   }

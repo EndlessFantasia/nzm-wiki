@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
+import { getPageExtensions } from "./scripts/static-build-config";
 
 // 直接读取 GitHub Action 注入的环境变量
 // 如果在本地开发，这个变量通常不存在，默认为空字符串，正好符合本地开发需求
@@ -10,7 +11,8 @@ const isDev = process.env.NODE_ENV === "development";
 const nextConfig: NextConfig = {
   agentRules: false,
   distDir: process.env.NEXT_DIST_DIR || ".next",
-  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  pageExtensions: getPageExtensions(isDev),
+  typescript: { tsconfigPath: isDev ? "tsconfig.json" : "tsconfig.build.json" },
   output: isDev ? undefined : "export",
   // output: "export",
 
