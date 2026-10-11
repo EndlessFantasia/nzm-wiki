@@ -176,8 +176,11 @@ export function WeaponAttenuationChart() {
   }
 
   const xMax = getChartMax(attenuationEnd);
-  const minDamage = chartData.reduce((min, point) => Math.min(min, point.damage), Infinity);
-  const maxDamage = chartData.reduce((max, point) => Math.max(max, point.damage), 0);
+  const minPercent = Math.min(...chartData.map((point) => point.percent));
+  const percentTicks = Array.from(
+    { length: 5 },
+    (_, index) => minPercent + ((100 - minPercent) * index) / 4,
+  );
 
   return (
     <div className="detail-panel not-prose my-6 h-72 w-full rounded-xl border border-zinc-700/50 bg-zinc-900/30 p-3 sm:h-80 sm:p-4">
@@ -202,15 +205,17 @@ export function WeaponAttenuationChart() {
             tickLine={{ stroke: "#3f3f46" }}
           />
           <YAxis
-            dataKey="damage"
+            dataKey="percent"
             type="number"
-            domain={[Math.max(0, Math.floor(minDamage * 0.9)), Math.ceil(maxDamage * 1.05)]}
-            tickFormatter={(value) => formatNumber(Number(value), 0)}
+            domain={[Math.max(0, minPercent * 0.9), 105]}
+            ticks={percentTicks}
+            interval="preserveStartEnd"
+            tickFormatter={(value) => formatPercent(Number(value))}
             stroke="#71717a"
             tick={{ fill: "#a1a1aa", fontSize: 12 }}
             axisLine={{ stroke: "#3f3f46" }}
             tickLine={{ stroke: "#3f3f46" }}
-            width={42}
+            width={48}
           />
           <ReferenceLine x={attenuationBegin} stroke="#52525b" strokeDasharray="4 4" />
           <ReferenceLine x={attenuationEnd} stroke="#52525b" strokeDasharray="4 4" />
@@ -221,7 +226,7 @@ export function WeaponAttenuationChart() {
           />
           <Area
             type="linear"
-            dataKey="damage"
+            dataKey="percent"
             stroke="#38bdf8"
             strokeWidth={2}
             fill={`url(#${gradientId})`}
