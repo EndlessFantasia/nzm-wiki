@@ -38,9 +38,12 @@ refs/         解包或外部参考数据
 
 ```bash
 pnpm i
-pnpm dev        # http://localhost:3000
+pnpm dev        # 校验、生成搜索索引，再启动 http://localhost:3000
+pnpm sync       # 编辑内容后一次更新索引并校验，不启动服务
 pnpm build      # 生产构建
 ```
+
+`pnpm sync` 更新超限关联、属性/乘区与技能索引、搜索索引、武器统计和站点地图，并校验相关内容。任一步失败都会停止并显示对应命令。它只使用本地站点内容和已提交的数值 Lock，不导入游戏原表、不刷新 Lock、不重新发布预览。完整流程见 [日常内容同步](docs/workflows/content-sync.md)。
 
 ## 免责声明
 

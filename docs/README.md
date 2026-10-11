@@ -13,6 +13,7 @@
 
 | 任务范围 | Required | Optional | 状态 |
 | :--- | :--- | :--- | :---: |
+| 日常内容编辑后的派生数据同步、开发启动 | [`workflows/content-sync.md`](workflows/content-sync.md) | 无 | active |
 | 本地 .uasset / .uexp 转 JSON | [本地转换流程](../.agents/skills/nzm-uasset/references/local-json.md) | [nzm-uasset](../.agents/skills/nzm-uasset/SKILL.md) | active |
 | pak 更新概览、容器条目或前版对比 | [按需 pak 分析](../.agents/skills/nzm-assets/references/pak-analysis.md) | [nzm-uasset](../.agents/skills/nzm-uasset/SKILL.md) | active |
 | Lua 脚本行为或函数版本差异 | [Lua 分析流程](../.agents/skills/nzm-assets/references/lua-analysis.md) | [按需 pak 分析](../.agents/skills/nzm-assets/references/pak-analysis.md) | active |

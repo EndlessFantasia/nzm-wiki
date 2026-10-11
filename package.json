@@ -5,6 +5,7 @@
   "packageManager": "pnpm@12.4.1",
   "scripts": {
     "dev": "pnpm num-modifier:check && pnpm index && next dev",
+    "sync": "tsx scripts/sync-content.ts",
     "build": "tsx scripts/build-static.ts",
     "start": "next start",
     "lint": "eslint",
