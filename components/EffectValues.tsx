@@ -47,13 +47,13 @@ function DetailEffect({
   const matchingRelations = relations.filter(relation => relation.modifierTypeId === facetId);
 
   return (
-    <div className="grid gap-3 rounded border border-white/10 bg-black/10 px-3 py-3 sm:grid-cols-[9rem_minmax(0,1fr)_auto] sm:items-center">
+    <div className="detail-inset grid gap-3 rounded border border-white/10 bg-black/10 px-3 py-3 sm:grid-cols-[9rem_minmax(0,1fr)_auto] sm:items-center">
       <p className="text-sm font-medium text-zinc-200">{effect.label}</p>
       <div className="flex min-w-0 flex-wrap gap-x-4 gap-y-1.5">
         {effect.stages.map((stage) => (
           <p
             key={`${stage.condition ?? "base"}:${stage.value}`}
-            className="min-w-0 text-sm leading-6 text-zinc-400"
+            className="detail-muted min-w-0 text-sm leading-6 text-zinc-400"
           >
             {stage.condition && <span>{stage.condition} </span>}
             <strong className="font-semibold text-[#e2c38b] tabular-nums">
@@ -121,9 +121,9 @@ export function EffectValuesPanel({
     <section
       id={id}
       aria-label={title}
-      className={`${layoutClass} ${className}`.trim()}
+      className={`${flush ? "" : "detail-panel "}${layoutClass} ${className}`.trim()}
     >
-      <h2 className="mb-3 text-sm font-medium text-zinc-400">{title}</h2>
+      <h2 className="detail-heading mb-3 text-sm font-medium text-zinc-400">{title}</h2>
       <div className="space-y-2">
         {skillVariants?.map(({ reference, skill }) => (
           <dl key={reference.variant} aria-label={skill.name} className="grid grid-cols-3 gap-2 text-sm">

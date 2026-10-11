@@ -180,7 +180,7 @@ export function WeaponAttenuationChart() {
   const maxDamage = chartData.reduce((max, point) => Math.max(max, point.damage), 0);
 
   return (
-    <div className="not-prose my-6 h-72 w-full rounded-xl border border-zinc-700/50 bg-zinc-900/30 p-3 sm:h-80 sm:p-4">
+    <div className="detail-panel not-prose my-6 h-72 w-full rounded-xl border border-zinc-700/50 bg-zinc-900/30 p-3 sm:h-80 sm:p-4">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={chartData} margin={{ top: 8, right: 10, left: 0, bottom: 0 }}>
           <defs>

@@ -178,7 +178,7 @@ export function MultiplierProviderRows({
             id={placementSource?.anchor}
             className={
               framed
-                ? "grid gap-3 rounded border border-white/10 bg-black/10 px-3 py-3 sm:grid-cols-[minmax(9rem,1fr)_auto] sm:items-center"
+                ? "detail-inset grid gap-3 rounded border border-white/10 bg-black/10 px-3 py-3 sm:grid-cols-[minmax(9rem,1fr)_auto] sm:items-center"
                 : "flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between"
             }
           >
@@ -209,7 +209,7 @@ export function MultiplierProviderPanel({
       aria-label="提供的增伤类型"
       className={`border-t border-white/10 px-4 py-4 sm:px-6 ${className}`}
     >
-      <h2 className="mb-3 text-sm font-medium text-zinc-400">
+      <h2 className="detail-heading mb-3 text-sm font-medium text-zinc-400">
         提供的增伤类型
       </h2>
       <MultiplierProviderRows relations={relations} />

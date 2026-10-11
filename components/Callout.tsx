@@ -70,7 +70,7 @@ export function Callout({ children, color = "gray" }: CalloutProps) {
   };
 
   return (
-    <div className={`my-4 overflow-hidden rounded-xl border ${colors.border} ${colors.bg} px-4 py-3`}>
+    <div className={`${color === "gray" ? "detail-panel " : ""}my-4 overflow-hidden rounded-xl border ${colors.border} ${colors.bg} px-4 py-3`}>
       <style>{`
         .callout strong { color: ${CALLOUT_BOLD_COLOR}; }
       `}</style>

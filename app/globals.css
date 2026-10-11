@@ -65,6 +65,54 @@ body {
   --tw-prose-invert-headings: var(--foreground);
 }
 
+/* 武器详情辅助面板沿用技能介绍卡的中性配色。 */
+.weapon-detail {
+  --weapon-panel-background: #1e1f20;
+  --weapon-panel-border: rgb(255 255 255 / 5%);
+}
+
+.weapon-detail .detail-panel {
+  background: var(--weapon-panel-background);
+  border-color: var(--weapon-panel-border);
+}
+
+.weapon-detail .detail-inset {
+  background: rgb(0 0 0 / 10%);
+  border-color: rgb(255 255 255 / 6%);
+}
+
+.weapon-detail .detail-heading {
+  color: #f9fafb;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.weapon-detail .detail-muted {
+  color: #94a3b8;
+}
+
+.weapon-detail .detail-table thead {
+  background: transparent;
+}
+
+.weapon-detail .detail-table thead tr {
+  background: rgb(255 255 255 / 3%);
+}
+
+.weapon-detail .detail-table tbody tr {
+  background: transparent;
+  border-color: rgb(255 255 255 / 6%);
+}
+
+.weapon-detail .detail-table tbody tr:hover {
+  background: rgb(255 255 255 / 3%);
+}
+
+.weapon-detail .detail-perk:hover {
+  background: #252729;
+  border-color: rgb(255 255 255 / 12%);
+}
+
 /* Callout / Blockquote 样式 */
 .prose blockquote {
   position: relative;

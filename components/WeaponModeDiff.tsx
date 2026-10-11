@@ -110,10 +110,10 @@ export function WeaponModeDiff({
 
   return (
     <section className="not-prose my-6">
-      <h2 className="mb-3 text-lg font-semibold text-white">
+      <h2 className="detail-heading mb-3 text-lg font-semibold text-white">
         猎场 / 塔防数值差异
       </h2>
-      <div className="overflow-x-auto rounded-xl border border-zinc-700">
+      <div className="detail-panel detail-table overflow-x-auto rounded-xl border border-zinc-700">
         <table className="w-full min-w-[34rem] text-sm">
           <thead className="bg-zinc-800/80 text-zinc-300">
             <tr>
@@ -132,7 +132,7 @@ export function WeaponModeDiff({
                 <td className="whitespace-nowrap px-3 py-2 text-zinc-200">
                   {row.sourceName}
                 </td>
-                <td className="whitespace-nowrap px-3 py-2 text-zinc-400">
+                <td className="detail-muted whitespace-nowrap px-3 py-2 text-zinc-400">
                   {getWeaponModeDiffFieldLabel(row)}
                 </td>
                 <td className="whitespace-nowrap px-3 py-2 text-right text-zinc-100">

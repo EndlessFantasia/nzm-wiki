@@ -45,7 +45,7 @@ export function Credit({ platform = "link", author, url, title }: CreditProps) {
   const iconPath = PLATFORM_ICONS[platform];
 
   return (
-    <div className="not-prose my-4 rounded-xl border border-zinc-700 bg-zinc-800/80 to-zinc-800/40 p-4 backdrop-blur-sm">
+    <div className="detail-panel not-prose my-4 rounded-xl border border-zinc-700 bg-zinc-800/80 to-zinc-800/40 p-4 backdrop-blur-sm">
       <div className="flex items-center gap-3">
         {/* 图标 */}
         <div

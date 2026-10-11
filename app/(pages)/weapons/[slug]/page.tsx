@@ -130,7 +130,7 @@ export default async function WeaponDetailPage({
     <WeaponDetailProvider weapon={weapon}>
       <TableOfContents enabled={document.page.toc} />
       <div
-        className={`mx-auto ${widthClass} py-6 ${customWidth ? "max-md:max-w-full" : ""}`}
+        className={`weapon-detail mx-auto ${widthClass} py-6 ${customWidth ? "max-md:max-w-full" : ""}`}
         style={customStyle}
       >
         <WeaponDetailCard />
