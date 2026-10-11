@@ -1,9 +1,5 @@
 {
   "schemaVersion": 1,
-  "source": {
-    "modifierIndexSha256": "057471be772a060afdb0da8bb3194a523cf939632a81a7aa8a90cb4a4e92d625",
-    "multiplierSchemaVersion": 12
-  },
   "providers": [
     {
       "id": "origin-talent:10011",

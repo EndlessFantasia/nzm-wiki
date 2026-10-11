@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import fs from "node:fs";
 
-import { hashJsonSourceText } from "./project";
+import { checkModifierRuntimeProjections, generateModifierIndexRuntime, generateMultiplierProviderRuntime } from "./project";
 import { getProviderResolver } from "./provider-resolver";
 import { NUM_MODIFIER_LOCK, NUM_MODIFIER_SEMANTICS } from "../../lib/num-modifier-data";
 import { createNumModifierResolver } from "../../lib/num-modifier";
@@ -27,9 +28,32 @@ test("promoted weapon providers use the live resolver and reject retired preview
   }, formalResolver), formalResolver);
 });
 
-test("projection source hashes ignore JSON formatting and line endings", () => {
-  const lf = "{\n  \"schemaVersion\": 1,\n  \"values\": [1, 2]\n}\n";
-  const crlf = "{\r\n\"schemaVersion\":1,\r\n\"values\":[1,2]\r\n}\r\n";
-
-  assert.equal(hashJsonSourceText(lf), hashJsonSourceText(crlf));
+test("projection freshness ignores audit notes and formatting but detects published data changes", (t) => {
+  const modifier = generateModifierIndexRuntime();
+  const multiplier = generateMultiplierProviderRuntime(modifier);
+  const readFile = fs.readFileSync;
+  for (const changeLabel of [false, true]) {
+    const read = t.mock.method(fs, "readFileSync", (...args: Parameters<typeof fs.readFileSync>) => {
+      const content = readFile(...args);
+      if (typeof args[0] !== "string") return content;
+      if (args[0].endsWith("modifier-index-runtime.json")) return JSON.stringify(modifier);
+      if (args[0].endsWith("multiplier-providers-runtime.json")) return JSON.stringify(multiplier);
+      if (!args[0].endsWith("modifier-providers.json")) return content;
+      const registry = JSON.parse(content.toString());
+      registry.evidencePriority.push("audit-only note");
+      if (changeLabel) registry.providers[0].label += " updated";
+      return JSON.stringify(registry, null, 4).replace(/\n/g, "\r\n");
+    });
+    try {
+      const issues = checkModifierRuntimeProjections();
+      if (changeLabel) {
+        assert.equal(issues.length, 2);
+        assert.ok(issues.every(issue => issue.includes("is stale")));
+      } else {
+        assert.deepEqual(generateModifierIndexRuntime(), modifier);
+        assert.deepEqual(generateMultiplierProviderRuntime(), multiplier);
+        assert.deepEqual(issues, []);
+      }
+    } finally { read.mock.restore(); }
+  }
 });

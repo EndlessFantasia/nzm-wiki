@@ -1,13 +1,5 @@
 {
   "schemaVersion": 1,
-  "source": {
-    "registrySha256": "6c0ad8ae544eb578cebd412ca5b9d1fca67fec58ee8eb7fcfc963d47e878920d",
-    "perkPreviewSha256": "2ea47ef5ff27b25970a168b43cfdf0e484a63dbb648051bf883f35bf61ddcf04",
-    "s2EvidenceSha256": "a3f16097b34fc589f1322faa4f798b74bc82066dbd02bdcaad4fa0e4c240a0b2",
-    "semanticsSha256": "a1f286b4eccf3a715d1fa881e4cb22322802b7faec2d02c9e40ef74845ad96ee",
-    "modifierSourceSha256": "43299261f763e2a66cc82060e84741b980f8f058a4f0cde485ab3021f8752f1a",
-    "attributeDescriptionSourceSha256": "8226fb6193a641eb5fce4f6ff09bf78862c3fab31ff432ae315246b27a440ff7"
-  },
   "attributeTypes": [
     {
       "id": "game-mode-damage",

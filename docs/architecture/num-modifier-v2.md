@@ -100,6 +100,8 @@ applications:
 
 `data/guides/multiplier-providers-runtime.json` 从通用投影筛选伤害分面生成，继续维持 `lib/multiplier-data.ts` 的既有查询与 URL。乘区矩阵只拥有 `facetId -> factor -> damage applicability`，不再拥有 `AttributeName` 映射。
 
+运行时投影不保存输入文件哈希。新鲜度校验重新生成投影并比较实际发布数据；只修改审计备注、未被消费的字段或 JSON 格式不会使索引过期。来源身份、分面、接收者或展示数据发生变化仍须重新生成。原表 Lock 和独立证据快照的来源哈希继续用于审计。
+
 ## 消费者
 
 Num 技能扩展见 [`../standards/weapon-skills.md`](../standards/weapon-skills.md)：全部武器以稳定技能身份关联参数与 Modifier 来源；插件以显式替换边指向版本隔离的技能变体。它复用已有充能 Lock 与 Modifier Resolver，不改变 Modifier operation 的含义。`num-modifier:check` 同时校验技能覆盖和双向索引。

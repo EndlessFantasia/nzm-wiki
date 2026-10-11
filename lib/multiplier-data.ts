@@ -274,11 +274,6 @@ type RawMultiplierData = {
 
 type RawProviderRegistry = {
   schemaVersion: 1;
-  source: {
-    registrySha256: string;
-    numModifierSourceSha256: string;
-    multiplierSchemaVersion: 12;
-  };
   providers: readonly MultiplierProvider[];
   exclusions: readonly MultiplierProviderExclusion[];
 };
@@ -432,7 +427,6 @@ function assertProviderRegistry(value: unknown): asserts value is RawProviderReg
   if (
     !isRecord(value) ||
     value.schemaVersion !== 1 ||
-    !isRecord(value.source) ||
     !Array.isArray(value.providers) ||
     !Array.isArray(value.exclusions)
   ) {

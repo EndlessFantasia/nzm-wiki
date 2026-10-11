@@ -1,4 +1,3 @@
-import { createHash } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
@@ -9,10 +8,7 @@ import {
 import { parseNumModifierSemantics } from "../../lib/num-modifier-semantics";
 import { readNumModifierDataLock } from "./lock";
 import { getProviderResolver } from "./provider-resolver";
-import {
-  loadModifierProviderRegistry,
-  MODIFIER_PROVIDER_REGISTRY_PATH,
-} from "./provider-registry";
+import { loadModifierProviderRegistry } from "./provider-registry";
 
 type JsonObject = Record<string, unknown>;
 
@@ -37,16 +33,6 @@ function readJson(filePath: string): JsonObject {
     throw new Error(`Expected JSON object: ${filePath}`);
   }
   return value as JsonObject;
-}
-
-export function hashJsonSourceText(source: string): string {
-  return createHash("sha256")
-    .update(JSON.stringify(JSON.parse(source) as unknown))
-    .digest("hex");
-}
-
-function sourceHash(filePath: string): string {
-  return hashJsonSourceText(readFileSync(filePath, "utf8"));
 }
 
 function unique(values: Iterable<string>): string[] {
@@ -125,15 +111,6 @@ export function generateModifierIndexRuntime(): JsonObject {
 
   return {
     schemaVersion: 1,
-    source: {
-      registrySha256: sourceHash(MODIFIER_PROVIDER_REGISTRY_PATH),
-      perkPreviewSha256: sourceHash(path.join(root, "data/perk-preview-modifiers.json")),
-      s2EvidenceSha256: sourceHash(path.join(root, "data/season-talents/s2/provider-evidence.json")),
-      semanticsSha256: sourceHash(SEMANTICS_PATH),
-      modifierSourceSha256: lock.sources.lc.modifiers.sha256,
-      attributeDescriptionSourceSha256:
-        lock.sources.lc.attribute_descriptions.sha256,
-    },
     attributeTypes: Object.entries(semantics.attribute_types).map(
       ([id, type]) => ({ id, ...type }),
     ),
@@ -191,12 +168,6 @@ export function generateMultiplierProviderRuntime(
   });
   return {
     schemaVersion: 1,
-    source: {
-      modifierIndexSha256: createHash("sha256")
-        .update(serializeRuntime(modifierRuntime))
-        .digest("hex"),
-      multiplierSchemaVersion: multiplierData.schemaVersion,
-    },
     providers,
     exclusions: modifierRuntime.exclusions,
   };
