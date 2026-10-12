@@ -102,7 +102,7 @@ export function verifyArchive(directory: string): void {
 }
 
 /** Approval records bind a reviewed projection to its exact bytes, not a season name. */
-export function activateCatalog(root: string, candidateFile: string, reviewFile: string, archiveDirectory: string): void {
+export function reviewedCatalog(root: string, candidateFile: string, reviewFile: string) {
   const bytes = fs.readFileSync(candidateFile);
   const catalog = parseOverlimitCatalog(JSON.parse(bytes.toString("utf8")));
   const review = JSON.parse(fs.readFileSync(reviewFile, "utf8")) as Record<string, unknown>;
@@ -111,6 +111,11 @@ export function activateCatalog(root: string, candidateFile: string, reviewFile:
     throw new Error("A reviewed projection requires status=approved, its exact catalogSha256, and an evidence basis");
   }
   checkCatalog(catalog, root);
+  return { bytes, catalog };
+}
+
+export function activateCatalog(root: string, candidateFile: string, reviewFile: string, archiveDirectory: string): void {
+  const { bytes } = reviewedCatalog(root, candidateFile, reviewFile);
   const current = path.join(root, CURRENT_FILE);
   if (bytes.equals(fs.readFileSync(current))) throw new Error("Candidate is already current");
   archiveCatalog(root, archiveDirectory);

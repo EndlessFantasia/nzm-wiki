@@ -7,15 +7,18 @@ import { diffVersions, exportVersion, listVersions, saveVersion, verifyVersion }
 import { assertReleaseReady, git, prepareRelease, readRelease, RELEASE_FILE, writeRelease } from "./release";
 import { getPreviewSeasonKey, isPreviewSeason } from "../../lib/content-preview";
 import { withdrawCurrent } from "./withdraw";
+import { planPromotion, applyPromotion } from "./promotion";
 
 const { values, positionals } = parseArgs({ allowPositionals: true, options: {
   season: { type: "string" }, version: { type: "string" }, archive: { type: "string" },
   left: { type: "string" }, right: { type: "string" }, output: { type: "string" },
+  "content-root": { type: "string" }, baseline: { type: "string" }, candidate: { type: "string" },
+  review: { type: "string" }, "perk-providers": { type: "string" }, write: { type: "boolean" },
 } });
 const root = process.cwd();
 function required(key: keyof typeof values): string {
   const value = values[key];
-  if (!value) throw new Error(`Missing --${key}`);
+  if (typeof value !== "string" || !value) throw new Error(`Missing --${key}`);
   return value;
 }
 
@@ -47,6 +50,18 @@ async function archiveCurrent(includePreview = false) {
 
 async function main() {
   switch (positionals[0]) {
+    case "promote": {
+      const options = { root, season: required("season"), version: required("version"),
+        contentRoot: path.resolve(required("content-root")), archive: path.resolve(required("archive")),
+        baseline: path.resolve(required("baseline")), candidate: path.resolve(required("candidate")),
+        review: path.resolve(required("review")),
+        perkProviders: values["perk-providers"] ? path.resolve(values["perk-providers"]) : undefined };
+      const plan = planPromotion(options);
+      console.log(JSON.stringify({ ...plan.report, blockers: plan.blockers }, null, 2));
+      if (plan.blockers.length) throw new Error(plan.blockers.join("\n"));
+      if (values.write) console.log(JSON.stringify(applyPromotion(options, plan), null, 2));
+      break;
+    }
     case "withdraw":
       withdrawCurrent(root, path.resolve(required("archive")), required("season"), required("version"));
       break;
@@ -99,7 +114,12 @@ async function main() {
       break;
     }
     default:
-      throw new Error("Usage: pnpm content-version <status|archive|archive-preview|verify|diff|export|prepare|withdraw|finalize> [--season s4 --version s4 --archive PATH --left PATH --right PATH --output PATH]");
+      throw new Error("Usage: pnpm content-version <status|archive|archive-preview|verify|diff|export|prepare|withdraw|promote|finalize> [--season ID --version ID --content-root PATH --archive PATH --baseline PATH --candidate PATH --review PATH --perk-providers PATH --write --left PATH --right PATH --output PATH]");
   }
 }
-main().catch(error => { console.error(error instanceof Error ? error.message : error); process.exitCode = 1; });
+main().catch(error => {
+  const message = error instanceof Error ? error.message : String(error);
+  if (positionals[0] === "promote") console.error(JSON.stringify({ status: "blocked", blockers: [message] }, null, 2));
+  else console.error(message);
+  process.exitCode = 1;
+});

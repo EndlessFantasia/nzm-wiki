@@ -3,27 +3,21 @@ import path from "node:path";
 import { createHash } from "node:crypto";
 import { pathToFileURL } from "node:url";
 import matter from "gray-matter";
-import { numSkillDefinitionsSchema, numSkillLockSchema, skillVariantCatalogSchema } from "../../lib/num-skill";
+import { numSkillDefinitionsSchema, numSkillLockSchema, skillVariantCatalogSchema, type NumSkillDefinition, type NumSkillLock } from "../../lib/num-skill";
 
 const file = "data/num-skill-lock.json";
 /** Read selected rows in place; never refresh another channel implicitly. */
-export function refreshSkillRows(contentRoot: string, channel: string) {
+export function prepareSkillRows(contentRoot: string, channel: string, input: NumSkillLock, definitions: readonly NumSkillDefinition[]): NumSkillLock {
   const references = new Set<string>();
   const gpChargeReferences = new Set<string>();
-  const definitions = fs.readdirSync("data/weapons").filter(name => name.endsWith(".mdx")).flatMap(name => {
-    const source = matter(fs.readFileSync(path.join("data/weapons", name), "utf8"));
-    return numSkillDefinitionsSchema.parse(source.data.skills ?? []);
-  });
-  const variants = skillVariantCatalogSchema.parse(JSON.parse(fs.readFileSync("data/num-skill-variants.json", "utf8")));
-  definitions.push(...variants.variants.map(entry => entry.skill));
   for (const skill of definitions) for (const expression of Object.values(skill.parameters ?? {})) {
     if ("row" in expression && expression.row.split(":")[0] === channel) {
       references.add(expression.row);
       if (expression.row.includes(":gp:") && ["CooldownDuration", "MaxChargeStackCount"].includes(expression.field)) gpChargeReferences.add(expression.row);
     }
   }
-  const lock = numSkillLockSchema.parse(JSON.parse(fs.readFileSync(file, "utf8")));
-  const tables = new Map<string, { rows: Record<string, Record<string, never>>; source: { path: string; sha256: string } }>();
+  const lock = numSkillLockSchema.parse(structuredClone(input));
+  const tables = new Map<string, { rows: Record<string, NumSkillLock["rows"][string]["raw"]>; source: { path: string; sha256: string } }>();
   for (const key of [...references].sort()) {
     const [, kind, rowName] = key.split(":");
     const sourcePath = kind === "gp" ? "DataTables/GPActiveSkillDataTable.json" : "DataTables/SkillConfigTable_Weapon_PVE.json";
@@ -50,9 +44,19 @@ export function refreshSkillRows(contentRoot: string, channel: string) {
   }
   for (const key of Object.keys(lock.rows)) if (key.startsWith(`${channel}:`) && !references.has(key)) delete lock.rows[key];
   lock.rows = Object.fromEntries(Object.entries(lock.rows).sort(([a], [b]) => a.localeCompare(b, "en")));
-  numSkillLockSchema.parse(lock);
+  return numSkillLockSchema.parse(lock);
+}
+
+export function refreshSkillRows(contentRoot: string, channel: string) {
+  const definitions = fs.readdirSync("data/weapons").filter(name => name.endsWith(".mdx")).flatMap(name => {
+    const source = matter(fs.readFileSync(path.join("data/weapons", name), "utf8"));
+    return numSkillDefinitionsSchema.parse(source.data.skills ?? []);
+  });
+  const variants = skillVariantCatalogSchema.parse(JSON.parse(fs.readFileSync("data/num-skill-variants.json", "utf8")));
+  definitions.push(...variants.variants.map(entry => entry.skill));
+  const lock = prepareSkillRows(contentRoot, channel, JSON.parse(fs.readFileSync(file, "utf8")), definitions);
   fs.writeFileSync(file, JSON.stringify(lock, null, 2) + "\n");
-  console.log(`Locked ${references.size} selected skill rows for ${channel}; other namespaces preserved.`);
+  console.log(`Locked ${Object.keys(lock.rows).filter(key => key.startsWith(`${channel}:`)).length} selected skill rows for ${channel}; other namespaces preserved.`);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
