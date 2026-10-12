@@ -176,7 +176,7 @@ export function collect() {
     const narrative = identity.NarrativeContent;
     const data: HunterMonster = { ...existing?.data, slug, title, monster_id: id, kind, description: narrative && narrative !== "None" ? narrative : `猎场${MONSTER_KINDS[kind]}怪物`, appearances };
     if (image) data.image = image; else delete data.image;
-    const body = existing?.content ?? "\n血量按地图、难度与区域分别记录。未确认的数值标为待核实，不代表该怪物不出现。\n";
+    const body = existing?.content ?? "\n血量按地图、难度与区域分别列出。\n";
     entries.push({ file, data, body });
     evidence.monsters.push({ monster_id: id, title, monster_type: identity.MonsterType, base_health: baseHealth ?? null, appearances: appearances.map(r => ({ map: r.map, area: r.area, source: appearanceSources.get(appearanceKey(r.map, r.area))! })), records });
   }
