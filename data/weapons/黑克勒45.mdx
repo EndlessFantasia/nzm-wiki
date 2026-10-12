@@ -37,6 +37,31 @@ damage_sources:
         id: 120500020
         level: 1
       asc_type_id: "33"
+  - id: burning-grenade
+    name: 燃烧手雷
+    section: skill
+    source:
+      numerical:
+        id: 1400100101
+        level: 1
+  - id: enhanced-burn
+    name: 强化灼烧（每层）
+    section: dot
+    sources:
+      lc:
+        numerical:
+          id: 90023
+          level: 1
+        attack_interval: 2
+        attack_interval_source: NZM/Content/DataTables/Buff/BuffConfigDatatableNew#Fire_Special1.Period
+  - id: enhanced-element-explosion
+    name: 强化元素爆炸
+    section: special
+    sources:
+      lc:
+        numerical:
+          id: 90024
+          level: 1
 skills:
   - id: active-1
     kind: active
@@ -58,18 +83,18 @@ skills:
     icon: /icons/weapons/skills/T_Weapon_Skill_effect_14.png
     tag: 元素异常
 ---
+<WeaponModeDiff />
+
 <WeaponSkill>
   <ActiveSkill skill="active-1">
     扔出一颗燃烧手雷，造成一次半径为<Yellow>6米</Yellow>的范围燃烧伤害。
   </ActiveSkill>
 
   <PassiveSkill skill="passive-1">
-    黑克勒45比其他火元素武器更容易造成灼热异常，且能造成更高的灼热异常伤害。该武器开火造成击杀时，减少其主动技能<Yellow>8秒</Yellow>充能时间。
+    黑克勒45使用强化灼热异常，提升灼烧与元素爆炸伤害。该武器开火造成击杀时，减少其主动技能<Yellow>8秒</Yellow>充能时间。
   </PassiveSkill>
 </WeaponSkill>
 
-> 黑克勒45 比其他火元素武器更容易造成 **灼热异常**，且能造成 **更高** 的灼热异常伤害
->
-> 具体数值：伤害为普通灼热异常的 **4** 倍，每 **2** 秒造成 **40 × 层数** 的伤害，元素爆炸伤害为 **1200**
-
-烈日手雷： 半径 **6** 米，伤害 **180**, 添加元素异常概率为 **100%**，冷却时间为 **50** 秒，一次击杀减少 **8** 秒冷却 <Grey>等效为获得 **16%** 技能充能</Grey>
+<GameMode only="lc">
+  强化灼烧按当前层数结算，每<Yellow>2秒</Yellow>减少一层。灼烧的每层伤害及强化元素爆炸伤害见属性面板。
+</GameMode>
