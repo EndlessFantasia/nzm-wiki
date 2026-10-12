@@ -37,6 +37,8 @@ skills:
 
 GP `Duration` 是技能生命周期，不能一律代替效果持续时间。旧正文的 `duration: -1` 表示不展示，迁移显式保留；未知阻回不自动当作 false。旧站点阻回语义与 GP 激活生命周期不完全一致，未建立等价链路时保留原记录并注明证据，不机械覆盖。
 
+MDX 按正式内容维护：正文直接说明机制，`reason` 简洁说明参数用途或采用依据，`evidence` 保留来源引用。核验状态、原生边界、候选配置和冲突过程记录在证据文档中，不在 MDX 重复“迁移前”“暂保留”“尚未核验”等维护措辞。措辞整理不改变来源等级；literal 仍是独立记录值，不能据此视为 runtime 绑定或实测结果。
+
 ### 已核验的持续时间绑定
 
 `num-skill-lock.json.runtime` 按 `通道:游戏技能ID:duration` 保存来源与执行链，schema 位于 `lib/num-skill-runtime.ts`。每项必须包含来源、`flow.read`、`flow.apply` 的资产/函数/StatementIndex、JSON快照SHA-256、证据文档、Native边界和来源环境（未确认时为 `unknown`）。结构校验不能代替人工审查控制流，也不代表游戏内实测。
@@ -100,5 +102,7 @@ pnpm test:num-skills
 - 心有凌兮：保留跳舞结束后的增益40秒，实际添加的XYLX_PassiveBuff_1配置仍为40；27秒没有可见生效链。Native添加内部未展开，保留带边界的literal。
 
 完整身份链、函数位置、来源哈希与限制见[技能持续时间证据](../architecture/weapon-skill-duration-evidence.md)。
+
+2026-10-12补充审计21把武器：密林杀机、幽冥毒王、收割者的正文与面板时长接入蓝图runtime绑定；其余18把保留literal并记录各自消费链、原生缺口与配置冲突。MDX来源说明不再使用“迁移前”作为核验依据。详见[持续时间补充审计](../architecture/weapon-skill-duration-followup.md)。
 
 生命线主动伤害、喷发频率及黑克勒45手雷、强化异常与击杀回充的补录依据见[两把武器的技能数值证据](../architecture/weapon-skill-smx-ump-evidence.md)。独立伤害继续由武器 `damage_sources` 与 Weapon Lock 承载；蓝图回充值不伪装为基础 cooldown 或 Modifier。

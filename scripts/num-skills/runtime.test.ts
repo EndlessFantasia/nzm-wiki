@@ -71,3 +71,27 @@ test("天鹅之舞面板与正文12秒；心有凌兮增益保留40秒，不采�
     assert.equal(dance.parameters.duration, 40);
   }
 });
+
+test("法阵与扩充装填使用已审计蓝图绑定，不采用未核验的同名PVE覆写", () => {
+  for (const [slug, gameSkillId, duration] of [
+    ["密林杀机", 5000201, 12],
+    ["幽冥毒王", 5001301, 12],
+    ["收割者", 5000701, 10],
+  ] as const) {
+    const runtime = `weapons:${gameSkillId}:duration`;
+    assert.equal(NUM_SKILL_LOCK.runtime![runtime].source.kind, "blueprint_default");
+    // A conflicting PVE field is not an audited input to these bindings.
+    assert.equal(resolveRuntimeDuration({ runtime }, {
+      channel: "weapons", gameSkillId, bindings: NUM_SKILL_LOCK.runtime,
+      pveParameters: [{ Name: "BuffDuration", Value: "999" }, { Name: "FieldDuration", Value: "999" }],
+    }), duration);
+    const data = matter(readFileSync(`data/weapons/${slug}.mdx`, "utf8")).data;
+    for (const mode of ["lc", "td"] as const) {
+      const skill = resolveWeaponSkills(data, slug, mode).find(entry => entry.id === "active-1")!;
+      assert.equal(skill.parameters.duration, duration);
+      assert.equal(skill.parameters.panel_duration, duration);
+      assert.deepEqual(skill.provenance.duration, { runtime });
+      assert.deepEqual(skill.provenance.panel_duration, { runtime });
+    }
+  }
+});

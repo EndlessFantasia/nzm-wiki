@@ -63,7 +63,7 @@ skills:
     parameters:
       duration:
         literal: -1
-        reason: 保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。
+        reason: 技能卡不展示持续时间。
         evidence: data/weapons/爆星.mdx#active-1.duration
       cooldown:
         weapon_charge: time
@@ -71,11 +71,11 @@ skills:
         weapon_charge: count
       panel_duration:
         literal: 10
-        reason: 保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。
+        reason: 属性面板持续时间的展示设置。
         evidence: data/weapons/爆星.mdx#active-1.skill_duration
       blocking:
         literal: true
-        reason: 保留原MDX展示值；未建立可直接替代的配置引用。
+        reason: 技能期间暂停充能的展示设置。
         evidence: data/weapons/爆星.mdx#frontmatter.skill_blocking
   - id: passive-1
     kind: passive

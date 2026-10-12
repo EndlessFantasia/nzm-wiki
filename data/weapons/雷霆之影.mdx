@@ -45,19 +45,19 @@ skills:
     parameters:
       duration:
         literal: 10
-        reason: 保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。
-        evidence: data/weapon-skill-migration-baseline.json#雷霆之影.active-1.duration
+        reason: 技能效果持续时间，依据见来源记录。
+        evidence: docs/architecture/weapon-skill-duration-followup.md#雷霆之影
       cooldown:
         weapon_charge: time
       count:
         weapon_charge: count
       panel_duration:
         literal: 10
-        reason: 保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。
-        evidence: data/weapon-skill-migration-baseline.json#雷霆之影.active-1.panel_duration
+        reason: 属性面板持续时间的展示设置。
+        evidence: docs/architecture/weapon-skill-duration-followup.md#雷霆之影
       blocking:
         literal: true
-        reason: 保留原MDX展示值；未建立可直接替代的配置引用。
+        reason: 技能期间暂停充能的展示设置。
         evidence: data/weapons/雷霆之影.mdx#frontmatter.skill_blocking
     modifier_sources:
       - weapon:雷霆之影:拒止力场

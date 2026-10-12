@@ -20,7 +20,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/Bully.mdx#active-1.duration"
         },
         "count": {
@@ -63,7 +63,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/Bully.mdx#active-1.duration"
         },
         "count": {
@@ -108,21 +108,21 @@
         },
         "duration": {
           "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#Z型步枪.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#Z型步枪"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/Z型步枪.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#Z型步枪.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#Z型步枪"
         }
       },
       "weaponSlug": "Z型步枪",
@@ -166,21 +166,21 @@
         },
         "duration": {
           "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#Z型步枪.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#Z型步枪"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/Z型步枪.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#Z型步枪.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#Z型步枪"
         }
       },
       "weaponSlug": "Z型步枪",
@@ -222,7 +222,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/乘风快递.mdx#active-1.duration"
         },
         "count": {
@@ -266,7 +266,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/乘风快递.mdx#active-1.duration"
         },
         "count": {
@@ -312,21 +312,21 @@
         },
         "duration": {
           "literal": 20,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#元宵来袭.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#元宵来袭"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/元宵来袭.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 20,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#元宵来袭.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#元宵来袭"
         }
       },
       "weaponSlug": "元宵来袭",
@@ -367,21 +367,21 @@
         },
         "duration": {
           "literal": 20,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#元宵来袭.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#元宵来袭"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/元宵来袭.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 20,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#元宵来袭.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#元宵来袭"
         }
       },
       "weaponSlug": "元宵来袭",
@@ -422,21 +422,21 @@
         },
         "duration": {
           "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#光荣之路.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#光荣之路"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/光荣之路.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#光荣之路.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#光荣之路"
         }
       },
       "weaponSlug": "光荣之路",
@@ -477,21 +477,21 @@
         },
         "duration": {
           "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#光荣之路.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#光荣之路"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/光荣之路.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#光荣之路.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#光荣之路"
         }
       },
       "weaponSlug": "光荣之路",
@@ -532,21 +532,21 @@
         },
         "duration": {
           "literal": 15,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#共晶点.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#共晶点"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/共晶点.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 15,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#共晶点.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#共晶点"
         }
       },
       "weaponSlug": "共晶点",
@@ -587,21 +587,21 @@
         },
         "duration": {
           "literal": 15,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#共晶点.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#共晶点"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/共晶点.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 15,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#共晶点.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#共晶点"
         }
       },
       "weaponSlug": "共晶点",
@@ -640,7 +640,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/再生冷却.mdx#active-1.duration"
         },
         "count": {
@@ -683,7 +683,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/再生冷却.mdx#active-1.duration"
         },
         "count": {
@@ -730,7 +730,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/冥河之矛.mdx#active-1.duration"
         },
         "count": {
@@ -738,12 +738,12 @@
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/冥河之矛.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 20,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/冥河之矛.mdx#active-1.skill_duration"
         }
       },
@@ -788,7 +788,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/冥河之矛.mdx#active-1.duration"
         },
         "count": {
@@ -796,12 +796,12 @@
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/冥河之矛.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 20,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/冥河之矛.mdx#active-1.skill_duration"
         }
       },
@@ -928,7 +928,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/刺隐.mdx#active-1.duration"
         },
         "count": {
@@ -940,7 +940,7 @@
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/刺隐.mdx#active-1.skill_duration"
         }
       },
@@ -984,7 +984,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/刺隐.mdx#active-1.duration"
         },
         "count": {
@@ -996,7 +996,7 @@
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/刺隐.mdx#active-1.skill_duration"
         }
       },
@@ -1066,7 +1066,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/哈士奇好友.mdx#active-1.duration"
         },
         "count": {
@@ -1109,7 +1109,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/哈士奇好友.mdx#active-1.duration"
         },
         "count": {
@@ -1180,7 +1180,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/夜影之逝.mdx#active-1.duration"
         },
         "count": {
@@ -1227,7 +1227,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/夜影之逝.mdx#active-1.duration"
         },
         "count": {
@@ -1377,9 +1377,7 @@
           "weapon_charge": "time"
         },
         "duration": {
-          "literal": 12,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#密林杀机.active-1.duration"
+          "runtime": "weapons:5000201:duration"
         },
         "count": {
           "weapon_charge": "count"
@@ -1389,9 +1387,7 @@
           "field": "bPauseChargeDuringActivation"
         },
         "panel_duration": {
-          "literal": 12,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#密林杀机.active-1.panel_duration"
+          "runtime": "weapons:5000201:duration"
         }
       },
       "weaponSlug": "密林杀机",
@@ -1434,9 +1430,7 @@
           "weapon_charge": "time"
         },
         "duration": {
-          "literal": 12,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#密林杀机.active-1.duration"
+          "runtime": "weapons:5000201:duration"
         },
         "count": {
           "weapon_charge": "count"
@@ -1446,9 +1440,7 @@
           "field": "bPauseChargeDuringActivation"
         },
         "panel_duration": {
-          "literal": 12,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#密林杀机.active-1.panel_duration"
+          "runtime": "weapons:5000201:duration"
         }
       },
       "weaponSlug": "密林杀机",
@@ -1627,9 +1619,7 @@
           "weapon_charge": "time"
         },
         "duration": {
-          "literal": 12,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#幽冥毒王.active-1.duration"
+          "runtime": "weapons:5001301:duration"
         },
         "count": {
           "weapon_charge": "count"
@@ -1639,9 +1629,7 @@
           "field": "bPauseChargeDuringActivation"
         },
         "panel_duration": {
-          "literal": 12,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#幽冥毒王.active-1.panel_duration"
+          "runtime": "weapons:5001301:duration"
         }
       },
       "weaponSlug": "幽冥毒王",
@@ -1684,9 +1672,7 @@
           "weapon_charge": "time"
         },
         "duration": {
-          "literal": 12,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#幽冥毒王.active-1.duration"
+          "runtime": "weapons:5001301:duration"
         },
         "count": {
           "weapon_charge": "count"
@@ -1696,9 +1682,7 @@
           "field": "bPauseChargeDuringActivation"
         },
         "panel_duration": {
-          "literal": 12,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#幽冥毒王.active-1.panel_duration"
+          "runtime": "weapons:5001301:duration"
         }
       },
       "weaponSlug": "幽冥毒王",
@@ -1740,7 +1724,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/幽冥毒皇.mdx#active-1.duration"
         },
         "count": {
@@ -1748,12 +1732,12 @@
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/幽冥毒皇.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/幽冥毒皇.mdx#active-1.skill_duration"
         }
       },
@@ -1798,7 +1782,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/幽冥毒皇.mdx#active-1.duration"
         },
         "count": {
@@ -1806,12 +1790,12 @@
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/幽冥毒皇.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/幽冥毒皇.mdx#active-1.skill_duration"
         }
       },
@@ -1854,7 +1838,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/往日速递.mdx#active-1.duration"
         },
         "count": {
@@ -1897,7 +1881,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/往日速递.mdx#active-1.duration"
         },
         "count": {
@@ -1942,7 +1926,7 @@
         },
         "duration": {
           "literal": 40,
-          "reason": "跳舞结束路径实际添加XYLX_PassiveBuff_1，Buff配置Duration=40；Native应用内部未展开，不采用无读取证据的PVE BuffDuration=27。",
+          "reason": "跳舞结束后添加 XYLX_PassiveBuff_1，采用该 Buff 配置的 40 秒持续时间。",
           "evidence": "docs/architecture/weapon-skill-duration-evidence.md#心有凌兮"
         },
         "count": {
@@ -1988,7 +1972,7 @@
         },
         "duration": {
           "literal": 40,
-          "reason": "跳舞结束路径实际添加XYLX_PassiveBuff_1，Buff配置Duration=40；Native应用内部未展开，不采用无读取证据的PVE BuffDuration=27。",
+          "reason": "跳舞结束后添加 XYLX_PassiveBuff_1，采用该 Buff 配置的 40 秒持续时间。",
           "evidence": "docs/architecture/weapon-skill-duration-evidence.md#心有凌兮"
         },
         "count": {
@@ -2064,7 +2048,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/战争矩阵.mdx#active-1.duration"
         },
         "count": {
@@ -2076,7 +2060,7 @@
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/战争矩阵.mdx#active-1.skill_duration"
         }
       },
@@ -2119,7 +2103,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/战争矩阵.mdx#active-1.duration"
         },
         "count": {
@@ -2131,7 +2115,7 @@
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/战争矩阵.mdx#active-1.skill_duration"
         }
       },
@@ -2206,7 +2190,7 @@
         },
         "duration": {
           "literal": 15,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能效果持续时间，依据见来源记录。",
           "evidence": "data/weapons/振弦.mdx#active-1.duration"
         },
         "count": {
@@ -2214,12 +2198,12 @@
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/振弦.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 15,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/振弦.mdx#active-1.skill_duration"
         }
       },
@@ -2264,7 +2248,7 @@
         },
         "duration": {
           "literal": 15,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能效果持续时间，依据见来源记录。",
           "evidence": "data/weapons/振弦.mdx#active-1.duration"
         },
         "count": {
@@ -2272,12 +2256,12 @@
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/振弦.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 15,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/振弦.mdx#active-1.skill_duration"
         }
       },
@@ -2319,22 +2303,18 @@
           "weapon_charge": "time"
         },
         "duration": {
-          "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#收割者.active-1.duration"
+          "runtime": "weapons:5000701:duration"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/收割者.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
-          "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#收割者.active-1.panel_duration"
+          "runtime": "weapons:5000701:duration"
         }
       },
       "weaponSlug": "收割者",
@@ -2375,22 +2355,18 @@
           "weapon_charge": "time"
         },
         "duration": {
-          "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#收割者.active-1.duration"
+          "runtime": "weapons:5000701:duration"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/收割者.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
-          "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#收割者.active-1.panel_duration"
+          "runtime": "weapons:5000701:duration"
         }
       },
       "weaponSlug": "收割者",
@@ -2432,7 +2408,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/星海狂想.mdx#active-1.duration"
         },
         "count": {
@@ -2444,7 +2420,7 @@
         },
         "panel_duration": {
           "literal": 8,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/星海狂想.mdx#active-1.skill_duration"
         }
       },
@@ -2487,7 +2463,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/星海狂想.mdx#active-1.duration"
         },
         "count": {
@@ -2499,7 +2475,7 @@
         },
         "panel_duration": {
           "literal": 8,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/星海狂想.mdx#active-1.skill_duration"
         }
       },
@@ -2642,7 +2618,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/暗夜之殇.mdx#active-1.duration"
         },
         "count": {
@@ -2687,7 +2663,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/暗夜之殇.mdx#active-1.duration"
         },
         "count": {
@@ -2790,7 +2766,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/杜瓦瓶.mdx#active-1.duration"
         },
         "count": {
@@ -2802,7 +2778,7 @@
         },
         "panel_duration": {
           "literal": 15,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/杜瓦瓶.mdx#active-1.skill_duration"
         }
       },
@@ -2844,7 +2820,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/杜瓦瓶.mdx#active-1.duration"
         },
         "count": {
@@ -2856,7 +2832,7 @@
         },
         "panel_duration": {
           "literal": 15,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/杜瓦瓶.mdx#active-1.skill_duration"
         }
       },
@@ -3086,21 +3062,21 @@
         },
         "duration": {
           "literal": 30,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#梦魇.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#梦魇"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/梦魇.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 30,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#梦魇.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#梦魇"
         }
       },
       "weaponSlug": "梦魇",
@@ -3144,21 +3120,21 @@
         },
         "duration": {
           "literal": 30,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#梦魇.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#梦魇"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/梦魇.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 30,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#梦魇.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#梦魇"
         }
       },
       "weaponSlug": "梦魇",
@@ -3314,7 +3290,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/死亡猎手.mdx#active-1.duration"
         },
         "count": {
@@ -3357,7 +3333,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/死亡猎手.mdx#active-1.duration"
         },
         "count": {
@@ -3402,7 +3378,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/死神猎手.mdx#active-1.duration"
         },
         "count": {
@@ -3414,7 +3390,7 @@
         },
         "panel_duration": {
           "literal": 2.5,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/死神猎手.mdx#active-1.skill_duration"
         }
       },
@@ -3457,7 +3433,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/死神猎手.mdx#active-1.duration"
         },
         "count": {
@@ -3469,7 +3445,7 @@
         },
         "panel_duration": {
           "literal": 2.5,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/死神猎手.mdx#active-1.skill_duration"
         }
       },
@@ -3542,21 +3518,21 @@
         },
         "duration": {
           "literal": 12,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#沙丘之怒.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#沙丘之怒"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/沙丘之怒.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 12,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#沙丘之怒.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#沙丘之怒"
         }
       },
       "weaponSlug": "沙丘之怒",
@@ -3597,21 +3573,21 @@
         },
         "duration": {
           "literal": 12,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#沙丘之怒.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#沙丘之怒"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/沙丘之怒.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 12,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#沙丘之怒.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#沙丘之怒"
         }
       },
       "weaponSlug": "沙丘之怒",
@@ -3708,7 +3684,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/浪里白条.mdx#active-1.duration"
         },
         "count": {
@@ -3716,12 +3692,12 @@
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/浪里白条.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/浪里白条.mdx#active-1.skill_duration"
         }
       },
@@ -3765,7 +3741,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/浪里白条.mdx#active-1.duration"
         },
         "count": {
@@ -3773,12 +3749,12 @@
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/浪里白条.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/浪里白条.mdx#active-1.skill_duration"
         }
       },
@@ -3876,7 +3852,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/火山口.mdx#active-1.duration"
         },
         "count": {
@@ -3919,7 +3895,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/火山口.mdx#active-1.duration"
         },
         "count": {
@@ -3988,7 +3964,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/火神炎帝.mdx#active-1.duration"
         },
         "count": {
@@ -4033,7 +4009,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/火神炎帝.mdx#active-1.duration"
         },
         "count": {
@@ -4078,7 +4054,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/炼狱双蝎.mdx#active-1.duration"
         },
         "count": {
@@ -4121,7 +4097,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/炼狱双蝎.mdx#active-1.duration"
         },
         "count": {
@@ -4166,21 +4142,21 @@
         },
         "duration": {
           "literal": 12,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#炼狱蝎王.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#炼狱蝎王"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/炼狱蝎王.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 12,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#炼狱蝎王.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#炼狱蝎王"
         }
       },
       "weaponSlug": "炼狱蝎王",
@@ -4223,21 +4199,21 @@
         },
         "duration": {
           "literal": 12,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#炼狱蝎王.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#炼狱蝎王"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/炼狱蝎王.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 12,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#炼狱蝎王.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#炼狱蝎王"
         }
       },
       "weaponSlug": "炼狱蝎王",
@@ -4280,7 +4256,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/爆星.mdx#active-1.duration"
         },
         "count": {
@@ -4288,12 +4264,12 @@
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/爆星.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/爆星.mdx#active-1.skill_duration"
         }
       },
@@ -4337,7 +4313,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/爆星.mdx#active-1.duration"
         },
         "count": {
@@ -4345,12 +4321,12 @@
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/爆星.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/爆星.mdx#active-1.skill_duration"
         }
       },
@@ -4484,7 +4460,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/猪猪榴弹发射器.mdx#active-1.duration"
         },
         "count": {
@@ -4529,7 +4505,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/猪猪榴弹发射器.mdx#active-1.duration"
         },
         "count": {
@@ -4574,21 +4550,21 @@
         },
         "duration": {
           "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#玄凌飞刃.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#玄凌飞刃"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/玄凌飞刃.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#玄凌飞刃.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#玄凌飞刃"
         }
       },
       "weaponSlug": "玄凌飞刃",
@@ -4629,21 +4605,21 @@
         },
         "duration": {
           "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#玄凌飞刃.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#玄凌飞刃"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/玄凌飞刃.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#玄凌飞刃.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#玄凌飞刃"
         }
       },
       "weaponSlug": "玄凌飞刃",
@@ -4682,7 +4658,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/生命公司.mdx#active-1.duration"
         },
         "count": {
@@ -4725,7 +4701,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/生命公司.mdx#active-1.duration"
         },
         "count": {
@@ -4770,7 +4746,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/生命线.mdx#active-1.duration"
         },
         "count": {
@@ -4782,7 +4758,7 @@
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/生命线.mdx#active-1.skill_duration"
         }
       },
@@ -4825,7 +4801,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/生命线.mdx#active-1.duration"
         },
         "count": {
@@ -4837,7 +4813,7 @@
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/生命线.mdx#active-1.skill_duration"
         }
       },
@@ -4878,8 +4854,8 @@
         },
         "duration": {
           "literal": 12,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#疾影逐风.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#疾影逐风"
         },
         "count": {
           "weapon_charge": "count"
@@ -4922,8 +4898,8 @@
         },
         "duration": {
           "literal": 12,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#疾影逐风.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#疾影逐风"
         },
         "count": {
           "weapon_charge": "count"
@@ -5058,7 +5034,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/精绝兽神.mdx#active-1.duration"
         },
         "count": {
@@ -5104,7 +5080,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/精绝兽神.mdx#active-1.duration"
         },
         "count": {
@@ -5152,21 +5128,21 @@
         },
         "duration": {
           "literal": 15,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#纯白至上.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#纯白至上"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/纯白至上.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 15,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#纯白至上.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#纯白至上"
         }
       },
       "weaponSlug": "纯白至上",
@@ -5210,21 +5186,21 @@
         },
         "duration": {
           "literal": 15,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#纯白至上.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#纯白至上"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/纯白至上.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 15,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#纯白至上.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#纯白至上"
         }
       },
       "weaponSlug": "纯白至上",
@@ -5266,21 +5242,21 @@
         },
         "duration": {
           "literal": 8,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#维和者.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#维和者"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/维和者.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 8,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#维和者.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#维和者"
         }
       },
       "weaponSlug": "维和者",
@@ -5322,21 +5298,21 @@
         },
         "duration": {
           "literal": 8,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#维和者.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#维和者"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/维和者.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 8,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#维和者.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#维和者"
         }
       },
       "weaponSlug": "维和者",
@@ -5376,7 +5352,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/胜利誓约.mdx#active-1.duration"
         },
         "count": {
@@ -5420,7 +5396,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/胜利誓约.mdx#active-1.duration"
         },
         "count": {
@@ -5472,7 +5448,7 @@
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/能源之影.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
@@ -5524,7 +5500,7 @@
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/能源之影.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
@@ -5568,7 +5544,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/苔色暴风.mdx#active-1.duration"
         },
         "count": {
@@ -5612,7 +5588,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/苔色暴风.mdx#active-1.duration"
         },
         "count": {
@@ -5836,21 +5812,21 @@
         },
         "duration": {
           "literal": 15,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#裁决之眼.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#裁决之眼"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/裁决之眼.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 15,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#裁决之眼.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#裁决之眼"
         }
       },
       "weaponSlug": "裁决之眼",
@@ -5894,21 +5870,21 @@
         },
         "duration": {
           "literal": 15,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#裁决之眼.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#裁决之眼"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/裁决之眼.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 15,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#裁决之眼.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#裁决之眼"
         }
       },
       "weaponSlug": "裁决之眼",
@@ -5965,13 +5941,13 @@
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/超级复合弓.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 8,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#超级复合弓.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#超级复合弓"
         }
       },
       "weaponSlug": "超级复合弓",
@@ -6014,13 +5990,13 @@
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/超级复合弓.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 8,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#超级复合弓.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#超级复合弓"
         }
       },
       "weaponSlug": "超级复合弓",
@@ -6108,21 +6084,21 @@
         },
         "duration": {
           "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#钢铁游隼.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#钢铁游隼"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/钢铁游隼.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#钢铁游隼.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#钢铁游隼"
         }
       },
       "weaponSlug": "钢铁游隼",
@@ -6163,21 +6139,21 @@
         },
         "duration": {
           "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#钢铁游隼.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#钢铁游隼"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/钢铁游隼.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#钢铁游隼.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#钢铁游隼"
         }
       },
       "weaponSlug": "钢铁游隼",
@@ -6216,7 +6192,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/钢铁轰鸣.mdx#active-1.duration"
         },
         "count": {
@@ -6259,7 +6235,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/钢铁轰鸣.mdx#active-1.duration"
         },
         "count": {
@@ -6302,7 +6278,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/钢铁骑士.mdx#active-1.duration"
         },
         "count": {
@@ -6347,7 +6323,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/钢铁骑士.mdx#active-1.duration"
         },
         "count": {
@@ -6454,21 +6430,21 @@
         },
         "duration": {
           "literal": 15,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#雷霆999.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#雷霆999"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/雷霆999.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 15,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#雷霆999.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#雷霆999"
         }
       },
       "weaponSlug": "雷霆999",
@@ -6509,21 +6485,21 @@
         },
         "duration": {
           "literal": 15,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#雷霆999.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#雷霆999"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/雷霆999.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 15,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#雷霆999.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#雷霆999"
         }
       },
       "weaponSlug": "雷霆999",
@@ -6566,21 +6542,21 @@
         },
         "duration": {
           "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#雷霆之影.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#雷霆之影"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/雷霆之影.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#雷霆之影.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#雷霆之影"
         }
       },
       "weaponSlug": "雷霆之影",
@@ -6626,21 +6602,21 @@
         },
         "duration": {
           "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#雷霆之影.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#雷霆之影"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/雷霆之影.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 10,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#雷霆之影.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#雷霆之影"
         }
       },
       "weaponSlug": "雷霆之影",
@@ -6746,7 +6722,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/韶光樱影.mdx#active-1.duration"
         },
         "count": {
@@ -6754,12 +6730,12 @@
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/韶光樱影.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 15,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/韶光樱影.mdx#active-1.skill_duration"
         }
       },
@@ -6805,7 +6781,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/韶光樱影.mdx#active-1.duration"
         },
         "count": {
@@ -6813,12 +6789,12 @@
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/韶光樱影.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 15,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "属性面板持续时间的展示设置。",
           "evidence": "data/weapons/韶光樱影.mdx#active-1.skill_duration"
         }
       },
@@ -6860,7 +6836,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/飓风之锤.mdx#active-1.duration"
         },
         "count": {
@@ -6903,7 +6879,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/飓风之锤.mdx#active-1.duration"
         },
         "count": {
@@ -6946,7 +6922,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/飓风之龙.mdx#active-1.duration"
         },
         "count": {
@@ -6990,7 +6966,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/飓风之龙.mdx#active-1.duration"
         },
         "count": {
@@ -7230,21 +7206,21 @@
         },
         "duration": {
           "literal": 8,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#黄沙风暴.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#黄沙风暴"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/黄沙风暴.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 8,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#黄沙风暴.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#黄沙风暴"
         }
       },
       "weaponSlug": "黄沙风暴",
@@ -7285,21 +7261,21 @@
         },
         "duration": {
           "literal": 8,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#黄沙风暴.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#黄沙风暴"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/黄沙风暴.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 8,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#黄沙风暴.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#黄沙风暴"
         }
       },
       "weaponSlug": "黄沙风暴",
@@ -7340,21 +7316,21 @@
         },
         "duration": {
           "literal": 15,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#黎明之光.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#黎明之光"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/黎明之光.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 15,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#黎明之光.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#黎明之光"
         }
       },
       "weaponSlug": "黎明之光",
@@ -7395,21 +7371,21 @@
         },
         "duration": {
           "literal": 15,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#黎明之光.active-1.duration"
+          "reason": "技能效果持续时间，依据见来源记录。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#黎明之光"
         },
         "count": {
           "weapon_charge": "count"
         },
         "blocking": {
           "literal": true,
-          "reason": "保留原MDX展示值；未建立可直接替代的配置引用。",
+          "reason": "技能期间暂停充能的展示设置。",
           "evidence": "data/weapons/黎明之光.mdx#frontmatter.skill_blocking"
         },
         "panel_duration": {
           "literal": 15,
-          "reason": "保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。",
-          "evidence": "data/weapon-skill-migration-baseline.json#黎明之光.active-1.panel_duration"
+          "reason": "属性面板持续时间的展示设置。",
+          "evidence": "docs/architecture/weapon-skill-duration-followup.md#黎明之光"
         }
       },
       "weaponSlug": "黎明之光",
@@ -7448,7 +7424,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/黑克勒45.mdx#active-1.duration"
         },
         "count": {
@@ -7492,7 +7468,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/黑克勒45.mdx#active-1.duration"
         },
         "count": {
@@ -7566,7 +7542,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/黑金仲裁者.mdx#active-1.duration"
         },
         "count": {
@@ -7611,7 +7587,7 @@
         },
         "duration": {
           "literal": -1,
-          "reason": "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。",
+          "reason": "技能卡不展示持续时间。",
           "evidence": "data/weapons/黑金仲裁者.mdx#active-1.duration"
         },
         "count": {

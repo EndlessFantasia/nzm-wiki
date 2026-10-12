@@ -54,17 +54,13 @@ skills:
     game_skill_id: 5000201
     parameters:
       duration:
-        literal: 12
-        reason: 保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。
-        evidence: data/weapon-skill-migration-baseline.json#密林杀机.active-1.duration
+        runtime: weapons:5000201:duration
       cooldown:
         weapon_charge: time
       count:
         weapon_charge: count
       panel_duration:
-        literal: 12
-        reason: 保留迁移前展示值；同名PVE参数尚未核验生效链，不能视为已验证来源。
-        evidence: data/weapon-skill-migration-baseline.json#密林杀机.active-1.panel_duration
+        runtime: weapons:5000201:duration
       blocking:
         row: weapons:gp:5000201
         field: bPauseChargeDuringActivation

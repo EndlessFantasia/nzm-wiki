@@ -1,6 +1,87 @@
 {
   "schema_version": 1,
   "runtime": {
+    "weapons:5000201:duration": {
+      "game_skill_id": 5000201,
+      "source": {
+        "kind": "blueprint_default",
+        "asset": "NZM/Content/Abilities/WeaponSkill/Purple/EnergyCracks/SKT_EnergyCracks.uasset",
+        "sha256": "27a96e5427c9c9383c7ee142833a3dd278ddf8fec2c073720bdca47230bfc524",
+        "object": "Default__SKT_EnergyCracks_C",
+        "field": "FieldDuration",
+        "value": 12
+      },
+      "flow": {
+        "asset": "NZM/Content/Abilities/WeaponSkill/Purple/EnergyCracks/BP_EnergyCracks.uasset",
+        "sha256": "255f12af87017a1d399e668fe8e8f2e56cc75ec20011d45f8398221552587508",
+        "read": {
+          "function": "ExecuteUbergraph_BP_EnergyCracks",
+          "statement": 85
+        },
+        "apply": {
+          "function": "ExecuteUbergraph_BP_EnergyCracks",
+          "statement": 85
+        },
+        "boundary": "native-call",
+        "evidence": "docs/architecture/weapon-skill-duration-followup.md#密林杀机"
+      },
+      "dataset": "unknown",
+      "modifiers": []
+    },
+    "weapons:5001301:duration": {
+      "game_skill_id": 5001301,
+      "source": {
+        "kind": "blueprint_default",
+        "asset": "NZM/Content/Abilities/WeaponSkill/Purple/ChargingArray/SKT_ChargingArray.uasset",
+        "sha256": "14ec779097e456b9718067c1bf8d1182bbcac2457c1066353ff92b66281d44eb",
+        "object": "Default__SKT_ChargingArray_C",
+        "field": "FieldDuration",
+        "value": 12
+      },
+      "flow": {
+        "asset": "NZM/Content/Abilities/WeaponSkill/Purple/ChargingArray/BP_ChargingArray.uasset",
+        "sha256": "80f5ca579468f9212ffee85e888192e8eeede952dc8746481d2754a37cf9822e",
+        "read": {
+          "function": "ExecuteUbergraph_BP_ChargingArray",
+          "statement": 85
+        },
+        "apply": {
+          "function": "ExecuteUbergraph_BP_ChargingArray",
+          "statement": 85
+        },
+        "boundary": "native-call",
+        "evidence": "docs/architecture/weapon-skill-duration-followup.md#幽冥毒王"
+      },
+      "dataset": "unknown",
+      "modifiers": []
+    },
+    "weapons:5000701:duration": {
+      "game_skill_id": 5000701,
+      "source": {
+        "kind": "blueprint_default",
+        "asset": "NZM/Content/Abilities/WeaponSkill/Purple/ExpandLoading/SKT_ExpandLoading.uasset",
+        "sha256": "aa5bdf6bfd8db821742c140249b079a741565cc9b837570f101f9852a8863db0",
+        "object": "Default__SKT_ExpandLoading_C",
+        "field": "BuffDuration",
+        "value": 10
+      },
+      "flow": {
+        "asset": "NZM/Content/Abilities/WeaponSkill/Purple/ExpandLoading/SKT_ExpandLoading.uasset",
+        "sha256": "aa5bdf6bfd8db821742c140249b079a741565cc9b837570f101f9852a8863db0",
+        "read": {
+          "function": "ExecuteUbergraph_SKT_ExpandLoading",
+          "statement": 1057
+        },
+        "apply": {
+          "function": "ExecuteUbergraph_SKT_ExpandLoading",
+          "statement": 1210
+        },
+        "boundary": "native-call",
+        "evidence": "docs/architecture/weapon-skill-duration-followup.md#收割者"
+      },
+      "dataset": "unknown",
+      "modifiers": []
+    },
     "weapons:5102001:duration": {
       "game_skill_id": 5102001,
       "source": {

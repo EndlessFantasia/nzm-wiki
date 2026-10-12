@@ -100,7 +100,11 @@ export function migrateWeaponSource(source: string, slug: string, lock: WeaponDa
   const expectedChanges: ExpectedChange[] = [];
   const literal = (value: number | boolean, field: string, id: string): Expression => ({
     literal: value,
-    reason: field.includes("duration") ? "保留原MDX展示持续时间；其与GP生命周期可能不同，尚未核验，不根据同名字段猜测。" : "保留原MDX展示值；未建立可直接替代的配置引用。",
+    reason: field === "skill_blocking" ? "技能期间暂停充能的展示设置。"
+      : field.includes("duration") && value === -1 ? "技能卡不展示持续时间。"
+      : field === "skill_duration" ? "属性面板持续时间的展示设置。"
+      : field === "duration" ? "技能效果持续时间，依据见来源记录。"
+      : "技能参数的独立展示设置。",
     evidence: `data/weapons/${slug}.mdx#${id}.${field}`,
   });
   // Even equal values do not prove that a same-named table field is consumed.
