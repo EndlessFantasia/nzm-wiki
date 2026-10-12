@@ -100,3 +100,5 @@ pnpm test:num-skills
 - 心有凌兮：保留跳舞结束后的增益40秒，实际添加的XYLX_PassiveBuff_1配置仍为40；27秒没有可见生效链。Native添加内部未展开，保留带边界的literal。
 
 完整身份链、函数位置、来源哈希与限制见[技能持续时间证据](../architecture/weapon-skill-duration-evidence.md)。
+
+生命线主动伤害、喷发频率及黑克勒45手雷、强化异常与击杀回充的补录依据见[两把武器的技能数值证据](../architecture/weapon-skill-smx-ump-evidence.md)。独立伤害继续由武器 `damage_sources` 与 Weapon Lock 承载；蓝图回充值不伪装为基础 cooldown 或 Modifier。
