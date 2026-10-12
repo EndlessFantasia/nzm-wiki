@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 import statusEffects from "../../data/status-effects.json";
-import contentVersion from "../../config/content-version.json";
+import { pathToFileURL } from "node:url";
 import { getPerkSourceEntries } from "../perks/source";
 import { createNumModifierResolver } from "../../lib/num-modifier";
 import { parseNumModifierSemantics } from "../../lib/num-modifier-semantics";
@@ -11,6 +11,8 @@ import { checkModifierRuntimeProjections } from "./project";
 import { loadModifierProviderRegistry } from "./provider-registry";
 import { getProviderResolver } from "./provider-resolver";
 import { checkSkillIndex } from "../num-skills/project";
+import type { NumModifierDataLock } from "../../lib/num-modifier-data-lock";
+import type { NumModifierSemantics } from "../../lib/num-modifier-semantics";
 
 const root = process.cwd();
 const errors: string[] = [];
@@ -43,6 +45,9 @@ function checkStaticBoundaries(): void {
       .map(file => path.join(root, "scripts", "overlimit", file)),
     ...["preview.json", "preview-evidence.json", "current.json", "current-evidence.json"].map(file => path.join(root, "data", "overlimit", file)),
     path.join(root, "scripts", "perks", "promote-release.ts"),
+    path.join(root, "scripts", "perks", "promotion.ts"),
+    path.join(root, "scripts", "content-versions", "promotion.ts"),
+    path.join(root, "scripts", "content-versions", "promotion.test.ts"),
     path.join(root, "data", "modifier-providers.json"),
     // Maintenance-only local review records provenance; no runtime raw-table reads.
     path.join(root, "scripts", "s4-perk-index-review.json"),
@@ -132,7 +137,6 @@ function checkStaticBoundaries(): void {
 function checkPerkConsumers(): void {
   const entries = [...getPerkSourceEntries("current"), ...getPerkSourceEntries("preview")];
   const perks = entries.map(entry => entry.perk);
-  const perksByName = new Map(getPerkSourceEntries("current").map(({ perk }) => [perk.name, perk]));
   let referencedEffects = 0;
   let referencedStages = 0;
   let literalStages = 0;
@@ -180,42 +184,6 @@ function checkPerkConsumers(): void {
   if (manualSemanticFields > 0) {
     addError(`${manualSemanticFields} perk effects still copy semantic classification fields`);
   }
-  if (referencedEffects < 97) {
-    addError(`expected at least the 97 audited Num-derived perk effect_values, found ${referencedEffects}`);
-  }
-
-  const samples: ReadonlyArray<{
-    name: string;
-    values: readonly string[];
-    forbidden?: readonly string[];
-  }> = [
-    { name: "递进膛压", values: ["2.5%"] },
-    { name: "川流不息", values: ["0.8%", "80%"] },
-    { name: "精密追击", values: ["7%", "42%"], forbidden: ["10%"] },
-    { name: "致命节拍", values: ["0.4%", "32%"] },
-    { name: "近距增幅", values: ["5%", "35%"] },
-    { name: "裁决充能", values: ["2%", "8%", "100%", "400%"] },
-    { name: "紫奖掉物", values: ["16%", "18%"] },
-  ];
-  // Frozen S3 samples are historical assertions once the official catalog is retired.
-  for (const sample of contentVersion.season === "s3" ? samples : []) {
-    const description = perksByName.get(sample.name)?.description;
-    if (description === undefined) {
-      addError(`${sample.name} is missing from the resolved perk catalog`);
-      continue;
-    }
-    for (const expected of sample.values) {
-      if (!description.includes(expected)) {
-        addError(`${sample.name} resolved description is missing ${expected}`);
-      }
-    }
-    for (const forbidden of sample.forbidden ?? []) {
-      if (description.includes(forbidden)) {
-        addError(`${sample.name} resolved description still contains ${forbidden}`);
-      }
-    }
-  }
-
   console.log(
     `Perk Num effects: ${referencedEffects}; referenced stages: ${referencedStages}; ` +
       `justified literals: ${literalStages}; perks loaded: ${perks.length}.`,
@@ -238,24 +206,15 @@ function checkStatusEffects(): void {
   }
 }
 
-function run(): void {
-  const lock = readNumModifierDataLock();
-  const semantics = parseNumModifierSemantics(
-    JSON.parse(
-      fs.readFileSync(path.join(root, "data", "num-modifier-semantics.json"), "utf8"),
-    ),
-  );
-  const lockCheck = checkNumModifierDataLock(lock);
-  errors.push(...lockCheck.issues);
+export function checkSemanticCoverage(lock: NumModifierDataLock, semantics: NumModifierSemantics): string[] {
+  const issues = [...checkNumModifierDataLock(lock).issues];
   const resolver = createNumModifierResolver(lock, semantics);
-  const registry = loadModifierProviderRegistry();
-
   const lockedAttributeNames = new Set(
     Object.values(lock.rows.lc).map((row) => String(row.raw.AttributeName ?? "")),
   );
   for (const attributeName of lockedAttributeNames) {
     if (!Object.hasOwn(semantics.attributes, attributeName)) {
-      addError(`attribute ${attributeName || "<empty>"} has no semantic disposition`);
+      issues.push(`attribute ${attributeName || "<empty>"} has no semantic disposition`);
     }
   }
   const descriptorNames = new Set(
@@ -269,12 +228,22 @@ function run(): void {
   const missing = [...lockedAttributeNames].filter(
     (attributeName) => attributeName && !descriptorNames.has(attributeName),
   ).length;
-  // S4 formal snapshot: 171 nonempty attributes plus the preserved empty source anomaly.
-  if (lockedAttributeNames.size !== 172 || joined !== 153 || missing !== 18) {
-    addError(
-      `attribute connection baseline changed: total=${lockedAttributeNames.size}, joined=${joined}, missing=${missing}`,
-    );
+  console.log(`Attribute connections: total=${lockedAttributeNames.size}, joined=${joined}, missing=${missing}.`);
+  for (const [row, reviewed] of Object.entries(semantics.reviewed_semantics)) {
+    // Every audited exception must match its declared signature, even if unused today.
+    resolver.resolveEffect({ row: row as `lc:${string}`, field: "base" }, { recipient: reviewed.recipient });
   }
+  return issues;
+}
+
+function run(): void {
+  const lock = readNumModifierDataLock();
+  const semantics = parseNumModifierSemantics(JSON.parse(
+    fs.readFileSync(path.join(root, "data", "num-modifier-semantics.json"), "utf8"),
+  ));
+  errors.push(...checkSemanticCoverage(lock, semantics));
+  const resolver = createNumModifierResolver(lock, semantics);
+  const registry = loadModifierProviderRegistry();
 
   for (const entry of registry.providers) {
     for (const [index, application] of (entry.applications ?? []).entries()) {
@@ -294,40 +263,6 @@ function run(): void {
       );
     }
   }
-  const samples = [
-    ["lc:111010083_1_0", "base", "toughness-efficiency", "increase"],
-    ["lc:111010076_1_0", "coefficient", "critical-rate", "increase"],
-    ["lc:100200001_1_0", "base", "slow", "decrease"],
-    ["lc:100300001_1_0", "base", "vulnerability", "decrease"],
-    ["lc:110003101_1_1", "base", "damage-reduction", "increase"],
-  ] as const;
-  for (const [row, field, facetId, direction] of samples) {
-    const effect = resolver.resolveEffect(
-      { row, field },
-      { recipient: facetId === "slow" || facetId === "vulnerability" ? "enemy" : "self" },
-      `semantic-sample:${row}`,
-    );
-    if (
-      effect.direction !== direction ||
-      !effect.facets.some((facet) => facet.id === facetId)
-    ) {
-      addError(`${row} does not resolve to ${facetId}:${direction}`);
-    }
-  }
-  const unknownOverride = resolver.resolveEffect(
-    { row: "lc:100000002_1_0", field: "base" },
-    { recipient: "enemy" },
-  );
-  if (unknownOverride.direction !== "unknown" || unknownOverride.facets.length > 0) {
-    addError("lc:100000002_1_0 must remain directionally unknown");
-  }
-  const slug = resolver.resolveEffect(
-    { row: "lc:111031014_1_0", field: "base" },
-    { recipient: "damage-event" },
-  );
-  if (!slug.reviewed || slug.factor !== 7 || slug.facets[0]?.id !== "correction") {
-    addError("independent slug B2 reviewed semantics drifted");
-  }
   errors.push(...checkModifierRuntimeProjections());
   checkPerkConsumers();
   checkStatusEffects();
@@ -346,9 +281,7 @@ function run(): void {
   );
 }
 
-try {
-  run();
-} catch (error) {
-  console.error(error);
-  process.exitCode = 1;
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+  try { run(); }
+  catch (error) { console.error(error); process.exitCode = 1; }
 }

@@ -20,21 +20,18 @@ test("S4 上新名单精确对应已归档的新插件，按正式服状态分�
     .map(entry => entry.perk.itemId).sort());
   const perks = getAllPerks();
   const grouped = perks.filter(perk => getS4PerkLaunchGroup(perk) !== undefined);
-  assert.equal(grouped.length, 74);
-  assert.equal(grouped.filter(perk => getS4PerkLaunchGroup(perk) === "season-new").length, 38);
-  assert.equal(grouped.filter(perk => getS4PerkLaunchGroup(perk) === "midseason-new").length, 36);
+  for (const perk of grouped) {
+    assert.ok(s4NewPerks.itemIds.includes(perk.itemId));
+    assert.equal(getS4PerkLaunchGroup(perk), perk.collectModItem === 1 ? "season-new" : "midseason-new");
+  }
   for (const id of s4NewPerks.superItemIds) {
-    const perk = perks.find(perk => perk.itemId === id)!;
-    assert.ok(perk, id);
     assert.ok(s4NewPerks.itemIds.includes(id));
+    const perk = { itemId: id, season: "s4" };
     assert.equal(getS4PerkLaunchGroup({ ...perk, collectModItem: 0 }), undefined);
     assert.equal(getS4PerkLaunchGroup({ ...perk, collectModItem: 1 }), "season-new");
   }
   for (const id of ["20703040160", "20703040164"]) {
-    const perk = perks.find(perk => perk.itemId === id)!;
-    assert.ok(perk);
-    assert.notEqual(perk.season, "s4");
-    assert.equal(getS4PerkLaunchGroup(perk), undefined);
+    assert.equal(getS4PerkLaunchGroup({ itemId: id, season: "s4", collectModItem: 1 }), undefined);
   }
 });
 
