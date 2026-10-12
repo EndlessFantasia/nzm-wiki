@@ -83,7 +83,7 @@ pnpm test:num-skills
 
 新增选定行使用 `pnpm exec tsx scripts/num-skills/lock.ts --channel <通道> --content-root <Content目录>`，只刷新该通道显式引用的行。CD 来源仍按 Weapon Lock 工作流维护。插件预览先 `pnpm perks:project --channel preview`，再生成技能索引。
 
-`num-modifier:check`（dev/build 使用）包含技能索引校验。它检查全量技能声明、每个可见技能的唯一正文引用、Num 关系完整性和投影新鲜度。
+`num-modifier:check`（build 使用）包含技能索引校验。它检查全量技能声明、每个可见技能的唯一正文引用、Num 关系完整性和投影新鲜度；开发启动不固定执行此审计。
 
 首次迁移基线为 `data/weapon-skill-migration-baseline.json`，保存 121 份旧 header/body、SHA、两种模式有效参数。`scripts/num-skills/migration.test.ts` 从冻结的旧源码重新执行迁移，检查原始 SHA、header/body 可逆性、技能身份与全部有效参数；日常正文和无关 frontmatter 编辑不与历史文本比较。当前 MDX 单独检查技能姓名、图标、标签、持续、充能和层数，已审查参数变化由修正账本声明；组件引用及来源关联由技能投影校验覆盖。**历史迁移回放必须保持全部原 CD，能源之影固定验收 45 秒；迁移本身造成的任何 CD 变化均失败。** 新增武器由当前技能协议校验覆盖，不需要扩写历史迁移基线，也不能重新生成基线掩盖差异。
 
