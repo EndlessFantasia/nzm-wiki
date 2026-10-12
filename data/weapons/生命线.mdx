@@ -54,6 +54,23 @@ damage_sources:
       numerical:
         id: 120800023
         level: 1
+  - id: ice-core-explosion
+    name: 严寒之触·冰冻核心爆炸
+    section: skill
+    source:
+      numerical:
+        id: 1410080101
+        level: 1
+  - id: ice-mist
+    name: 严寒之触·冰雾
+    section: skill
+    source:
+      numerical:
+        id: 1410080102
+        level: 1
+      attack_interval: 3
+      attack_count: 3
+      attack_interval_source: NZM/Content/Abilities/WeaponSkill/Gold/TouchOfCold/SKT_PulsedSpray4#TEMPLATE_SKT_PulsedSpray4_C_Begin_D4496549468D9D7DC30CFFA19BAD25BE.TimelineTaskContexts.m_StartTime
 explosion_range:
   td: 2.5
 skills:
@@ -88,12 +105,10 @@ skills:
 
 <WeaponSkill>
   <ActiveSkill skill="active-1">
-    丢出一颗冰冻核心，碰撞或一定时间后爆炸，爆炸后会在原地留下一颗冰壶，冰壶每<Yellow>3秒</Yellow>喷发一次冰雾，共喷发<Yellow>3次</Yellow>。
+    丢出一颗冰冻核心，碰撞或一定时间后爆炸。爆炸后在原地留下冰壶，在第<Yellow>3、6、9秒</Yellow>各喷发一次冰雾。
   </ActiveSkill>
 
   <PassiveSkill skill="passive-1">
     生命线射出的榴弹，爆炸时将在地面上造成半径为<Yellow>4米</Yellow>的冰池，进入冰池的敌人将持续受到伤害。
   </PassiveSkill>
 </WeaponSkill>
-
-主动 **严寒之触** 冰冻核心爆炸伤害为 **170**，添加元素异常概率为 **100%**，之后每 **3** 秒发射一次冰雾共三次，每次伤害为 **75**，添加元素异常概率为 **50%**

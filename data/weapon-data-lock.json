@@ -50636,6 +50636,131 @@
         },
         "row_name": "1410050101_1"
       },
+      "lc:1410080101_1": {
+        "raw": {
+          "CameraHitFeedBackTag": {
+            "TagName": "None"
+          },
+          "DamageAttenuationEnd": 0,
+          "DamageAttenuationRatio": 0,
+          "DamageAttenuationStart": 0,
+          "DamageSourceType": 1,
+          "DamageTextType": "EDamageTextType::EDamageTextType_Normal",
+          "Description": "生命线_严寒之触-冰冻爆炸",
+          "ElementAddRate": 1,
+          "ElementDebuffTypeID": 0,
+          "ElementType": "EElementEffectType::EDamageType_Cryo",
+          "EnableAttributes": [],
+          "EnableWeaknessDamage": false,
+          "FleshDamageBase": 0,
+          "FriendlyCoefficient": -1,
+          "HpCalBase": 0,
+          "HpCalScale": 0.34,
+          "HpFloatCoef": 0,
+          "HurtableBase": 3.4,
+          "ImpulseBase": 0,
+          "KnockUpDistance1": 0,
+          "KnockUpDistance2": 0,
+          "KnockUpLevel1": 0,
+          "KnockUpLevel2": 0,
+          "KnockupLevel": 1,
+          "Level": 1,
+          "MaxDamageAttackRatio": 0,
+          "OnlyKnockUpWhenKill": false,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.WeaponSkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.KnockUp.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ],
+          "TableRowPlatformCookRule": "EUEDataTableRowCookRule::Default",
+          "ToughnessBase": 0,
+          "ToughnessDamageType": "EHardStrightWeaknessType::None",
+          "ToughnessScale": 0,
+          "WeaknessDamageAddScale": 0,
+          "bDamageIgnoreShield": false,
+          "bEnableCriticalDamage": false,
+          "bEnableParry": false,
+          "id": 1410080101
+        },
+        "row_name": "1410080101_1",
+        "source": {
+          "sha256": "e10148a5a6e2c3429f97246745ede8db0d3846baa2a27e9d9ea48de0eb656ccf",
+          "source_path": "DataTables/numerical_config_composite.json"
+        }
+      },
+      "lc:1410080102_1": {
+        "raw": {
+          "CameraHitFeedBackTag": {
+            "TagName": "None"
+          },
+          "DamageAttenuationEnd": 0,
+          "DamageAttenuationRatio": 0,
+          "DamageAttenuationStart": 0,
+          "DamageSourceType": 1,
+          "DamageTextType": "EDamageTextType::EDamageTextType_Normal",
+          "Description": "生命线_严寒之触-蓄力脉冲喷雾",
+          "ElementAddRate": 0.5,
+          "ElementDebuffTypeID": 0,
+          "ElementType": "EElementEffectType::EDamageType_Cryo",
+          "EnableAttributes": [],
+          "EnableWeaknessDamage": false,
+          "FleshDamageBase": 0,
+          "FriendlyCoefficient": -1,
+          "HpCalBase": 0,
+          "HpCalScale": 0.15,
+          "HpFloatCoef": 0,
+          "HurtableBase": 1.5,
+          "ImpulseBase": 0,
+          "KnockUpDistance1": 0,
+          "KnockUpDistance2": 0,
+          "KnockUpLevel1": 0,
+          "KnockUpLevel2": 0,
+          "KnockupLevel": 0,
+          "Level": 1,
+          "MaxDamageAttackRatio": 0,
+          "OnlyKnockUpWhenKill": false,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.WeaponSkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ],
+          "TableRowPlatformCookRule": "EUEDataTableRowCookRule::Default",
+          "ToughnessBase": 0,
+          "ToughnessDamageType": "EHardStrightWeaknessType::None",
+          "ToughnessScale": 0,
+          "WeaknessDamageAddScale": 0,
+          "bDamageIgnoreShield": false,
+          "bEnableCriticalDamage": false,
+          "bEnableParry": false,
+          "id": 1410080102
+        },
+        "row_name": "1410080102_1",
+        "source": {
+          "sha256": "e10148a5a6e2c3429f97246745ede8db0d3846baa2a27e9d9ea48de0eb656ccf",
+          "source_path": "DataTables/numerical_config_composite.json"
+        }
+      },
       "lc:1410110101_1": {
         "raw": {
           "CameraHitFeedBackTag": {
@@ -71217,6 +71342,137 @@
           "id": 1410050101
         },
         "row_name": "1410050101_1"
+      },
+      "td:1410080101_1": {
+        "raw": {
+          "CameraHitFeedBackTag": {
+            "TagName": "None"
+          },
+          "DamageAttenuationEnd": 0,
+          "DamageAttenuationRatio": 0,
+          "DamageAttenuationStart": 0,
+          "DamageSourceType": 0,
+          "DamageTextType": "EDamageTextType::EDamageTextType_Normal",
+          "Description": "严寒之触-冰冻爆炸",
+          "ElementAddRate": 1,
+          "ElementDebuffTypeID": 0,
+          "ElementType": "EElementEffectType::EDamageType_Cryo",
+          "EnableAttributes": [],
+          "EnableWeaknessDamage": false,
+          "FleshDamageBase": 0,
+          "FriendlyCoefficient": -1,
+          "HpCalBase": 0,
+          "HpCalScale": 0.34,
+          "HpFloatCoef": 0,
+          "HurtableBase": 3.4,
+          "ImpulseBase": 0,
+          "KnockUpDistance1": 0,
+          "KnockUpDistance2": 0,
+          "KnockUpLevel1": 0,
+          "KnockUpLevel2": 0,
+          "KnockupLevel": 1,
+          "Level": 1,
+          "MaxDamageAttackRatio": 0,
+          "OnlyKnockUpWhenKill": false,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.WeaponSkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.KnockUp.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Toughness.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ],
+          "TableRowPlatformCookRule": "EUEDataTableRowCookRule::Default",
+          "ToughnessBase": 0,
+          "ToughnessDamageType": "EHardStrightWeaknessType::None",
+          "ToughnessScale": 0,
+          "WeaknessDamageAddScale": 0,
+          "bDamageIgnoreShield": false,
+          "bEnableCriticalDamage": false,
+          "bEnableParry": false,
+          "id": 1410080101
+        },
+        "row_name": "1410080101_1",
+        "source": {
+          "sha256": "e3e4b8e9b0829f99301be12cf89dd85be0d5f3720de9cf9224183d1b591e2ba5",
+          "source_path": "DataTables/TD_numerical_config_composite.json"
+        }
+      },
+      "td:1410080102_1": {
+        "raw": {
+          "CameraHitFeedBackTag": {
+            "TagName": "None"
+          },
+          "DamageAttenuationEnd": 0,
+          "DamageAttenuationRatio": 0,
+          "DamageAttenuationStart": 0,
+          "DamageSourceType": 0,
+          "DamageTextType": "EDamageTextType::EDamageTextType_Normal",
+          "Description": "严寒之触-蓄力脉冲喷雾",
+          "ElementAddRate": 0.5,
+          "ElementDebuffTypeID": 0,
+          "ElementType": "EElementEffectType::EDamageType_Cryo",
+          "EnableAttributes": [],
+          "EnableWeaknessDamage": false,
+          "FleshDamageBase": 0,
+          "FriendlyCoefficient": -1,
+          "HpCalBase": 0,
+          "HpCalScale": 0.15,
+          "HpFloatCoef": 0,
+          "HurtableBase": 1.5,
+          "ImpulseBase": 0,
+          "KnockUpDistance1": 0,
+          "KnockUpDistance2": 0,
+          "KnockUpLevel1": 0,
+          "KnockUpLevel2": 0,
+          "KnockupLevel": 0,
+          "Level": 1,
+          "MaxDamageAttackRatio": 0,
+          "OnlyKnockUpWhenKill": false,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.WeaponSkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Toughness.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ],
+          "TableRowPlatformCookRule": "EUEDataTableRowCookRule::Default",
+          "ToughnessBase": 0,
+          "ToughnessDamageType": "EHardStrightWeaknessType::None",
+          "ToughnessScale": 0,
+          "WeaknessDamageAddScale": 0,
+          "bDamageIgnoreShield": false,
+          "bEnableCriticalDamage": false,
+          "bEnableParry": false,
+          "id": 1410080102
+        },
+        "row_name": "1410080102_1",
+        "source": {
+          "sha256": "e3e4b8e9b0829f99301be12cf89dd85be0d5f3720de9cf9224183d1b591e2ba5",
+          "source_path": "DataTables/TD_numerical_config_composite.json"
+        }
       },
       "td:1410110101_1": {
         "raw": {
