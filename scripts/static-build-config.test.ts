@@ -26,7 +26,7 @@ test("route discovery keeps dev pages out of export and honors content publicati
     "perks/preview/page.perk-preview.tsx", "builds/[slug]/page.build-guide.tsx",
     "guides/season-talents/s4/[talentId]/page.s4-talent.tsx",
   ];
-  const matches = (dev: boolean) => createValidFileMatcher(getPageExtensions(dev, "D:/fixture"));
+  const matches = (dev: boolean) => createValidFileMatcher(getPageExtensions(dev, "D:/fixture"), undefined);
   for (const file of [...devOnly, ...gated]) {
     assert.equal(matches(true).isAppRouterPage(file), true, file);
     assert.equal(matches(false).isAppRouterPage(file), false, file);

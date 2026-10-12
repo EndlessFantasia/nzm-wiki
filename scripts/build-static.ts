@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { execSync } from "node:child_process";
 import { isS4SeasonTalentDraft } from "./static-build-config";
+import { assertStaticExport } from "./static-export-check";
 
 try {
   console.log("[START] Preparing for static build...");
@@ -19,6 +20,7 @@ try {
   // tsconfig.build.json excludes dev route validators; no source directories move.
   console.log("[BUILD] Running Next.js static export...");
   execSync("pnpm exec next build", { stdio: "inherit" });
+  console.log(`[EXPORT] Verified ${assertStaticExport()} published overlimit and S4 talent pages and the active Next config.`);
 
   if (isS4SeasonTalentDraft()) {
     // Prune only the exported copy; public assets remain available in dev.

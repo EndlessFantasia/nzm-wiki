@@ -34,3 +34,5 @@ pnpm sync
 `pnpm build` 不移动源码或 `public/` 目录。`next.config.ts` 根据发布状态选择复合 `pageExtensions`，规则集中在 `scripts/static-build-config.ts`：`page.dev.tsx` / `route.dev.ts` 只在开发环境成为路由，其他条件路由分别使用 `overlimit.tsx`、`overlimit-preview.tsx`、`perk-preview.tsx`、`build-guide.tsx`、`s4-talent.tsx` 后缀。新增开发专用路由应使用 `dev.ts` / `dev.tsx` 后缀。
 
 生产类型检查使用 `tsconfig.build.json` 排除 `.next/dev` 内的开发路由类型，避免开发与静态导出规则不同导致旧类型报错。Next 自动清理生产输出与类型并保留 `.next/cache`，构建脚本不再删除整个 `.next`。S4 天赋为草稿时，只在导出完成后裁剪 `out/webp/images/season-talents/s4`，本地原始资源保留。
+
+GitHub Pages 的 `configure-pages` 只提供部署元数据，不传 `static_site_generator`；基础路径通过 `NEXT_PUBLIC_BASE_PATH` 交给现有 `next.config.ts`。自动配置会生成优先级更高的 `next.config.js`，覆盖复合路由扩展名并漏导出详情页。构建结束后，`scripts/static-export-check.ts` 核对实际加载的配置与正式超限、S4 天赋页面的 HTML，缺失时阻止上传。
