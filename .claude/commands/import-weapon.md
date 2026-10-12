@@ -37,6 +37,6 @@
    pnpm weapon-data:check
    ```
 
-7. 运行 `pnpm test:weapon-source-v2`、`pnpm test:weapon-resolver`、相关消费者测试和 `pnpm lint`。新增资源路径必须经过站点既有的 `getAssetPath()` 边界。
+7. 引用或数值结构变化运行 `pnpm test:weapon-source-v2`、`pnpm test:weapon-resolver` 和受影响的消费者测试；纯正文修改只做内容解析与差异检查。其余验证按 `AGENTS.md` 的验证策略选择，TypeScript 修改使用定向 ESLint。新增资源路径必须经过站点既有的 `getAssetPath()` 边界。
 
 遇到多候选、缺行、跨表差异或语义不明时停止自动写入，列出候选与证据等待人工裁决。

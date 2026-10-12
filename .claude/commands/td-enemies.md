@@ -27,9 +27,9 @@
 
    ```text
    pnpm exec tsx --test scripts/import-td-enemies.test.ts
-   pnpm lint
-   pnpm build
    ```
+
+   通用验证按 `AGENTS.md` 的验证策略选择：代码修改使用定向 ESLint，发布前运行 build。
 
 6. 报告新增和更新的 MDX、图标、排除项及验证结果。
 

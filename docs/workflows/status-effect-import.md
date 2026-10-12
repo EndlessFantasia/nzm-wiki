@@ -88,14 +88,12 @@ pnpm test:status-effects
 
 ## 发布检查
 
-数据刷新后至少运行：
+数据刷新后运行领域检查：
 
 ```bash
 pnpm status-effects:check
-pnpm num-modifier:check
-pnpm lint
-pnpm index
-pnpm build
 ```
+
+派生数据需要更新时运行 `pnpm sync`；代码、页面及发布验证统一按 [AGENTS.md](../../AGENTS.md#验证策略) 选择。发布 build 已包含 Numerical 检查和索引生成，不额外重复执行。
 
 两篇 MDX 位于 `data/posts/`，会自动进入文章归档、指南归档、搜索索引和站点地图。旧 `/posts/element` 当前保留；未来删除时需要单独处理重定向、站内链接和 canonical 迁移。

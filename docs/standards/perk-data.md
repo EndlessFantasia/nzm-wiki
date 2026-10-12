@@ -130,7 +130,7 @@ description_override: true
 
 超限正式短摘要发布在 `data/overlimit/current.json`，过渡期下一版使用独立的 `data/overlimit/preview.json`；同 ID 的两版数据不能互相覆盖。版本更新先用 `pnpm overlimit prepare` 生成独立候选，再审定数值和文案。`OverrideDesc` 仅作为展示证据，不能覆盖 Numerical 真值。旧 `import-overlimit-cards.ts` 及其中审定映射已经退役，S3.2 审定结果已保存在发布投影与本地归档。
 
-超限预览卡片和羁绊的 Modifier 来源须携带显式预览 `season`，并使用该季选定 Numerical 证据。数值未核验完的预览卡片声明 `verification: { status: "partial", note: "具体缺口" }`，不得展示推测数值或沿用 S3 数值。羁绊按真实档位组合分组，不在组件中硬编码某季名称；羁绊与地图轮换随超限投影一同归档。操作见 [超限维护](../workflows/overlimit-season.md#重建已审定的超限预览)。
+超限预览卡片和羁绊的 Modifier 来源须携带显式预览 `season`，并使用该季选定 Numerical 证据。数值未核验完的预览卡片声明 `verification: { status: "partial", note: "具体缺口" }`，不得展示推测数值或沿用旧版数值。羁绊按真实档位组合分组，不在组件中硬编码某季名称；羁绊与地图轮换随超限投影一同归档。操作见 [超限维护](../workflows/overlimit-season.md#审定与生成)。
 
 新增或修改审定短摘要时按以下顺序维护：
 
@@ -294,37 +294,36 @@ pnpm exec tsx scripts/import-perks.ts --all-with-icons --json
 
 ## 下一赛季预览导入
 
-预览是 SN 未结束、SN+1 选定内容已经完成编辑和核验的过渡阶段，遵循 [跨赛季版本管理](../workflows/content-versions.md#过渡期当前正式版与下一版预览并存)。先在版本配置登记预览赛季、版本号和显示名称，再用 `<season>-preview` 标记条目与 Modifier 来源。图鉴 `/perks` 展示正式插件，`/perks/preview` 展示已发布预览，标题上方使用 **S3.2 / S4 Preview** 两个版本按钮切换；快速筛选中不再设置 Preview，也不增加卡片预览标签。`CollectMODItem`、`MakeMODItem`、`IsCooked` 保留预载表原值，不能把预载开关当作正式上线日期。预览插件全部纳入乘区覆盖检查，使用显式绑定赛季的独立 Numerical 证据；正式上线时必须重新审计。
+预览是 SN 未结束、SN+1 选定内容已经完成编辑和核验的过渡阶段，遵循 [跨赛季版本管理](../workflows/content-versions.md#候选工作区与预览)。先在版本配置登记预览赛季、版本号和显示名称，再用 `<season>-preview` 标记条目与 Modifier 来源。图鉴 `/perks` 展示正式插件，`/perks/preview` 展示已发布预览，版本按钮名称来自配置。`CollectMODItem`、`MakeMODItem`、`IsCooked` 保留预载表原值，不能把预载开关当作正式上线日期。预览插件纳入乘区覆盖检查，使用绑定赛季的独立 Numerical 证据；正式上线时重新审计。
 
-2026-09-16 预载新增 78 个普通插件；12 个 `MODItemType=1`、通过 `RoutineItemID` 关联旧插件的腐化变体不单独作为普通插件导入。同名“连锁充能”保留两个 ItemID，新版文件使用 `连锁充能-20703040513.mdx`。
+`MODItemType=1`、通过 `RoutineItemID` 关联旧插件的腐化变体不单独作为普通插件导入；同名多 ItemID 保持独立文件，不按名称合并。
 
-维护时先用 `import-perks.ts --content-root <Content目录> --ids <审定ID列表> --season s4-preview --write` 建立草稿，再运行：
+维护时先用 `import-perks.ts --content-root <Content目录> --ids <审定ID列表> --season <season>-preview --write` 建立草稿，再运行：
 
 ```bash
-pnpm exec tsx scripts/prepare-perk-preview.ts --content-root <Content目录> --icon-root <参考图标目录> --review scripts/s4-preview-perks-review.json
+pnpm exec tsx scripts/prepare-perk-preview.ts --content-root <Content目录> --icon-root <参考图标目录> --review <本次审定清单>
 pnpm perks:project --channel preview
-pnpm perks:check
 ```
 
 `--review` 指向本次审定清单，S4 使用 `scripts/s4-preview-perks-review.json` 保存 ItemID、身份链、文案替换、武器独立伤害引用和未确认项。导入器在 `--season *-preview` 时仅写入 `data/perk-preview/slot-*`；准备器也只修改此目录。它从版本配置读取预览目标，从指定目录原地读取数据，预检通过后生成编辑 MDX、PNG、WebP 和 `data/perk-preview-modifiers.json` 中绑定该赛季的选定 Modifier 行。Num 模板由独立预览 Resolver 解析；已导入武器的伤害 Token 使用审定的武器引用与 Weapon Lock。生成器不刷新两类正式 Lock。未能通过执行配置核验的预览文案不转换为 `effect_values`。下一赛季替换配置和审定清单，复用同一生成器。
 
 编辑完成后，`perks:project --channel preview` 才将解析后的插件、正文、metadata 和独立伤害写入 `data/perk-preview/preview.json`，并记录来源哈希；修改编辑 MDX 不会自动更新页面。`perks:check` 检查 Schema、预览配置和资源，构建也执行此检查。预览运行时不重新解析编辑 MDX 或读取共享武器数值。
 
-同 ItemID 可在正式和预览通道各有一版，预览详情 slug 使用 `preview/slot-N/<名称>`。默认列表、名称和 ItemID 查询保持正式通道；发布列表可合并两版，显式指定 `preview` 才按名称或 ItemID 读取预览。S4 初次迁移了原有 82 个预览条目，随后加入贯长虹预览；这个集合只代表已审定预览，不表示所有正式插件已复制到 S4。撤下或转正须按[版本管理流程](../workflows/content-versions.md#过渡期当前正式版与下一版预览并存)逐项处理两版差异，不能靠修改 `season` 或整体覆盖共享 Lock 完成。
+同 ItemID 可在正式和预览通道各有一版，预览详情 slug 使用 `preview/slot-N/<名称>`。默认列表、名称和 ItemID 查询保持正式通道；显式指定 `preview` 才读取预览。预览集合只代表已审定条目，不表示下一季全部正式内容。已审转正统一使用[版本管理的 `content-version promote`](../workflows/content-versions.md#已审预览转正)，由工具迁移来源、技能和预览配置；撤下仍按版本管理处理，不整体覆盖共享 Lock。
 
 图标按本地同 ItemID 的 CommonItem 资源名匹配 `public/icons/perks/` 与 `public/webp/icons/perks/`；详情和数值以本项目预载证据、MDX 引用和预览 Numerical 行为准。S4 初始插件的索引审定维护在 `scripts/s4-perk-index-review.json`，每项记录本地身份链与精确 Numerical 引用，或明确的排除理由和证据缺口。其他项目只能作为实现参考，不能作为数值或乘区分类的验收依据。
 
 ## 版本更新流程
 
-S4 正式图鉴的“赛季上新”和“季中上新”使用 `data/s4-new-perks.json` 的 81 个 ItemID 白名单，身份来自最终 S4 Preview 中 `preview_change: new` 的条目；状态使用当前正式 MDX 的 `CollectMODItem`，1 对应赛季上新，其余在排除 `superItemIds` 中的 7 个超级插件后对应季中上新。目前两组分别为 38 个、36 个。不得直接将所有已上线／未上线插件或所有 `season: s4` 条目算作上新。连锁电环、释能火环是补录旧插件，已移除误标的 S4 引入赛季，不属于这两组。未确认首次引入赛季时保持字段缺省，不猜测历史赛季。
+S4 正式图鉴的“赛季上新”和“季中上新”使用 `data/s4-new-perks.json` 的 ItemID 白名单，身份来自最终预览中 `preview_change: new` 的条目；状态读取当前正式 MDX 的 `CollectMODItem`，1 对应赛季上新，其余排除 `superItemIds` 后对应季中上新。数量随正式投放变化，不作为通用验收门槛。未确认首次引入赛季时保持字段缺省，不猜测历史赛季。
 
 跨赛季发布、历史保存和恢复统一使用 [插件与超限版本管理](../workflows/content-versions.md)。普通插件与超限共同归档，但不共享身份、投放状态或运行时数值。候选在独立工作区维护；归档不进入网站构建。
 
-1. 更新 `refs/` 后先运行全量审计，不直接写入。
+1. 更新 `refs/` 后先审计本次版本涉及的条目，不直接写入。
 2. 身份、图标、适用武器和上线状态分别检查；确认真实上线日期后，在状态同步时显式传入 `--release-date`，避免一次批量同步混合多个风险面。
 3. 描述差异按四类规则分类。
 4. 小幅省略不改；严重残缺补全；真正冲突输出清单等待决策。
 5. 用户确认或新截图证实后修改 MDX，必要时设置 `description_override: true`。
-6. 运行 `git diff --check` 和 `pnpm build`。
+6. 数值或引用变化运行对应领域检查；通用验证按 [AGENTS.md](../../AGENTS.md#验证策略) 选择。派生数据使用 `pnpm sync` 更新，发布 build 已包含的检查不重复执行。
 
 详细命令和导入器字段说明见 [`.claude/commands/import-perks.md`](../../.claude/commands/import-perks.md)。

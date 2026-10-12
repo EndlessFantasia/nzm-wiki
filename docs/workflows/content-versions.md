@@ -1,151 +1,76 @@
 # 插件与超限的跨赛季版本管理
 
-> 状态：active。版本管理属于维护工具，不增加历史页面，不按日期自动换季。
+状态：active。版本工具负责候选工作区、已审内容迁移和展示快照；Git 负责源码合并与历史代码。工具不提交、推送或部署，不按日期自动换季。
 
-## 范围与数据所有权
+## 数据所有权与归档
 
-`config/content-version.json` 记录当前工作区的赛季、版本和阶段，并可登记一个对外预览的下一版。赛季如 `s3`，版本如 `s3.2`；下一季可用 `s4`，季中发布可用 `s4.1`。日常文字修正无需新建快照；需要固定发布节点时才升级版本。`phase: candidate` 表示维护中的下一版，`current` 表示已核验的发布内容，均不代替部署状态。
+`config/content-version.json` 声明工作区的 `season/version/phase` 和可选的下一版 `preview`。`candidate` 表示维护中的候选，`current` 表示完成本地发布核验，不代替部署状态。日常文字修正无需新建版本。
 
-- 普通插件正式内容在 `data/perks/slot-*/*.mdx` 维护；预览编辑源独立放在 `data/perk-preview/slot-*/*.mdx`，通过显式发布生成 `data/perk-preview/preview.json`。正式内容继续使用现有 MDX、Numerical 引用和 Resolver，预览运行时只读已解析的发布投影。
-- 超限正式版使用 `data/overlimit/current.json`；过渡期另有 `data/overlimit/preview.json`（无预览时为 `null`）。卡片、结构化效果、独立伤害、羁绊及各档效果、等级规则、地图轮换共同属于各自版本。
-- 历史放在 `archives/content-versions/<season>/<version>/`，可随 Git 保存。目录位于 `data/`、`public/` 之外，不进入路由、搜索和静态资源部署。
-- 原始游戏资源留在只读 `refs/`；版本工具不移动、复制或重新导出游戏底包。
-- 武器不纳入版本切换范围。插件引用武器的独立伤害保存当时解析结果与引用身份，不能靠日后读取当前武器重现旧数值。
-
-## 归档内容
-
-每份归档包含原始插件 MDX、插件解析后的描述/属性效果/独立伤害、跨页面关联结果、完整超限发布数据，以及引用的站点图标和地图图片。预览 MDX 从发布快照内的原文归档，不读取尚未发布的编辑文件。Numerical 证据保存在归档证据区，仅供追溯；不因恢复插件而覆盖全站共享 Lock。
-
-`manifest.json` 记录版本、时间、摘要、逐文件字节数与 SHA-256。归档创建后拒绝覆盖；需要修正版就使用新的版本号。校验失败时不能用于比较或恢复。原始文件和解析结果都保留，以免旧 MDX 的引用随着当前 Lock 更新而产生不同数值。
-
-`.gitattributes` 对归档关闭换行转换和源码空白检查，保留原文件的 CRLF 与空白；归档完整性由逐文件哈希校验，不能为格式检查改写历史证据。
-
-正式归档排除 `season` 以 `-preview` 结尾的插件，并记录排除数量。S4 Preview 不会混入 S3.2 正式归档；需要保存过渡期时单独使用下文的预览归档。快照描述的是归档时维护数据的实际状态，不能把后建快照宣称为过去某天完整客户端的复原。
+- 普通插件正式内容由 `data/perks/slot-*/*.mdx`、正式 Lock 和 Resolver 解析；预览编辑源位于 `data/perk-preview/slot-*/*.mdx`，发布后冻结到 `preview.json`。
+- 超限正式内容使用 `data/overlimit/current.json`，下一版预览使用 `preview.json`，无预览时为 `null`。两版卡片、独立伤害、羁绊、等级和地图轮换互相隔离。
+- 历史位于 `archives/content-versions/<season>/<version>/`，不进入站点运行、搜索或静态资源部署。归档随 Git 保存，但工具不自动提交。
+- 归档保存插件 MDX、已解析展示及伤害、超限投影、关联证据和所引用的站点图像。预览原文取已发布快照，不取未发布编辑源。原始文件与解析结果都保留，防止当前 Lock 改变历史展示。
+- Numerical 证据仅用于追溯，不能整体覆盖共享 Lock。武器不纳入版本切换；插件引用的武器伤害保存当时解析结果。
+- `manifest.json` 保存身份、时间和逐文件 SHA-256；归档不可覆盖。`.gitattributes` 保留归档原始字节，完整性由哈希校验。
 
 ```powershell
 pnpm content-version status
 pnpm content-version archive
-pnpm content-version verify --archive archives/content-versions/s3/s3.2
-```
-
-首次 S3.2 快照建立后，旧的 `MD/_local/overlimit/archives/` 保留作为本机证据，不再承担长期版本管理。`pnpm overlimit archive` 仍可用于局部操作前的临时备份；正式版本统一通过 `content-version` 归档插件与全部超限模块。
-
-## 下一赛季准备与当前版维护
-
-正式服换季时，若新正式内容尚未审定，可在完整归档后显式撤下旧版：
-
-```powershell
-pnpm content-version withdraw --archive archives/content-versions/s3/s3.2-final-20260922 --season s4 --version s4
-pnpm overlimit project
-pnpm num-modifier:project
-pnpm num-skills:project
-```
-
-撤下前逐文件比对归档哈希；只移除已归档的正式插件 MDX、正式插件及超限来源，并把超限正式投影标记为 `withdrawn: true`。空投影不得保留卡片、独立伤害、羁绊、等级或地图轮换。正式页面显示待更新，旧详情及搜索条目不再生成；现有预览保持独立。版本进入 `candidate`，不是已核验的新季发布。后续审定正式投影时移除撤下标记。
-
-先归档并提交当前版本，再建立下一版工作区：
-
-```powershell
-pnpm content-version prepare --season s4 --version s4
-```
-
-命令要求工作区干净，从当前 HEAD 创建 `codex/content-s4` 分支和 `MD/_local/content-versions/worktrees/s4` Git 工作区，只在新工作区把版本标为 `candidate`。不会复制游戏目录、共享 `node_modules` 或给线上数据增加另一套季节分支。进入该工作区安装依赖后正常编辑；这里的初始数据仍是上一版，不能仅改版本号就视作已更新。
-
-当前工作区照常修复插件、攻略等内容。准备期间涉及两版的修正，通过普通 Git 提交合并或 cherry-pick 到候选工作区；冲突逐项审查，不盲目复制目录。候选发布前再次合并当前维护分支并重新验证，避免遗漏准备期间的修正。
-
-插件按 [插件标准](../standards/perk-data.md) 核验身份、投放、描述、数值和资源；超限按 [超限流程](overlimit-season.md) 核验卡池、羁绊、地图轮换和规则。新季不适用的超限规则使用 `null`，不能默认继承旧版；超限退出卡池不意味着删除普通插件。
-
-## 过渡期：当前正式版与下一版预览并存
-
-Preview 是可重复使用的发布阶段：SN 尚未结束，SN+1 的选定内容已经完成可供预览的编辑和核验，可以提前展示。它既不是历史归档，也不是游戏内正式上线。未完成核验的草稿继续留在候选工作区，不以 Preview 名义直接展示。
-
-在 `config/content-version.json` 登记一个预览目标：
-
-```json
-"preview": {
-  "season": "s4",
-  "version": "s4-preview",
-  "label": "S4 Preview"
-}
-```
-
-- 当前 `season/version/phase` 仍为 `s3/s3.2/current`。预览的版本号独立，用于保存过渡期快照；修正版可用 `s4-preview.1`。
-- 插件及其 Modifier 来源使用 `<预览赛季>-preview` 标记，例如 `s4-preview`。标记选择数据通道，不表示 `CollectMODItem=1` 已在正式服生效。预览快照小版本不改变条目标记。
-- 图鉴 `/perks` 只展示正式插件，`/perks/preview` 只展示已发布预览。标题上方用两个版本按钮切换，名称来自版本配置（当前为 S3.2 / S4 Preview）；快速筛选中不再设置 Preview。只有存在该预览目标的已发布插件时才显示预览入口，未登记预览时不展示预览内容。
-- 关闭预览时同步撤下或迁移预览投影、编辑源和来源登记，具体步骤见下文；不能仅隐藏入口后继续使用无归属的预览数值。
-- Numerical 证据显式保存目标 `season`，只覆盖被登记预览消费者的内存数据。目标、标记、证据不匹配必须报错，不能把 S4 证据用于 S5，也不能静默回退当前正式数值。
-- 当前版本与预览各自维护；提前展示不能刷新全站正式 Lock 或修改当前超限。当前普通插件的 `season` 是引入赛季，不能为发布下一季而批量重标所有存量插件。
-- 同一个 ItemID 可同时存在正式版和预览版，两者分别编辑，不能互相覆盖。预览 slug 使用 `preview/slot-N/<名称>`，正式 slug 保持 `slot-N/<名称>`，来源关联按「通道 + 身份」隔离。预览集合只包含已审定条目，不代表已复制或核验下一季所有存量插件。
-- 预览 MDX 的 `preview_change` 必填：`new`（新插件）、`changed`（改动插件）、`existing`（老插件）。图鉴仅在预览通道提供该分类筛选，默认全部；改动包含数值、机制、适用武器和已确认的文案调整，不等于全部都是增强或削弱。
-- S4 预览纳入全部 S3.2 存量插件，包括原表中 `CollectMODItem: 1 → 0` 的 121 项。预览上下线筛选直接使用本版 `CollectMODItem`：1 为已上线，其余为已下线；这表示预览配置中的开放状态，不表示 S4 已在正式服生效。快速筛选左侧为上下线，右侧为新插件／改动插件／老插件，两组取交集，手机端上下排列。仅关闭投放的条目仍归老插件，另有数值、机制或适用范围变化才归改动插件。
-- 一次性扩充工具 `pnpm exec tsx scripts/perks/expand-s4-preview.ts` 读取两版本地原表，保留已有预览编辑，补入独立副本与精确 Numerical 证据；随后执行 `pnpm exec tsx scripts/perks/sync-preview-providers.ts --content-root refs/Exports/NZM/Content --baseline-root refs/Exports/NZM/Content_S3.2 --write` 同步来源，再执行 `pnpm num-modifier:project` 和 `pnpm perks:project --channel preview`。不要把该版本专用迁移当作通用更新器。
-- 存量插件的触发伤害可显式保存为 `independent_damage_snapshot`，发布时校验后与武器引用结果合并。迁移前核对相应 Numerical，运行时不回落到正式版 `trigger-damage`；缺失快照不自动补齐，重新发布也不会隐式刷新此手工冻结值。
-- `getAllPerks()`、默认按名称或 ItemID 查询只返回正式内容；搜索及静态页面生成通过 `getAllPublishedPerks()` 获取已发布的两版，图鉴按路由选择通道。需要预览时显式调用 `getPerkByName(name, "preview")`、`getPerkByItemId(id, "preview")`，或使用带 `preview/` 前缀的 slug。
-- 超限的候选按独立投影准备，羁绊效果和地图轮换随它一起核验。审定并写入 `preview.json` 后，`/overlimit/preview` 展示预览、`/overlimit` 继续展示正式版；共享组件，不复制赛季专用页面。仅登记配置不会自动导入内容。
-- 超限同 ID 可在两个投影中并存，关联键为「通道 + ID」。预览来源登记额外带 `season: "s4-preview"`，不覆盖正式来源；普通插件详情的超限入口仍指向当前正式卡池。搜索明确标注预览版本。
-- 超限预览可发布已核验的机制与数值；确有证据缺口时逐卡声明 `verification.status: partial`，省略未证实的数字。未知服务端概率/限制不能借用旧版。未审定整个规则模块时仍用 `null`。
-
-把已审定的预览内容作为单独提交合入当前维护分支，就能在当前赛季继续运行时展示下一季内容；完整换季改动仍留在候选工作区。下一轮仅换预览配置、审定清单及对应证据，复用 `scripts/prepare-perk-preview.ts`，不复制 S5/S6 专用 Resolver 或页面。
-
-普通插件预览编辑完成后显式发布：
-
-```powershell
-pnpm perks:project --channel preview
-pnpm perks:check
-```
-
-发布投影保存插件身份、解析后的描述和结构化效果、正文、metadata 及独立伤害结果，并记录编辑源、Numerical 证据及使用的武器来源 SHA-256。运行时不解析预览 MDX，不随共享 Weapon Lock 或武器内容变化重新计算预览伤害。重新发布会按审定引用使用当前武器 Resolver 和 Lock，必须先复核它们是否仍对应目标版本；来源哈希用于追溯，不代替审计。`perks:check` 校验 Schema、配置通道和资源，已接入构建；它不会因共享武器变化而自动刷新快照。
-
-```powershell
 pnpm content-version archive-preview
+pnpm content-version verify --archive <归档目录>
 ```
 
-该命令保存“当前正式底座 + 已登记预览”的过渡期快照，归档身份取 `preview.season/version`，清单标记 `channel: preview` 和 `baseRelease`，包含两版插件原始 MDX、预览发布投影、冻结独立伤害、预览 Numerical 证据、独立的超限预览投影/关联/审计证据及图像。同 ItemID 的插件按通道分别保存；两个超限通道的羁绊和轮换也不会互相覆盖。它不能当作 S4 正式归档。默认 `archive` 继续只保存正式条目。两种归档均不在网站显示。
+`archive` 仅保存正式版，`archive-preview` 保存正式底座与已登记预览，不能将过渡快照当作下一季正式归档。快照描述归档时维护数据的实际状态，不证明某一天完整客户端的状态。超限单次操作的本地备份仍可使用 `overlimit archive`，不替代正式版本归档。
 
-普通插件转正或撤下按以下人工流程执行，不自动覆盖正式内容或共享 Lock：
+## 候选工作区与预览
 
-1. 先归档当前正式版及需要保留的预览快照。
-2. 转正时复核正式客户端，逐 ItemID 审查两版差异，把选定预览 MDX 合并到 `data/perks/slot-*` 的对应文件；新条目建立正式文件。复核 Numerical 引用、正式投放状态和上线日期；已有条目保留引入赛季，新条目填写正式赛季。按现有 Lock 维护流程审定所需行，不能把预览证据文件整体覆盖到共享 Lock。
-3. 转正时迁移或合并相应 Modifier 来源，撤下时直接移除本季预览来源。移除已处理的预览编辑源，并把 `data/perk-preview/preview.json` 置为 `null`；尚需留存的草稿放回候选工作区或本地工作目录，不留作活跃预览来源。
-4. 确认超限及其他消费者也已处理本季预览后，移除配置中的本季 `preview`，重建 `pnpm num-modifier:project` 并运行发布检查。历史预览 Numerical 证据可保留供追溯，但不能再有本季活跃消费者。
+先归档并提交当前版本，再执行：
 
-共享的 Preview 代码保留供下一次过渡使用；日期到达或字符串替换不能代替数值审计。
+```powershell
+pnpm content-version prepare --season <下一赛季> --version <下一版本>
+```
 
-### S4 正式服转正维护
+命令要求工作区干净，创建候选分支和独立 Git 工作区；安装依赖后在候选工作区维护。初始内容仍来自上一版，修改版本号不表示已完成换季。准备期间的正式修正通过 Git 合并或 cherry-pick 带入，发布前再合并维护分支。
 
-2026-09-22 的 S4 正式源位于 `refs/Exports/NZM/Content`，预载另存为 `Content_S4_Preload`。转正前快照为 `archives/content-versions/s4/s4-preview-final-20260922`；其底座是撤下 S3 后的候选状态，不是 S4 正式发布。
+需要先撤下已过期正式版时，显式执行 `content-version withdraw --archive <当前正式归档> --season <下一赛季> --version <下一版本>`，随后运行 `pnpm sync`。撤下前比对归档哈希，只移除已归档的正式内容，预览保持独立。
 
-已审定插件可以用 `scripts/perks/promote-release.ts` 显式迁移。它要求正式 Content、已校验的预览归档和上一版归档；先检查身份、插槽和每条引用与正式 Lock 一致，再写入尚不存在的正式文件。保留既有插件的引入赛季，新插件使用正式赛季；移除 `preview_change`、预览快照和预览变体通道，原编辑副本仅在全部正式文件写入后移除。此命令不负责审定描述、触发伤害或新出现的属性链，必须先完成对应复核。
+在版本配置登记 `preview: { season, version, label }`；预览插件及 Modifier 来源使用 `<season>-preview` 通道。同 ItemID 可在正式与预览各有一版，按通道隔离，普通插件的引入赛季不因切换通道重标。预览 Numerical 证据必须绑定目标赛季，缺行或跨赛季不得回退正式值。
 
-`scripts/content-versions/promote-shared.ts` 在超限正式投影已经激活后，合并经审定的超限/插件来源候选、迁移技能变体通道并移除本季 Preview 配置。随后必须重新执行当前通道技能锁定及两类索引生成；不要把预览行重命名后当作正式源。图标使用 `scripts/sync-perk-icons.ts` 按 ItemID 与正式 CommonItem 的 NormalIcon 同步 PNG/WebP，并为冲突图标分配 ItemID 后缀。
+按[插件标准](../standards/perk-data.md)及[超限流程](overlimit-season.md)准备、审计内容。未核验草稿留在候选工作区；服务端未知规则使用 `null`，不继承旧版。插件预览编辑完成后显式执行 `pnpm perks:project --channel preview`；需要更新关联投影时运行 `pnpm sync`。构建不隐式发布编辑源。
 
-正式超限的 `current-evidence.json` 随版本归档保留；历史 Preview 证据可以留存，正式消费者不能依赖它。
+预览运行时只读发布快照，不随共享武器或 Lock 更新重算。重新发布前仍须复核武器来源是否适用于目标版本；来源哈希用于追溯，不代替机制审定。`preview_change` 为 `new/changed/existing`，分类仅供预览展示；投放状态不等于正式上线日期。超限卡片的证据缺口逐项声明 `verification.status: partial` 并省略未证实数值。
 
-本轮最终正式快照为 `archives/content-versions/s4/s4-final-20260922`，对应正式内容提交 `c8691c1f`。早先的 `s4/s4` 快照保留原样；最终快照补入正式来源文案修正，恢复的召唤物关联由该提交追溯。极寒领域新增 Modifier `120300175` 尚无已证实的执行消费链，未计入发布增伤，完整来源审计仍保留这一项未通过结果。
+## 已审预览转正
 
-超限转正前先归档当前正式版，再按超限 `activate` 流程将复核后的投影写入 `current.json`，同时迁移对应来源登记。将 `preview.json` 置为 `null`，撤下本季预览来源，运行 `pnpm overlimit project` 和 `pnpm num-modifier:project`，最后移除本季预览配置。空预览不进入静态导出、搜索或站点地图；不要删除通用组件。
+先保存上一正式版和需要保留的已发布预览归档。在候选工作区复核正式客户端、正式 Numerical Lock、插件文案及触发伤害；技能 runtime 必须有正式执行链绑定，预载值不能改名成为正式证据。
 
-## 核验、发布与归档
+超限生成器的正式候选目录应包含 `catalog.json`、`evidence.json`、`providers.json`。审定文件继续使用 `status: approved`、精确 `catalogSha256` 和非空 `basis`。插件来源需要修正时准备独立来源候选。随后统一执行：
 
-在候选工作区完成内容审计后：
+```powershell
+pnpm content-version promote --season <赛季> --version <版本> --content-root <正式Content> --archive <已发布预览归档> --baseline <上一正式归档> --candidate <已审超限候选目录> --review <超限审定文件>
+```
+
+默认只读，输出插件、来源、技能、配置差异和阻塞项；增加 `--write` 才应用。`--perk-providers <文件>` 可提供已审正式插件来源替换项。来源候选沿用现有协议，不需要复制全站目录或创建新的审批文件。
+
+入口先完成归档、版本、资源、正式 Lock 和技能预检。插件按 ItemID 定位目标并核对插槽；相同内容跳过且保留原字节，不同内容列出冲突并阻止全部写入。工具不覆盖已有编辑；先人工合并对应正式与预览来源再重试。
+
+执行依次迁移插件、替换超限及保存证据、合并来源和技能声明、从正式 Content 刷新当前技能行、清理本季预览消费者与配置，最后执行既有 `pnpm sync`。技能只修改协议字段，不改名称、正文或证据里的通道文字。缺少经审定的正式 runtime 绑定会阻止转正，不从预览复制。
+
+写入前将本次站点文件和派生产物备份到 `MD/_local/content-versions/promotions/`；超限旧投影自动归档并核验，不需先手工重复备份。失败恢复本次确认写入的文件；检测到并发修改或中断生成器的产物归属不明时，保留文件并输出恢复冲突及备份路径。先核对冲突再重试。
+
+成功保持 `phase: candidate`，不运行 build 或正式定版。重复执行已完成的迁移只报告 `already-promoted`。底层 `scripts/perks/promote-release.ts`、`scripts/content-versions/promote-shared.ts` 继续供专项维护兼容使用，常规换季统一使用上述入口。
+
+## 正式定版、对比与恢复
 
 ```powershell
 pnpm content-version finalize
 ```
 
-命令要求超限的 `season.id` 等于发布版本号且状态为 `current`，该赛季插件不得残留 `s4-preview` 等预览标记，版本配置中也不得继续登记本季预览；随后执行 `pnpm build`，通过后将工作区标为当前版并生成不可覆盖的正式归档。检查不替代游戏机制和数据来源审计。失败不会标记为正式版；不会提交、合并或部署。
-
-复核并提交候选工作区后，按正常 Git 合并与项目发布流程切换线上版本。Git 负责源文件合并、历史代码和回退；版本工具负责明确版本身份、固定展示数据和归档完整性。不要另写一套覆盖 `data/`、共享 Lock 和站点文件的自动恢复器。
-
-## 对比和恢复
+仅候选可定版。命令验证正式超限版本、插件通道和本季预览清理，执行 `pnpm build`，通过后标为当前版并生成不可覆盖的正式归档；失败不标记成功。检查不代替来源审计。复核后按正常 Git 合并与发布流程上线，通用验证遵循 [AGENTS.md](../../AGENTS.md#验证策略)，不重复列出 build 已包含的检查。
 
 ```powershell
-pnpm content-version diff --left archives/content-versions/s3/s3.2 --right archives/content-versions/s4/s4
-pnpm content-version export --archive archives/content-versions/s3/s3.2 --output MD/_local/content-versions/recovery/s3.2
+pnpm content-version diff --left <归档A> --right <归档B>
+pnpm content-version export --archive <归档目录> --output MD/_local/content-versions/recovery/<版本>
 ```
 
-对比先验证两份归档，按文件报告新增、移除和变化。导出仅写入全新目录，拒绝覆盖现有路径；解析后的 JSON 可直接查看，不需要安装旧代码。
-
-需要恢复旧页面行为时，在独立 Git 分支使用归档记录的提交审查对应代码，再从导出目录选择恢复内容，运行现行校验后发布。`evidence/` 只供核对，不整体覆盖到当前项目。旧版本无需保持兼容当前 Resolver，也无需出现在网站上。
-
-归档受到 Git 管理但不会自动提交或推送；只有提交并按项目流程备份后，才具备跨机器恢复能力。
+对比先验证两份归档，按文件报告增删改。导出仅写全新目录。恢复旧页面行为时在独立 Git 分支审查归档记录的代码提交，再选择恢复内容并运行现行校验；`evidence/` 不整体覆盖当前项目。旧版本无需兼容当前 Resolver，也不需要新增网站历史页面。已完成的换季操作记录由 Git 历史保留。

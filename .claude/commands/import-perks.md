@@ -416,9 +416,4 @@ rg -n "^weapon(Type|Names):" data/perks -g "*.mdx"
 - `weaponType` → 中文类型和武器类型精灵图
 - `weaponNames` → `专属武器`名称标签
 
-最后运行：
-
-```bash
-pnpm exec eslint scripts/import-perks.ts
-pnpm build
-```
+其余验证按 `AGENTS.md` 的验证策略选择：修改导入器代码时对改动文件执行 ESLint；发布前运行 build，构建已经包含的检查无需再次列为前置步骤。跨赛季转正使用 `docs/workflows/content-versions.md` 的 `content-version promote` 入口。

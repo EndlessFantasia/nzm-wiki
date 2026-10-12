@@ -60,9 +60,8 @@ pnpm exec tsx --test scripts/summons/refresh-damage-lock.test.ts
 
 ```bash
 pnpm test:summons
-pnpm index
-pnpm lint
-pnpm build
 ```
+
+派生数据同步使用 `pnpm sync`；代码及发布验证按 [AGENTS.md](../../AGENTS.md#验证策略) 选择，不固定追加全量 lint，也不在 build 前重复生成搜索索引。
 
 测试会检查稳定 ID、伤害引用、射速、Buff/插件/天赋引用、公开图标、搜索深链和 `refs/` 运行时边界。新增召唤物后还要在 375px、768px、1024px 与桌面宽度检查卡片密度、折叠详情、键盘焦点和横向溢出。
