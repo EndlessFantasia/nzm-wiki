@@ -30,6 +30,7 @@ import matter from "gray-matter";
 import { isValidDateKey } from "../lib/date-key";
 import { getActivePreview, getPreviewSeasonKey, isPreviewSeason } from "../lib/content-preview";
 import { NUM_MODIFIER_RESOLVER } from "../lib/num-modifier-data";
+import { createMgeDescriptionLookup } from "./perks/description-source";
 
 const ROOT_DIR = process.cwd();
 let REFS_DIR = path.join(ROOT_DIR, "refs/Exports/NZM/Content");
@@ -150,6 +151,8 @@ interface ItemRow {
 }
 
 interface DescriptionRow {
+  MGEId?: number;
+  TextID?: number;
   MGEDescription?: LocalizedText;
 }
 
@@ -783,6 +786,7 @@ function buildRecords(): PerkRecord[] {
   const mods = loadRows<ModRow>(REF_FILES.mods);
   const items = loadRows<ItemRow>(REF_FILES.items);
   const descriptions = loadRows<DescriptionRow>(REF_FILES.descriptions);
+  const findDescription = createMgeDescriptionLookup(descriptions);
   const overrides = loadRows<OverrideRow>(REF_FILES.overrides);
   const attributeDescriptions = loadRows<AttributeDescriptionRow>(
     REF_FILES.attributeDescriptions,
@@ -813,8 +817,10 @@ function buildRecords(): PerkRecord[] {
     if (!id || !name || name === "占位符" || slot < 1 || slot > 4 || !item) continue;
 
     const passiveSkillId = row.PassiveSkill_ID ?? "";
-    const descriptionKey = mgeDescriptionKey(passiveSkillId);
-    const rawMgeDescription = textValue(descriptions[descriptionKey]?.MGEDescription);
+    const expectedDescriptionKey = mgeDescriptionKey(passiveSkillId);
+    const descriptionEntry = findDescription(expectedDescriptionKey);
+    const descriptionKey = descriptionEntry?.rowKey ?? expectedDescriptionKey;
+    const rawMgeDescription = textValue(descriptionEntry?.row.MGEDescription);
     const mgeResolved = resolveDescription(rawMgeDescription, numericals);
     const rawOverrideDescription = textValue(overrides[id]?.OverrideDesc);
     const overrideResolved = resolveDescription(

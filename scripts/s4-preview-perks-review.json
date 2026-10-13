@@ -1133,9 +1133,9 @@
       "CDO光能量层数-射速加成映射与暗能量层数-死神之光伤害映射均为1..5；Buff时长映射各层均15秒；直击伤害Modifier=130044411实际属性为WeaponSkillDamageRatio，Base=0, Coef=.55。"
     ],
     "warnings": [
-      "MGE详情为空，依据CDO映射、SSLS_Lightbuff.GPModifyIDs及Numerical补充；Buff默认Duration=10，CDO各层传入时长15。"
+      "完整详情在DT_GPMGESkillDesConfig_BD[1312045001_2]，行内MGEId=1312071002、TextID=1；行名与身份不一致，不能按1312071002_1判为空。Buff默认Duration=10，CDO各层传入时长15。"
     ],
-    "description": "获得光能量时，根据当前光能量层数提升射速和换弹速度：每层分别提升<strong>{{num:fire-rate-per-stack|percent}}</strong>和<strong>{{num:reload-per-stack|percent}}</strong>，最多<strong>5层</strong>，持续<strong>15秒</strong>。持有暗能量时，根据暗能量层数提升死神之光技能伤害，每层提升<strong>{{num:skill-per-stack|percent}}</strong>，最多提升<strong>{{num:skill-at-five-stacks|percent}}</strong>。"
+    "description": "死神猎手满充能时不再获得射速、换弹速度增加的被动效果。死神之光的爆炸范围大幅减小，同时飞行速度大幅提升。获得光能量时，根据当前光能量层数提升射速和换弹速度：每层分别提升<strong>{{num:fire-rate-per-stack|percent}}</strong>和<strong>{{num:reload-per-stack|percent}}</strong>，最多<strong>5层</strong>，持续<strong>15秒</strong>。持有暗能量时，根据暗能量层数提升死神之光技能伤害，每层提升<strong>{{num:skill-per-stack|percent}}</strong>，最多提升<strong>{{num:skill-at-five-stacks|percent}}</strong>。"
   },
   "20703040569": {
     "bindings": {},

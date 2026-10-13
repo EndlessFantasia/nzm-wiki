@@ -78,8 +78,8 @@ DT_GPMGESkillDesConfig_BD[技能ID_等级].MGEDescription
 1. 从两个以上已确认插件中提取有辨识度的完整短句。
 2. 用 `rg --fixed-strings` 在 `refs/Exports/NZM/Content/` 搜索。
 3. 确认这些短句共同落在哪张原始表，不从单个目标的候选文案中猜。
-4. 按目标 ItemID 找到 `PassiveSkill_ID`，转成 `技能ID_等级` 行键。
-5. 在同一张表中读取目标的 `MGEDescription`。
+4. 按目标 ItemID 找到 `PassiveSkill_ID`，沿被动技能表确认描述身份。
+5. 按描述行内的 `MGEId` 与 `TextID` 唯一匹配，再读取 `MGEDescription`；不得仅凭行名认定描述缺失。光暗死神的描述行名为 `1312045001_2`，实际身份为 `MGEId=1312071002`、`TextID=1`。出现重复身份时报告歧义，不任取一行。
 
 2026-07-14 已用异态共鸣、相位强袭、冥河送葬、兽躯双衍、幸运龙炎和肾上腺素截图确认：武器插件详情正文来自 `DT_GPMGESkillDesConfig_BD.json`。
 

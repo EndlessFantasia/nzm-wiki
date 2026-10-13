@@ -289,7 +289,7 @@
       "evidence": {
         "kind": "reviewed-chain",
         "passiveSkillId": "1312071002",
-        "descriptionRowKey": "1312071002_1",
+        "descriptionRowKey": "1312045001_2",
         "basis": [
           "WeaponModItemData[20703040551].PassiveSkill_ID=1312071002:1 -> MGEPassive_BD[1312071002_1].MGE.Id=1312071002 -> GPModularGameplayEffectTable[1312071002].MGEClass=Weapon/Data/DMR/DMR_20014000005_WBH_SSLS/MGE/MGE_1312071002_SSLS.json",
           "Weapon/Data/DMR/DMR_20014000005_WBH_SSLS/MGE/MGE_1312071002_SSLS.json#CDO.直击伤害Modifier=130044411; configured Modifier identity; dynamic parameter semantics require the execution graph when publishing scaled values",
