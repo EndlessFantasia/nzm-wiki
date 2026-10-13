@@ -315,7 +315,7 @@ pnpm perks:project --channel preview
 
 ## 版本更新流程
 
-S4 正式图鉴的“赛季上新”和“季中上新”使用 `data/s4-new-perks.json` 的 ItemID 白名单，身份来自最终预览中 `preview_change: new` 的条目；状态读取当前正式 MDX 的 `CollectMODItem`，1 对应赛季上新，其余排除 `superItemIds` 后对应季中上新。数量随正式投放变化，不作为通用验收门槛。未确认首次引入赛季时保持字段缺省，不猜测历史赛季。
+S4 正式图鉴的“赛季上新”“季中上新”和“赛季未上线”使用 `data/s4-new-perks.json` 的 ItemID 白名单，身份来自最终预览中 `preview_change: new` 的条目。`seasonLaunchItemIds` 固定 S4 首次正式发布时已上线的新插件，来源由 `seasonLaunchSource` 指向正式发布归档；首发后上线的插件归入“季中上新”，不会因状态同步移入“赛季上新”。当前正式 MDX 的 `CollectMODItem` 不为 1 时，普通新插件进入“赛季未上线”，排除 `superItemIds` 中尚未上线的 S4 超级插件；后续上线时按首发名单分组。数量随正式投放变化，不作为通用验收门槛。未确认首次引入赛季时保持字段缺省，不猜测历史赛季。
 
 跨赛季发布、历史保存和恢复统一使用 [插件与超限版本管理](../workflows/content-versions.md)。普通插件与超限共同归档，但不共享身份、投放状态或运行时数值。候选在独立工作区维护；归档不进入网站构建。
 

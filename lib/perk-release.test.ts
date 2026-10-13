@@ -11,34 +11,57 @@ const ONLINE_PERK = {
   releaseDate: "2026-07-24",
 };
 
-test("S4 上新名单精确对应已归档的新插件，按正式服状态分组", () => {
+test("S4 上新名单对应预览身份，首发名单固定为正式发布时已上线的新插件", () => {
   const archived = JSON.parse(fs.readFileSync(s4NewPerks.source, "utf8")) as {
     entries: { perk: { itemId: string; previewChange: string } }[];
   };
   assert.deepEqual(s4NewPerks.itemIds, archived.entries
     .filter(entry => entry.perk.previewChange === "new")
     .map(entry => entry.perk.itemId).sort());
+  const released = JSON.parse(fs.readFileSync(s4NewPerks.seasonLaunchSource, "utf8")) as {
+    perks: { itemId: string; collectModItem?: number }[];
+  };
+  assert.deepEqual(s4NewPerks.seasonLaunchItemIds, released.perks
+    .filter(perk => s4NewPerks.itemIds.includes(perk.itemId) && perk.collectModItem === 1)
+    .map(perk => perk.itemId).sort());
   const perks = getAllPerks();
   const grouped = perks.filter(perk => getS4PerkLaunchGroup(perk) !== undefined);
   for (const perk of grouped) {
     assert.ok(s4NewPerks.itemIds.includes(perk.itemId));
-    assert.equal(getS4PerkLaunchGroup(perk), perk.collectModItem === 1 ? "season-new" : "midseason-new");
+    assert.equal(getS4PerkLaunchGroup(perk), perk.collectModItem !== 1 ? "season-unreleased"
+      : s4NewPerks.seasonLaunchItemIds.includes(perk.itemId) ? "season-new" : "midseason-new");
   }
   for (const id of s4NewPerks.superItemIds) {
     assert.ok(s4NewPerks.itemIds.includes(id));
     const perk = { itemId: id, season: "s4" };
     assert.equal(getS4PerkLaunchGroup({ ...perk, collectModItem: 0 }), undefined);
-    assert.equal(getS4PerkLaunchGroup({ ...perk, collectModItem: 1 }), "season-new");
+    assert.equal(getS4PerkLaunchGroup({ ...perk, collectModItem: 1 }), "midseason-new");
   }
   for (const id of ["20703040160", "20703040164"]) {
     assert.equal(getS4PerkLaunchGroup({ itemId: id, season: "s4", collectModItem: 1 }), undefined);
   }
 });
 
-test("S4 上新只认新插件身份，正式服状态更新覆盖历史分组", () => {
-  const perk = { itemId: s4NewPerks.itemIds[0], season: "s4", collectModItem: 1 as const };
+test("赛季未上线只收纳普通新插件，排除尚未上线的超级插件", () => {
+  const unreleased = getAllPerks().filter(perk => getS4PerkLaunchGroup(perk) === "season-unreleased");
+  assert.deepEqual(unreleased.map(perk => perk.itemId).sort(), [
+    "20703040083", "20703040084", "20703040540", "20703040541", "20703040544",
+  ]);
+  for (const perk of unreleased) {
+    assert.notEqual(perk.collectModItem, 1);
+    assert.ok(!s4NewPerks.superItemIds.includes(perk.itemId));
+  }
+});
+
+test("S4 首发与季中上新身份不会随上下线状态互换", () => {
+  const perk = { itemId: s4NewPerks.seasonLaunchItemIds[0], season: "s4", collectModItem: 1 as const };
   assert.equal(getS4PerkLaunchGroup(perk), "season-new");
-  assert.equal(getS4PerkLaunchGroup({ ...perk, collectModItem: 0 }), "midseason-new");
+  assert.equal(getS4PerkLaunchGroup({ ...perk, collectModItem: 0 }), "season-unreleased");
+  const midseason = { ...perk, itemId: "20703040488" };
+  assert.equal(getS4PerkLaunchGroup(midseason), "midseason-new");
+  assert.equal(getS4PerkLaunchGroup({ ...midseason, collectModItem: 0 }), "season-unreleased");
+  assert.equal(getS4PerkLaunchGroup({ ...midseason, collectModItem: 1 }), "midseason-new");
+  assert.equal(getS4PerkLaunchGroup({ ...midseason, collectModItem: undefined }), "season-unreleased");
   assert.equal(getS4PerkLaunchGroup({ ...perk, season: "s3" }), undefined);
   assert.equal(getS4PerkLaunchGroup({ ...perk, season: "s4-preview" }), undefined);
   assert.equal(getS4PerkLaunchGroup({ ...perk, itemId: "20703040160" }), undefined);

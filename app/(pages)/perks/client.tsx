@@ -28,7 +28,7 @@ import {
   RARITY_OPTIONS,
 } from "@/constants/perks";
 
-type QuickFilter = "online" | "recent" | "offline" | "super" | "season-new" | "midseason-new";
+type QuickFilter = "online" | "recent" | "offline" | "super" | "season-new" | "midseason-new" | "season-unreleased";
 
 const PREVIEW_CHANGE_OPTIONS: { type: PerkPreviewChange; label: string }[] = [
   { type: "new", label: "新插件" },
@@ -44,6 +44,7 @@ function parseQuickFilter(value: string): QuickFilter {
     case "super":
     case "season-new":
     case "midseason-new":
+    case "season-unreleased":
       return value;
     default:
       return "online";
@@ -246,6 +247,7 @@ export default function PerksPageClient({
       ...(contentVersion.season === "s4" ? [
         { type: "season-new" as const, label: "赛季上新" },
         { type: "midseason-new" as const, label: "季中上新" },
+        { type: "season-unreleased" as const, label: "赛季未上线" },
       ] : []),
     ],
     [recentPerkCount, isPreview],
@@ -400,7 +402,7 @@ export default function PerksPageClient({
           gridClass={
             isPreview
               ? "grid grid-cols-2 gap-2 lg:grid-cols-4"
-              : quickFilterOptions.length === 6
+              : quickFilterOptions.length >= 6
               ? "grid max-w-4xl grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6"
               : quickFilterOptions.length === 5
               ? "grid max-w-3xl grid-cols-2 gap-2 sm:grid-cols-5"
