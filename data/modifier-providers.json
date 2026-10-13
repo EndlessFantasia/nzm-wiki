@@ -17763,6 +17763,1051 @@
           "NZM/Content/Attributes/AutoGenerate/numerical_modifier_config.json#130042640_1_0, 130042640_1_1; 此处仅索引属性，不推断施加时机与受益对象。"
         ]
       }
+    },
+    {
+      "id": "season:s4:dual-star:4010102",
+      "label": "S4 双星·双星",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010102"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:160401001_1_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "6005101",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40101021 -> Skill=6005101，最高天赋等级=1；所有等级共用此来源身份。",
+          "kismet/live/20261013T111217Z-d545579530564b2ca7bd8e75b9a65de8/json/NZM/Content/Abilities/Skills/Season/S5/Wormhole/SK_ChongDongAbility.uasset.json:ExecuteUbergraph_SK_ChongDongAbility@345；BeginDeferredActorSpawnFromClass / BP_WH_Out_Left",
+          "refs/Exports/NZM/Content/Abilities/Skills/Season/S5/Wormhole/BP_WH_Out_Left.json:Default__.WormHoleModifierId=160401001",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Wormhole/BP_WH_Out_Left.uasset.json:ExecuteUbergraph_BP_WH_Out_Left@3239；ModifierID / WormHoleModifierId",
+          "复制弹道的 ExecutionRatio 仅登记单次修正参数；B5 方向及最终因子仍未知，不显示为正向增伤百分比。",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010202",
+      "label": "S4 双星·空间涟漪",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010202"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:160401002_1_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1319051001",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40102021 -> Skill=1319051001，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319051001_1.MGE.Id=1319051001; MGEConfig.Id=1319051011",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319051001.MGEClass=/Game/Abilities/Skills/Season/S5/Wormhole/Talents/MGE_1319051001_AutoWormHole.MGE_1319051001_AutoWormHole_C",
+          "kismet/live/20261013T111217Z-d545579530564b2ca7bd8e75b9a65de8/json/NZM/Content/Abilities/Skills/Season/S5/Wormhole/Talents/MGE_1319051001_AutoWormHole.uasset.json:ExecuteUbergraph_MGE_1319051001_AutoWormHole@2094；BeginDeferredActorSpawnFromClass / BP_WH_Floating",
+          "refs/Exports/NZM/Content/Abilities/Skills/Season/S5/Wormhole/BP_WH_Floating.json:Default__.WormHoleModifierId=160401002",
+          "kismet/live/20261013T111705Z-88ab483fa208473c87774ebfd72de879/json/NZM/Content/Abilities/Skills/Season/S5/Wormhole/BP_WH_Floating.uasset.json:ExecuteUbergraph_BP_WH_Floating@3047；ModifierID / WormHoleModifierId",
+          "复制弹道的 ExecutionRatio 仅登记单次修正参数；B5 方向及最终因子仍未知，不显示为正向增伤百分比。",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010402",
+      "label": "S4 双星·空间坍缩",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010402"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:160401003_1_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1319051003",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40104021 -> Skill=1319051003，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319051003_1.MGE.Id=1319051003; MGEConfig.Id=1319051031",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319051003.MGEClass=/Game/Abilities/Skills/Season/S5/Wormhole/Talents/MGE_1319051003_KJTS.MGE_1319051003_KJTS_C",
+          "kismet/live/20261013T111217Z-d545579530564b2ca7bd8e75b9a65de8/json/NZM/Content/Abilities/Skills/Season/S5/Wormhole/SK_ChongDongAbility.uasset.json:ExecuteUbergraph_SK_ChongDongAbility@2042；BeginDeferredActorSpawnFromClass / BP_WH_Out_Right",
+          "refs/Exports/NZM/Content/Abilities/Skills/Season/S5/Wormhole/BP_WH_Out_Right.json:Default__.WormHoleModifierId=160401003",
+          "kismet/live/20261013T111705Z-88ab483fa208473c87774ebfd72de879/json/NZM/Content/Abilities/Skills/Season/S5/Wormhole/BP_WH_Out_Right.uasset.json:ExecuteUbergraph_BP_WH_Out_Right@3090；ModifierID / WormHoleModifierId",
+          "复制弹道的 ExecutionRatio 仅登记单次修正参数；B5 方向及最终因子仍未知，不显示为正向增伤百分比。",
+          "kismet/live/20261013T111705Z-88ab483fa208473c87774ebfd72de879/json/NZM/Content/Abilities/Skills/Season/S5/Wormhole/Talents/MGE_1319051003_KJTS.uasset.json:ExecuteUbergraph_MGE_1319051003_KJTS@165；MGEAddMGEContextForTarget / MGE_1319051003_ImplInternal",
+          "kismet/live/20261013T111217Z-d545579530564b2ca7bd8e75b9a65de8/json/NZM/Content/Abilities/Skills/Season/S5/Wormhole/Talents/MGE_1319051003_ImplInternal.uasset.json:ExecuteUbergraph_MGE_1319051003_ImplInternal@197；SpawnOrRefreshTheNewWormHole",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010501",
+      "label": "S4 双星·空间共振",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010501"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:160401004_3_2",
+            "field": "coefficient"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1319051004",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40105013 -> Skill=1319051004，最高天赋等级=3；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319051004_3.MGE.Id=1319051004; MGEConfig.Id=1319051043",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319051004.MGEClass=/Game/Abilities/Skills/Season/S5/Wormhole/Talents/MGE_1319051004_KJGZ.MGE_1319051004_KJGZ_C",
+          "kismet/live/20261013T111705Z-88ab483fa208473c87774ebfd72de879/json/NZM/Content/Abilities/Skills/Season/S5/Wormhole/Talents/MGE_1319051004_KJGZ.uasset.json:ExecuteUbergraph_MGE_1319051004_KJGZ@616；MGEAddMGEContextForTarget / MGE_1319051004_ImplInternal",
+          "refs/Exports/NZM/Content/Abilities/Skills/Season/S5/Wormhole/Talents/MGE_1319051004_ImplInternal.json:Default__.ModifierID空间共振=160401004",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Wormhole/Talents/MGE_1319051004_ImplInternal.uasset.json:ExecuteUbergraph_MGE_1319051004_ImplInternal@141；AddScopeModiferForSettlement / GetSeasonTalentLevel / NumericalEffectAppliedEvent",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010503",
+      "label": "S4 双星·空间共鸣",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010503"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:160401005_3_2",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "self"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1319051006",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40105033 -> Skill=1319051006，最高天赋等级=3；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319051006_3.MGE.Id=1319051006; MGEConfig.Id=1319051063",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319051006.MGEClass=/Game/Abilities/Skills/Season/S5/Wormhole/Talents/MGE_1319051006_KJGM.MGE_1319051006_KJGM_C",
+          "kismet/live/20261013T111705Z-88ab483fa208473c87774ebfd72de879/json/NZM/Content/Abilities/Skills/Season/S5/Wormhole/Talents/MGE_1319051006_KJGM.uasset.json:ExecuteUbergraph_MGE_1319051006_KJGM@165；MGEAddMGEContextForTarget / MGE_1319051006_ImplInternal",
+          "refs/Exports/NZM/Content/Abilities/Skills/Season/S5/Wormhole/Talents/MGE_1319051006_ImplInternal.json:Default__.BuffName空间共鸣=S4Talent0102",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Wormhole/Talents/MGE_1319051006_ImplInternal.uasset.json:ExecuteUbergraph_MGE_1319051006_ImplInternal@467；MGEAddBuff / TalentLevel",
+          "refs/Exports/NZM/Content/DataTables/Buff/BuffConfigDatatableNew.json:S4Talent0102_3.GPModifyIDs=160401005",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010507",
+      "label": "S4 双星·蓄能重击",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010507"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:111053009_5_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1379040180",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40105075 -> Skill=1379040180，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040180_5.MGE.Id=1379040180; MGEConfig.Id=1379040185",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040180.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040180.MGE_1379040180_C",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040180.uasset.json:ExecuteUbergraph_MGE_1379040180@315；AddScopedModifierForActivatedSkill / 111053009 / MGELevel",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010602",
+      "label": "S4 双星·坐标锁定",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010602"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:160401006_1_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1319051007",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40106021 -> Skill=1319051007，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319051007_1.MGE.Id=1319051007; MGEConfig.Id=1319051071",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319051007.MGEClass=/Game/Abilities/Skills/Season/S5/Wormhole/Talents/MGE_1319051007.MGE_1319051007_C",
+          "refs/Exports/NZM/Content/Abilities/Skills/Season/S5/Wormhole/BP_WH_Out_Left.json:Default__.ZuBiaoSuoDingShangHaiXiuZhengID=160401006",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Wormhole/BP_WH_Out_Left.uasset.json:ExecuteUbergraph_BP_WH_Out_Left@3370；SelectInt / ZuBiaoSuoDingShangHaiXiuZhengID",
+          "锁定分支的伴星结算属性；不是施加给玩家的全局增伤。",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040103",
+      "label": "S4 双星·迫近护体",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040103"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:111053010_1_0",
+            "field": "coefficient"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1379040030",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:39 -> Skill=1379040030，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040030_1.MGE.Id=1379040030; MGEConfig.Id=1379040031",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040030.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040030.MGE_1379040030_C",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040030.uasset.json:ExecuteUbergraph_MGE_1379040030@1457；CreateAsyncAddScopedModifier / 111053010 / NumericalEffectAppliedEvent",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040104",
+      "label": "S4 双星·炽热弹链",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040104"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:111053004_1_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "self"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1379040040",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:40 -> Skill=1379040040，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040040_1.MGE.Id=1379040040; MGEConfig.Id=1379040041",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040040.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040040.MGE_1379040040_C",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040040.uasset.json:ExecuteUbergraph_MGE_1379040040@1069；MGEAddBuff / SeasonTalent_S5_Normal_00602",
+          "refs/Exports/NZM/Content/DataTables/Buff/BuffConfigDatatableNew.json:SeasonTalent_S5_Normal_00602.GPModifyIDs=111053004",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040111",
+      "label": "S4 双星·暗蚀噬弱",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040111"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:111053005_1_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        },
+        {
+          "expression": {
+            "row": "lc:111053005_1_1",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1379040120",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:43 -> Skill=1379040120，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040120_1.MGE.Id=1379040120; MGEConfig.Id=1379040121",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040120.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040120.MGE_1379040120_C",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040120.uasset.json:ExecuteUbergraph_MGE_1379040120@1553；CreateAsyncAddScopedModifier / 111053005 / NumericalEffectAppliedEvent",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040113",
+      "label": "S4 双星·守势增幅",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040113"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:111053011_1_0",
+            "field": "coefficient"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1379040140",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:45 -> Skill=1379040140，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040140_1.MGE.Id=1379040140; MGEConfig.Id=1379040141",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040140.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040140.MGE_1379040140_C",
+          "refs/Exports/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040140.json:Default__.ModifierID=111053011",
+          "kismet/live/20261013T111217Z-d545579530564b2ca7bd8e75b9a65de8/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040140.uasset.json:ExecuteUbergraph_MGE_1379040140@1636；ApplyModifiers / ModifierID",
+          "kismet/live/20261013T111217Z-d545579530564b2ca7bd8e75b9a65de8/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040140.uasset.json:ExecuteUbergraph_MGE_1379040140@3016；AddScopedModifierForActivatedSkill / ModifierID",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040115",
+      "label": "S4 双星·猎场跃升",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040115"
+      },
+      "reviewedFacetIds": [
+        "game-mode"
+      ],
+      "evidence": {
+        "kind": "reviewed-override",
+        "passiveSkillId": "1379040300",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:47 -> Skill=1379040300，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040300_1.MGE.Id=1379040300; MGEConfig.Id=1379040301",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040300.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040300.MGE_1379040300_C",
+          "refs/Exports/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040300.json:Default__.AddLevel=1",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040300.uasset.json:Change Attack Level@71；MetropolisPlayerAttackComponent:AddExtraAttackLevel / LevelUpNum",
+          "Native 额外猎场攻击等级机制归入游戏模式乘区；效果依赖当前攻击等级，没有固定的天赋 Modifier 表达式，不发布固定增伤值或将其他等级的 Numerical 冒充本天赋数值。Native 内部等级应用实现未导出。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040116",
+      "label": "S4 双星·暗能补弹",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040116"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:111053013_1_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1379040310",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:48 -> Skill=1379040310，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040310_1.MGE.Id=1379040310; MGEConfig.Id=1379040311",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040310.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040310.MGE_1379040310_C",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040310.uasset.json:ExecuteUbergraph_MGE_1379040310@890；ApplyModifiers / 111053013",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020402",
+      "label": "S4 矩阵共生·静默过载",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020402"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:130040036_1_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "unknown"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1319053002",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40204021 -> Skill=1319053002，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319053002_1.MGE.Id=1319053002; MGEConfig.Id=1319053002",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319053002.MGEClass=/Game/Abilities/Skills/Season/S5/XJHH/MGE/MGE_1319053002.MGE_1319053002_C",
+          "refs/Exports/NZM/Content/Abilities/Skills/Season/S5/XJHH/MGE/MGE_1319051016.json:Default__.AttackUpTalentID=1319053002; AttackBuffName=SeasonTalent_S5_XJHHHuge_NotHitState",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/XJHH/MGE/MGE_1319051016.uasset.json:ExecuteUbergraph_MGE_1319051016@6937；HasTalent / AttackUpTalentID",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/XJHH/MGE/MGE_1319051016.uasset.json:ExecuteUbergraph_MGE_1319051016@7759；BuffName / AttackBuffName",
+          "kismet/live/20261013T111217Z-d545579530564b2ca7bd8e75b9a65de8/json/NZM/Content/Abilities/Skills/Season/S5/XJHH/MGE/MGE_1319051009.uasset.json:ExecuteUbergraph_MGE_1319051009@1137；AddBuffByName / AttackBuffName / TargetActor",
+          "refs/Exports/NZM/Content/DataTables/Buff/BuffConfigDatatableNew.json:SeasonTalent_S5_XJHHHuge_NotHitState.GPModifyIDs=130040036",
+          "领域给玩家与召唤物的条件分支；索引仅发布武器伤害属性，不把 unknown 接收者解释为全局效果。",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020507",
+      "label": "S4 矩阵共生·蓄能重击",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020507"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:111053009_5_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1379040180",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40205075 -> Skill=1379040180，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040180_5.MGE.Id=1379040180; MGEConfig.Id=1379040185",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040180.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040180.MGE_1379040180_C",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040180.uasset.json:ExecuteUbergraph_MGE_1379040180@315；AddScopedModifierForActivatedSkill / 111053009 / MGELevel",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020602",
+      "label": "S4 矩阵共生·巨构投影",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020602"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:130040033_1_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "ally"
+          }
+        },
+        {
+          "expression": {
+            "row": "lc:130040038_1_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "ally"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1319053003",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40206021 -> Skill=1319053003，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319053003_1.MGE.Id=1319053003; MGEConfig.Id=1319053003",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319053003.MGEClass=/Game/Abilities/Skills/Season/S5/XJHH/MGE/MGE_1319053003.MGE_1319053003_C",
+          "refs/Exports/NZM/Content/Abilities/Skills/Season/S5/XJHH/MGE/MGE_1319051016.json:Default__.HugeTalentID=1319053003",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/XJHH/MGE/MGE_1319051016.uasset.json:ExecuteUbergraph_MGE_1319051016@11546；HasTalent / HugeTalentID",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/XJHH/MGE/MGE_1319051016.uasset.json:ExecuteUbergraph_MGE_1319051016@5270；AddBuffByName / SeasonTalent_S5_XJHHHuge_Huge_gungpm_huoshen",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/XJHH/MGE/MGE_1319051016.uasset.json:ExecuteUbergraph_MGE_1319051016@5499；AddBuffByName / SeasonTalent_S5_XJHHHuge_Huge_gungpm",
+          "refs/Exports/NZM/Content/DataTables/Buff/BuffConfigDatatableNew.json:SeasonTalent_S5_XJHHHuge_Huge_gungpm.GPModifyIDs=130040033",
+          "refs/Exports/NZM/Content/DataTables/Buff/BuffConfigDatatableNew.json:SeasonTalent_S5_XJHHHuge_Huge_gungpm_huoshen.GPModifyIDs=130040038",
+          "普通召唤物与火神变体同属武器伤害分面；仅登记伤害行，不将射速视为伤害乘区。",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040203",
+      "label": "S4 矩阵共生·迫近护体",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040203"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:111053010_1_0",
+            "field": "coefficient"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1379040030",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:51 -> Skill=1379040030，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040030_1.MGE.Id=1379040030; MGEConfig.Id=1379040031",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040030.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040030.MGE_1379040030_C",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040030.uasset.json:ExecuteUbergraph_MGE_1379040030@1457；CreateAsyncAddScopedModifier / 111053010 / NumericalEffectAppliedEvent",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040204",
+      "label": "S4 矩阵共生·炽热弹链",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040204"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:111053004_1_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "self"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1379040040",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:52 -> Skill=1379040040，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040040_1.MGE.Id=1379040040; MGEConfig.Id=1379040041",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040040.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040040.MGE_1379040040_C",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040040.uasset.json:ExecuteUbergraph_MGE_1379040040@1069；MGEAddBuff / SeasonTalent_S5_Normal_00602",
+          "refs/Exports/NZM/Content/DataTables/Buff/BuffConfigDatatableNew.json:SeasonTalent_S5_Normal_00602.GPModifyIDs=111053004",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040211",
+      "label": "S4 矩阵共生·暗蚀噬弱",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040211"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:111053005_1_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        },
+        {
+          "expression": {
+            "row": "lc:111053005_1_1",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1379040120",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:55 -> Skill=1379040120，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040120_1.MGE.Id=1379040120; MGEConfig.Id=1379040121",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040120.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040120.MGE_1379040120_C",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040120.uasset.json:ExecuteUbergraph_MGE_1379040120@1553；CreateAsyncAddScopedModifier / 111053005 / NumericalEffectAppliedEvent",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040213",
+      "label": "S4 矩阵共生·守势增幅",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040213"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:111053011_1_0",
+            "field": "coefficient"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1379040140",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:57 -> Skill=1379040140，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040140_1.MGE.Id=1379040140; MGEConfig.Id=1379040141",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040140.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040140.MGE_1379040140_C",
+          "refs/Exports/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040140.json:Default__.ModifierID=111053011",
+          "kismet/live/20261013T111217Z-d545579530564b2ca7bd8e75b9a65de8/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040140.uasset.json:ExecuteUbergraph_MGE_1379040140@1636；ApplyModifiers / ModifierID",
+          "kismet/live/20261013T111217Z-d545579530564b2ca7bd8e75b9a65de8/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040140.uasset.json:ExecuteUbergraph_MGE_1379040140@3016；AddScopedModifierForActivatedSkill / ModifierID",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040215",
+      "label": "S4 矩阵共生·猎场跃升",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040215"
+      },
+      "reviewedFacetIds": [
+        "game-mode"
+      ],
+      "evidence": {
+        "kind": "reviewed-override",
+        "passiveSkillId": "1379040300",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:59 -> Skill=1379040300，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040300_1.MGE.Id=1379040300; MGEConfig.Id=1379040301",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040300.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040300.MGE_1379040300_C",
+          "refs/Exports/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040300.json:Default__.AddLevel=1",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040300.uasset.json:Change Attack Level@71；MetropolisPlayerAttackComponent:AddExtraAttackLevel / LevelUpNum",
+          "Native 额外猎场攻击等级机制归入游戏模式乘区；效果依赖当前攻击等级，没有固定的天赋 Modifier 表达式，不发布固定增伤值或将其他等级的 Numerical 冒充本天赋数值。Native 内部等级应用实现未导出。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040216",
+      "label": "S4 矩阵共生·暗能补弹",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040216"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:111053013_1_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1379040310",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:60 -> Skill=1379040310，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040310_1.MGE.Id=1379040310; MGEConfig.Id=1379040311",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040310.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040310.MGE_1379040310_C",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040310.uasset.json:ExecuteUbergraph_MGE_1379040310@890；ApplyModifiers / 111053013",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030303",
+      "label": "S4 黑洞·扭曲瓦解",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030303"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:111031067_3_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "enemy"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1319052007",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40303033 -> Skill=1319052007，最高天赋等级=3；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319052007_3.MGE.Id=1319052007; MGEConfig.Id=1319052007",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319052007.MGEClass=/Game/Abilities/Skills/Season/S5/BlackHole/MGE/MGE_1319052007.MGE_1319052007_C",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/BlackHole/MGE/MGE_1319052007.uasset.json:ExecuteUbergraph_MGE_1319052007@92；MGEAddBuff / SeasonTalent_S5_Blackhole_002 / Target",
+          "refs/Exports/NZM/Content/DataTables/Buff/BuffConfigDatatableNew.json:SeasonTalent_S5_Blackhole_002.GPModifyIDs=111031067",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030401",
+      "label": "S4 黑洞·瞬态奇点",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030401"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:111031066_1_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "enemy"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1319052002",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40304011 -> Skill=1319052002，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319052002_1.MGE.Id=1319052002; MGEConfig.Id=1319052002",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319052002.MGEClass=/Game/Abilities/Skills/Season/S5/BlackHole/MGE/MGE_1319052002.MGE_1319052002_C",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/BlackHole/MGE/MGE_1319052002.uasset.json:ExecuteUbergraph_MGE_1319052002@481；MGEAddBuff / SeasonTalent_S5_Blackhole_001 / Target",
+          "refs/Exports/NZM/Content/DataTables/Buff/BuffConfigDatatableNew.json:SeasonTalent_S5_Blackhole_001.GPModifyIDs=111031066",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030507",
+      "label": "S4 黑洞·蓄能重击",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030507"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:111053009_5_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1379040180",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40305075 -> Skill=1379040180，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040180_5.MGE.Id=1379040180; MGEConfig.Id=1379040185",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040180.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040180.MGE_1379040180_C",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040180.uasset.json:ExecuteUbergraph_MGE_1379040180@315；AddScopedModifierForActivatedSkill / 111053009 / MGELevel",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040303",
+      "label": "S4 黑洞·迫近护体",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040303"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:111053010_1_0",
+            "field": "coefficient"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1379040030",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:63 -> Skill=1379040030，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040030_1.MGE.Id=1379040030; MGEConfig.Id=1379040031",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040030.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040030.MGE_1379040030_C",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040030.uasset.json:ExecuteUbergraph_MGE_1379040030@1457；CreateAsyncAddScopedModifier / 111053010 / NumericalEffectAppliedEvent",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040304",
+      "label": "S4 黑洞·炽热弹链",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040304"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:111053004_1_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "self"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1379040040",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:64 -> Skill=1379040040，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040040_1.MGE.Id=1379040040; MGEConfig.Id=1379040041",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040040.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040040.MGE_1379040040_C",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040040.uasset.json:ExecuteUbergraph_MGE_1379040040@1069；MGEAddBuff / SeasonTalent_S5_Normal_00602",
+          "refs/Exports/NZM/Content/DataTables/Buff/BuffConfigDatatableNew.json:SeasonTalent_S5_Normal_00602.GPModifyIDs=111053004",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040311",
+      "label": "S4 黑洞·暗蚀噬弱",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040311"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:111053005_1_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        },
+        {
+          "expression": {
+            "row": "lc:111053005_1_1",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1379040120",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:67 -> Skill=1379040120，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040120_1.MGE.Id=1379040120; MGEConfig.Id=1379040121",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040120.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040120.MGE_1379040120_C",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040120.uasset.json:ExecuteUbergraph_MGE_1379040120@1553；CreateAsyncAddScopedModifier / 111053005 / NumericalEffectAppliedEvent",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040313",
+      "label": "S4 黑洞·守势增幅",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040313"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:111053011_1_0",
+            "field": "coefficient"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1379040140",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:69 -> Skill=1379040140，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040140_1.MGE.Id=1379040140; MGEConfig.Id=1379040141",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040140.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040140.MGE_1379040140_C",
+          "refs/Exports/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040140.json:Default__.ModifierID=111053011",
+          "kismet/live/20261013T111217Z-d545579530564b2ca7bd8e75b9a65de8/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040140.uasset.json:ExecuteUbergraph_MGE_1379040140@1636；ApplyModifiers / ModifierID",
+          "kismet/live/20261013T111217Z-d545579530564b2ca7bd8e75b9a65de8/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040140.uasset.json:ExecuteUbergraph_MGE_1379040140@3016；AddScopedModifierForActivatedSkill / ModifierID",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040315",
+      "label": "S4 黑洞·猎场跃升",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040315"
+      },
+      "reviewedFacetIds": [
+        "game-mode"
+      ],
+      "evidence": {
+        "kind": "reviewed-override",
+        "passiveSkillId": "1379040300",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:71 -> Skill=1379040300，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040300_1.MGE.Id=1379040300; MGEConfig.Id=1379040301",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040300.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040300.MGE_1379040300_C",
+          "refs/Exports/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040300.json:Default__.AddLevel=1",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040300.uasset.json:Change Attack Level@71；MetropolisPlayerAttackComponent:AddExtraAttackLevel / LevelUpNum",
+          "Native 额外猎场攻击等级机制归入游戏模式乘区；效果依赖当前攻击等级，没有固定的天赋 Modifier 表达式，不发布固定增伤值或将其他等级的 Numerical 冒充本天赋数值。Native 内部等级应用实现未导出。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040316",
+      "label": "S4 黑洞·暗能补弹",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040316"
+      },
+      "applications": [
+        {
+          "expression": {
+            "row": "lc:111053013_1_0",
+            "field": "base"
+          },
+          "context": {
+            "recipient": "damage-event"
+          }
+        }
+      ],
+      "evidence": {
+        "kind": "reviewed-chain",
+        "passiveSkillId": "1379040310",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:72 -> Skill=1379040310，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040310_1.MGE.Id=1379040310; MGEConfig.Id=1379040311",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040310.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040310.MGE_1379040310_C",
+          "kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9/json/NZM/Content/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040310.uasset.json:ExecuteUbergraph_MGE_1379040310@890；ApplyModifiers / 111053013",
+          "最高等级 Numerical 只用于属性归类；不以描述值覆盖 Numerical，不额外发布叠层、运行时增伤值或其他等级数值。"
+        ]
+      }
     }
   ],
   "exclusions": [
@@ -38567,6 +39612,1802 @@
       "evidence": {
         "basis": [
           "NZM/Content/DataTables/Roguelike/AffixWeapon/AffixWeaponAffixDisplayConfig.json#10109"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010205",
+      "label": "S4 双星·精准锁定",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010205"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040050",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40102055 -> Skill=1379040050，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040050_5.MGE.Id=1379040050; MGEConfig.Id=1379040055",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040050.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040050.MGE_1379040050_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010206",
+      "label": "S4 双星·群伤聚能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010206"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040060",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40102065 -> Skill=1379040060，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040060_5.MGE.Id=1379040060; MGEConfig.Id=1379040065",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040060.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040060.MGE_1379040060_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010207",
+      "label": "S4 双星·近身倾泻",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010207"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040070",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40102075 -> Skill=1379040070，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040070_5.MGE.Id=1379040070; MGEConfig.Id=1379040075",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040070.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040070.MGE_1379040070_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010208",
+      "label": "S4 双星·连射共振",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010208"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040080",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40102085 -> Skill=1379040080，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040080_5.MGE.Id=1379040080; MGEConfig.Id=1379040085",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040080.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040080.MGE_1379040080_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010301",
+      "label": "S4 双星·时间锚定",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010301"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能持续时间，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1319051002",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40103013 -> Skill=1319051002，最高天赋等级=3；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319051002_3.MGE.Id=1319051002; MGEConfig.Id=1319051023",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319051002.MGEClass=/Game/Abilities/Skills/Season/S5/Wormhole/Talents/MGE_1319051002_SJMD.MGE_1319051002_SJMD_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010303",
+      "label": "S4 双星·空间回收",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010303"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1319051005",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40103033 -> Skill=1319051005，最高天赋等级=3；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319051005_3.MGE.Id=1319051005; MGEConfig.Id=1319051053",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319051005.MGEClass=/Game/Abilities/Skills/Season/S5/Wormhole/Talents/MGE_1319051005_KJHS.MGE_1319051005_KJHS_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010305",
+      "label": "S4 双星·广域虹吸",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010305"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球拾取范围，不修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040090",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40103055 -> Skill=1379040090，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040090_5.MGE.Id=1379040090; MGEConfig.Id=1379040095",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040090.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040090.MGE_1379040090_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010306",
+      "label": "S4 双星·精密拾取",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010306"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040100",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40103065 -> Skill=1379040100，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040100_5.MGE.Id=1379040100; MGEConfig.Id=1379040105",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040100.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040100.MGE_1379040100_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010307",
+      "label": "S4 双星·击裂聚能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010307"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040110",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40103075 -> Skill=1379040110，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040110_5.MGE.Id=1379040110; MGEConfig.Id=1379040115",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040110.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040110.MGE_1379040110_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010308",
+      "label": "S4 双星·拾光续能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010308"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040250",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40103085 -> Skill=1379040250，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040250_5.MGE.Id=1379040250; MGEConfig.Id=1379040255",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040250.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040250.MGE_1379040250_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010405",
+      "label": "S4 双星·光能潮汐",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010405"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040260",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40104055 -> Skill=1379040260，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040260_5.MGE.Id=1379040260; MGEConfig.Id=1379040265",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040260.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040260.MGE_1379040260_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010406",
+      "label": "S4 双星·无伤蓄光",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010406"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040270",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40104065 -> Skill=1379040270，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040270_5.MGE.Id=1379040270; MGEConfig.Id=1379040275",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040270.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040270.MGE_1379040270_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010407",
+      "label": "S4 双星·技能萃光",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010407"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040280",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40104075 -> Skill=1379040280，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040280_5.MGE.Id=1379040280; MGEConfig.Id=1379040285",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040280.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040280.MGE_1379040280_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010408",
+      "label": "S4 双星·灵光先兆",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010408"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040290",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40104085 -> Skill=1379040290，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040290_5.MGE.Id=1379040290; MGEConfig.Id=1379040295",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040290.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040290.MGE_1379040290_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010505",
+      "label": "S4 双星·暗能回流",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010505"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040160",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40105055 -> Skill=1379040160，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040160_5.MGE.Id=1379040160; MGEConfig.Id=1379040165",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040160.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040160.MGE_1379040160_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010506",
+      "label": "S4 双星·急速充能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010506"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040170",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40105065 -> Skill=1379040170，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040170_5.MGE.Id=1379040170; MGEConfig.Id=1379040175",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040170.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040170.MGE_1379040170_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010508",
+      "label": "S4 双星·迅捷充能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010508"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040190",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40105085 -> Skill=1379040190，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040190_5.MGE.Id=1379040190; MGEConfig.Id=1379040195",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040190.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040190.MGE_1379040190_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010605",
+      "label": "S4 双星·溢能回充",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010605"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040200",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40106055 -> Skill=1379040200，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040200_5.MGE.Id=1379040200; MGEConfig.Id=1379040205",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040200.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040200.MGE_1379040200_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010606",
+      "label": "S4 双星·赛季续航",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010606"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能持续时间，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040210",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40106065 -> Skill=1379040210，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040210_5.MGE.Id=1379040210; MGEConfig.Id=1379040215",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040210.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040210.MGE_1379040210_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010607",
+      "label": "S4 双星·节律共振",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010607"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040220",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40106075 -> Skill=1379040220，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040220_5.MGE.Id=1379040220; MGEConfig.Id=1379040225",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040220.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040220.MGE_1379040220_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:4010608",
+      "label": "S4 双星·满溢转化",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010608"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040320",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40106085 -> Skill=1379040320，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040320_5.MGE.Id=1379040320; MGEConfig.Id=1379040325",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040320.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040320.MGE_1379040320_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040101",
+      "label": "S4 双星·弱点补正",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040101"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "改变弱点结算概率，没有直接增伤属性行。",
+      "evidence": {
+        "passiveSkillId": "1379040010",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:37 -> Skill=1379040010，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040010_1.MGE.Id=1379040010; MGEConfig.Id=1379040011",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040010.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040010.MGE_1379040010_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040102",
+      "label": "S4 双星·殉爆连锁",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040102"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。",
+      "evidence": {
+        "passiveSkillId": "1379040020",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:38 -> Skill=1379040020，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040020_1.MGE.Id=1379040020; MGEConfig.Id=1379040021",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040020.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040020.MGE_1379040020_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040105",
+      "label": "S4 双星·拾光生金",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040105"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "金币获取，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040230",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:41 -> Skill=1379040230，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040230_1.MGE.Id=1379040230; MGEConfig.Id=1379040231",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040230.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040230.MGE_1379040230_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040106",
+      "label": "S4 双星·光能补弹",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040106"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "特殊弹药恢复/过充，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040240",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:42 -> Skill=1379040240，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040240_1.MGE.Id=1379040240; MGEConfig.Id=1379040241",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040240.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040240.MGE_1379040240_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040112",
+      "label": "S4 双星·虚空裂变",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040112"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。",
+      "evidence": {
+        "passiveSkillId": "1379040130",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:44 -> Skill=1379040130，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040130_1.MGE.Id=1379040130; MGEConfig.Id=1379040131",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040130.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040130.MGE_1379040130_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040114",
+      "label": "S4 双星·暗能过充",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040114"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。",
+      "evidence": {
+        "passiveSkillId": "1379040150",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:46 -> Skill=1379040150，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040150_1.MGE.Id=1379040150; MGEConfig.Id=1379040151",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040150.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040150.MGE_1379040150_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020102",
+      "label": "S4 矩阵共生·矩阵共生",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020102"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "矩阵共生基础领域提供射速加成，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "6005301",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40201021 -> Skill=6005301，最高天赋等级=1；所有等级共用此来源身份。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020202",
+      "label": "S4 矩阵共生·阵列共鸣",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020202"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "射速/攻击速度加成，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1319053001",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40202021 -> Skill=1319053001，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319053001_1.MGE.Id=1319053001; MGEConfig.Id=1319053001",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319053001.MGEClass=/Game/Abilities/Skills/Season/S5/XJHH/MGE/MGE_1319053001.MGE_1319053001_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020205",
+      "label": "S4 矩阵共生·精准锁定",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020205"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040050",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40202055 -> Skill=1379040050，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040050_5.MGE.Id=1379040050; MGEConfig.Id=1379040055",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040050.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040050.MGE_1379040050_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020206",
+      "label": "S4 矩阵共生·群伤聚能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020206"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040060",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40202065 -> Skill=1379040060，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040060_5.MGE.Id=1379040060; MGEConfig.Id=1379040065",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040060.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040060.MGE_1379040060_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020207",
+      "label": "S4 矩阵共生·近身倾泻",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020207"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040070",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40202075 -> Skill=1379040070，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040070_5.MGE.Id=1379040070; MGEConfig.Id=1379040075",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040070.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040070.MGE_1379040070_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020208",
+      "label": "S4 矩阵共生·连射共振",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020208"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040080",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40202085 -> Skill=1379040080，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040080_5.MGE.Id=1379040080; MGEConfig.Id=1379040085",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040080.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040080.MGE_1379040080_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020301",
+      "label": "S4 矩阵共生·广域展开",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020301"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能范围，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1319053004",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40203013 -> Skill=1319053004，最高天赋等级=3；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319053004_3.MGE.Id=1319053004; MGEConfig.Id=1319053024",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319053004.MGEClass=/Game/Abilities/Skills/Season/S5/XJHH/MGE/MGE_1319053004.MGE_1319053004_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020303",
+      "label": "S4 矩阵共生·相位滞留",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020303"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能持续时间，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1319053005",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40203033 -> Skill=1319053005，最高天赋等级=3；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319053005_3.MGE.Id=1319053005; MGEConfig.Id=1319053025",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319053005.MGEClass=/Game/Abilities/Skills/Season/S5/XJHH/MGE/MGE_1319053005.MGE_1319053005_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020305",
+      "label": "S4 矩阵共生·广域虹吸",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020305"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球拾取范围，不修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040090",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40203055 -> Skill=1379040090，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040090_5.MGE.Id=1379040090; MGEConfig.Id=1379040095",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040090.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040090.MGE_1379040090_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020306",
+      "label": "S4 矩阵共生·精密拾取",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020306"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040100",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40203065 -> Skill=1379040100，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040100_5.MGE.Id=1379040100; MGEConfig.Id=1379040105",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040100.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040100.MGE_1379040100_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020307",
+      "label": "S4 矩阵共生·击裂聚能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020307"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040110",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40203075 -> Skill=1379040110，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040110_5.MGE.Id=1379040110; MGEConfig.Id=1379040115",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040110.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040110.MGE_1379040110_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020308",
+      "label": "S4 矩阵共生·拾光续能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020308"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040250",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40203085 -> Skill=1379040250，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040250_5.MGE.Id=1379040250; MGEConfig.Id=1379040255",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040250.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040250.MGE_1379040250_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020405",
+      "label": "S4 矩阵共生·光能潮汐",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020405"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040260",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40204055 -> Skill=1379040260，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040260_5.MGE.Id=1379040260; MGEConfig.Id=1379040265",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040260.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040260.MGE_1379040260_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020406",
+      "label": "S4 矩阵共生·无伤蓄光",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020406"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040270",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40204065 -> Skill=1379040270，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040270_5.MGE.Id=1379040270; MGEConfig.Id=1379040275",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040270.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040270.MGE_1379040270_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020407",
+      "label": "S4 矩阵共生·技能萃光",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020407"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040280",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40204075 -> Skill=1379040280，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040280_5.MGE.Id=1379040280; MGEConfig.Id=1379040285",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040280.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040280.MGE_1379040280_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020408",
+      "label": "S4 矩阵共生·灵光先兆",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020408"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040290",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40204085 -> Skill=1379040290，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040290_5.MGE.Id=1379040290; MGEConfig.Id=1379040295",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040290.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040290.MGE_1379040290_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020501",
+      "label": "S4 矩阵共生·偏导加速",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020501"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "移速加成，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1319053006",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40205013 -> Skill=1319053006，最高天赋等级=3；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319053006_3.MGE.Id=1319053006; MGEConfig.Id=1319053026",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319053006.MGEClass=/Game/Abilities/Skills/Season/S5/XJHH/MGE/MGE_1319053006.MGE_1319053006_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020503",
+      "label": "S4 矩阵共生·超导回能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020503"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1319053007",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40205033 -> Skill=1319053007，最高天赋等级=3；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319053007_3.MGE.Id=1319053007; MGEConfig.Id=1319053027",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319053007.MGEClass=/Game/Abilities/Skills/Season/S5/XJHH/MGE/MGE_1319053007.MGE_1319053007_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020505",
+      "label": "S4 矩阵共生·暗能回流",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020505"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040160",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40205055 -> Skill=1379040160，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040160_5.MGE.Id=1379040160; MGEConfig.Id=1379040165",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040160.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040160.MGE_1379040160_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020506",
+      "label": "S4 矩阵共生·急速充能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020506"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040170",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40205065 -> Skill=1379040170，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040170_5.MGE.Id=1379040170; MGEConfig.Id=1379040175",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040170.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040170.MGE_1379040170_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020508",
+      "label": "S4 矩阵共生·迅捷充能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020508"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040190",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40205085 -> Skill=1379040190，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040190_5.MGE.Id=1379040190; MGEConfig.Id=1379040195",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040190.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040190.MGE_1379040190_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020605",
+      "label": "S4 矩阵共生·溢能回充",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020605"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040200",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40206055 -> Skill=1379040200，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040200_5.MGE.Id=1379040200; MGEConfig.Id=1379040205",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040200.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040200.MGE_1379040200_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020606",
+      "label": "S4 矩阵共生·赛季续航",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020606"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能持续时间，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040210",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40206065 -> Skill=1379040210，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040210_5.MGE.Id=1379040210; MGEConfig.Id=1379040215",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040210.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040210.MGE_1379040210_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020607",
+      "label": "S4 矩阵共生·节律共振",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020607"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040220",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40206075 -> Skill=1379040220，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040220_5.MGE.Id=1379040220; MGEConfig.Id=1379040225",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040220.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040220.MGE_1379040220_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020608",
+      "label": "S4 矩阵共生·满溢转化",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020608"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040320",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40206085 -> Skill=1379040320，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040320_5.MGE.Id=1379040320; MGEConfig.Id=1379040325",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040320.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040320.MGE_1379040320_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040201",
+      "label": "S4 矩阵共生·弱点补正",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040201"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "改变弱点结算概率，没有直接增伤属性行。",
+      "evidence": {
+        "passiveSkillId": "1379040010",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:49 -> Skill=1379040010，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040010_1.MGE.Id=1379040010; MGEConfig.Id=1379040011",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040010.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040010.MGE_1379040010_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040202",
+      "label": "S4 矩阵共生·殉爆连锁",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040202"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。",
+      "evidence": {
+        "passiveSkillId": "1379040020",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:50 -> Skill=1379040020，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040020_1.MGE.Id=1379040020; MGEConfig.Id=1379040021",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040020.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040020.MGE_1379040020_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040205",
+      "label": "S4 矩阵共生·拾光生金",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040205"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "金币获取，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040230",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:53 -> Skill=1379040230，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040230_1.MGE.Id=1379040230; MGEConfig.Id=1379040231",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040230.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040230.MGE_1379040230_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040206",
+      "label": "S4 矩阵共生·光能补弹",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040206"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "特殊弹药恢复/过充，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040240",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:54 -> Skill=1379040240，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040240_1.MGE.Id=1379040240; MGEConfig.Id=1379040241",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040240.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040240.MGE_1379040240_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040212",
+      "label": "S4 矩阵共生·虚空裂变",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040212"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。",
+      "evidence": {
+        "passiveSkillId": "1379040130",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:56 -> Skill=1379040130，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040130_1.MGE.Id=1379040130; MGEConfig.Id=1379040131",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040130.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040130.MGE_1379040130_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040214",
+      "label": "S4 矩阵共生·暗能过充",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040214"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。",
+      "evidence": {
+        "passiveSkillId": "1379040150",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:58 -> Skill=1379040150，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040150_1.MGE.Id=1379040150; MGEConfig.Id=1379040151",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040150.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040150.MGE_1379040150_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030102",
+      "label": "S4 黑洞·黑洞",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030102"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。",
+      "evidence": {
+        "passiveSkillId": "6005201",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40301021 -> Skill=6005201，最高天赋等级=1；所有等级共用此来源身份。"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030202",
+      "label": "S4 黑洞·扭曲殉爆",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030202"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。",
+      "evidence": {
+        "passiveSkillId": "1319052001",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40302021 -> Skill=1319052001，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319052001_1.MGE.Id=1319052001; MGEConfig.Id=1319052001",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319052001.MGEClass=/Game/Abilities/Skills/Season/S5/BlackHole/MGE/MGE_1319052001.MGE_1319052001_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030205",
+      "label": "S4 黑洞·精准锁定",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030205"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040050",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40302055 -> Skill=1379040050，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040050_5.MGE.Id=1379040050; MGEConfig.Id=1379040055",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040050.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040050.MGE_1379040050_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030206",
+      "label": "S4 黑洞·群伤聚能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030206"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040060",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40302065 -> Skill=1379040060，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040060_5.MGE.Id=1379040060; MGEConfig.Id=1379040065",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040060.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040060.MGE_1379040060_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030207",
+      "label": "S4 黑洞·近身倾泻",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030207"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040070",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40302075 -> Skill=1379040070，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040070_5.MGE.Id=1379040070; MGEConfig.Id=1379040075",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040070.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040070.MGE_1379040070_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030208",
+      "label": "S4 黑洞·连射共振",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030208"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040080",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40302085 -> Skill=1379040080，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040080_5.MGE.Id=1379040080; MGEConfig.Id=1379040085",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040080.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040080.MGE_1379040080_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030301",
+      "label": "S4 黑洞·引力绞杀",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030301"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "黑洞伤害频率，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1319052005",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40303013 -> Skill=1319052005，最高天赋等级=3；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319052005_3.MGE.Id=1319052005; MGEConfig.Id=1319052005",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319052005.MGEClass=/Game/Abilities/Skills/Season/S5/BlackHole/MGE/MGE_1319052005.MGE_1319052005_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030305",
+      "label": "S4 黑洞·广域虹吸",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030305"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球拾取范围，不修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040090",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40303055 -> Skill=1379040090，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040090_5.MGE.Id=1379040090; MGEConfig.Id=1379040095",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040090.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040090.MGE_1379040090_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030306",
+      "label": "S4 黑洞·精密拾取",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030306"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040100",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40303065 -> Skill=1379040100，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040100_5.MGE.Id=1379040100; MGEConfig.Id=1379040105",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040100.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040100.MGE_1379040100_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030307",
+      "label": "S4 黑洞·击裂聚能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030307"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040110",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40303075 -> Skill=1379040110，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040110_5.MGE.Id=1379040110; MGEConfig.Id=1379040115",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040110.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040110.MGE_1379040110_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030308",
+      "label": "S4 黑洞·拾光续能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030308"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040250",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40303085 -> Skill=1379040250，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040250_5.MGE.Id=1379040250; MGEConfig.Id=1379040255",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040250.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040250.MGE_1379040250_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030403",
+      "label": "S4 黑洞·扭曲共振",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030403"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能持续时间，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1319052003",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40304031 -> Skill=1319052003，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319052003_1.MGE.Id=1319052003; MGEConfig.Id=1319052003",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319052003.MGEClass=/Game/Abilities/Skills/Season/S5/BlackHole/MGE/MGE_1319052003.MGE_1319052003_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030405",
+      "label": "S4 黑洞·光能潮汐",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030405"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040260",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40304055 -> Skill=1379040260，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040260_5.MGE.Id=1379040260; MGEConfig.Id=1379040265",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040260.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040260.MGE_1379040260_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030406",
+      "label": "S4 黑洞·无伤蓄光",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030406"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040270",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40304065 -> Skill=1379040270，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040270_5.MGE.Id=1379040270; MGEConfig.Id=1379040275",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040270.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040270.MGE_1379040270_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030407",
+      "label": "S4 黑洞·技能萃光",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030407"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040280",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40304075 -> Skill=1379040280，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040280_5.MGE.Id=1379040280; MGEConfig.Id=1379040285",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040280.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040280.MGE_1379040280_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030408",
+      "label": "S4 黑洞·灵光先兆",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030408"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040290",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40304085 -> Skill=1379040290，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040290_5.MGE.Id=1379040290; MGEConfig.Id=1379040295",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040290.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040290.MGE_1379040290_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030501",
+      "label": "S4 黑洞·广域视界",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030501"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能范围，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1319052006",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40305013 -> Skill=1319052006，最高天赋等级=3；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319052006_3.MGE.Id=1319052006; MGEConfig.Id=1319052006",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319052006.MGEClass=/Game/Abilities/Skills/Season/S5/BlackHole/MGE/MGE_1319052006.MGE_1319052006_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030503",
+      "label": "S4 黑洞·质量汲取",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030503"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能持续时间，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1319052009",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40305033 -> Skill=1319052009，最高天赋等级=3；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319052009_3.MGE.Id=1319052009; MGEConfig.Id=1319052009",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319052009.MGEClass=/Game/Abilities/Skills/Season/S5/BlackHole/MGE/MGE_1319052009.MGE_1319052009_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030505",
+      "label": "S4 黑洞·暗能回流",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030505"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040160",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40305055 -> Skill=1379040160，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040160_5.MGE.Id=1379040160; MGEConfig.Id=1379040165",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040160.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040160.MGE_1379040160_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030506",
+      "label": "S4 黑洞·急速充能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030506"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040170",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40305065 -> Skill=1379040170，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040170_5.MGE.Id=1379040170; MGEConfig.Id=1379040175",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040170.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040170.MGE_1379040170_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030508",
+      "label": "S4 黑洞·迅捷充能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030508"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040190",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40305085 -> Skill=1379040190，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040190_5.MGE.Id=1379040190; MGEConfig.Id=1379040195",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040190.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040190.MGE_1379040190_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030602",
+      "label": "S4 黑洞·连锁坍缩",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030602"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。",
+      "evidence": {
+        "passiveSkillId": "1319052004",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40306021 -> Skill=1319052004，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1319052004_1.MGE.Id=1319052004; MGEConfig.Id=1319052004",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1319052004.MGEClass=/Game/Abilities/Skills/Season/S5/BlackHole/MGE/MGE_1319052004.MGE_1319052004_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030605",
+      "label": "S4 黑洞·溢能回充",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030605"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040200",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40306055 -> Skill=1379040200，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040200_5.MGE.Id=1379040200; MGEConfig.Id=1379040205",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040200.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040200.MGE_1379040200_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030606",
+      "label": "S4 黑洞·赛季续航",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030606"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能持续时间，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040210",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40306065 -> Skill=1379040210，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040210_5.MGE.Id=1379040210; MGEConfig.Id=1379040215",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040210.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040210.MGE_1379040210_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030607",
+      "label": "S4 黑洞·节律共振",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030607"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040220",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40306075 -> Skill=1379040220，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040220_5.MGE.Id=1379040220; MGEConfig.Id=1379040225",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040220.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040220.MGE_1379040220_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:4030608",
+      "label": "S4 黑洞·满溢转化",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030608"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。",
+      "evidence": {
+        "passiveSkillId": "1379040320",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentBasicTable.json:40306085 -> Skill=1379040320，最高天赋等级=5；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040320_5.MGE.Id=1379040320; MGEConfig.Id=1379040325",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040320.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040320.MGE_1379040320_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040301",
+      "label": "S4 黑洞·弱点补正",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040301"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "改变弱点结算概率，没有直接增伤属性行。",
+      "evidence": {
+        "passiveSkillId": "1379040010",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:61 -> Skill=1379040010，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040010_1.MGE.Id=1379040010; MGEConfig.Id=1379040011",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040010.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040010.MGE_1379040010_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040302",
+      "label": "S4 黑洞·殉爆连锁",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040302"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。",
+      "evidence": {
+        "passiveSkillId": "1379040020",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:62 -> Skill=1379040020，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040020_1.MGE.Id=1379040020; MGEConfig.Id=1379040021",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040020.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040020.MGE_1379040020_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040305",
+      "label": "S4 黑洞·拾光生金",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040305"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "金币获取，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040230",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:65 -> Skill=1379040230，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040230_1.MGE.Id=1379040230; MGEConfig.Id=1379040231",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040230.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040230.MGE_1379040230_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040306",
+      "label": "S4 黑洞·光能补弹",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040306"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "特殊弹药恢复/过充，不属于伤害乘区。",
+      "evidence": {
+        "passiveSkillId": "1379040240",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:66 -> Skill=1379040240，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040240_1.MGE.Id=1379040240; MGEConfig.Id=1379040241",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040240.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040240.MGE_1379040240_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040312",
+      "label": "S4 黑洞·虚空裂变",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040312"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。",
+      "evidence": {
+        "passiveSkillId": "1379040130",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:68 -> Skill=1379040130，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040130_1.MGE.Id=1379040130; MGEConfig.Id=1379040131",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040130.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040130.MGE_1379040130_C"
+        ]
+      }
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040314",
+      "label": "S4 黑洞·暗能过充",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040314"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。",
+      "evidence": {
+        "passiveSkillId": "1379040150",
+        "basis": [
+          "refs/Exports/NZM/Content/DataTables/SeasonTalent/SeasonTalentPassiveConfigTable.json:70 -> Skill=1379040150，最高天赋等级=1；所有等级共用此来源身份。",
+          "refs/Exports/NZM/Content/DataTables/MGE/MGEPassive_Season.json:1379040150_1.MGE.Id=1379040150; MGEConfig.Id=1379040151",
+          "refs/Exports/NZM/Content/DataTables/MGE/GPModularGameplayEffectTable.json:1379040150.MGEClass=/Game/Abilities/Skills/Season/S5/Normal/MGE/MGE_1379040150.MGE_1379040150_C"
         ]
       }
     }

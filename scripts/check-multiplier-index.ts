@@ -9,6 +9,10 @@ import passives from "@/data/season-talents/s3/passives.json";
 import grapplingHook from "@/data/season-talents/s3/grappling-hook.json";
 import ironFist from "@/data/season-talents/s3/iron-fist.json";
 import zero from "@/data/season-talents/s3/zero.json";
+import s4DualStar from "@/data/season-talents/s4/dual-star.json";
+import s4Matrix from "@/data/season-talents/s4/matrix-symbiosis.json";
+import s4BlackHole from "@/data/season-talents/s4/black-hole.json";
+import s4Passives from "@/data/season-talents/s4/passives.json";
 import huntingSpeedrun from "@/data/guides/hunting-speedrun.json";
 import originRunes from "@/data/origin/runes.json";
 import originAffixes from "@/data/origin/affixes.json";
@@ -343,6 +347,18 @@ for (const passive of passives.passives) {
 }
 
 const relationKeys = new Set<string>();
+for (const tree of [s4DualStar, s4Matrix, s4BlackHole]) {
+  const options = s4Passives.trees[tree.id as keyof typeof s4Passives.trees];
+  const entries = [
+    ...tree.nodes.map(node => ({ id: node.id, name: node.name, passive: false })),
+    ...[...options.light, ...options.dark].map(passive => ({ id: passive.id, name: passive.name, passive: true })),
+  ];
+  for (const entry of entries) {
+    const id = `season:s4:${tree.id}:${entry.passive ? "passive:" : ""}${entry.id}`;
+    if (!coveredIds.has(id)) errors.push(`S4 天赋未处理：${id} ${entry.name}`);
+  }
+}
+
 for (const relation of PROVIDER_RELATIONS) {
   const key = `${relation.effectId}:${relation.modifierTypeId}:${relation.sourceHref}`;
   if (relationKeys.has(key)) errors.push(`重复关系：${key}`);

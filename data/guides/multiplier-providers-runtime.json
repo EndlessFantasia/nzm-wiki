@@ -6777,6 +6777,412 @@
         "weapon-damage",
         "skill-damage"
       ]
+    },
+    {
+      "id": "season:s4:dual-star:4010102",
+      "label": "S4 双星·双星",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010102"
+      },
+      "modifierTypeIds": [
+        "correction-parameter"
+      ]
+    },
+    {
+      "id": "season:s4:dual-star:4010202",
+      "label": "S4 双星·空间涟漪",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010202"
+      },
+      "modifierTypeIds": [
+        "correction-parameter"
+      ]
+    },
+    {
+      "id": "season:s4:dual-star:4010402",
+      "label": "S4 双星·空间坍缩",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010402"
+      },
+      "modifierTypeIds": [
+        "correction-parameter"
+      ]
+    },
+    {
+      "id": "season:s4:dual-star:4010501",
+      "label": "S4 双星·空间共振",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010501"
+      },
+      "modifierTypeIds": [
+        "all-damage"
+      ]
+    },
+    {
+      "id": "season:s4:dual-star:4010503",
+      "label": "S4 双星·空间共鸣",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010503"
+      },
+      "modifierTypeIds": [
+        "weapon-damage"
+      ]
+    },
+    {
+      "id": "season:s4:dual-star:4010507",
+      "label": "S4 双星·蓄能重击",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010507"
+      },
+      "modifierTypeIds": [
+        "weapon-skill-damage"
+      ]
+    },
+    {
+      "id": "season:s4:dual-star:4010602",
+      "label": "S4 双星·坐标锁定",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010602"
+      },
+      "modifierTypeIds": [
+        "all-damage"
+      ]
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040103",
+      "label": "S4 双星·迫近护体",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040103"
+      },
+      "modifierTypeIds": [
+        "weapon-damage"
+      ]
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040104",
+      "label": "S4 双星·炽热弹链",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040104"
+      },
+      "modifierTypeIds": [
+        "weapon-hit-damage"
+      ]
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040111",
+      "label": "S4 双星·暗蚀噬弱",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040111"
+      },
+      "modifierTypeIds": [
+        "weapon-damage",
+        "weakness"
+      ]
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040113",
+      "label": "S4 双星·守势增幅",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040113"
+      },
+      "modifierTypeIds": [
+        "weapon-damage"
+      ]
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040115",
+      "label": "S4 双星·猎场跃升",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040115"
+      },
+      "modifierTypeIds": [
+        "game-mode"
+      ]
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040116",
+      "label": "S4 双星·暗能补弹",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040116"
+      },
+      "modifierTypeIds": [
+        "weapon-damage"
+      ]
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020402",
+      "label": "S4 矩阵共生·静默过载",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020402"
+      },
+      "modifierTypeIds": [
+        "weapon-damage"
+      ]
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020507",
+      "label": "S4 矩阵共生·蓄能重击",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020507"
+      },
+      "modifierTypeIds": [
+        "weapon-skill-damage"
+      ]
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020602",
+      "label": "S4 矩阵共生·巨构投影",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020602"
+      },
+      "modifierTypeIds": [
+        "weapon-damage"
+      ]
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040203",
+      "label": "S4 矩阵共生·迫近护体",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040203"
+      },
+      "modifierTypeIds": [
+        "weapon-damage"
+      ]
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040204",
+      "label": "S4 矩阵共生·炽热弹链",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040204"
+      },
+      "modifierTypeIds": [
+        "weapon-hit-damage"
+      ]
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040211",
+      "label": "S4 矩阵共生·暗蚀噬弱",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040211"
+      },
+      "modifierTypeIds": [
+        "weapon-damage",
+        "weakness"
+      ]
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040213",
+      "label": "S4 矩阵共生·守势增幅",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040213"
+      },
+      "modifierTypeIds": [
+        "weapon-damage"
+      ]
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040215",
+      "label": "S4 矩阵共生·猎场跃升",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040215"
+      },
+      "modifierTypeIds": [
+        "game-mode"
+      ]
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040216",
+      "label": "S4 矩阵共生·暗能补弹",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040216"
+      },
+      "modifierTypeIds": [
+        "weapon-damage"
+      ]
+    },
+    {
+      "id": "season:s4:black-hole:4030303",
+      "label": "S4 黑洞·扭曲瓦解",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030303"
+      },
+      "modifierTypeIds": [
+        "vulnerability"
+      ]
+    },
+    {
+      "id": "season:s4:black-hole:4030401",
+      "label": "S4 黑洞·瞬态奇点",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030401"
+      },
+      "modifierTypeIds": [
+        "vulnerability"
+      ]
+    },
+    {
+      "id": "season:s4:black-hole:4030507",
+      "label": "S4 黑洞·蓄能重击",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030507"
+      },
+      "modifierTypeIds": [
+        "weapon-skill-damage"
+      ]
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040303",
+      "label": "S4 黑洞·迫近护体",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040303"
+      },
+      "modifierTypeIds": [
+        "weapon-damage"
+      ]
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040304",
+      "label": "S4 黑洞·炽热弹链",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040304"
+      },
+      "modifierTypeIds": [
+        "weapon-hit-damage"
+      ]
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040311",
+      "label": "S4 黑洞·暗蚀噬弱",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040311"
+      },
+      "modifierTypeIds": [
+        "weapon-damage",
+        "weakness"
+      ]
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040313",
+      "label": "S4 黑洞·守势增幅",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040313"
+      },
+      "modifierTypeIds": [
+        "weapon-damage"
+      ]
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040315",
+      "label": "S4 黑洞·猎场跃升",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040315"
+      },
+      "modifierTypeIds": [
+        "game-mode"
+      ]
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040316",
+      "label": "S4 黑洞·暗能补弹",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040316"
+      },
+      "modifierTypeIds": [
+        "weapon-damage"
+      ]
     }
   ],
   "exclusions": [
@@ -18247,6 +18653,1086 @@
       },
       "reasonCode": "unverified-evidence",
       "reason": "武器专属词条在正式服没有 AffixID 到被动技能的映射表，被动身份未核定，不按描述推定乘区。"
+    },
+    {
+      "id": "season:s4:dual-star:4010205",
+      "label": "S4 双星·精准锁定",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010205"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:dual-star:4010206",
+      "label": "S4 双星·群伤聚能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010206"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:dual-star:4010207",
+      "label": "S4 双星·近身倾泻",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010207"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:dual-star:4010208",
+      "label": "S4 双星·连射共振",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010208"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:dual-star:4010301",
+      "label": "S4 双星·时间锚定",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010301"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能持续时间，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:dual-star:4010303",
+      "label": "S4 双星·空间回收",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010303"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:dual-star:4010305",
+      "label": "S4 双星·广域虹吸",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010305"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球拾取范围，不修改伤害属性。"
+    },
+    {
+      "id": "season:s4:dual-star:4010306",
+      "label": "S4 双星·精密拾取",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010306"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:dual-star:4010307",
+      "label": "S4 双星·击裂聚能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010307"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:dual-star:4010308",
+      "label": "S4 双星·拾光续能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010308"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:dual-star:4010405",
+      "label": "S4 双星·光能潮汐",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010405"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:dual-star:4010406",
+      "label": "S4 双星·无伤蓄光",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010406"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:dual-star:4010407",
+      "label": "S4 双星·技能萃光",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010407"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:dual-star:4010408",
+      "label": "S4 双星·灵光先兆",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010408"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:dual-star:4010505",
+      "label": "S4 双星·暗能回流",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010505"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:dual-star:4010506",
+      "label": "S4 双星·急速充能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010506"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:dual-star:4010508",
+      "label": "S4 双星·迅捷充能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010508"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:dual-star:4010605",
+      "label": "S4 双星·溢能回充",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010605"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:dual-star:4010606",
+      "label": "S4 双星·赛季续航",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010606"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能持续时间，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:dual-star:4010607",
+      "label": "S4 双星·节律共振",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010607"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:dual-star:4010608",
+      "label": "S4 双星·满溢转化",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "nodeId": "4010608"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040101",
+      "label": "S4 双星·弱点补正",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040101"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "改变弱点结算概率，没有直接增伤属性行。"
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040102",
+      "label": "S4 双星·殉爆连锁",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040102"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。"
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040105",
+      "label": "S4 双星·拾光生金",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040105"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "金币获取，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040106",
+      "label": "S4 双星·光能补弹",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040106"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "特殊弹药恢复/过充，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040112",
+      "label": "S4 双星·虚空裂变",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040112"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。"
+    },
+    {
+      "id": "season:s4:dual-star:passive:2040114",
+      "label": "S4 双星·暗能过充",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "dual-star",
+        "passiveId": "2040114"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020102",
+      "label": "S4 矩阵共生·矩阵共生",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020102"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "矩阵共生基础领域提供射速加成，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020202",
+      "label": "S4 矩阵共生·阵列共鸣",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020202"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "射速/攻击速度加成，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020205",
+      "label": "S4 矩阵共生·精准锁定",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020205"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020206",
+      "label": "S4 矩阵共生·群伤聚能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020206"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020207",
+      "label": "S4 矩阵共生·近身倾泻",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020207"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020208",
+      "label": "S4 矩阵共生·连射共振",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020208"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020301",
+      "label": "S4 矩阵共生·广域展开",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020301"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能范围，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020303",
+      "label": "S4 矩阵共生·相位滞留",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020303"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能持续时间，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020305",
+      "label": "S4 矩阵共生·广域虹吸",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020305"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球拾取范围，不修改伤害属性。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020306",
+      "label": "S4 矩阵共生·精密拾取",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020306"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020307",
+      "label": "S4 矩阵共生·击裂聚能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020307"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020308",
+      "label": "S4 矩阵共生·拾光续能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020308"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020405",
+      "label": "S4 矩阵共生·光能潮汐",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020405"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020406",
+      "label": "S4 矩阵共生·无伤蓄光",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020406"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020407",
+      "label": "S4 矩阵共生·技能萃光",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020407"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020408",
+      "label": "S4 矩阵共生·灵光先兆",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020408"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020501",
+      "label": "S4 矩阵共生·偏导加速",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020501"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "移速加成，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020503",
+      "label": "S4 矩阵共生·超导回能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020503"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020505",
+      "label": "S4 矩阵共生·暗能回流",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020505"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020506",
+      "label": "S4 矩阵共生·急速充能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020506"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020508",
+      "label": "S4 矩阵共生·迅捷充能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020508"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020605",
+      "label": "S4 矩阵共生·溢能回充",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020605"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020606",
+      "label": "S4 矩阵共生·赛季续航",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020606"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能持续时间，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020607",
+      "label": "S4 矩阵共生·节律共振",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020607"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:4020608",
+      "label": "S4 矩阵共生·满溢转化",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "nodeId": "4020608"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040201",
+      "label": "S4 矩阵共生·弱点补正",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040201"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "改变弱点结算概率，没有直接增伤属性行。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040202",
+      "label": "S4 矩阵共生·殉爆连锁",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040202"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040205",
+      "label": "S4 矩阵共生·拾光生金",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040205"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "金币获取，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040206",
+      "label": "S4 矩阵共生·光能补弹",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040206"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "特殊弹药恢复/过充，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040212",
+      "label": "S4 矩阵共生·虚空裂变",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040212"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。"
+    },
+    {
+      "id": "season:s4:matrix-symbiosis:passive:2040214",
+      "label": "S4 矩阵共生·暗能过充",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "matrix-symbiosis",
+        "passiveId": "2040214"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。"
+    },
+    {
+      "id": "season:s4:black-hole:4030102",
+      "label": "S4 黑洞·黑洞",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030102"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。"
+    },
+    {
+      "id": "season:s4:black-hole:4030202",
+      "label": "S4 黑洞·扭曲殉爆",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030202"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。"
+    },
+    {
+      "id": "season:s4:black-hole:4030205",
+      "label": "S4 黑洞·精准锁定",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030205"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:black-hole:4030206",
+      "label": "S4 黑洞·群伤聚能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030206"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:black-hole:4030207",
+      "label": "S4 黑洞·近身倾泻",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030207"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:black-hole:4030208",
+      "label": "S4 黑洞·连射共振",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030208"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:black-hole:4030301",
+      "label": "S4 黑洞·引力绞杀",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030301"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "黑洞伤害频率，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:black-hole:4030305",
+      "label": "S4 黑洞·广域虹吸",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030305"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球拾取范围，不修改伤害属性。"
+    },
+    {
+      "id": "season:s4:black-hole:4030306",
+      "label": "S4 黑洞·精密拾取",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030306"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:black-hole:4030307",
+      "label": "S4 黑洞·击裂聚能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030307"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:black-hole:4030308",
+      "label": "S4 黑洞·拾光续能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030308"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:black-hole:4030403",
+      "label": "S4 黑洞·扭曲共振",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030403"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能持续时间，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:black-hole:4030405",
+      "label": "S4 黑洞·光能潮汐",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030405"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:black-hole:4030406",
+      "label": "S4 黑洞·无伤蓄光",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030406"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:black-hole:4030407",
+      "label": "S4 黑洞·技能萃光",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030407"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:black-hole:4030408",
+      "label": "S4 黑洞·灵光先兆",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030408"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:black-hole:4030501",
+      "label": "S4 黑洞·广域视界",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030501"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能范围，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:black-hole:4030503",
+      "label": "S4 黑洞·质量汲取",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030503"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能持续时间，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:black-hole:4030505",
+      "label": "S4 黑洞·暗能回流",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030505"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:black-hole:4030506",
+      "label": "S4 黑洞·急速充能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030506"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:black-hole:4030508",
+      "label": "S4 黑洞·迅捷充能",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030508"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:black-hole:4030602",
+      "label": "S4 黑洞·连锁坍缩",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030602"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。"
+    },
+    {
+      "id": "season:s4:black-hole:4030605",
+      "label": "S4 黑洞·溢能回充",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030605"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:black-hole:4030606",
+      "label": "S4 黑洞·赛季续航",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030606"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能持续时间，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:black-hole:4030607",
+      "label": "S4 黑洞·节律共振",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030607"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "技能充能速度或充能量，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:black-hole:4030608",
+      "label": "S4 黑洞·满溢转化",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "nodeId": "4030608"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "能量球获取、能量层数或触发条件，不直接修改伤害属性。"
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040301",
+      "label": "S4 黑洞·弱点补正",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040301"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "改变弱点结算概率，没有直接增伤属性行。"
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040302",
+      "label": "S4 黑洞·殉爆连锁",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040302"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。"
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040305",
+      "label": "S4 黑洞·拾光生金",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040305"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "金币获取，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040306",
+      "label": "S4 黑洞·光能补弹",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040306"
+      },
+      "reasonCode": "not-damage-multiplier",
+      "reason": "特殊弹药恢复/过充，不属于伤害乘区。"
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040312",
+      "label": "S4 黑洞·虚空裂变",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040312"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。"
+    },
+    {
+      "id": "season:s4:black-hole:passive:2040314",
+      "label": "S4 黑洞·暗能过充",
+      "source": {
+        "type": "season-talent",
+        "season": "s4",
+        "tree": "black-hole",
+        "passiveId": "2040314"
+      },
+      "reasonCode": "independent-damage-event",
+      "reason": "独立伤害来源；基础伤害不作为增伤属性登记。"
     }
   ]
 }

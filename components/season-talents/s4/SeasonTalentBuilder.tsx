@@ -14,6 +14,7 @@ import {
   type RefObject,
 } from "react";
 import { TalentPassiveSelector } from "@/components/season-talents/TalentPassiveSelector";
+import { MultiplierSourceBadges } from "@/components/MultiplierBadges";
 import {
   getSpentTalentPoints,
   isTalentNodeUnlocked,
@@ -306,8 +307,8 @@ function MutualPairCards({
   });
 }
 
-function NodeDetail({ node, level, unlocked, spentPoints, pointLimit, onChangeLevel, onReset }: {
-  node: SeasonTalentNodeData; level: number; unlocked: boolean; spentPoints: number; pointLimit: number;
+function NodeDetail({ talentId, node, level, unlocked, spentPoints, pointLimit, onChangeLevel, onReset }: {
+  talentId: S4TalentId; node: SeasonTalentNodeData; level: number; unlocked: boolean; spentPoints: number; pointLimit: number;
   onChangeLevel: (level: number) => void; onReset: () => void;
 }) {
   const [previewLevel, setPreviewLevel] = useTalentPreviewLevel(node.id, level);
@@ -316,6 +317,9 @@ function NodeDetail({ node, level, unlocked, spentPoints, pointLimit, onChangeLe
       canIncrease={unlocked && level < node.maxLevel && spentPoints < pointLimit} onChange={onChangeLevel} />}>
     {!node.isRoot && <TalentLevelPreview level={previewLevel} maxLevel={node.maxLevel} onChange={setPreviewLevel} />}
     <p className="whitespace-pre-line"><RichText>{node.descriptions[previewLevel - 1] ?? "暂无技能说明"}</RichText></p>
+    <div id={`multiplier-provider-node-${node.id}`} data-multiplier-provider-target={`node-${node.id}`} className="mt-3">
+      <MultiplierSourceBadges source={{ type: "season-talent", season: "s4", tree: talentId, nodeId: node.id }} />
+    </div>
   </TalentDetails>;
 }
 
@@ -329,6 +333,9 @@ function PassiveSelector({ talentId, energy, passives, equippedId, previewId, on
       "--s4-accent-soft": energy === "light" ? "#e2c95f20" : "#78c9f420" } as CSSProperties}
     options={passives} previewId={previewId} equippedId={equippedId} onPreview={onPreview} onApply={onApply} onClose={onClose}>
     <p className="whitespace-pre-line"><RichText>{selected?.description ?? ""}</RichText></p>
+    {selected && <div id={`multiplier-provider-passive-${selected.id}`} data-multiplier-provider-target={`passive-${selected.id}`} className="mt-3">
+      <MultiplierSourceBadges source={{ type: "season-talent", season: "s4", tree: talentId, passiveId: selected.id }} />
+    </div>}
   </TalentPassiveSelector>;
 }
 
@@ -511,6 +518,7 @@ export function S4SeasonTalentBuilder({
       <TalentWorkspace details={
             <NodeDetail
               key={selectedNode.id}
+              talentId={talentId}
               node={selectedNode}
               level={selectedLevel}
               unlocked={isTalentNodeUnlocked(selectedNode, tree.nodes, levels)}
