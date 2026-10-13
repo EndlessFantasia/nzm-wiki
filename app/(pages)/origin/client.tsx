@@ -189,7 +189,6 @@ export default function OriginRunesClient({ catalog, showOperation, onShowOperat
 
   return (
     <section id="runes" aria-label="强化图鉴" className="scroll-mt-6">
-      <p className="mb-4 text-sm leading-6 text-zinc-400">图鉴整理中，当前展示游戏内描述，数值尚未核验。</p>
       <div className="mb-5 rounded-lg border border-zinc-700 bg-zinc-800/50 p-4">
         <div role="search" className="relative mb-6 max-w-xl">
           <label htmlFor="origin-rune-search" className="sr-only">搜索强化名称或 ID</label>
