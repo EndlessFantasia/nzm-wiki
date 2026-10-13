@@ -3,11 +3,14 @@
 Stage explicit patch containers in place, then apply their latest asset versions
 to refs. No containers are copied. Apply requires an explicit separate invocation;
 old reference files are backed up and concurrent reference changes are rejected.
+Use -Asset with exact uasset/luac paths to select assets from mixed containers;
+unselected entries are recorded in the manifest instead of exported.
 #>
 param(
     [Parameter(Mandatory)][ValidateSet('Stage', 'Apply')][string]$Mode,
     [Parameter(Mandatory)][string]$OutputRoot,
     [string[]]$Container,
+    [string[]]$Asset,
     [string]$AssemblyPath = 'D:/Workspace/FModel/FModel.Cli/bin/Release/net10.0/FModel.Cli.dll',
     [string]$ProfilePath = 'MD/_local/nzm-assets/nzm.json',
     [string]$ExcludeContainer = 'P_1.0.50.485.0_Patch_Season_4261608_P.pak',
@@ -73,6 +76,11 @@ if ($Mode -eq 'Apply') {
     exit 0
 }
 if (!$Container -or (Test-Path -LiteralPath $OutputRoot)) { throw 'Stage needs explicit containers and a new output root.' }
+$selected = [Collections.Generic.HashSet[string]]::new([StringComparer]::OrdinalIgnoreCase)
+foreach ($path in $Asset) {
+    if ($path -notmatch '^NZM/Content/(?!.*\.\.)[^:]+\.(uasset|luac)$') { throw 'Selection requires exact uasset or luac paths.' }
+    if (!$selected.Add($path)) { throw 'Duplicate selected asset.' }
+}
 $AssemblyPath = [IO.Path]::GetFullPath($AssemblyPath, $projectRoot)
 $ProfilePath = [IO.Path]::GetFullPath($ProfilePath, $projectRoot)
 $assembly = [Reflection.Assembly]::LoadFrom($AssemblyPath)
@@ -86,7 +94,7 @@ $profileBase = Split-Path -Parent $ProfilePath
 $profile.Directory = [IO.Path]::GetFullPath($profile.Directory, $profileBase)
 if ($profile.Mappings) { $profile.Mappings = [IO.Path]::GetFullPath($profile.Mappings, $profileBase) }
 $profile.OutputDirectory = SafePath $OutputRoot 'exports'
-$manifest = [ordered]@{schemaVersion=1; status='in-progress'; destination=$destinationRoot; excludedContainer=$ExcludeContainer; toolSha256=(Hash $AssemblyPath); containers=@(); assets=@(); files=@()}
+$manifest = [ordered]@{schemaVersion=1; status='in-progress'; destination=$destinationRoot; excludedContainer=$ExcludeContainer; toolSha256=(Hash $AssemblyPath); containers=@(); assets=@(); skippedEntries=@(); files=@()}
 $session = $null
 $stdout = [Console]::Out
 [Console]::SetOut([IO.TextWriter]::Null)
@@ -105,12 +113,22 @@ try {
         $manifest.containers += $listing.container
         $listing | ConvertTo-Json -Depth 10 | Set-Content -LiteralPath (SafePath $OutputRoot ($listing.container.name + '.list.json')) -Encoding utf8
         foreach ($item in $listing.assets) {
+            if ($selected.Count -gt 0) {
+                $logicalPath = $item.path -replace '\.(uexp|ubulk|uptnl)$', '.uasset'
+                if (!$selected.Contains($logicalPath)) {
+                    $manifest.skippedEntries += [ordered]@{path=$item.path; sourceContainer=$listing.container.name}
+                    continue
+                }
+            }
             if ($item.path -notmatch '^NZM/Content/(?!.*\.\.)[^:]+\.(uasset|uexp|ubulk|uptnl|luac)$') { throw "Unsupported patch entry: $($item.path)" }
             if ($item.path -notmatch '\.(uasset|luac)$') { continue }
             if (!$assets.ContainsKey($item.path) -or $assets[$item.path].readOrder -lt $listing.container.readOrder) {
                 $assets[$item.path] = [ordered]@{asset=$item.path; sourceContainer=$listing.container.name; readOrder=$listing.container.readOrder}
             }
         }
+    }
+    foreach ($path in $selected) {
+        if (!$assets.ContainsKey($path)) { throw "Selected asset absent from requested containers: $path" }
     }
     if ($assets.Count -gt $MaxAssets) { throw 'Selection exceeds the asset limit.' }
     $textures = @()
