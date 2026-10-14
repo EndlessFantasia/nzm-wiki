@@ -123,6 +123,10 @@ function WeaponImage({ name, size = "normal" }: { name: string; size?: "small" |
   );
 }
 
+function withUnit(value: string, unit: string): string {
+  return value === "-" ? value : `${value}${unit}`;
+}
+
 function formatValue(val: number | undefined): string {
   if (val === undefined || val === -1) return "-";
   return String(val);
@@ -609,7 +613,7 @@ function DetailedCard({ weapon }: { weapon: WeaponCatalogEntry }) {
         {isMelee ? (
           <MeleeCatalogStats sources={weapon.meleeSources} hpMultiplier={hpMul} />
         ) : (
-          <div className="mt-4 grid grid-cols-1 gap-y-2 text-base sm:grid-cols-2 sm:gap-x-6">
+          <div className="mt-4 grid grid-cols-1 gap-y-2 text-base tabular-nums sm:grid-cols-2 sm:gap-x-6">
             <div className="flex justify-between">
                 <span className="text-zinc-500">单发伤害</span>
                 <span className="text-white">{formatDamage(mode, hpMul)}</span>
@@ -640,13 +644,20 @@ function DetailedCard({ weapon }: { weapon: WeaponCatalogEntry }) {
               <div className="flex justify-between">
                 <span className="text-zinc-500">弱点倍率</span>
                 <span className="text-white">
-                  {formatValue(getResolvedFieldValue(mode.weaknessMultiplier))}
+                  {getResolvedFieldValue(mode.enableWeakness) === true
+                    ? withUnit(
+                        formatPrecise(
+                          getResolvedFieldValue(mode.weaknessMultiplier),
+                        ),
+                        "×",
+                      )
+                    : "-"}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-zinc-500">破韧伤害</span>
                 <span className="text-white">
-                  {formatValue(getResolvedFieldValue(mode.damage.toughness))}
+                  {formatPrecise(getResolvedFieldValue(mode.damage.toughness))}
                 </span>
               </div>
               <div className="flex justify-between">
@@ -654,12 +665,14 @@ function DetailedCard({ weapon }: { weapon: WeaponCatalogEntry }) {
                 <span className="text-white">
                   {fullReload === undefined
                     ? "-"
-                    : (Math.ceil(fullReload * 100) / 100).toFixed(2)}
+                    : `${(Math.ceil(fullReload * 100) / 100).toFixed(2)}s`}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-zinc-500">技能冷却</span>
-                <span className="text-white">{formatValue(chargeTime)}</span>
+                <span className="text-white">
+                  {withUnit(formatValue(chargeTime), "s")}
+                </span>
               </div>
           </div>
         )}
