@@ -384,6 +384,142 @@ body:has(.home-page) {
   }
 }
 
+/* 首页：地图氛围背景 + 入场动效 */
+@keyframes home-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@keyframes home-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes home-logo-sweep {
+  0% {
+    background-position: 100% 0;
+  }
+  22%,
+  100% {
+    background-position: 0% 0;
+  }
+}
+
+.home-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.home-backdrop img {
+  object-fit: cover;
+  filter: blur(6px) brightness(0.42) saturate(0.9);
+  transform: scale(1.06);
+  animation: home-fade-in 700ms ease-out backwards;
+}
+
+.home-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 65% at 50% 45%, transparent 30%, rgba(12, 12, 13, 0.88) 100%),
+    linear-gradient(to bottom, transparent 60%, var(--canvas));
+}
+
+.home-shell {
+  z-index: 1;
+}
+
+.home-nav-card,
+.home-community,
+.home-shortcuts {
+  border-color: rgba(255, 255, 255, 0.14);
+  background-color: rgba(39, 39, 42, 0.36);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  backdrop-filter: blur(14px) saturate(1.2);
+}
+
+.home-nav-card:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(63, 63, 70, 0.45);
+}
+
+.home-nav-card:focus-visible {
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.home-header {
+  animation: home-rise-in 480ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+}
+
+.home-nav-card {
+  animation: home-rise-in 420ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  animation-delay: calc(var(--i, 0) * 60ms + 140ms);
+}
+
+.home-community {
+  animation: home-rise-in 420ms cubic-bezier(0.2, 0.7, 0.2, 1) 500ms backwards;
+}
+
+.home-shortcuts {
+  animation: home-rise-in 420ms cubic-bezier(0.2, 0.7, 0.2, 1) 560ms backwards;
+}
+
+.home-logo-wrap {
+  position: relative;
+  display: block;
+  line-height: 0;
+}
+
+.home-logo-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.8) 50%,
+    transparent 62%
+  );
+  background-size: 250% 100%;
+  background-position: 100% 0;
+  -webkit-mask: var(--logo-mask) top center / 100% auto no-repeat;
+  mask: var(--logo-mask) top center / 100% auto no-repeat;
+  animation: home-logo-sweep 6s ease-in-out 400ms infinite;
+}
+
+.home-nav-icon {
+  transition: color 200ms ease, transform 200ms ease;
+}
+
+.home-nav-card:hover .home-nav-icon {
+  transform: translateY(-3px);
+}
+
+.home-nav-accent {
+  position: absolute;
+  right: 18%;
+  bottom: 0;
+  left: 18%;
+  z-index: 2;
+  height: 2px;
+  border-radius: 9999px;
+  background: #fbbf24;
+  transform: scaleX(0);
+  transition: transform 220ms ease;
+}
+
+.home-nav-card:hover .home-nav-accent {
+  transform: scaleX(1);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .site-nav-dialog[open] {
     animation: none;
@@ -391,6 +527,20 @@ body:has(.home-page) {
 
   .home-nav-card,
   .home-nav-card::before {
+    transition: none;
+  }
+
+  .home-header,
+  .home-nav-card,
+  .home-community,
+  .home-shortcuts,
+  .home-backdrop img,
+  .home-logo-wrap::after {
+    animation: none;
+  }
+
+  .home-nav-icon,
+  .home-nav-accent {
     transition: none;
   }
 

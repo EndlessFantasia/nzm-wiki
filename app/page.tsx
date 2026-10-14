@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { getAssetPath } from "@/lib/path";
 import { IcpFilingNotice } from "@/components/IcpFilingNotice";
+import { HomeBackdrop } from "@/components/HomeBackdrop";
 
 const GITHUB_FORK = "https://github.com/lostlightll/nzm-wiki";
 
@@ -21,6 +22,7 @@ interface NavCardProps {
   href: string;
   icon: React.ReactNode;
   title: string;
+  index: number;
 }
 
 const NAV_ITEMS = [
@@ -56,18 +58,20 @@ const NAV_ITEMS = [
   },
 ];
 
-function NavCard({ href, icon, title }: NavCardProps) {
+function NavCard({ href, icon, title, index }: NavCardProps) {
   return (
     <Link
       href={href}
+      style={{ "--i": index } as React.CSSProperties}
       className="home-nav-card group flex flex-col items-center justify-center rounded-xl border border-zinc-600/90 bg-zinc-800/50 px-4 transition-[transform,border-color,background-color,box-shadow] duration-200 hover:scale-[1.02] hover:border-zinc-400/80 hover:bg-zinc-700/50 focus-visible:border-zinc-300 focus-visible:outline-none active:scale-[0.98]"
     >
-      <span className="relative z-10 text-zinc-400 transition-colors group-hover:text-white">
+      <span className="home-nav-icon relative z-10 text-zinc-400 transition-colors group-hover:text-white">
         {icon}
       </span>
       <span className="home-nav-label relative z-10 mt-2 text-base font-medium text-white sm:text-lg">
         {title}
       </span>
+      <span aria-hidden="true" className="home-nav-accent" />
     </Link>
   );
 }
@@ -75,17 +79,23 @@ function NavCard({ href, icon, title }: NavCardProps) {
 export default function Home() {
   return (
     <main className="home-page relative h-[calc(100dvh-3.5rem)] overflow-hidden bg-background px-4">
+      <HomeBackdrop />
       <div className="home-shell relative mx-auto flex h-full w-full max-w-md flex-col items-center justify-center xl:-left-8 2xl:-left-14">
         {/* Logo 和标题 */}
         <div className="home-header flex shrink-0 flex-col items-center text-center">
-          <Image
-            src={getAssetPath("/logo.png")}
-            alt="逆战未来 维基"
-            width={180}
-            height={180}
-            className="home-logo"
-            priority
-          />
+          <span
+            className="home-logo-wrap"
+            style={{ "--logo-mask": `url("${getAssetPath("/logo.png")}")` } as React.CSSProperties}
+          >
+            <Image
+              src={getAssetPath("/logo.png")}
+              alt="逆战未来 维基"
+              width={180}
+              height={180}
+              className="home-logo"
+              priority
+            />
+          </span>
           <h1 className="text-2xl font-bold tracking-normal text-zinc-100 sm:text-4xl">
             逆战未来 维基
           </h1>
@@ -97,12 +107,13 @@ export default function Home() {
         {/* 导航卡片网格 */}
         <div className="w-full max-w-md">
           <div className="home-nav-grid grid grid-cols-2 gap-2 sm:gap-3">
-            {NAV_ITEMS.map((item) => (
+            {NAV_ITEMS.map((item, index) => (
               <NavCard
                 key={item.href}
                 href={item.href}
                 icon={item.icon}
                 title={item.title}
+                index={index}
               />
             ))}
           </div>
