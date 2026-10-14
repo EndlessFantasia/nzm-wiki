@@ -498,6 +498,12 @@ body:has(.home-page) {
   transition: color 200ms ease, transform 200ms ease;
 }
 
+.home-nav-glyph {
+  background-color: currentColor;
+  -webkit-mask: var(--glyph) center / contain no-repeat;
+  mask: var(--glyph) center / contain no-repeat;
+}
+
 .home-nav-card:hover .home-nav-icon {
   transform: translateY(-3px);
 }

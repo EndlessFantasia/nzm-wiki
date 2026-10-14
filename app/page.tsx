@@ -1,17 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import {
-  ArrowUpRight,
-  BookOpenText,
-  GalleryVerticalEnd,
-  GitBranch,
-  Search,
-  Skull,
-  Sword,
-  Target,
-  Terminal,
-  Zap,
-} from "lucide-react";
+import { ArrowUpRight, GitBranch, Search, Terminal } from "lucide-react";
 import { getAssetPath } from "@/lib/path";
 import { IcpFilingNotice } from "@/components/IcpFilingNotice";
 import { HomeBackdrop } from "@/components/HomeBackdrop";
@@ -20,7 +9,7 @@ const GITHUB_FORK = "https://github.com/lostlightll/nzm-wiki";
 
 interface NavCardProps {
   href: string;
-  icon: React.ReactNode;
+  icon: string;
   title: string;
   index: number;
 }
@@ -28,32 +17,32 @@ interface NavCardProps {
 const NAV_ITEMS = [
   {
     href: "/weapons",
-    icon: <Sword className="h-8 w-8 sm:h-10 sm:w-10" />,
+    icon: "/icons/home/weapons.png",
     title: "武器图鉴",
   },
   {
     href: "/perks",
-    icon: <Zap className="h-8 w-8 sm:h-10 sm:w-10" />,
+    icon: "/icons/home/perks.png",
     title: "插件图鉴",
   },
   {
     href: "/tower-defense",
-    icon: <Target className="h-8 w-8 sm:h-10 sm:w-10" />,
+    icon: "/icons/home/tower-defense.png",
     title: "塔防图鉴",
   },
   {
     href: "/bosses",
-    icon: <Skull className="h-8 w-8 sm:h-10 sm:w-10" />,
+    icon: "/icons/home/enemies.png",
     title: "敌人图鉴",
   },
   {
     href: "/overlimit",
-    icon: <GalleryVerticalEnd className="h-8 w-8 sm:h-10 sm:w-10" />,
+    icon: "/icons/home/overlimit.png",
     title: "超限图鉴",
   },
   {
     href: "/builds",
-    icon: <BookOpenText className="h-8 w-8 sm:h-10 sm:w-10" />,
+    icon: "/icons/home/builds.png",
     title: "攻略搭配",
   },
 ];
@@ -66,7 +55,11 @@ function NavCard({ href, icon, title, index }: NavCardProps) {
       className="home-nav-card group flex flex-col items-center justify-center rounded-xl border border-zinc-600/90 bg-zinc-800/50 px-4 transition-[transform,border-color,background-color,box-shadow] duration-200 hover:scale-[1.02] hover:border-zinc-400/80 hover:bg-zinc-700/50 focus-visible:border-zinc-300 focus-visible:outline-none active:scale-[0.98]"
     >
       <span className="home-nav-icon relative z-10 text-zinc-400 transition-colors group-hover:text-white">
-        {icon}
+        <span
+          aria-hidden="true"
+          className="home-nav-glyph block h-8 w-8 sm:h-10 sm:w-10"
+          style={{ "--glyph": `url("${getAssetPath(icon)}")` } as React.CSSProperties}
+        />
       </span>
       <span className="home-nav-label relative z-10 mt-2 text-base font-medium text-white sm:text-lg">
         {title}
