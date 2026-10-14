@@ -99,9 +99,6 @@ export default function Home() {
           <h1 className="text-2xl font-bold tracking-normal text-zinc-100 sm:text-4xl">
             逆战未来 维基
           </h1>
-          <p className="home-subtitle mt-1 text-sm text-zinc-400 sm:mt-1.5 sm:text-base">
-            武器、插件、首领、超限卡片、塔防与攻略机制资料库
-          </p>
         </div>
 
         {/* 导航卡片网格 */}
