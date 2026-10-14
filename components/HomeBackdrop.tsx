@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useSyncExternalStore } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { getAssetPath } from "@/lib/path";
 
 // S4 新地图：朔望计划、禁魔岛
@@ -15,6 +15,7 @@ const subscribe = () => () => {};
 
 export function HomeBackdrop() {
   const pick = useSyncExternalStore(subscribe, () => clientPick, () => -1);
+  const [loaded, setLoaded] = useState(false);
 
   return (
     <div aria-hidden="true" className="home-backdrop">
@@ -25,6 +26,8 @@ export function HomeBackdrop() {
           fill
           sizes="100vw"
           priority
+          data-loaded={loaded || undefined}
+          onLoad={() => setLoaded(true)}
         />
       )}
     </div>

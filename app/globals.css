@@ -391,12 +391,6 @@ body:has(.home-page) {
   }
 }
 
-@keyframes home-fade-in {
-  from {
-    opacity: 0;
-  }
-}
-
 @keyframes home-logo-sweep {
   0% {
     background-position: 100% 0;
@@ -418,8 +412,16 @@ body:has(.home-page) {
 .home-backdrop img {
   object-fit: cover;
   filter: blur(6px) brightness(0.42) saturate(0.9);
+  opacity: 0;
+  transform: scale(1.12);
+  transition:
+    opacity 1200ms ease-out,
+    transform 1800ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.home-backdrop img[data-loaded] {
+  opacity: 1;
   transform: scale(1.06);
-  animation: home-fade-in 700ms ease-out backwards;
 }
 
 .home-backdrop::after {
@@ -539,11 +541,11 @@ body:has(.home-page) {
   .home-nav-card,
   .home-community,
   .home-shortcuts,
-  .home-backdrop img,
   .home-logo-wrap::after {
     animation: none;
   }
 
+  .home-backdrop img,
   .home-nav-icon,
   .home-nav-accent {
     transition: none;
