@@ -141,17 +141,21 @@ export default function Home() {
           <div className="home-community-details">
             <div className="my-3 h-px bg-zinc-700/70" />
             <p className="text-sm leading-relaxed text-zinc-300">
-              原项目的武器与怪物资料可能不完整，本站将继续补充与维护，欢迎反馈。
-            </p>
-            <div className="mt-3 flex items-center justify-center gap-4 border-t border-zinc-700/70 pt-2.5 text-xs text-zinc-400">
+              关注
               <a
-                href={GITHUB_FORK}
+                href="https://space.bilibili.com/3494356482787443"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="transition-colors hover:text-zinc-100"
+                className="mx-0.5 font-medium text-zinc-100 underline decoration-zinc-500 underline-offset-4 transition-colors hover:decoration-zinc-200"
               >
-                项目说明
+                幻想延续
               </a>
+              谢谢喵
+            </p>
+            <p className="mt-1 text-sm leading-relaxed text-zinc-400">
+              发现错漏或缺失的资料，欢迎反馈。
+            </p>
+            <div className="mt-3 flex items-center justify-center gap-4 border-t border-zinc-700/70 pt-2.5 text-xs text-zinc-400">
               <Link href="/credits" className="transition-colors hover:text-zinc-100">
                 致谢名单
               </Link>
