@@ -41,12 +41,16 @@ interface ImageViewerProps {
   onClose: () => void;
 }
 
-export function ImageViewer({ images, initialIndex = 0, onClose }: ImageViewerProps) {
+export function ImageViewer({ images, initialIndex = 0, onClose: onClosed }: ImageViewerProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [scale, setScale] = useState(100);
+  const [closing, setClosing] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const currentImage = images[currentIndex];
+
+  // 先播放退场动画，结束后再通知父组件卸载
+  const onClose = useCallback(() => setClosing(true), []);
 
   // Keyboard navigation
   useEffect(() => {
@@ -170,7 +174,12 @@ export function ImageViewer({ images, initialIndex = 0, onClose }: ImageViewerPr
   return createPortal(
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 overflow-hidden"
+      data-state={closing ? "closed" : "open"}
+      inert={closing}
+      onAnimationEnd={(e) => {
+        if (closing && e.animationName === "image-viewer-out") onClosed();
+      }}
+      className="image-viewer fixed inset-0 z-[200] flex items-center justify-center bg-black/90 overflow-hidden"
     >
       {/* Close button */}
       <div className="absolute top-4 right-4">
@@ -186,7 +195,7 @@ export function ImageViewer({ images, initialIndex = 0, onClose }: ImageViewerPr
 
       {/* Main image */}
       <div
-        className="flex items-center justify-center overflow-hidden"
+        className="image-viewer-stage flex items-center justify-center overflow-hidden"
         style={{ width: "calc(100% - 80px)", height: "calc(100% - 120px)" }}
         onClick={(e) => {
           if (e.target === e.currentTarget) onClose();
@@ -195,9 +204,10 @@ export function ImageViewer({ images, initialIndex = 0, onClose }: ImageViewerPr
         {/* Native img preserves direct CSS zoom behavior for the full-resolution viewer. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          key={currentIndex}
           src={getAssetPath(currentImage.src)}
           alt={currentImage.alt || ""}
-          className="max-h-full max-w-full object-contain transition-transform duration-200"
+          className="image-viewer-image max-h-full max-w-full object-contain transition-transform duration-200"
           style={{ transform: `scale(${scale / 100})` }}
           draggable={false}
         />

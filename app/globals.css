@@ -281,6 +281,51 @@ dialog[open] {
   }
 }
 
+/* 图片查看器：开关淡入淡出，切图时新图淡入；退场动画结束后再卸载 */
+@keyframes image-viewer-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes image-viewer-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes image-viewer-stage-in {
+  from {
+    scale: 0.97;
+  }
+}
+
+@keyframes image-viewer-stage-out {
+  to {
+    scale: 0.97;
+  }
+}
+
+.image-viewer {
+  animation: image-viewer-in 200ms ease-out;
+}
+
+.image-viewer-stage {
+  animation: image-viewer-stage-in 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.image-viewer-image {
+  animation: image-viewer-in 200ms ease-out;
+}
+
+.image-viewer[data-state="closed"] {
+  animation: image-viewer-out 160ms ease-in forwards;
+}
+
+.image-viewer[data-state="closed"] .image-viewer-stage {
+  animation: image-viewer-stage-out 160ms ease-in forwards;
+}
+
 /* 折叠区展开收起：动画期间裁剪内容，展开完成后恢复可见以免裁掉内部浮层 */
 details:not(.multiplier-badge-stack) {
   interpolate-size: allow-keywords;
@@ -754,6 +799,11 @@ body:has(.home-page) {
       opacity: 0;
     }
   }
+  .image-viewer-stage,
+  .image-viewer[data-state="closed"] .image-viewer-stage {
+    animation: none;
+  }
+
   .multiplier-badge-stack::details-content,
   details:not(.multiplier-badge-stack)::details-content,
   details:not(.multiplier-badge-stack):not([open])::details-content,
