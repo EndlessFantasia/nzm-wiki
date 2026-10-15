@@ -106,10 +106,10 @@ function OverlimitCardItem({
   ];
 
   return (
-    <div className="relative min-w-0 transition-transform duration-200 hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+    <div className="catalog-card relative min-w-0">
       <OverlimitHoverPreview card={card} href={`${basePath}/${card.id}`}>
         <article
-          className={`relative flex min-h-[290px] flex-col overflow-hidden rounded-lg border-2 ${qualityStyle.border} ${qualityStyle.bg} sm:min-h-[344px]`}
+          className={`catalog-card-frame flex min-h-[290px] flex-col overflow-hidden rounded-lg border-2 ${qualityStyle.border} ${qualityStyle.bg} sm:min-h-[344px]`}
         >
         <span className="sr-only">品质：{qualityStyle.label}</span>
         <div aria-hidden="true" className={`h-1 w-full ${qualityStyle.bar}`} />

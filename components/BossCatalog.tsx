@@ -32,9 +32,9 @@ function BossCard({ boss, eager = false }: { boss: Boss; eager?: boolean }) {
   return (
     <CatalogLink
       href={withDifficulty(`/bosses/${encodeURIComponent(boss.slug)}`)}
-      className="group block touch-manipulation rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      className="catalog-card group block h-full touch-manipulation rounded-lg outline-none focus-visible:[&_h3]:underline focus-visible:[&_h3]:decoration-2 focus-visible:[&_h3]:underline-offset-4"
     >
-      <article className="flex h-full min-w-0 flex-col overflow-hidden rounded-lg border border-zinc-700 bg-zinc-900/70 transition-[border-color,background-color,transform] duration-200 ease-out group-hover:-translate-y-0.5 group-hover:border-[#d1ac69]/70 group-hover:bg-zinc-800/90 group-active:translate-y-0 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0">
+      <article className="catalog-card-frame flex h-full min-w-0 flex-col overflow-hidden rounded-lg border border-zinc-700 bg-zinc-900/70 group-hover:border-[#d1ac69]/70 group-hover:bg-zinc-800/90">
         <div className="relative aspect-square w-full overflow-hidden border-b border-zinc-700 bg-zinc-950/80">
           <div
             aria-hidden="true"

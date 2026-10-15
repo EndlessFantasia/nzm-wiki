@@ -285,6 +285,29 @@ body {
   animation: palette-panel-out 150ms ease-in forwards;
 }
 
+/* 图鉴卡片：外层负责上浮，内层边框负责阴影 */
+.catalog-card {
+  transition: transform 200ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.catalog-card-frame {
+  position: relative;
+  transition:
+    box-shadow 200ms ease,
+    border-color 200ms ease,
+    background-color 200ms ease;
+}
+
+@media (hover: hover) {
+  .catalog-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .catalog-card:hover .catalog-card-frame {
+    box-shadow: 0 12px 28px -10px rgb(0 0 0 / 0.6);
+  }
+}
+
 .home-nav-card {
   position: relative;
   isolation: isolate;
@@ -609,6 +632,15 @@ body:has(.home-page) {
     to {
       opacity: 0;
     }
+  }
+
+  .catalog-card,
+  .catalog-card-frame {
+    transition: none;
+  }
+
+  .catalog-card:hover {
+    transform: none;
   }
 
   .multiplier-badge-stack::details-content,

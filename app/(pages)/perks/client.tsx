@@ -135,10 +135,10 @@ function PerkCard({ perk }: { perk: Perk }) {
   const href = `/perks/${perk.slug.split("/").map(encodeURIComponent).join("/")}`;
 
   return (
-    <div className="relative min-w-0 transition-transform duration-200 hover:scale-[1.03] motion-reduce:transition-none motion-reduce:hover:scale-100">
+    <div className="catalog-card relative min-w-0">
       <PerkHoverPreview perk={perk} href={href}>
         <div
-          className={`flex flex-col items-center rounded-lg border-2 ${rarityStyle.border} ${rarityStyle.bg} p-3 pb-4`}
+          className={`catalog-card-frame flex flex-col items-center rounded-lg border-2 ${rarityStyle.border} ${rarityStyle.bg} p-3 pb-4`}
         >
           {perk.icon ? (
             <Image

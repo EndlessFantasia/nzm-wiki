@@ -35,8 +35,8 @@ function TrapImage({ name, size = 128, className }: { name: string; size?: numbe
 
 export function TrapCard({ trap }: { trap: Trap }) {
   return (
-    <CatalogLink href={`/traps/${encodeURIComponent(trap.slug)}`}>
-      <div className="rounded-lg border-2 border-zinc-700 bg-zinc-800/50 p-4 transition-transform hover:scale-[1.02] hover:border-zinc-600">
+    <CatalogLink href={`/traps/${encodeURIComponent(trap.slug)}`} className="catalog-card block">
+      <div className="catalog-card-frame rounded-lg border-2 border-zinc-700 bg-zinc-800/50 p-4 hover:border-zinc-600">
         <div className="flex justify-center mb-3">
           <TrapImage name={trap.title} />
         </div>

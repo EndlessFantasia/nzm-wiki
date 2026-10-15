@@ -495,12 +495,12 @@ function SimpleCard({ weapon }: { weapon: WeaponCatalogEntry }) {
   const elementIcon = element ? ELEMENT_ICONS[element] : undefined;
 
   return (
-    <div className="min-w-0">
+    <div className="catalog-card min-w-0">
       <CatalogLink
         href={`/weapons${weapon.table === "td" ? "/td" : ""}/${encodeURIComponent(weapon.slug)}`}
       >
         <div
-          className={`relative rounded-lg border-2 ${rarityStyle.border} ${rarityStyle.bg} p-3 transition-transform hover:scale-[1.02]`}
+          className={`catalog-card-frame rounded-lg border-2 ${rarityStyle.border} ${rarityStyle.bg} p-3`}
         >
         {elementIcon && (
           <div className="absolute right-2 top-2 z-10">
@@ -554,9 +554,10 @@ function DetailedCard({ weapon }: { weapon: WeaponCatalogEntry }) {
     return (
       <CatalogLink
         href={`/weapons${weapon.table === "td" ? "/td" : ""}/${encodeURIComponent(weapon.slug)}`}
+        className="catalog-card block"
       >
         <div
-          className={`relative flex h-[408px] w-full min-w-0 flex-col rounded-lg border-2 ${rarityStyle.border} ${rarityStyle.bg} p-5`}
+          className={`catalog-card-frame flex h-[408px] w-full min-w-0 flex-col rounded-lg border-2 ${rarityStyle.border} ${rarityStyle.bg} p-5`}
         >
           <h3 className="text-xl font-semibold text-white">{weapon.title}</h3>
           <div className="mt-1 text-sm text-zinc-400">{weapon.useType}</div>
@@ -570,12 +571,12 @@ function DetailedCard({ weapon }: { weapon: WeaponCatalogEntry }) {
   }
 
   return (
-    <div className="min-w-0">
+    <div className="catalog-card min-w-0">
       <CatalogLink
         href={`/weapons${weapon.table === "td" ? "/td" : ""}/${encodeURIComponent(weapon.slug)}`}
       >
         <div
-          className={`relative w-full min-w-0 rounded-lg border-2 ${rarityStyle.border} ${rarityStyle.bg} p-5 transition-shadow hover:shadow-lg hover:shadow-black/20`}
+          className={`catalog-card-frame w-full min-w-0 rounded-lg border-2 ${rarityStyle.border} ${rarityStyle.bg} p-5`}
         >
         {elementIcon && (
           <div className="absolute right-4 top-4 z-10">
