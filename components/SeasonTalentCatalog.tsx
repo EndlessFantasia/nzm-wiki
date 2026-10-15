@@ -150,7 +150,7 @@ function TalentInfo({ talent }: { talent: SeasonTalentCard }) {
                 />
               </div>
               <div className="min-w-0">
-                <p className="truncate text-base font-semibold text-white">
+                <p className="truncate text-sm font-semibold text-white">
                   {talent.name}
                 </p>
                 <p className="mt-0.5 truncate text-xs text-zinc-400">
