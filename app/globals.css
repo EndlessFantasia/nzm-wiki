@@ -404,6 +404,12 @@ details:not(.multiplier-badge-stack):not([open])::details-content {
   }
 }
 
+/* 快照裁到页面区域内：天赋页等的 fixed 全屏背景会被一起截进快照，否则过渡时会盖住侧边栏和顶栏 */
+::view-transition-group(.page-enter),
+::view-transition-group(.page-exit) {
+  overflow: clip;
+}
+
 ::view-transition-old(.page-exit) {
   animation: page-exit 140ms ease-in both;
 }
