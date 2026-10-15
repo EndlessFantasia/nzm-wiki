@@ -65,9 +65,8 @@ export function PerkHoverPreview({
         {children}
       </CatalogLink>
 
-      {isOpen &&
-        <HoverPreviewPanel anchorRef={anchorRef} id={tooltipId}>
-            <div className="border-b border-white/10 px-4 py-3">
+      <HoverPreviewPanel open={isOpen} anchorRef={anchorRef} id={tooltipId}>
+            <div className="border-b border-white/[0.08] bg-white/[0.025] px-4 py-3">
               <p className="truncate text-sm font-semibold text-white">
                 {perk.name}
               </p>
@@ -129,7 +128,7 @@ export function PerkHoverPreview({
                 </div>
               )}
             </div>
-        </HoverPreviewPanel>}
+      </HoverPreviewPanel>
     </>
   );
 }

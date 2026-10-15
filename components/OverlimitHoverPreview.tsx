@@ -48,8 +48,8 @@ export function OverlimitHoverPreview({
         {children}
       </CatalogLink>
 
-      {isOpen && (card.weight !== undefined || card.applicabilityKnown !== false) &&
-        <HoverPreviewPanel anchorRef={anchorRef} id={tooltipId} widthClassName="w-[min(13rem,calc(100vw-2rem))]">
+      {(card.weight !== undefined || card.applicabilityKnown !== false) &&
+        <HoverPreviewPanel open={isOpen} anchorRef={anchorRef} id={tooltipId} widthClassName="w-[min(13rem,calc(100vw-2rem))]">
             {card.weight !== undefined && <div className="flex items-center justify-between gap-3 px-2 py-3">
               <div className="text-xs font-medium text-zinc-400">
                 抽取权重

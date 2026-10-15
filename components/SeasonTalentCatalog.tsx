@@ -138,9 +138,8 @@ function TalentInfo({ talent }: { talent: SeasonTalentCard }) {
         </span>
       </button>
 
-      {isOpen &&
-        <HoverPreviewPanel anchorRef={anchorRef} id={tooltipId}>
-            <div className="flex items-center gap-3 border-b border-white/10 px-4 py-3">
+      <HoverPreviewPanel open={isOpen} anchorRef={anchorRef} id={tooltipId}>
+            <div className="flex items-center gap-3 border-b border-white/[0.08] bg-white/[0.025] px-4 py-3">
               <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded border border-[#d1ac69]/30 bg-black/30">
                 <Image
                   src={getAssetPath(talent.icon)}
@@ -199,7 +198,7 @@ function TalentInfo({ talent }: { talent: SeasonTalentCard }) {
                 )}
               </div>
             </div>
-        </HoverPreviewPanel>}
+      </HoverPreviewPanel>
     </>
   );
 }

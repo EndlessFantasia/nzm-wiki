@@ -243,15 +243,27 @@ dialog[open] {
   }
 }
 
+@keyframes catalog-preview-out {
+  to {
+    opacity: 0;
+    transform: translateY(calc(var(--preview-entry-offset, 8px) / 2)) scale(0.98);
+  }
+}
+
+/* 悬停预览：从锚点方向展开，关闭时短促淡出后由 usePresence 卸载 */
 .catalog-hover-preview {
-  --preview-entry-offset: 8px;
+  --preview-entry-offset: 6px;
   animation: catalog-preview-in 180ms cubic-bezier(0.16, 1, 0.3, 1);
   transform-origin: center bottom;
 }
 
 .catalog-hover-preview[data-placement="below"] {
-  --preview-entry-offset: -8px;
+  --preview-entry-offset: -6px;
   transform-origin: center top;
+}
+
+.catalog-hover-preview[data-state="closed"] {
+  animation: catalog-preview-out 120ms ease-in forwards;
 }
 
 .multiplier-badge-stack::details-content {
@@ -774,8 +786,16 @@ body:has(.home-page) {
     transition: none;
   }
 
-  .catalog-hover-preview {
-    animation: none;
+  @keyframes catalog-preview-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes catalog-preview-out {
+    to {
+      opacity: 0;
+    }
   }
 
   @keyframes palette-panel-in {

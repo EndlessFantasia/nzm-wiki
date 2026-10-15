@@ -129,9 +129,9 @@ function RuneCard({ rune, tagNames, showOperation, onOpenMobile }: {
       className={`absolute top-1 z-10 [&_a]:min-h-5 [&_a]:min-w-0 [&_a]:justify-center [&_a]:py-0 [&_a]:text-center [&_a]:leading-3 [&_a_span]:break-all ${hasMultipleFactors
         ? "inset-x-1 flex-nowrap gap-0.5 [&_a]:flex-1 [&_a]:px-0.5 [&_a]:text-[9px]"
         : "right-1 max-w-[calc(100%-0.5rem)] justify-end [&_a]:px-1 [&_a]:text-[9px] sm:[&_a]:text-[10px]"}`} />}
-    {isOpen && <HoverPreviewPanel anchorRef={buttonRef} id={tooltipId}>
+    <HoverPreviewPanel open={isOpen} anchorRef={buttonRef} id={tooltipId}>
       <RuneDetails rune={rune} tagNames={tagNames} showOperation={showOperation} />
-    </HoverPreviewPanel>}
+    </HoverPreviewPanel>
   </div>;
 }
 
