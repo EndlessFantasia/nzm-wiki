@@ -36,3 +36,6 @@
 .levelPreview { display: flex; gap: 4px; margin-top: 20px; border-bottom: 1px solid #ffffff20; }
 .levelPreview button { flex: 1; min-width: 0; min-height: 44px; border: 0; border-bottom: 2px solid transparent; background: none; color: #92999e; font-size: 12px; cursor: pointer; }
 .levelPreview button[aria-pressed="true"] { border-bottom-color: #e6c77e; color: #e6c77e; }
+/* 点亮、选中、互斥等状态切换只过渡颜色与亮度，不做位移 */
+.node { transition: opacity 180ms ease-out, border-color 180ms ease-out, background-color 180ms ease-out; }.nodeIcon img { transition: filter 180ms ease-out, opacity 180ms ease-out; }.pips span { transition: background-color 160ms ease-out; }.connectors path { transition: opacity 200ms ease-out, stroke-width 200ms ease-out; }.levelPreview button { transition: color 150ms ease-out, border-color 150ms ease-out; }.navigation a, .passive { transition: color 150ms ease-out, background-color 150ms ease-out, border-color 150ms ease-out, filter 150ms ease-out; }
+@media (prefers-reduced-motion: reduce) { .node, .nodeIcon img, .pips span, .connectors path, .levelPreview button, .navigation a, .passive { transition: none; } }
