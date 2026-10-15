@@ -36,15 +36,6 @@ function RuneDescription({ description }: { description: string }) {
   </span>;
 }
 
-function RuneTags({ rune, tagNames }: { rune: OriginRune; tagNames: Map<number, string> }) {
-  return <span className="flex flex-wrap gap-1.5">
-    {rune.tagIds.map((id) => <span key={id}
-      className="max-w-full break-words rounded border border-white/10 bg-zinc-800/80 px-1.5 py-0.5 text-[11px] leading-4 text-zinc-200">
-      {tagNames.get(id)}
-    </span>)}
-  </span>;
-}
-
 function toggleSet<T>(current: ReadonlySet<T>, value: T): Set<T> {
   const next = new Set(current);
   if (next.has(value)) next.delete(value);
@@ -60,31 +51,32 @@ function RuneDetails({ rune, tagNames, showOperation, onClose }: {
 }) {
   const quality = qualityStyles[rune.quality];
   const relations = getProviderRelationsForSource({ type: "origin-rune", id: rune.id });
+  const chip = "inline-flex items-center rounded border px-2 py-1 text-xs";
   return (
     <div className="min-w-0 bg-[#15171b]">
-      <div className="flex min-h-12 items-center justify-between gap-2 border-b border-white/10 px-4 py-2">
-        <h2 className="min-w-0 break-words text-sm font-semibold leading-6 text-white">{rune.name}</h2>
+      <div className={`flex items-center gap-2 border-b border-white/[0.08] bg-white/[0.025] py-3 pl-4 ${onClose ? "pr-1" : "pr-4"}`}>
+        <h2 className="min-w-0 flex-1 break-words text-sm font-semibold leading-6 text-white">{rune.name}</h2>
         {onClose && <button type="button" onClick={onClose} aria-label="关闭强化详情" title="关闭"
-          className="flex h-11 w-11 shrink-0 items-center justify-center text-zinc-400 outline-none hover:text-white focus-visible:bg-zinc-700 focus-visible:text-white">
+          className="-my-2.5 flex h-11 w-11 shrink-0 items-center justify-center text-zinc-400 outline-none hover:text-white focus-visible:bg-zinc-700 focus-visible:text-white">
           <X aria-hidden="true" className="h-5 w-5" />
         </button>}
       </div>
-      <div className="space-y-2 border-b border-white/10 px-4 py-3">
-        <div className="flex flex-wrap gap-2 text-xs">
-          <span className={quality.text}>{quality.label}品质</span>
-          <span className="text-zinc-400">{rune.category === "special" ? "特殊强化" : "普通强化"}</span>
-        </div>
-        <RuneTags rune={rune} tagNames={tagNames} />
-      </div>
       <div className="px-4 py-3.5">
-        <h3 className="mb-2 text-xs font-medium text-zinc-400">强化效果</h3>
+        <div className="mb-2 text-xs font-medium text-zinc-400">强化效果</div>
         <div className="break-words text-sm leading-6 text-zinc-200">
           <RuneDescription description={rune.description} />
         </div>
       </div>
-      {relations.length > 0 && <div className="border-t border-white/10 px-4 py-3">
-        <MultiplierBadges relations={relations} variant="catalog-compact" showOperation={showOperation} />
-      </div>}
+      <div className="border-t border-white/10 px-4 py-3.5">
+        <div className="mb-2.5 text-xs font-medium text-zinc-400">强化属性</div>
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className={`${chip} font-medium ${quality.active}`}>{quality.label}品质</span>
+          <span className={`${chip} border-white/10 bg-white/5 text-zinc-200`}>{rune.category === "special" ? "特殊强化" : "普通强化"}</span>
+          {rune.tagIds.map((id) => <span key={id} className={`${chip} border-white/10 bg-white/5 text-zinc-200`}>{tagNames.get(id)}</span>)}
+          {relations.length > 0 && <MultiplierBadges relations={relations} variant="catalog-compact" showOperation={showOperation}
+            className="[&_a]:min-h-[26px]" />}
+        </div>
+      </div>
     </div>
   );
 }
