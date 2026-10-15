@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import { Search, FileText, ArrowRight } from "lucide-react";
 import { getAssetPath } from "@/lib/path";
 import { usePresence } from "@/hooks/usePresence";
@@ -92,6 +93,7 @@ export function SearchPalette() {
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const presence = usePresence(isOpen, "palette-panel-out");
+  const router = useRouter();
 
   // 加载搜索数据
   useEffect(() => {
@@ -198,8 +200,8 @@ export function SearchPalette() {
 
   const navigateTo = useCallback((item: SearchItem) => {
     setIsOpen(false);
-    window.location.href = getAssetPath(item.path);
-  }, []);
+    router.push(item.path);
+  }, [router]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     switch (e.key) {
