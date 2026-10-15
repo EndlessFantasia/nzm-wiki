@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Search, FileText, ArrowRight } from "lucide-react";
 import { getAssetPath } from "@/lib/path";
+import { usePresence } from "@/hooks/usePresence";
 
 interface SearchItem {
   title: string;
@@ -90,6 +91,7 @@ export function SearchPalette() {
   const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  const presence = usePresence(isOpen, "palette-panel-out");
 
   // 加载搜索数据
   useEffect(() => {
@@ -222,20 +224,25 @@ export function SearchPalette() {
     }
   };
 
-  if (!isOpen) return null;
+  if (!presence.mounted) return null;
 
   let currentIndex = 0;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh]">
+    <div
+      data-state={presence.state}
+      inert={!isOpen}
+      onAnimationEnd={presence.onAnimationEnd}
+      className="palette fixed inset-0 z-[100] flex items-start justify-center pt-[15vh]"
+    >
       {/* 背景遮罩 */}
       <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-200"
+        className="palette-backdrop absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={() => setIsOpen(false)}
       />
 
       {/* 搜索面板 */}
-      <div className="relative w-full max-w-xl mx-4 overflow-hidden rounded-xl bg-zinc-900 shadow-2xl ring-1 ring-zinc-700 animate-in fade-in slide-in-from-top-4 duration-200">
+      <div className="palette-panel relative w-full max-w-xl mx-4 overflow-hidden rounded-xl bg-zinc-900 shadow-2xl ring-1 ring-zinc-700">
         {/* 搜索框 */}
         <div className="flex items-center gap-3 border-b border-zinc-800 px-4 py-3">
           <Search className="h-5 w-5 text-zinc-500" />

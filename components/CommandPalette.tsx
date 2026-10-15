@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Calculator, Search, Github, Pencil, History } from "lucide-react";
+import { usePresence } from "@/hooks/usePresence";
 
 // GitHub 仓库基础 URL
 const GITHUB_REPO_URL = "https://github.com/qiekn/nzm-wiki/blob/main";
@@ -100,6 +101,7 @@ export function CommandPalette({ commands }: CommandPaletteProps) {
   const [githubCommitsUrl, setGithubCommitsUrl] = useState<string | null>(null);
   const [editorUrl, setEditorUrl] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const presence = usePresence(isOpen, "palette-panel-out");
 
   const openPalette = useCallback(() => {
     setQuery("");
@@ -227,18 +229,23 @@ export function CommandPalette({ commands }: CommandPaletteProps) {
     }
   };
 
-  if (!isOpen) return null;
+  if (!presence.mounted) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh]">
+    <div
+      data-state={presence.state}
+      inert={!isOpen}
+      onAnimationEnd={presence.onAnimationEnd}
+      className="palette fixed inset-0 z-[100] flex items-start justify-center pt-[15vh]"
+    >
       {/* 背景遮罩 */}
       <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-200"
+        className="palette-backdrop absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={() => setIsOpen(false)}
       />
 
       {/* 命令面板 */}
-      <div className="relative w-full max-w-lg mx-4 overflow-hidden rounded-xl bg-zinc-900 shadow-2xl ring-1 ring-zinc-700 animate-in fade-in slide-in-from-top-4 duration-200">
+      <div className="palette-panel relative w-full max-w-lg mx-4 overflow-hidden rounded-xl bg-zinc-900 shadow-2xl ring-1 ring-zinc-700">
         {/* 搜索框 */}
         <div className="flex items-center gap-3 border-b border-zinc-800 px-4 py-3">
           <Search className="h-5 w-5 text-zinc-500" />

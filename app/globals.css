@@ -241,6 +241,50 @@ body {
   }
 }
 
+/* 搜索与命令面板：退场动画结束后由 usePresence 卸载 */
+@keyframes palette-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes palette-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes palette-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.98);
+  }
+}
+
+@keyframes palette-panel-out {
+  to {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+}
+
+.palette-backdrop {
+  animation: palette-fade-in 200ms ease-out;
+}
+
+.palette-panel {
+  animation: palette-panel-in 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: top center;
+}
+
+.palette[data-state="closed"] .palette-backdrop {
+  animation: palette-fade-out 150ms ease-in forwards;
+}
+
+.palette[data-state="closed"] .palette-panel {
+  animation: palette-panel-out 150ms ease-in forwards;
+}
+
 .home-nav-card {
   position: relative;
   isolation: isolate;
@@ -553,6 +597,18 @@ body:has(.home-page) {
 
   .catalog-hover-preview {
     animation: none;
+  }
+
+  @keyframes palette-panel-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes palette-panel-out {
+    to {
+      opacity: 0;
+    }
   }
 
   .multiplier-badge-stack::details-content,
