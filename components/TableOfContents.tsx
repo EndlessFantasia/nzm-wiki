@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 interface TocItem {
   id: string;
@@ -16,6 +16,8 @@ export function TableOfContents({ enabled = true }: TableOfContentsProps) {
   const [headings, setHeadings] = useState<TocItem[]>([]);
   const [activeId, setActiveId] = useState<string>("");
   const [isHovered, setIsHovered] = useState(false);
+  const listRef = useRef<HTMLUListElement>(null);
+  const [indicator, setIndicator] = useState<{ top: number; height: number } | null>(null);
 
   useEffect(() => {
     if (!enabled) return;
@@ -58,13 +60,27 @@ export function TableOfContents({ enabled = true }: TableOfContentsProps) {
     return () => observer.disconnect();
   }, [enabled]);
 
+  useLayoutEffect(() => {
+    const link = activeId
+      ? listRef.current?.querySelector<HTMLElement>(`[data-toc-id="${CSS.escape(activeId)}"]`)
+      : null;
+    // The indicator follows rendered link geometry, which is only known after layout.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIndicator(link ? { top: link.offsetTop, height: link.offsetHeight } : null);
+  }, [activeId, headings]);
+
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     const element = document.getElementById(id);
     if (element) {
       const offset = 80; // 导航栏高度 + 一点间距
       const top = element.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: "smooth" });
+      window.scrollTo({
+        top,
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+      });
     }
   };
 
@@ -85,7 +101,7 @@ export function TableOfContents({ enabled = true }: TableOfContentsProps) {
         {headings.map((heading, index) => (
           <div
             key={index}
-            className={`rounded-full transition-colors ${
+            className={`rounded-full transition-colors duration-200 ${
               heading.level === 3 ? "ml-2 w-4 h-0.5" : "w-5 h-0.5"
             } ${activeId === heading.id ? "bg-blue-400" : "bg-zinc-600"}`}
           />
@@ -100,18 +116,29 @@ export function TableOfContents({ enabled = true }: TableOfContentsProps) {
             : "opacity-0 scale-95 pointer-events-none"
         }`}
       >
-        <ul className="text-sm whitespace-nowrap">
+        <ul ref={listRef} className="relative text-sm whitespace-nowrap">
+          {indicator && (
+            <li
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 top-0 rounded bg-blue-500/10 transition-[transform,height] duration-200 ease-out motion-reduce:transition-none"
+              style={{
+                height: indicator.height,
+                transform: `translateY(${indicator.top}px)`,
+              }}
+            />
+          )}
           {headings.map((heading) => (
             <li key={heading.id}>
               <a
                 href={`#${heading.id}`}
+                data-toc-id={heading.id}
                 onClick={(e) => handleClick(e, heading.id)}
-                className={`block py-1 px-2 rounded transition-colors hover:bg-zinc-700/50 ${
+                className={`relative block py-1 px-2 rounded transition-colors ${
                   heading.level === 3 ? "pl-4 text-xs" : ""
                 } ${
                   activeId === heading.id
-                    ? "text-blue-400 bg-blue-500/10"
-                    : "text-zinc-400 hover:text-white"
+                    ? "text-blue-400"
+                    : "text-zinc-400 hover:bg-zinc-700/50 hover:text-white"
                 }`}
               >
                 {heading.text}
