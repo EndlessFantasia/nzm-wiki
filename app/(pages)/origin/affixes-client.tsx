@@ -4,6 +4,7 @@ import { RotateCcw, Search, Star, X } from "lucide-react";
 import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { MultiplierBadges } from "@/components/MultiplierBadges";
 import { getProviderRelationsForSource } from "@/lib/multiplier-data";
+import { revealLocatedTarget } from "@/lib/locate-target";
 import { filterOriginAffixes, type OriginAffix, type OriginAffixCatalog,
   type OriginAffixCategory } from "@/lib/origin-affixes";
 
@@ -50,7 +51,7 @@ export default function OriginAffixesClient({ catalog, showOperation }: { catalo
     const focusLinkedAffix = () => {
       const id = window.location.hash.match(/^#affix-(\d+)$/)?.[1];
       setLinkedId(id && catalog.affixes.some((affix) => affix.id === id) ? id : null);
-      if (id) window.requestAnimationFrame(() => document.getElementById(`affix-${id}`)?.scrollIntoView({ block: "center" }));
+      if (id) window.requestAnimationFrame(() => revealLocatedTarget(`affix-${id}`));
     };
     focusLinkedAffix();
     window.addEventListener("hashchange", focusLinkedAffix);

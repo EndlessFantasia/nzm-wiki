@@ -21,6 +21,7 @@ import {
 } from "react";
 import { getMultiplierFactorStyle } from "@/components/multiplier-badge-styles";
 import { getAssetPath } from "@/lib/path";
+import { revealLocatedTarget } from "@/lib/locate-target";
 import type {
   StatusEffectCatalogViewEntry,
   StatusEffectModifierReference,
@@ -501,9 +502,7 @@ export function StatusEffectCatalogClient({
   useEffect(() => {
     if (!linkedBuffId) return;
     const frame = requestAnimationFrame(() => {
-      document
-        .getElementById(`status-effect-${linkedBuffId}`)
-        ?.scrollIntoView({ block: "center" });
+      revealLocatedTarget(`status-effect-${linkedBuffId}`);
     });
     return () => cancelAnimationFrame(frame);
   }, [linkedBuffId]);

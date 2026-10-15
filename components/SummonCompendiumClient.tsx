@@ -22,6 +22,7 @@ import {
 import { MultiplierBadges } from "@/components/MultiplierBadges";
 import { getMultiplierFactorStyle } from "@/components/multiplier-badge-styles";
 import { getAssetPath } from "@/lib/path";
+import { revealLocatedTarget } from "@/lib/locate-target";
 import {
   HEALTH_SETTLEMENT_PREFIX,
   getHealthSettlementDefinition,
@@ -641,7 +642,7 @@ export function SummonCompendiumClient({ catalog }: { catalog: SummonCatalogView
       ? `summon-${linkedSummon}-${section}`
       : `summon-${linkedSummon}`;
     const frame = requestAnimationFrame(() => {
-      document.getElementById(targetId)?.scrollIntoView({ block: "center" });
+      revealLocatedTarget(targetId);
     });
     return () => cancelAnimationFrame(frame);
   }, [linkedSummon, section]);

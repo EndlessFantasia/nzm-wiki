@@ -430,6 +430,33 @@ details:not(.multiplier-badge-stack):not([open])::details-content {
   animation: page-enter 280ms cubic-bezier(0.2, 0.7, 0.2, 1) 60ms both;
 }
 
+/* 深链定位：落地后在目标上叠一层底色再淡出，不改变布局也不加外框 */
+@keyframes located-flash {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  12%,
+  45% {
+    opacity: 1;
+  }
+}
+
+.located-flash[data-located-static="true"] {
+  position: relative;
+}
+
+.located-flash::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: var(--located-radius, 0);
+  background: rgb(209 172 105 / 0.16);
+  pointer-events: none;
+  animation: located-flash 1600ms ease-out forwards;
+}
+
 /* 图鉴卡片：外层负责上浮，内层边框负责阴影 */
 .catalog-card {
   transition: transform 200ms cubic-bezier(0.2, 0.7, 0.2, 1);

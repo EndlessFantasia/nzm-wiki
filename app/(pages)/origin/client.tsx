@@ -10,6 +10,7 @@ import { filterOriginRunes, resolveOriginRuneSelection,
   type OriginRune, type OriginRuneCatalog, type OriginRuneCategory,
   type OriginRuneQuality } from "@/lib/origin-runes";
 import { getAssetPath } from "@/lib/path";
+import { revealLocatedTarget } from "@/lib/locate-target";
 
 const qualityOptions = [5, 4, 3] as const;
 const qualityStyles = {
@@ -170,7 +171,7 @@ export default function OriginRunesClient({ catalog, showOperation, onShowOperat
       const id = window.location.hash.match(/^#rune-(\d+)$/)?.[1];
       if (!id || !catalog.runes.some((rune) => rune.id === id)) return;
       setSelectedId(id);
-      window.requestAnimationFrame(() => document.getElementById(`rune-${id}`)?.scrollIntoView({ block: "center" }));
+      window.requestAnimationFrame(() => revealLocatedTarget(`rune-${id}`));
     };
     focusLinkedRune();
     window.addEventListener("hashchange", focusLinkedRune);

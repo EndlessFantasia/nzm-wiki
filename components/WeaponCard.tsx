@@ -8,6 +8,7 @@ import { DamageSourceMultiplierBadges } from "@/components/MultiplierBadges";
 import { useWeaponDetail } from "@/components/WeaponDetailContext";
 import type { ElementType } from "@/types";
 import { getAssetPath } from "@/lib/path";
+import { revealLocatedTarget } from "@/lib/locate-target";
 import { buildDamageProfile } from "@/lib/multiplier-data";
 import {
   getHealthSettlementDefinition,
@@ -960,7 +961,7 @@ function SkillSection({
       if (!targetMode) return;
       setExpanded(true);
       window.requestAnimationFrame(() => {
-        document.getElementById(sourceId)?.scrollIntoView({ block: "center" });
+        revealLocatedTarget(sourceId);
       });
     };
     revealHashTarget();

@@ -11,6 +11,7 @@ import {
 import { useSyncExternalStore } from "react";
 import { getMultiplierFactorStyle } from "@/components/multiplier-badge-styles";
 import { getAssetPath } from "@/lib/path";
+import { revealLocatedTarget } from "@/lib/locate-target";
 import {
   MULTIPLIER_FACTORS,
   resolveMultiplierFactorHref,
@@ -268,7 +269,7 @@ export function WeeklyBuffGuide({
       `buff-${buff.id}`,
     );
     window.setTimeout(() => {
-      document.getElementById(`buff-${buff.id}`)?.scrollIntoView({
+      revealLocatedTarget(`buff-${buff.id}`, {
         behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
           ? "auto"
           : "smooth",

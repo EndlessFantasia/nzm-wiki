@@ -2,6 +2,7 @@
 
 import { RotateCcw, Search, X } from "lucide-react";
 import { FadeInImage } from "@/components/FadeInImage";
+import { revealLocatedTarget } from "@/lib/locate-target";
 import {
   useDeferredValue,
   useEffect,
@@ -238,7 +239,7 @@ export default function OverlimitPageClient({
     try { targetId = decodeURIComponent(window.location.hash.slice(1)); } catch { return; }
     if (!targetId.startsWith("bond-")) return;
     const frame = window.requestAnimationFrame(() => {
-      document.getElementById(targetId)?.scrollIntoView({ block: "center" });
+      revealLocatedTarget(targetId);
     });
     return () => window.cancelAnimationFrame(frame);
   }, [activeModule]);
