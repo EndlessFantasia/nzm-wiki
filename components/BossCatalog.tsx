@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { MapPinned, RotateCcw, Search, Skull, X } from "lucide-react";
 import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { BossDifficultyControl } from "@/components/BossDifficultyControl";
@@ -9,6 +8,7 @@ import { BossCardHealth } from "@/components/BossHealth";
 import { useBossDifficulty, type BossMode } from "@/components/BossDifficultyProvider";
 import { CatalogLink } from "@/components/CatalogLink";
 import { EnemyCatalogNav } from "@/components/EnemyCatalogNav";
+import { FadeInImage } from "@/components/FadeInImage";
 import { restoreCatalogNavigation } from "@/lib/catalog-navigation";
 import { getAssetPath } from "@/lib/path";
 import { LC_MAPS } from "@/lib/lc-maps";
@@ -40,13 +40,13 @@ function BossCard({ boss, eager = false }: { boss: Boss; eager?: boolean }) {
             aria-hidden="true"
             className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(209,172,105,0.18),_transparent_68%)]"
           />
-          <Image
+          <FadeInImage
             src={getAssetPath(`/icons/enemies/lc/boss/${boss.slug}.png`)}
             alt={boss.title}
             fill
             loading={eager ? "eager" : "lazy"}
             sizes="(max-width: 639px) 45vw, (max-width: 767px) 30vw, 200px"
-            className="object-contain transition-transform duration-200 ease-out group-hover:scale-[1.025] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+            className="object-contain group-hover:scale-[1.025] motion-reduce:group-hover:scale-100"
           />
           <span className="absolute left-2 top-2 inline-flex min-h-7 items-center gap-1 rounded border border-[#d1ac69]/40 bg-zinc-950/85 px-2 py-1 text-xs font-medium text-[#e1c58f] backdrop-blur-sm">
             <Skull aria-hidden="true" className="h-3.5 w-3.5" />
@@ -85,7 +85,7 @@ function MapBanner({
   return (
     <div className="relative isolate min-h-24 overflow-hidden rounded-lg border border-zinc-700 bg-zinc-900">
       {group.image && (
-        <Image
+        <FadeInImage
           src={getAssetPath(group.image)}
           alt=""
           fill

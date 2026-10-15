@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
+import { FadeInImage } from "@/components/FadeInImage";
 import { getAssetPath } from "@/lib/path";
 import { getShanghaiDateKey } from "@/lib/date-key";
 import { getPerkAvailability, getPerkConfiguredAvailability, getS4PerkLaunchGroup, isPerkRecent } from "@/lib/perk-release";
@@ -141,7 +141,7 @@ function PerkCard({ perk }: { perk: Perk }) {
           className={`catalog-card-frame flex flex-col items-center rounded-lg border-2 ${rarityStyle.border} ${rarityStyle.bg} p-3 pb-4`}
         >
           {perk.icon ? (
-            <Image
+            <FadeInImage
               src={getAssetPath(`/icons/perks/${perk.icon}.png`)}
               alt={perk.name}
               width={80}

@@ -308,6 +308,17 @@ body {
   }
 }
 
+/* 图片加载完成后淡入，水合前已加载的图片不隐藏 */
+.fade-in-image:not([data-pending]) {
+  transition:
+    opacity 320ms ease-out,
+    transform 200ms ease-out;
+}
+
+.fade-in-image[data-pending] {
+  opacity: 0;
+}
+
 .home-nav-card {
   position: relative;
   isolation: isolate;
@@ -635,7 +646,8 @@ body:has(.home-page) {
   }
 
   .catalog-card,
-  .catalog-card-frame {
+  .catalog-card-frame,
+  .fade-in-image:not([data-pending]) {
     transition: none;
   }
 

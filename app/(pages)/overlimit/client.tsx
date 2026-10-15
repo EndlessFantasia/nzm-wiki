@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { RotateCcw, Search, X } from "lucide-react";
+import { FadeInImage } from "@/components/FadeInImage";
 import {
   useDeferredValue,
   useEffect,
@@ -143,7 +143,7 @@ function OverlimitCardItem({
           </div>
 
           <div className="flex h-24 w-24 items-center justify-center sm:h-32 sm:w-32">
-            <Image
+            <FadeInImage
               src={getAssetPath(card.icon)}
               alt=""
               width={128}

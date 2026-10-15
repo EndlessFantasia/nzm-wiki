@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { CatalogLink } from "@/components/CatalogLink";
+import { FadeInImage } from "@/components/FadeInImage";
 import type { Trap } from "@/types";
 import { getAssetPath } from "@/lib/path";
 
@@ -21,7 +21,7 @@ function TrapImage({ name, size = 128, className }: { name: string; size?: numbe
   }
 
   return (
-    <Image
+    <FadeInImage
       src={getAssetPath(`/icons/traps/${name}.png`)}
       alt={name}
       width={192}

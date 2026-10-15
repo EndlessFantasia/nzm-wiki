@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { CatalogLink } from "@/components/CatalogLink";
+import { FadeInImage } from "@/components/FadeInImage";
 import { DamageSourceMultiplierBadges } from "@/components/MultiplierBadges";
 import { useWeaponDetail } from "@/components/WeaponDetailContext";
 import type { ElementType } from "@/types";
@@ -111,7 +112,7 @@ function WeaponImage({ name, size = "normal" }: { name: string; size?: "small" |
 
   return (
     <div className={`relative ${height} w-full overflow-hidden`}>
-      <Image
+      <FadeInImage
         src={getAssetPath(`/icons/weapons/normal/${name}.png`)}
         alt={name}
         width={320}
@@ -602,7 +603,7 @@ function DetailedCard({ weapon }: { weapon: WeaponCatalogEntry }) {
         </div>
 
         <div className="flex justify-center">
-          <Image
+          <FadeInImage
             src={getAssetPath(`/icons/weapons/normal/${weapon.title}.png`)}
             alt={weapon.title || ""}
             width={320}
@@ -1102,7 +1103,7 @@ export function WeaponDetailCard() {
 
       {/* 武器图片 */}
       <div className="relative mb-6 h-32 w-full">
-        <Image
+        <FadeInImage
           src={getAssetPath(`/icons/weapons/normal/${weapon.title}.png`)}
           alt={weapon.title || ""}
           width={320}

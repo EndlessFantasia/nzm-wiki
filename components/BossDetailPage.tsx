@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { MapPinned, Skull } from "lucide-react";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
@@ -9,6 +8,7 @@ import { mdxOptions } from "@/lib/mdx-options";
 import { getLcMapImagePath } from "@/lib/lc-maps";
 import { getAssetPath } from "@/lib/path";
 import { TableOfContents } from "@/components/TableOfContents";
+import { FadeInImage } from "@/components/FadeInImage";
 import { BossDetailHealth } from "@/components/BossHealth";
 import type { Boss } from "@/types";
 
@@ -34,7 +34,7 @@ export async function BossDetailPage({ slug }: { slug: string }) {
           className="relative isolate overflow-hidden rounded-lg border border-zinc-700 bg-zinc-900"
         >
           {mapImage && (
-            <Image
+            <FadeInImage
               src={getAssetPath(mapImage)}
               alt=""
               fill
@@ -91,7 +91,7 @@ export async function BossDetailPage({ slug }: { slug: string }) {
                   className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(209,172,105,0.2),_transparent_70%)]"
                 />
                 <div className="absolute inset-4">
-                  <Image
+                  <FadeInImage
                     src={getAssetPath(
                       `/icons/enemies/lc/boss/${boss.slug}.png`,
                     )}
