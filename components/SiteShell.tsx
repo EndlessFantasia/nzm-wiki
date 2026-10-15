@@ -1,9 +1,10 @@
+/// <reference types="react/canary" />
 "use client";
 
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, ViewTransition } from "react";
 import { ArrowLeft, Command, Github, Menu, Search, X } from "lucide-react";
 import {
   BossDifficultyProvider,
@@ -550,7 +551,10 @@ function SiteShellContent({ children }: { children: React.ReactNode }) {
           drawerOpen={drawerOpen}
           onOpenDrawer={openDrawer}
         />
-        <div className="min-w-0">{children}</div>
+        {/* 以路径为 key：换页时新旧页面交叉过渡，仅 query 或 hash 变化时不播放 */}
+        <ViewTransition key={pathname} default="none" enter="page-enter" exit="page-exit">
+          <div className="min-w-0">{children}</div>
+        </ViewTransition>
       </div>
       <MobileNavigationDialog
         dialogRef={dialogRef}

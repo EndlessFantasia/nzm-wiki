@@ -285,6 +285,28 @@ body {
   animation: palette-panel-out 150ms ease-in forwards;
 }
 
+/* 页面切换：SiteShell 中以路径为 key 的 ViewTransition 触发 */
+@keyframes page-exit {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+::view-transition-old(.page-exit) {
+  animation: page-exit 140ms ease-in both;
+}
+
+::view-transition-new(.page-enter) {
+  animation: page-enter 280ms cubic-bezier(0.2, 0.7, 0.2, 1) 60ms both;
+}
+
 /* 图鉴卡片：外层负责上浮，内层边框负责阴影 */
 .catalog-card {
   transition: transform 200ms cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -655,6 +677,11 @@ body:has(.home-page) {
     transform: none;
   }
 
+  @keyframes page-enter {
+    from {
+      opacity: 0;
+    }
+  }
   .multiplier-badge-stack::details-content,
   .multiplier-badge-preview {
     transition: none;
