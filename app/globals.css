@@ -281,6 +281,26 @@ dialog[open] {
   }
 }
 
+/* 折叠区展开收起：动画期间裁剪内容，展开完成后恢复可见以免裁掉内部浮层 */
+details:not(.multiplier-badge-stack) {
+  interpolate-size: allow-keywords;
+}
+
+details:not(.multiplier-badge-stack)::details-content {
+  transition:
+    block-size 240ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    content-visibility 240ms allow-discrete,
+    overflow 0s 240ms allow-discrete;
+}
+
+details:not(.multiplier-badge-stack):not([open])::details-content {
+  block-size: 0;
+  overflow: clip;
+  transition:
+    block-size 180ms ease-in,
+    content-visibility 180ms allow-discrete;
+}
+
 /* 搜索与命令面板：退场动画结束后由 usePresence 卸载 */
 @keyframes palette-fade-in {
   from {
@@ -735,6 +755,8 @@ body:has(.home-page) {
     }
   }
   .multiplier-badge-stack::details-content,
+  details:not(.multiplier-badge-stack)::details-content,
+  details:not(.multiplier-badge-stack):not([open])::details-content,
   .multiplier-badge-preview {
     transition: none;
   }
