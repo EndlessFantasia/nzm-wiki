@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nzm-wiki.pages.dev/sitemap.xml
+Sitemap: https://nzm-wiki.com/sitemap.xml

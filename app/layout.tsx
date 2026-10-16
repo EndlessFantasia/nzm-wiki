@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-const siteUrl = "https://nzm-wiki.pages.dev";
+const siteUrl = "https://nzm-wiki.com";
 
 export const metadata: Metadata = {
   title: {
@@ -52,7 +52,7 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html:
-              'if (window.location.hostname.toLowerCase() === "nzmwiki.vincentzyu233.cn") { window.location.replace("https://nzm-wiki.com" + window.location.pathname + window.location.search + window.location.hash); }',
+              'var host = window.location.hostname.toLowerCase(); if (host === "nzmwiki.vincentzyu233.cn" || host === "nzm-wiki.pages.dev") { window.location.replace("https://nzm-wiki.com" + window.location.pathname + window.location.search + window.location.hash); }',
           }}
         />
         <script

@@ -6,7 +6,7 @@ import { getOverlimitCatalog, getOverlimitPreviewCatalog } from "../lib/overlimi
 import { getAllPublishedPerks } from "../lib/perks";
 import { getPerkPreviewCatalog } from "../lib/perk-preview";
 
-const SITE_URL = "https://nzm-wiki.pages.dev";
+const SITE_URL = "https://nzm-wiki.com";
 const baseDir = path.join(process.cwd(), "data");
 
 // 路径映射（与 generate-search-index.ts 保持一致）

@@ -170,7 +170,7 @@ import { getAssetPath } from "@/lib/path";
 3. 新动态详情页需要导出 `generateMetadata()`，包含 `title`、`description` 和 `alternates.canonical`。
 4. 新静态列表页需要加入站点地图的 `staticPages`。
 
-SEO 主域名是 `https://endlessfantasia.github.io/nzm-wiki/`，canonical URL 以此为基准。
+SEO 主域名是 `https://nzm-wiki.com/`，canonical URL 以此为基准。
 
 ## 完成标准
 
