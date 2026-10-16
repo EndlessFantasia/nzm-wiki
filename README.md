@@ -6,6 +6,8 @@
 
 在线访问：[逆战未来维基](https://nzm-wiki.com)
 
+仓库地址：[EndlessFantasia/nzm-wiki](https://github.com/EndlessFantasia/nzm-wiki)（原 [lostlightll/nzm-wiki](https://github.com/lostlightll/nzm-wiki)，已迁移至 EndlessFantasia 组织，旧地址会自动重定向）
+
 ## 技术栈
 
 Next.js 16 + React 19 + TypeScript + Tailwind CSS v4 + MDX 
@@ -54,12 +56,9 @@ pnpm build      # 生产构建
 
 完整致谢请查看 [致谢页面](https://nzm-wiki.com/credits)。
 
-- [@qiekn](https://github.com/qiekn) — 原始项目 [nzm-wiki](https://github.com/qiekn/nzm-wiki)，本项目 Fork 自此
+- [@lostlightll](https://github.com/lostlightll) — 项目维护者
 - [@Sh4ck1e](https://github.com/Sh4ck1e) — 项目维护者
-- [抖音 阿秋](https://www.douyin.com/user/MS4wLjABAAAAuR82F-F_U4ywRmTAAMtc5ssvsFdhZn62EF4f7YWJe1M) — 游戏内实测数据
-- [B站 乐意如多](https://space.bilibili.com/52220706)
-- [B站 正人君执](https://space.bilibili.com/15114153)
-- [B站 小小米河](https://space.bilibili.com/3546669903775781)
+- [@qiekn](https://github.com/qiekn) — 原始项目 [nzm-wiki](https://github.com/qiekn/nzm-wiki)，本项目 Fork 自此
 
 ## 许可
 
