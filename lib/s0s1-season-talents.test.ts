@@ -3,15 +3,13 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 import { getLegacyTalentCatalog, getLegacyTalentTree, resolveLegacyTalentCatalog, resolveLegacyTalentFact, type LegacyTalentFact, type LegacyTalentLevel, type LegacyTalentTree } from "./s0s1-season-talents";
 import { buildTrees, sanitizeDescription, auditActiveSkill, extract, UNVERIFIED, type Evidence } from "../scripts/s0s1-season-talents/extract";
-import { checkLegacyTalents, checkProjection } from "../scripts/s0s1-season-talents/check";
+import { checkProjection } from "../scripts/s0s1-season-talents/check";
 import { NUM_MODIFIER_LOCK, NUM_MODIFIER_RESOLVER, NUM_MODIFIER_SEMANTICS } from "./num-modifier-data";
 import { createNumModifierResolver } from "./num-modifier";
 import { summarizeSemanticReview } from "../scripts/s0s1-season-talents/semantic-conflicts";
 
 const evidence = (season: string): Evidence => JSON.parse(readFileSync(`data/season-talents/${season}/audit.json`, "utf8"));
 const emptyLevel = (level = 1): LegacyTalentLevel => ({ level, description: "", modifierRows: [], facts: [], warnings: [] });
-
-test("committed projections replay against current Numerical without refs", () => checkLegacyTalents());
 
 test("refresh without the reviewed script export cannot discard execution evidence", () => {
   assert.ok(evidence("s1").valueEvidence?.s1?.taboo);

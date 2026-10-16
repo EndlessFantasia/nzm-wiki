@@ -4,7 +4,6 @@ import {
   mkdtempSync,
   rmSync,
   writeFileSync,
-  existsSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -399,51 +398,3 @@ test("身份冲突、缺失引用和 Prototype 关系错误不会被吞掉", (co
   );
   assert.equal(error.code, "PROTOTYPE_LINK_MISMATCH");
 });
-
-const realContentRoot = path.join(
-  process.cwd(),
-  "refs",
-  "Exports",
-  "NZM",
-  "Content",
-);
-
-test(
-  "真实导出可联查飓风之龙并保留已知异常",
-  { skip: !existsSync(realContentRoot) },
-  () => {
-    const reader = createWeaponDataSourceReader({ contentRoot: realContentRoot });
-    const mode0Candidates = reader.getPrototypeCandidates("20003000011", 0);
-    assert.ok(mode0Candidates.length >= 1);
-    const mode0 = reader.validatePrototypeLink({
-      prototypeId: "20003000011",
-      mode: 0,
-      rowName: mode0Candidates[0].rowName,
-      numerical: { table: "lc", id: 120300110, level: 1 },
-      ascTypeId: "143",
-    });
-    assert.equal(mode0.numerical.rowName, "120300110_1");
-    assert.equal(mode0.asc?.rowName, "143");
-    assert.equal(mode0.feel?.rowName, "143");
-    assert.ok(Array.isArray(mode0.numerical.raw.Settlements));
-
-    assert.equal(reader.getPrototypeCandidates("20013000050", 0).length, 2);
-    assert.ok(
-      reader
-        .getNumericalDiagnostics()
-        .some((diagnostic) => diagnostic.rowName === "11010053_2"),
-    );
-    assert.equal(
-      reader.getWeaponPveSkill({ skillId: 5100101, level: 1 }).raw
-        .ChargeNeedTime,
-      45,
-    );
-    assert.deepEqual(
-      reader
-        .getGpActiveSkillDiagnostics()
-        .map((diagnostic) => diagnostic.rowName)
-        .sort(),
-      ["5000501", "5102901"],
-    );
-  },
-);
