@@ -21,7 +21,7 @@
 - V2 Schema、统一原表读取层、Lock 和 Resolver 已实现。
 - 页面、搜索、图表和计算器已经统一消费 Resolver 输出。
 - LC 与 TD 各 112 份武器均为 V2，迁移排除项已经清零。
-- 迁移来源决策以 `data/weapon-v2-migration-decisions.json` 为机器权威；检查不依赖生成的 Markdown 报告。
+- 迁移决策、报告和快照（`data/weapon-v2-migration-*.json`、`data/weapon-v2-pilot-snapshots.json`）已移出仓库，需要追溯时从提交 `b7ec722b` 读取。
 
 ## 工作内容
 

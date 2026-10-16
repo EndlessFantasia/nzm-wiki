@@ -4,7 +4,7 @@
 
 ## 武器技能参数
 
-技能 literal 的来源引用继续保留。`duration: -1` 是技能卡的显示开关，不是效果时长；`panel_duration` 和 `blocking` 是独立展示设置。既有页面记录未因此变成配置绑定，GP 生命周期与效果时长也不能按同名字段互换。冻结记录见 `data/weapon-skill-migration-baseline.json`，21 把武器的消费链和配置冲突见 [持续时间补充审计](weapon-skill-duration-followup.md)。
+技能 literal 的来源引用继续保留。`duration: -1` 是技能卡的显示开关，不是效果时长；`panel_duration` 和 `blocking` 是独立展示设置。既有页面记录未因此变成配置绑定，GP 生命周期与效果时长也不能按同名字段互换。冻结记录 `data/weapon-skill-migration-baseline.json` 已移出仓库，可从提交 `b7ec722b` 读取；21 把武器的消费链和配置冲突见 [持续时间补充审计](weapon-skill-duration-followup.md)。
 
 心有凌兮采用跳舞结束路径添加的 `XYLX_PassiveBuff_1.Duration=40`。Native 应用内部未展开，无读取证据的 PVE `BuffDuration=27` 不作为替代；具体证据继续沿该武器的 `evidence` 引用维护。
 

@@ -16,7 +16,6 @@ import matter from "gray-matter";
 import { parseWeaponDataLock } from "../../lib/weapon-data-lock";
 import { createWeaponResolver } from "../../lib/weapon-resolver";
 import { getActiveSkillDisplay, toWeaponDetailData } from "../../lib/weapon-consumers";
-import { currentSkillCorrections } from "../num-skills/s4-migration-review";
 import {
   createWeaponDataSourceReader,
   WEAPON_DATA_SOURCE_FILES,
@@ -300,6 +299,10 @@ const activeWeapons = readdirSync(weaponDirectory)
   .map((fileName) => ({ fileName, data: matter(readFileSync(path.join(weaponDirectory, fileName), "utf8")).data }))
   .filter(({ data }) => typeof data.active_skill_id === "number" && data.active_skill_id > 0);
 const committedLock = parseWeaponDataLock(JSON.parse(readFileSync(path.join(process.cwd(), "data/weapon-data-lock.json"), "utf8")));
+/** Locked rows deliberately differ from the export; see docs/standards/weapon-skills.md. */
+const currentSkillCorrections = [
+  { sourceKind: "skill-pve", sourceKey: "5104101_1", sourceField: "ChargeNeedTime", after: 30 },
+] as const;
 
 test("全部63把主动技能武器的LC/TD充能只由已提交Lock决定：59 PVE、4 GP", () => {
   const resolver = createWeaponResolver(committedLock);

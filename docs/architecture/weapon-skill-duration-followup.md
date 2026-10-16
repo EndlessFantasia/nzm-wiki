@@ -27,7 +27,7 @@
 
 此链确认了“时长计算返回值用于 Buff”，没有展开 Native GetModifiedSkillDurationBySlotType 的参数选择，也没有发现可证明 PVE Parameters 装载到 BuffDuration / FieldDuration 的蓝图实现。字段名、Tag和值相同均不能补足该缺口。因此不把以下 literal 批量换成 weapon_parameter runtime。CDO 的 BuffDuration=-1，以及元宵5/20、光荣15/10等冲突，也不能直接当作最终效果时长。
 
-未闭环条目的 literal 来源仍是既有页面记录，原始记录可从 `data/weapon-skill-migration-baseline.json#<武器>.active-1.duration|panel_duration` 复查；本页增加结构化候选配置与消费链，未把历史记录改称实测或已验证配置。
+未闭环条目的 literal 来源仍是既有页面记录，原始记录可从提交 `b7ec722b` 的 `data/weapon-skill-migration-baseline.json#<武器>.active-1.duration|panel_duration` 复查；本页增加结构化候选配置与消费链，未把历史记录改称实测或已验证配置。
 
 ## Z型步枪
 
