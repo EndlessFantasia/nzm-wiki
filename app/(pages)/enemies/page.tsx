@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "敌人图鉴",
+  description: "逆战未来敌人图鉴，按游戏模式查看塔防敌人与猎场首领。",
+  alternates: { canonical: "/enemies" },
+};
 
 const ENEMY_CATEGORIES = [
   {
