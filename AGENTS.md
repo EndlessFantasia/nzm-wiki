@@ -66,6 +66,8 @@ D:\Workspace\nzm-wiki
 
 不要假设 MSYS2 的 `/home/...` 等虚拟路径可用。需要跨工具传递路径时，优先使用 `D:\Workspace\nzm-wiki` 或 `D:/Workspace\nzm-wiki` 形式。
 
+文本文件在仓库和工作区统一使用 LF，由 `.gitattributes`（`* text=auto eol=lf`）强制，不依赖本机 `core.autocrlf`。新建或改写文件不要写入 CRLF；`archives/content-versions/**` 按字节校验，禁止任何换行转换。
+
 本地游戏资源导出按环境区分：
 
 - `refs/Exports/NZM/Content/`：正式服资源。用户给出以 `NZM/Content/` 开头的路径时默认映射到这里。

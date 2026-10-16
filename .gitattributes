@@ -1,3 +1,21 @@
+# 文本文件在仓库与工作区统一使用 LF，不受本机 core.autocrlf 影响
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.mp4 binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.pdf binary
+*.zip binary
+
 *.exe filter=lfs diff=lfs merge=lfs -text
 pnpm-lock.yaml -text
+# 内容快照按字节校验 sha256，禁止换行转换
 archives/content-versions/** -text -whitespace
