@@ -62,4 +62,5 @@ pnpm build      # 生产构建
 
 ## 许可
 
-MIT License
+代码采用 [AGPL-3.0-only](LICENSE)，文章与数据采用 [CC BY-SA 4.0](LICENSE-CONTENT)。\
+基于本项目构建或批量引用本站数据的 Wiki 类项目，须在首页放置直达本站的署名栏，详见 [NOTICE.md](NOTICE.md)。
