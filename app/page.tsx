@@ -5,7 +5,7 @@ import { getAssetPath } from "@/lib/path";
 import { IcpFilingNotice } from "@/components/IcpFilingNotice";
 import { HomeBackdrop } from "@/components/HomeBackdrop";
 
-const GITHUB_FORK = "https://github.com/lostlightll/nzm-wiki";
+const GITHUB_FORK = "https://github.com/EndlessFantasia/nzm-wiki";
 
 interface NavCardProps {
   href: string;

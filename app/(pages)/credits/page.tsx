@@ -177,7 +177,7 @@ const CONTENT_CONTRIBUTORS = [
   {
     platform: "github" as const,
     author: "Perpetual-Memories",
-    url: "https://github.com/lostlightll/nzm-wiki/issues/11",
+    url: "https://github.com/EndlessFantasia/nzm-wiki/issues/11",
     title: "GitHub issue 反馈",
   },
   {

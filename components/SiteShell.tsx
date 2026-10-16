@@ -20,7 +20,7 @@ import {
   type SiteNavItem,
 } from "@/lib/site-navigation";
 
-const GITHUB_REPO = "https://github.com/lostlightll/nzm-wiki";
+const GITHUB_REPO = "https://github.com/EndlessFantasia/nzm-wiki";
 const DEFAULT_SIDEBAR_WIDTH = 184;
 const MIN_SIDEBAR_WIDTH = 184;
 const MAX_SIDEBAR_WIDTH = 320;
