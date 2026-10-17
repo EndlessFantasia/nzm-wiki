@@ -15,30 +15,24 @@ import { TalentHeader, TalentPassiveSlot, TalentNode, TalentDetails, TalentLevel
 function column(node: S2TalentNode) { return node.column >= 5 ? node.column - 4 : node.column + 3; }
 
 function connectorPaths(tree: S2TalentTree, levels: Record<string, number>, section?: "special" | "common") {
-  const groups = new Map<string, { sources: Set<S2TalentNode>; targets: Set<S2TalentNode> }>();
+  const groups = new Map<string, Map<string, [S2TalentNode, S2TalentNode]>>();
   for (const node of tree.nodes.filter(n => !n.isRoot)) {
     if (section && (node.column >= 5 ? "special" : "common") !== section) continue;
     for (const id of s2PrerequisiteGroups(node.prerequisite).flat()) {
       const source = tree.nodes.find(n => n.id === id && !n.isRoot);
       if (!source) continue;
       const key = `${node.column >= 5 ? "special" : "common"}-${source.phase}-${node.phase}`;
-      const group = groups.get(key) ?? { sources: new Set<S2TalentNode>(), targets: new Set<S2TalentNode>() };
-      group.sources.add(source); group.targets.add(node); groups.set(key, group);
+      const group = groups.get(key) ?? new Map<string, [S2TalentNode, S2TalentNode]>();
+      group.set(`${source.id}-${node.id}`, [source, node]); groups.set(key, group);
     }
   }
   const x = (n: S2TalentNode) => section ? ((n.column >= 5 ? n.column - 4 : n.column) - .5) / 3 * 100 : (column(n) - .5) / 6 * 100;
   const y = (n: S2TalentNode) => (n.phase - 1.5) / 5 * 100;
-  const path = (sources: S2TalentNode[], targets: S2TalentNode[]) => {
-    const rail = (Math.max(...sources.map(n => y(n) + 8.25)) + Math.min(...targets.map(n => y(n) - 5.25))) / 2;
-    const xs = [...sources, ...targets].map(x);
-    return [`M ${Math.min(...xs)} ${rail} H ${Math.max(...xs)}`,
-      ...sources.map(n => `M ${x(n)} ${y(n) + 8.25} V ${rail}`),
-      ...targets.map(n => `M ${x(n)} ${rail} V ${y(n) - 5.25}`)].join(" ");
-  };
   return [...groups].flatMap(([id, group]) => {
-    const sources = [...group.sources], targets = [...group.targets];
-    const activeSources = sources.filter(n => (levels[n.id] ?? 0) > 0), activeTargets = targets.filter(n => (levels[n.id] ?? 0) > 0);
-    return [{ id, d: path(sources, targets), active: false }, ...(activeSources.length && activeTargets.length ? [{ id: id + "-active", d: path(activeSources, activeTargets), active: true }] : [])];
+    const edges = [...group];
+    const rail = (Math.max(...edges.map(([, [source]]) => y(source) + 8.25)) + Math.min(...edges.map(([, [, target]]) => y(target) - 5.25))) / 2;
+    return edges.map(([edgeId, [source, target]]) => ({ id: `${id}-${edgeId}`, d: `M ${x(source)} ${y(source) + 8.25} V ${rail} H ${x(target)} V ${y(target) - 5.25}`,
+      active: (levels[source.id] ?? 0) > 0 && (levels[target.id] ?? 0) > 0 }));
   });
 }
 

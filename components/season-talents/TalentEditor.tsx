@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ChevronRight, Minus, Plus, RotateCcw } from "lucide-react";
-import { useRef, useState, type CSSProperties, type ReactNode, type Ref } from "react";
+import { useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode, type Ref } from "react";
 import { getAssetPath } from "@/lib/path";
 import styles from "./talent-editor.module.css";
 
@@ -108,10 +108,65 @@ export function TalentTreeSections({ exclusiveWidth = "42.5%", generalWidth = "5
   </div>;
 }
 
+const CONNECTOR_RADIUS = 4;
+
+// 路径以 0–100 百分比坐标给出（仅 M/L/H/V），按容器像素尺寸换算后给折点加圆角，避免非等比拉伸把圆弧压成椭圆
+function roundConnectorPath(d: string, width: number, height: number) {
+  const tokens = d.match(/[MLHV]|-?(?:\d+\.?\d*|\.\d+)(?:e[-+]?\d+)?/gi) ?? [];
+  const subpaths: { x: number; y: number }[][] = [];
+  let x = 0, y = 0, i = 0;
+  while (i < tokens.length) {
+    const command = tokens[i++].toUpperCase();
+    if (command === "M" || command === "L") { x = Number(tokens[i++]); y = Number(tokens[i++]); }
+    else if (command === "H") x = Number(tokens[i++]);
+    else if (command === "V") y = Number(tokens[i++]);
+    else continue;
+    const point = { x: (x / 100) * width, y: (y / 100) * height };
+    if (command === "M") { subpaths.push([point]); continue; }
+    const current = subpaths.at(-1);
+    const last = current?.at(-1);
+    if (!current || !last || (Math.abs(last.x - point.x) < .01 && Math.abs(last.y - point.y) < .01)) continue;
+    const previous = current.at(-2);
+    if (previous && Math.abs((last.x - previous.x) * (point.y - last.y) - (last.y - previous.y) * (point.x - last.x)) < .01) current.pop();
+    current.push(point);
+  }
+  const format = (value: number) => Number(value.toFixed(2));
+  return subpaths.filter(points => points.length > 1).map(points => {
+    let path = `M ${format(points[0].x)} ${format(points[0].y)}`;
+    for (let index = 1; index < points.length - 1; index++) {
+      const [before, corner, after] = [points[index - 1], points[index], points[index + 1]];
+      const inLength = Math.hypot(corner.x - before.x, corner.y - before.y);
+      const outLength = Math.hypot(after.x - corner.x, after.y - corner.y);
+      const radius = Math.min(CONNECTOR_RADIUS, inLength / 2, outLength / 2);
+      const start = { x: corner.x - ((corner.x - before.x) / inLength) * radius, y: corner.y - ((corner.y - before.y) / inLength) * radius };
+      const end = { x: corner.x + ((after.x - corner.x) / outLength) * radius, y: corner.y + ((after.y - corner.y) / outLength) * radius };
+      path += ` L ${format(start.x)} ${format(start.y)} Q ${format(corner.x)} ${format(corner.y)} ${format(end.x)} ${format(end.y)}`;
+    }
+    const end = points[points.length - 1];
+    return `${path} L ${format(end.x)} ${format(end.y)}`;
+  }).join(" ");
+}
+
 export function TalentConnectorLines({ paths, className = "" }: { paths: readonly { id: string; d: string; active: boolean; style?: CSSProperties }[]; className?: string }) {
-  return <svg className={`${styles.theme} ${styles.connectors} ${className}`} aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none">
-    {paths.filter(path => !path.active).map(path => <path key={path.id} d={path.d} style={path.style} vectorEffect="non-scaling-stroke" />)}
-    {paths.filter(path => path.active).map(path => <path key={`${path.id}-glow`} d={path.d} className={styles.connectorGlow} vectorEffect="non-scaling-stroke" />)}
-    {paths.filter(path => path.active).map(path => <path key={path.id} d={path.d} style={path.style} data-active vectorEffect="non-scaling-stroke" />)}
+  const svgRef = useRef<SVGSVGElement>(null);
+  const [size, setSize] = useState<{ width: number; height: number } | null>(null);
+  useLayoutEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    const observer = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      setSize(width > 0 && height > 0 ? { width: Math.round(width), height: Math.round(height) } : null);
+    });
+    observer.observe(svg);
+    return () => observer.disconnect();
+  }, []);
+  const resolve = (d: string) => size ? roundConnectorPath(d, size.width, size.height) : d;
+  const inactive = paths.filter(path => !path.active);
+  const active = paths.filter(path => path.active);
+  return <svg ref={svgRef} className={`${styles.theme} ${styles.connectors} ${className}`} aria-hidden="true"
+    viewBox={size ? `0 0 ${size.width} ${size.height}` : "0 0 100 100"} preserveAspectRatio="none">
+    <g>{inactive.map(path => <path key={path.id} d={resolve(path.d)} style={path.style} vectorEffect="non-scaling-stroke" />)}</g>
+    <g className={styles.connectorGlow}>{active.map(path => <path key={path.id} d={resolve(path.d)} vectorEffect="non-scaling-stroke" />)}</g>
+    <g className={styles.connectorActive}>{active.map(path => <path key={path.id} d={resolve(path.d)} style={path.style} vectorEffect="non-scaling-stroke" />)}</g>
   </svg>;
 }

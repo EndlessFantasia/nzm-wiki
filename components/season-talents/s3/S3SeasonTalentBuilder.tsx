@@ -265,83 +265,47 @@ interface PositionedTalentNode extends TalentNode {
   y: number;
 }
 
-interface ConnectorGroup {
+interface ConnectorEdge {
   key: string;
-  sources: PositionedTalentNode[];
-  targets: PositionedTalentNode[];
+  source: PositionedTalentNode;
+  target: PositionedTalentNode;
+  railY: number;
 }
 
-function createConnectorGroups(
-  nodes: TalentNode[],
-  activeNodeIds?: Set<string>,
-): ConnectorGroup[] {
+function createConnectorEdges(nodes: TalentNode[]): ConnectorEdge[] {
   const positionedNodes = nodes.map((node) => ({
     ...node,
     x: ((getDesktopColumn(node.column) - 0.5) / 7) * 100,
     y: ((node.phase - 1.5) / 5) * 100,
   }));
   const nodeMap = new Map(positionedNodes.map((node) => [node.id, node]));
-  const groups = new Map<
-    string,
-    { sources: Map<string, PositionedTalentNode>; targets: Map<string, PositionedTalentNode> }
-  >();
+  const groups = new Map<string, Array<[PositionedTalentNode, PositionedTalentNode]>>();
 
   positionedNodes.forEach((target) => {
-    if (activeNodeIds && !activeNodeIds.has(target.id)) return;
-
     target.prerequisites.forEach((prerequisiteId) => {
       const source = nodeMap.get(prerequisiteId);
-      if (!source || (activeNodeIds && !activeNodeIds.has(source.id))) return;
-
+      if (!source) return;
       const section = target.column >= 5 ? "general" : "exclusive";
       const key = `${section}-${source.phase}-${target.phase}`;
-      const group = groups.get(key) ?? {
-        sources: new Map<string, PositionedTalentNode>(),
-        targets: new Map<string, PositionedTalentNode>(),
-      };
-      group.sources.set(source.id, source);
-      group.targets.set(target.id, target);
-      groups.set(key, group);
+      groups.set(key, [...(groups.get(key) ?? []), [source, target]]);
     });
   });
 
-  return [...groups.entries()].map(([key, group]) => ({
-    key,
-    sources: [...group.sources.values()],
-    targets: [...group.targets.values()],
-  }));
-}
-
-function getConnectorPath({ sources, targets }: ConnectorGroup) {
-  const sourceOffset = 8.25;
-  const sourceBottom = Math.max(
-    ...sources.map((node) => node.y + sourceOffset),
-  );
-  const targetTop = Math.min(
-    ...targets.map((node) => node.y - 5.25),
-  );
-  const railY = (sourceBottom + targetTop) / 2;
-  const xs = [...sources, ...targets].map((node) => node.x);
-  const left = Math.min(...xs);
-  const right = Math.max(...xs);
-
-  return [
-    `M${left} ${railY} H${right}`,
-    ...sources.map(
-      (node) => `M${node.x} ${node.y + sourceOffset} V${railY}`,
-    ),
-    ...targets.map(
-      (node) => `M${node.x} ${railY} V${node.y - 5.25}`,
-    ),
-  ].join(" ");
+  // 同一层之间的连线共用一条横轨高度
+  return [...groups.entries()].flatMap(([key, edges]) => {
+    const sourceBottom = Math.max(...edges.map(([source]) => source.y + 8.25));
+    const targetTop = Math.min(...edges.map(([, target]) => target.y - 5.25));
+    const railY = (sourceBottom + targetTop) / 2;
+    return edges.map(([source, target]) => ({ key: `${key}-${source.id}-${target.id}`, source, target, railY }));
+  });
 }
 
 function TalentConnectors({ nodes, levels }: { nodes: TalentNode[]; levels: Record<string, number> }) {
-  const activeIds = new Set(nodes.filter(node => (levels[node.id] ?? 0) > 0).map(node => node.id));
-  return <TalentConnectorLines paths={[
-    ...createConnectorGroups(nodes).map(group => ({ id: group.key, d: getConnectorPath(group), active: false })),
-    ...createConnectorGroups(nodes, activeIds).map(group => ({ id: group.key + "-active", d: getConnectorPath(group), active: true })),
-  ]} />;
+  return <TalentConnectorLines paths={createConnectorEdges(nodes).map(({ key, source, target, railY }) => ({
+    id: key,
+    d: `M ${source.x} ${source.y + 8.25} V ${railY} H ${target.x} V ${target.y - 5.25}`,
+    active: (levels[source.id] ?? 0) > 0 && (levels[target.id] ?? 0) > 0,
+  }))} />;
 }
 
 function PassiveTalentSelector({ theme, previewTalent, equippedId, onPreview, onApply, onClose }: {
