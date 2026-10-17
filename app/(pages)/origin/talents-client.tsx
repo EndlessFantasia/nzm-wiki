@@ -170,8 +170,7 @@ function BranchTree({ talents, levels, selectedId, onSelect, onIncrease }: {
     const toY = rowPercent(rowOf(talent.row), -half, rows);
     const midY = rowPercent(rowOf(talent.row), -half - 4, rows);
     const active = (levels[parent.id] ?? 0) >= prerequisite.level && (levels[talent.id] ?? 0) > 0;
-    return [{ id: `${parent.id}-${talent.id}`, d: `M ${fromX} ${fromY} V ${midY} H ${toX} V ${toY}`, active,
-      style: { stroke: active ? "var(--talent-accent)" : "rgba(148,163,184,.32)", strokeWidth: active ? 1.5 : 1, opacity: 1 } }];
+    return [{ id: `${parent.id}-${talent.id}`, d: `M ${fromX} ${fromY} V ${midY} H ${toX} V ${toY}`, active }];
   }));
   return <div className="relative grid grid-cols-4 [grid-template-rows:repeat(var(--compact-rows),var(--row-px))] lg:[grid-template-rows:repeat(var(--rows),var(--row-px))]"
     style={{ "--rows": rowCount, "--compact-rows": usedRows.length, "--row-px": `${rowPx}px` } as CSSProperties}>

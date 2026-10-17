@@ -224,8 +224,7 @@ function TalentConnectors({
       const targetActive = targetPair
         ? targetPair.members.some((node) => (levels[node.id] ?? 0) > 0)
         : (levels[target.id] ?? 0) > 0;
-      return [{ id: edgeKey, d: `M ${sourceX} ${sourceY} V ${midpoint} H ${targetX} V ${targetY}`, active: sourceActive && targetActive,
-        style: { stroke: sourceActive && targetActive ? "var(--s4-accent)" : "rgba(118,145,164,.28)", strokeWidth: sourceActive && targetActive ? .5 : .32, opacity: 1 } }];
+      return [{ id: edgeKey, d: `M ${sourceX} ${sourceY} V ${midpoint} H ${targetX} V ${targetY}`, active: sourceActive && targetActive }];
     }),
   );
 

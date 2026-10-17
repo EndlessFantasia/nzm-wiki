@@ -43,7 +43,7 @@ export function TalentNode({ node, selected, level, unlocked, mutuallyExcluded =
 }) {
   const rapidUntil = useRef(0);
   return <button type="button" id={anchorId ?? `season-talent-node-${node.id}`} className={`${styles.theme} ${styles.node} ${className}`} style={style}
-    data-selected={selected} data-active={!!node.isRoot || level > 0} data-unlocked={unlocked} data-excluded={mutuallyExcluded}
+    data-selected={selected} data-active={!!node.isRoot || level > 0} data-maxed={!!node.isRoot || level >= node.maxLevel} data-unlocked={unlocked} data-excluded={mutuallyExcluded}
     aria-pressed={selected} aria-label={preview ? `${node.name}，效果预览，最高 ${node.maxLevel} 级` : `${node.name}，${node.isRoot ? "根技能" : `${level}/${node.maxLevel} 级`}${mutuallyExcluded ? "，与已选天赋互斥" : unlocked ? "" : "，前置未满足"}`}
     onClick={() => onIncrease && Date.now() <= rapidUntil.current ? onIncrease() : onSelect()}
     onDoubleClick={() => {
@@ -110,6 +110,8 @@ export function TalentTreeSections({ exclusiveWidth = "42.5%", generalWidth = "5
 
 export function TalentConnectorLines({ paths, className = "" }: { paths: readonly { id: string; d: string; active: boolean; style?: CSSProperties }[]; className?: string }) {
   return <svg className={`${styles.theme} ${styles.connectors} ${className}`} aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none">
-    {paths.map(path => <path key={path.id} d={path.d} style={path.style} data-active={path.active} vectorEffect="non-scaling-stroke" />)}
+    {paths.filter(path => !path.active).map(path => <path key={path.id} d={path.d} style={path.style} vectorEffect="non-scaling-stroke" />)}
+    {paths.filter(path => path.active).map(path => <path key={`${path.id}-glow`} d={path.d} className={styles.connectorGlow} vectorEffect="non-scaling-stroke" />)}
+    {paths.filter(path => path.active).map(path => <path key={path.id} d={path.d} style={path.style} data-active vectorEffect="non-scaling-stroke" />)}
   </svg>;
 }
