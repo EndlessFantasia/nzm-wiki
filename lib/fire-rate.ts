@@ -1,5 +1,8 @@
 import { getAllOverlimitCards } from "@/lib/overlimit-cards";
 import { getAllPerks } from "@/lib/perks";
+import { getPerkAvailability } from "@/lib/perk-release";
+import { NUM_MODIFIER_RESOLVER } from "@/lib/num-modifier-data";
+import type { NumModifierValueExpression } from "@/lib/num-modifier";
 import { getResolvedFieldValue } from "@/lib/weapon-consumers";
 import { getResolvedWeaponBySlug } from "@/lib/weapons";
 import type {
@@ -11,7 +14,109 @@ import type {
 
 export const FIRE_RATE_STAT_ID = "fire-rate" as const;
 
-export type FireRateCatalogGroup = "weapons" | "perks" | "overlimit" | "base";
+type MechanicFireRateGroup = "talents" | "origin" | "limits";
+export type FireRateCatalogGroup = "weapons" | "perks" | "overlimit" | "base" | MechanicFireRateGroup;
+
+interface MechanicFireRateSource {
+  id: string;
+  name: string;
+  href: string;
+  icon: string;
+  sourceLabel: string;
+  stages: {
+    condition: string;
+    expression: NumModifierValueExpression;
+    percentagePoints?: boolean;
+  }[];
+}
+
+const MECHANIC_FIRE_RATE_SOURCES: Record<MechanicFireRateGroup, MechanicFireRateSource[]> = {
+  talents: [
+    {
+      id: "season:s4:matrix-symbiosis:4020102",
+      name: "矩阵共生",
+      href: "/guides/season-talents/s4/matrix-symbiosis?node=4020102",
+      icon: "/webp/images/season-talents/s4/details/T_Talent_S4_XJHH_1.webp",
+      sourceLabel: "S4天赋 · 玩家枪械部分",
+      stages: [{ condition: "自身处于狂暴领域内", expression: { row: "lc:130040034_1_1", field: "base" } }],
+    },
+    {
+      id: "season:s4:matrix-symbiosis:4020202",
+      name: "阵列共鸣",
+      href: "/guides/season-talents/s4/matrix-symbiosis?node=4020202",
+      icon: "/webp/images/season-talents/s4/details/T_Talent_S4_XJHH_02.webp",
+      sourceLabel: "S4天赋 · 玩家枪械部分",
+      stages: [
+        { condition: "领域内每个友方单位", expression: { row: "lc:130040035_1_1", field: "base" } },
+        { condition: "6层上限", expression: { row: "lc:130040035_1_1", field: "base", scale: 6 } },
+      ],
+    },
+  ],
+  origin: [
+    {
+      id: "origin-rune:1378042240",
+      name: "怒战狂暴",
+      href: "/origin#rune-1378042240",
+      icon: "/icons/origin/runes/T_Icons_S4_Rouge_SPRunes04_01.webp",
+      sourceLabel: "原点强化 · 叠层数值未计射速上限",
+      stages: [
+        { condition: "受损叠层，每层", expression: { row: "lc:130042240_1_0", field: "base" } },
+        { condition: "20层合计（截断前）", expression: { row: "lc:130042240_1_0", field: "base", scale: 20 } },
+      ],
+    },
+    {
+      id: "origin-rune:1378044250",
+      name: "狂战之力",
+      href: "/origin#rune-1378044250",
+      icon: "/icons/origin/runes/T_Icons_S4_Rouge_SPRunes04_03.webp",
+      sourceLabel: "原点强化 · 玩家枪械部分",
+      stages: [{ condition: "获得强化后", expression: { row: "lc:130044250_1_2", field: "base" } }],
+    },
+    {
+      id: "origin-affix:10015",
+      name: "复合弓·备弹",
+      href: "/origin#affix-10015",
+      icon: "/icons/weapons/normal/超级复合弓.png",
+      sourceLabel: "原点武器词条",
+      stages: [{ condition: "使用武器技能后8秒内", expression: { row: "lc:130040150_1_0", field: "base" } }],
+    },
+    {
+      id: "origin-affix:10006",
+      name: "纯白·狂热",
+      href: "/origin#affix-10006",
+      icon: "/icons/weapons/normal/纯白至上.png",
+      sourceLabel: "原点武器词条 · 换弹清除叠层",
+      stages: [
+        { condition: "初始减益", expression: { row: "lc:130040062_1_0", field: "base" } },
+        { condition: "持续射击每秒叠1层", expression: { row: "lc:130040061_1_0", field: "base" } },
+        { condition: "4层叠加部分（未扣初始减益）", expression: { row: "lc:130040061_1_0", field: "base", scale: 4 } },
+      ],
+    },
+  ],
+  limits: [
+    {
+      id: "origin-affix:10006:fire-rate-limit",
+      name: "纯白·狂热",
+      href: "/origin#affix-10006",
+      icon: "/icons/weapons/normal/纯白至上.png",
+      sourceLabel: "原点武器词条 · 上限修正",
+      stages: [{ condition: "射速加成上限增加", expression: { row: "lc:130040060_1_1", field: "base" }, percentagePoints: true }],
+    },
+  ],
+};
+
+export function getMechanicFireRateSources(group: MechanicFireRateGroup) {
+  return MECHANIC_FIRE_RATE_SOURCES[group].map((source) => ({
+    ...source,
+    stages: source.stages.map((stage): EffectValueStage => {
+      const value = NUM_MODIFIER_RESOLVER.resolveValue(stage.expression, "signed-percent", source.id).text;
+      return {
+        condition: stage.condition,
+        value: stage.percentagePoints ? value.replace(/%$/, " 个百分点") : value,
+      };
+    }),
+  }));
+}
 
 export interface WeaponFireRateSource {
   id: string;
@@ -222,7 +327,11 @@ export function getPerkFireRateSources(): Array<{
       const effect = getFireRateEffect(perk.effectValues);
       return effect ? [{ perk, effect }] : [];
     })
-    .sort((left, right) => left.perk.name.localeCompare(right.perk.name, "zh-CN"));
+    .sort((left, right) =>
+      Number(getPerkAvailability(left.perk) === "offline") -
+        Number(getPerkAvailability(right.perk) === "offline") ||
+      left.perk.name.localeCompare(right.perk.name, "zh-CN"),
+    );
 }
 
 export function getOverlimitFireRateSources(): Array<{

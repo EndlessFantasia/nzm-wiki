@@ -58,6 +58,48 @@ pnpm exec tsx scripts/overlimit/project-fatal-explosion.ts --content-root refs/E
 
 本项补充验证：独立伤害测试16/16、超限卡测试25/25、改动代码ESLint、TypeScript、超限投影与Weapon/Num Modifier数据检查均通过。测试中极寒领域的正式服旧预期同步为60%/300，保留冻结快照与覆写隔离检查。两次生产构建均在临时重命名 `app/api` 时遇到Windows文件占用（EPERM），尚未进入Next.js编译；路由目录完整保留，本项完整生产构建未验证。
 
+## 射速目录补充核验（2026-10-17）
+
+哈士奇鼓舞（20703040533）的射速使用 `lc:121600114_1_0.base`（B1，0.1），在增幅区域内为+10%。光暗死神（20703040551）使用 `lc:1410210103_1_0.base`（B1，0.05），光能量每层+5%，5层+25%；此效果替代死神猎手原满充能射速加成，不与其相加。
+
+绝境雷霆（20703040570）的身份链已由 `perk:20703040570` 来源登记：Passive1312083001 → MGE1312083001 → 伤害Modifier120600190、射速Modifier120600191。当前正式Lock中两行均为B1、BaseValue=0、CoefValue=0.6、Level=1。旧描述的每1%弹耗+0.3%、上限21%没有跟随当前Numerical，改为表达式引用。
+
+本次原地读取选定资产 `NZM/Content/Weapon/Data/Rifle/Rifle_20001000019_WBH_LT999P/MGE/MGE_1312083001_LT999P_DarkGoldPlugin.uasset`，保存快照 `kismet/unknown/20261017T050831Z-eaca7b280ad34a3d81fbaa4a06c62afb/json/NZM/Content/Weapon/Data/Rifle/Rifle_20001000019_WBH_LT999P/MGE/MGE_1312083001_LT999P_DarkGoldPlugin.uasset.json`，SHA-256为 `67f0fee8a83c6dfb03228d72403ffa0f9ca86eafc32e705602b30c9126340eb7`。来源环境与构建号未独立确认，按unknown保留；不将快照目录或导出日期视作正式版本证明。它与既有来源登记中的函数、Modifier及调用位置一致，数值仍采用已提交的正式Lock。
+
+`ExecuteUbergraph_MGE_1312083001_LT999P_DarkGoldPlugin` 的伤害路径在549读取当前主弹匣弹量，606取最大主弹匣弹量，645相除，691计算 `1 - 当前弹量 / 最大弹量`，733将其Clamp至0–0.7，780把该输入传给120600190。射速路径从1292重置旧Modifier，经1414、1471、1510、1556重复同一计算，1598限制为0–0.7，1665把结果传给120600191，1833启动Action。射速初始化从3465保存1292执行路径；弹药变化回调亦更新该路径。2151的120600192为主动技能弹药消耗修正，未混入射速值。
+
+因此发布表达式分别使用系数×0.01（每消耗1%主弹匣弹药，+0.6%）和系数×0.7（主弹匣剩余不高于30%，+42%），不是把0.6直接作为最大加成。Native Modifier内部与实际游戏运行未展开，本项为静态配置和蓝图输入审计，不是实测。
+
+## 天赋、原点与射速上限补充（2026-10-17）
+
+文章与目录区分普通射速加成、叠层合计、基础射速变化、射速上限和收益转换。`lib/fire-rate.ts` 的新增目录只通过Num Resolver解析正式Lock，不把展示描述写成数值来源，也不为尚未核定的上限或B5攻击转换推导最终因子。
+
+| 来源 | 已核定数值与链路 |
+| --- | --- |
+| S4矩阵共生 | 节点4020102→Skill6005301；既有领域MGE1319051016的`OriginShootSpeedBuff=SeasonTalent_S5_XJHHHuge_RangeShootSpeed`，Buff.GPModifyIDs=[130040034]。玩家行`lc:130040034_1_1.base=0.09`、B1，为+9%；不使用同ID的召唤物间隔行`_1_0`。 |
+| S4阵列共鸣 | 节点4020202→Passive1319053001；领域CDO的`TargetSumSpeedTalent=1319053001`、`TargetSumSpeedBuffName=SeasonTalent_S5_XJHHHuge_OwnShootSpeed`。Buff.GPModifyIDs=[130040035]、StackLimitCount=6、bMagnitudesFactorInStackCount=true；玩家行`lc:130040035_1_1.base=0.017`、B1，每层+1.7%，六层+10.2%。 |
+| 怒战狂暴 | 强化1378042240→同ID被动与MGE；Buff_Rogue_1378042240.GPModifyIDs=[130042240]、StackLimitCount=20、按层数缩放。`lc:130042240_1_0.base=0.05`、B1，每层+5%，二十层截断前合计+100%，不视为最终生效射速。 |
+| 狂战之力 | 强化1378044250→同ID被动与MGE；主图163将Modifier130044250施加于角色，玩家枪械行`lc:130044250_1_2.base=0.2`、B1，为+20%。同ID的近战行不并入枪械射速。 |
+| 复合弓·备弹 | 词条10015沿现有审定映射→Passive1378040150；MGE主图30调用AddCrazyShootingEffect，参数为8秒、Modifier130040150。`lc:130040150_1_0.base=0.3`、B1，为+30%。 |
+| 纯白·狂热 | 词条10006沿现有审定映射→Passive1378040060；主图99施加130040060，383向武器施加130040062，925添加Buff_Rogue_1378040060，1478换弹路径清Buff。CustomCD=1秒，857检查、989提交自定义冷却；Buff.GPModifyIDs=[130040061]、StackLimitCount=4、按层数缩放。`130040062_1_0.base=-0.2`为初始武器减益，`130040061_1_0.base=0.2`为每层增益；四层叠加部分+80%仍需扣初始减益。 |
+| 纯白·狂热上限 | 同一130040060调用包含`lc:130040060_1_1`，属性`GunRPMRatioAdjustMaxAdd`、B1、BaseValue=0.3、CoefValue=0。按属性描述表2327确认其为射速上限，单独展示+30个百分点；在通常50%基准上只考虑此修正时算术上限为80%，不将其当作额外射速或推断多修正的叠加规则。 |
+
+矩阵证据复用`kismet/live/20261013T110925Z-daa46394cacb44a7bb6bce9ccc96c9b9`中的`Abilities/Skills/Season/S5/XJHH/MGE/MGE_1319051016.uasset.json`及manifest：主图15120通过OriginShootSpeedBuff添加领域Buff；969检查TargetSumSpeedTalent，1472限制友方计数为6，2905用DeltaBuffStack添加TargetSumSpeedBuffName。原表路径虽含S5，站点S4身份由既有天赋表连接确认，不凭资产目录名推断赛季。
+
+原点仅导出上述五个选定MGE，快照位于`kismet/unknown/20261017T051420Z-f413acbc1059427f9505097dfb47308b/json/NZM/Content/Abilities/Build/RoguePerk/S4/`。按既有正式服审计排除残留容器`P_1.0.50.485.0_Patch_Season_4261608_P.pak`；本次来源环境与构建号未独立确认，保留unknown，不把导出时间作为版本证明。快照SHA-256依次为：
+
+| MGE | SHA-256 |
+| --- | --- |
+| 1378042240 | e1bed3e3b251aec1d16a3f019155b3d7ca6c44398d645600a1b96ba0cf375caa |
+| 1378040060 | 80cd35a29a2318632b67550ebecde9c0788aedfde2827d7d6a91090727f74b7e |
+| 1378040150 | 8088c1b8350e5ac91762803452cc164e0d5f50720f981e4fdfa0513cd3d5984d |
+| 1378044250 | fdd6b3677ee957e8f77dd566f53ed22943d3b334f010bd2536f86e6db04a97f7 |
+| 1378044500 | 466530eec9d6856817ba8681e3f69ac9fbb49a8bec812b41142d447a168a53bf |
+
+怒战狂暴主图688添加上述叠层Buff，879监听0.1的累计血量与护盾损失。主图200另调用Modifier130042241，但当前正式Lock与本地Numerical原表均无该ID；不能用描述的“射速上限加50%”补造缺失行，也不能据二十层合计+100%断言实际翻倍。此上限例外保留待核验。
+
+精准命中1378044500的主图724读取上限前的角色GunRPMRatioAdjust，893读取武器RPMAdjustRatio，计算后292将Scale×100作为334调用Modifier130044500的动态输入。该行是Attack、B5、BaseValue=0、CoefValue=0.014；B5最终因子未建模，因此文章只说明收益转换，不从1.4%的描述反推最终攻击力或额外射速。以上为配置与蓝图输入审计，Native内部和实际运行未展开，未新增游戏内实测结论。
+
 ## 平衡补丁同步验证
 
 生产构建通过，生成1357个静态页面，构建临时隐藏的路由均已恢复。25项定向测试、25项超限卡测试、改动代码的ESLint、TypeScript及Numerical/原点/乘区索引投影检查通过。

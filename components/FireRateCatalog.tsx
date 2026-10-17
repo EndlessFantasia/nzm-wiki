@@ -3,6 +3,7 @@ import Link from "next/link";
 import { EffectValuesPanel } from "@/components/EffectValues";
 import {
   getBaseFireRateEntries,
+  getMechanicFireRateSources,
   getOverlimitFireRateSources,
   getPerkFireRateSources,
   getWeaponFireRateSources,
@@ -11,7 +12,8 @@ import {
 } from "@/lib/fire-rate";
 import { getProviderRelationsForSource } from "@/lib/multiplier-data";
 import { getAssetPath } from "@/lib/path";
-import type { PerkEffectValue } from "@/types";
+import { getPerkAvailability } from "@/lib/perk-release";
+import type { EffectValueStage } from "@/types";
 
 interface CatalogEntry {
   id: string;
@@ -19,7 +21,8 @@ interface CatalogEntry {
   href: string;
   icon: string;
   sourceLabel: string;
-  effect: PerkEffectValue;
+  stages: EffectValueStage[];
+  offline?: boolean;
 }
 
 function formatNumber(value: number, maximumFractionDigits = 2): string {
@@ -28,10 +31,10 @@ function formatNumber(value: number, maximumFractionDigits = 2): string {
   }).format(value);
 }
 
-function FireRateStages({ effect }: { effect: PerkEffectValue }) {
+function FireRateStages({ stages }: { stages: EffectValueStage[] }) {
   return (
     <div className="flex min-w-0 flex-wrap gap-x-4 gap-y-1.5 sm:justify-end">
-      {effect.stages.map((stage) => (
+      {stages.map((stage) => (
         <p
           key={`${stage.condition ?? "base"}:${stage.value}`}
           className="text-sm leading-6 text-zinc-400"
@@ -59,7 +62,7 @@ function CatalogRows({ entries }: { entries: CatalogEntry[] }) {
             alt=""
             width={48}
             height={48}
-            className="h-12 w-12 object-contain"
+            className={`h-12 w-12 object-contain${entry.offline ? " grayscale opacity-50" : ""}`}
           />
           <div className="min-w-0">
             <Link
@@ -67,12 +70,13 @@ function CatalogRows({ entries }: { entries: CatalogEntry[] }) {
               className="break-words text-sm font-semibold text-zinc-100 transition-colors hover:text-amber-300 focus-visible:outline-none focus-visible:text-amber-300 focus-visible:underline focus-visible:decoration-2 focus-visible:underline-offset-4"
             >
               {entry.name}
+              {entry.offline && <span className="sr-only">（未上线）</span>}
             </Link>
             <p className="mt-0.5 break-words text-xs leading-5 text-zinc-500">
               {entry.sourceLabel}
             </p>
           </div>
-          <FireRateStages effect={entry.effect} />
+          <FireRateStages stages={entry.stages} />
         </article>
       ))}
     </div>
@@ -147,6 +151,10 @@ export async function FireRateCatalog({
 }) {
   if (group === "base") return <BaseFireRateCatalog />;
 
+  if (group === "talents" || group === "origin" || group === "limits") {
+    return <CatalogRows entries={getMechanicFireRateSources(group)} />;
+  }
+
   if (group === "weapons") {
     return (
       <CatalogRows
@@ -156,7 +164,7 @@ export async function FireRateCatalog({
           href: `/weapons/${source.slug}`,
           icon: `/icons/weapons/normal/${source.name}.png`,
           sourceLabel: source.skillName,
-          effect: toWeaponFireRateEffect(source),
+          stages: source.stages,
         }))}
       />
     );
@@ -171,7 +179,8 @@ export async function FireRateCatalog({
           href: `/perks/${perk.slug}`,
           icon: `/webp/icons/perks/${perk.icon}.webp`,
           sourceLabel: `${perk.slot}号槽位`,
-          effect,
+          stages: effect.stages,
+          offline: getPerkAvailability(perk) === "offline",
         }))}
       />
     );
@@ -185,7 +194,7 @@ export async function FireRateCatalog({
         href: `/overlimit/${card.id}`,
         icon: card.icon,
         sourceLabel: "超限卡片",
-        effect,
+        stages: effect.stages,
       }))}
     />
   );

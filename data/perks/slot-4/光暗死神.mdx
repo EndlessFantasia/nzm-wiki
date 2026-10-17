@@ -16,6 +16,10 @@ num_modifier_values:
   fire-rate-per-stack:
     row: lc:1410210103_1_0
     field: base
+  fire-rate-max:
+    row: lc:1410210103_1_0
+    field: base
+    scale: 5
   reload-per-stack:
     row: lc:1410210104_1_0
     field: base
@@ -26,4 +30,15 @@ num_modifier_values:
     row: lc:130044411_1_0
     field: coefficient
     scale: 5
+effect_values:
+  - label: 射速
+    stages:
+      - condition: 光能量每层（替代满充能加成）
+        value:
+          ref: fire-rate-per-stack
+          format: signed-percent
+      - condition: 5层（持续15秒）
+        value:
+          ref: fire-rate-max
+          format: signed-percent
 ---

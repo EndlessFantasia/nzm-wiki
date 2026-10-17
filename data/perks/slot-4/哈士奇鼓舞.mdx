@@ -20,4 +20,11 @@ num_modifier_values:
   fire-rate:
     row: lc:121600114_1_0
     field: base
+effect_values:
+  - label: 射速
+    stages:
+      - condition: 位于增幅区域内
+        value:
+          ref: fire-rate
+          format: signed-percent
 ---

@@ -11,5 +11,43 @@ CollectMODItem: 1
 MakeMODItem: 1
 IsCooked: true
 season: s4
-description: 雷霆999按弹药消耗比例获得增益：每消耗最大弹药量的<strong>1%</strong>，射击伤害、技能伤害和射速提高<strong>0.3%</strong>，最多计算<strong>70%</strong>的弹药消耗，因此剩余弹药低于<strong>30%</strong>时三项均提高<strong>21%</strong>。主动技能期间，雷霆999开火不消耗弹药。
+num_modifier_values:
+  weapon-damage-per-percent:
+    row: lc:120600190_1_0
+    field: coefficient
+    scale: 0.01
+  weapon-damage-max:
+    row: lc:120600190_1_0
+    field: coefficient
+    scale: 0.7
+  fire-rate-per-percent:
+    row: lc:120600191_1_0
+    field: coefficient
+    scale: 0.01
+  fire-rate-max:
+    row: lc:120600191_1_0
+    field: coefficient
+    scale: 0.7
+effect_values:
+  - label: 武器伤害
+    stages:
+      - condition: 每消耗1%主弹匣弹药
+        value:
+          ref: weapon-damage-per-percent
+          format: signed-percent
+      - condition: 主弹匣剩余不高于30%
+        value:
+          ref: weapon-damage-max
+          format: signed-percent
+  - label: 射速
+    stages:
+      - condition: 每消耗1%主弹匣弹药
+        value:
+          ref: fire-rate-per-percent
+          format: signed-percent
+      - condition: 主弹匣剩余不高于30%
+        value:
+          ref: fire-rate-max
+          format: signed-percent
+description: 雷霆999按主弹匣弹药消耗比例获得增益：每消耗主弹匣最大弹药量的<strong>1%</strong>，射击伤害、技能伤害提高<strong>{{num:weapon-damage-per-percent|percent}}</strong>，射速提高<strong>{{num:fire-rate-per-percent|percent}}</strong>，最多计算<strong>70%</strong>的弹药消耗，因此主弹匣剩余弹药不高于<strong>30%</strong>时，伤害提高<strong>{{num:weapon-damage-max|percent}}</strong>，射速提高<strong>{{num:fire-rate-max|percent}}</strong>。主动技能期间，雷霆999开火不消耗弹药。
 ---
