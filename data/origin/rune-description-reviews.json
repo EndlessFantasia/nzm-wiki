@@ -1,4 +1,13 @@
 {
+  "1378042240": {
+    "sourceDescription": "每受到10%血量伤害，叠1层「狂暴」，每层+5%攻速与移速，最多叠20层。（射速上限加50%）",
+    "description": "每受到10%血量伤害，叠1层「狂暴」，每层射速+{{num:fire-rate|percent}}、移速+{{num:move-speed|percent}}，最多叠20层。（射速加成暂按50%总上限计算）",
+    "numModifierValues": {
+      "fire-rate": { "row": "lc:130042240_1_0", "field": "base" },
+      "move-speed": { "row": "lc:130042240_1_1", "field": "base" }
+    },
+    "basis": "2026-10-17维护者明确要求怒战狂暴暂按50%射速加成总上限处理。每层射速和移速分别引用130042240_1_0、130042240_1_1；Buff_Rogue_1378042240的StackLimitCount=20。蓝图另调用130042241，但当前Numerical缺行，因此50%总上限仅为维护者指定的临时展示与计算口径，不是已核实的运行时上限，也不解释为额外增加50个百分点。完整链路见docs/architecture/balance-evidence.md。"
+  },
   "1378042250": {
     "sourceDescription": "受到致命伤害时免疫死亡4秒，期间攻击力+300%（CD120秒）。",
     "description": "受到致命伤害时免疫死亡4秒，期间攻击力+{{num:attack|percent}}（CD120秒）。",

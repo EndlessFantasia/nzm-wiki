@@ -263,7 +263,7 @@
     {
       "id": "1378042240",
       "name": "怒战狂暴",
-      "description": "每受到10%血量伤害，叠1层「狂暴」，每层**+5%**攻速与移速，最多叠20层。（射速上限加**50%**）",
+      "description": "每受到10%血量伤害，叠1层「狂暴」，每层射速**+5%**、移速**+5%**，最多叠20层。（射速加成暂按**50%**总上限计算）",
       "category": "special",
       "quality": 5,
       "icon": "/icons/origin/runes/T_Icons_S4_Rouge_SPRunes04_01.webp",
