@@ -71,7 +71,7 @@
     "test:origin-runes": "tsx --test lib/origin-runes.test.ts scripts/origin/project-runes.test.ts",
     "origin-talents:project": "tsx scripts/origin/project-talents.ts",
     "origin-talents:check": "tsx scripts/origin/project-talents.ts --check",
-    "test:origin-talents": "tsx --test scripts/origin/project-talents.test.ts",
+    "test:origin-talents": "tsx --test lib/origin-talents.test.ts scripts/origin/project-talents.test.ts",
     "origin-affixes:multiplier:project": "tsx scripts/origin/project-affix-multipliers.ts",
     "origin-affixes:multiplier:check": "tsx scripts/origin/project-affix-multipliers.ts --check",
     "test:origin-affix-multiplier": "tsx --test lib/origin-affix-multiplier.test.ts",
