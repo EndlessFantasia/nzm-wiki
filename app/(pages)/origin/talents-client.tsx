@@ -55,8 +55,8 @@ function columnFor(talent: OriginTalent, talents: readonly OriginTalent[]) {
   return row.length === 1 ? { start: 2, x: 50 } : row.indexOf(talent) === 0 ? { start: 1, x: 25 } : { start: 3, x: 75 };
 }
 
-function rowPercent(row: number, offset: number) {
-  return (((row - 0.5) * rowPx + offset) / (rowCount * rowPx)) * 100;
+function rowPercent(row: number, offset: number, rows: number) {
+  return (((row - 0.5) * rowPx + offset) / (rows * rowPx)) * 100;
 }
 
 function DetailSection({ label, children }: { label: string; children: ReactNode }) {
@@ -158,24 +158,30 @@ function BranchTree({ talents, levels, selectedId, onSelect, onIncrease }: {
   onIncrease: (talent: OriginTalent) => void;
 }) {
   const half = nodePx / 2;
-  const paths = talents.flatMap((talent) => talent.prerequisites.flatMap((prerequisite) => {
+  // 移动端只显示单个分支，不需要跨分支对齐，折叠掉空行
+  const usedRows = [...new Set(talents.map((talent) => talent.row))].sort((a, b) => a - b);
+  const compactRow = (row: number) => usedRows.indexOf(row) + 1;
+  const pathsFor = (rowOf: (row: number) => number, rows: number) => talents.flatMap((talent) => talent.prerequisites.flatMap((prerequisite) => {
     const parent = talents.find((item) => item.id === prerequisite.id);
     if (!parent) return [];
     const fromX = columnFor(parent, talents).x;
     const toX = columnFor(talent, talents).x;
-    const fromY = rowPercent(parent.row, half);
-    const toY = rowPercent(talent.row, -half);
-    const midY = rowPercent(talent.row, -half - 4);
+    const fromY = rowPercent(rowOf(parent.row), half, rows);
+    const toY = rowPercent(rowOf(talent.row), -half, rows);
+    const midY = rowPercent(rowOf(talent.row), -half - 4, rows);
     const active = (levels[parent.id] ?? 0) >= prerequisite.level && (levels[talent.id] ?? 0) > 0;
     return [{ id: `${parent.id}-${talent.id}`, d: `M ${fromX} ${fromY} V ${midY} H ${toX} V ${toY}`, active,
       style: { stroke: active ? "var(--talent-accent)" : "rgba(148,163,184,.32)", strokeWidth: active ? 1.5 : 1, opacity: 1 } }];
   }));
-  return <div className="relative grid grid-cols-4" style={{ gridTemplateRows: `repeat(${rowCount}, ${rowPx}px)` }}>
-    <TalentConnectorLines paths={paths} />
-    {talents.map((talent) => <TalentNode key={talent.id} anchorId={`talent-${talent.id}`} className="scroll-mt-24" nameClassName={nodeName}
+  return <div className="relative grid grid-cols-4 [grid-template-rows:repeat(var(--compact-rows),var(--row-px))] lg:[grid-template-rows:repeat(var(--rows),var(--row-px))]"
+    style={{ "--rows": rowCount, "--compact-rows": usedRows.length, "--row-px": `${rowPx}px` } as CSSProperties}>
+    <TalentConnectorLines paths={pathsFor(compactRow, usedRows.length)} className="lg:hidden" />
+    <TalentConnectorLines paths={pathsFor((row) => row, rowCount)} className="hidden lg:block" />
+    {talents.map((talent) => <TalentNode key={talent.id} anchorId={`talent-${talent.id}`} nameClassName={nodeName}
       node={talent} selected={selectedId === talent.id} level={levels[talent.id] ?? 0}
       unlocked={isOriginTalentUnlocked(talent, levels)} onSelect={() => onSelect(talent)} onIncrease={() => onIncrease(talent)}
-      style={{ ...nodeStyle, gridColumn: `${columnFor(talent, talents).start} / span 2`, gridRow: talent.row }} />)}
+      className="scroll-mt-24 [grid-row:var(--compact-row)] lg:[grid-row:var(--row)]"
+      style={{ ...nodeStyle, gridColumn: `${columnFor(talent, talents).start} / span 2`, "--row": talent.row, "--compact-row": compactRow(talent.row) } as CSSProperties} />)}
   </div>;
 }
 
