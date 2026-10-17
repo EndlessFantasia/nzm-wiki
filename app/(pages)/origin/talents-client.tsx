@@ -33,10 +33,11 @@ const runeColors = { 5: "#ef8d4f", 4: "#e2c38b", 3: "#c57acc" } as const;
 const storageKey = "nzm-wiki:origin:talents:v1";
 const desktopQuery = "(min-width: 1024px)";
 const rowCount = 8;
-const rowPx = 100;
-const nodePx = 66;
-const nodeStyle = { width: 62, height: nodePx };
-const nameClearance = 23;
+const rowPx = 84;
+const nodePx = 58;
+const nodeStyle = { width: 56, height: nodePx };
+// 连线从节点底边直通下一节点，名称垫底色压在线上
+const nodeName = "w-auto! whitespace-nowrap rounded-sm bg-[#15171a] px-1";
 const chip = "inline-flex min-h-[26px] items-center gap-1.5 rounded border px-2 py-1 text-xs leading-4";
 const chipLink = `${chip} border-white/10 bg-white/5 text-zinc-200 transition-colors hover:border-white/25 hover:bg-white/10 hover:text-white`;
 
@@ -162,16 +163,16 @@ function BranchTree({ talents, levels, selectedId, onSelect, onIncrease }: {
     if (!parent) return [];
     const fromX = columnFor(parent, talents).x;
     const toX = columnFor(talent, talents).x;
-    const fromY = rowPercent(parent.row, half + nameClearance);
+    const fromY = rowPercent(parent.row, half);
     const toY = rowPercent(talent.row, -half);
-    const midY = rowPercent(talent.row, -half - 7);
+    const midY = rowPercent(talent.row, -half - 4);
     const active = (levels[parent.id] ?? 0) >= prerequisite.level && (levels[talent.id] ?? 0) > 0;
     return [{ id: `${parent.id}-${talent.id}`, d: `M ${fromX} ${fromY} V ${midY} H ${toX} V ${toY}`, active,
       style: { stroke: active ? "var(--talent-accent)" : "rgba(148,163,184,.32)", strokeWidth: active ? 1.5 : 1, opacity: 1 } }];
   }));
   return <div className="relative grid grid-cols-4" style={{ gridTemplateRows: `repeat(${rowCount}, ${rowPx}px)` }}>
     <TalentConnectorLines paths={paths} />
-    {talents.map((talent) => <TalentNode key={talent.id} anchorId={`talent-${talent.id}`} className="scroll-mt-24"
+    {talents.map((talent) => <TalentNode key={talent.id} anchorId={`talent-${talent.id}`} className="scroll-mt-24" nameClassName={nodeName}
       node={talent} selected={selectedId === talent.id} level={levels[talent.id] ?? 0}
       unlocked={isOriginTalentUnlocked(talent, levels)} onSelect={() => onSelect(talent)} onIncrease={() => onIncrease(talent)}
       style={{ ...nodeStyle, gridColumn: `${columnFor(talent, talents).start} / span 2`, gridRow: talent.row }} />)}
@@ -296,13 +297,13 @@ export default function OriginTalentsClient({ catalog, unlockedRunes, showOperat
           })}
         </div>
         {ultimate && <div style={branchTheme(4)}
-          className="mt-3 flex items-center gap-4 rounded-lg border border-white/10 border-t-[color:var(--talent-accent)] bg-[linear-gradient(160deg,var(--talent-accent-soft),transparent_45%)] px-4 pb-7 pt-3 sm:px-6">
-          <TalentNode anchorId={`talent-${ultimate.id}`} className="scroll-mt-24" node={ultimate} selected={selected?.id === ultimate.id}
+          className="mt-3 flex items-center gap-4 rounded-lg border border-white/10 border-t-[color:var(--talent-accent)] bg-[linear-gradient(160deg,var(--talent-accent-soft),transparent_45%)] px-4 py-2.5 sm:px-6">
+          <TalentNode anchorId={`talent-${ultimate.id}`} className="scroll-mt-24" nameClassName="hidden!" node={ultimate} selected={selected?.id === ultimate.id}
             level={levels[ultimate.id] ?? 0} unlocked={isOriginTalentUnlocked(ultimate, levels)} style={{ ...nodeStyle, margin: 0 }}
             onSelect={() => selectTalent(ultimate, true)} onIncrease={() => increase(ultimate)} />
           <div className="min-w-0">
-            <h2 className="text-sm font-semibold text-[color:var(--talent-accent)]">终极天赋</h2>
-            <p className="mt-1 text-xs leading-5 text-zinc-400">
+            <h2 className="text-sm font-semibold text-white"><span className="text-[color:var(--talent-accent)]">终极天赋</span> · {ultimate.name}</h2>
+            <p className="mt-0.5 text-xs leading-5 text-zinc-400">
               其他天赋合计 {ultimate.requiredTotalLevels} 级后解锁（当前 {totals.level - (levels[ultimate.id] ?? 0)}）
             </p>
           </div>

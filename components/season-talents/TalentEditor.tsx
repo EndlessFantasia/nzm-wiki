@@ -37,9 +37,9 @@ export function TalentPassiveSlot({ label = "被动天赋", name = "选择被动
 
 export interface TalentNodeView { id: string; name: string; icon: string; maxLevel: number; isRoot?: boolean }
 
-export function TalentNode({ node, selected, level, unlocked, mutuallyExcluded = false, onSelect, onIncrease, style, className = "", iconContent, preview = false, anchorId }: {
+export function TalentNode({ node, selected, level, unlocked, mutuallyExcluded = false, onSelect, onIncrease, style, className = "", iconContent, preview = false, anchorId, nameClassName = "" }: {
   node: TalentNodeView; selected: boolean; level: number; unlocked: boolean; mutuallyExcluded?: boolean;
-  onSelect: () => void; onIncrease?: () => void; style?: CSSProperties; className?: string; iconContent?: ReactNode; preview?: boolean; anchorId?: string;
+  onSelect: () => void; onIncrease?: () => void; style?: CSSProperties; className?: string; iconContent?: ReactNode; preview?: boolean; anchorId?: string; nameClassName?: string;
 }) {
   const rapidUntil = useRef(0);
   return <button type="button" id={anchorId ?? `season-talent-node-${node.id}`} className={`${styles.theme} ${styles.node} ${className}`} style={style}
@@ -53,7 +53,7 @@ export function TalentNode({ node, selected, level, unlocked, mutuallyExcluded =
     }}>
     <span className={styles.nodeIcon}>{iconContent ?? <Image src={getAssetPath(node.icon)} alt="" fill sizes="80px" />}</span>
     {!node.isRoot && <span className={styles.pips} aria-hidden="true">{Array.from({ length: node.maxLevel }, (_, i) => <span key={i} data-filled={i < level} />)}</span>}
-    <span className={styles.nodeName}>{node.name}</span>
+    <span className={`${styles.nodeName} ${nameClassName}`}>{node.name}</span>
   </button>;
 }
 
