@@ -26,7 +26,7 @@ import {
 import { MDXImage } from "@/components/MDXImage";
 import { MDXLink } from "@/components/MDXLink";
 import { VideoGif } from "@/components/VideoGif";
-import { AtkChart } from "@/components/AtkChart";
+import { HuntingGrowth } from "@/components/HuntingGrowth";
 import {
   AttenuationChart,
   WeaponAttenuationChart,
@@ -85,7 +85,7 @@ export const mdxComponents = {
   Kinetic,
   Highlight,
   VideoGif,
-  AtkChart,
+  HuntingGrowth,
   AttenuationChart,
   WeaponAttenuationChart,
   CritCalculator,
