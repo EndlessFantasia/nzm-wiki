@@ -1,17 +1,58 @@
+import Link from "next/link";
+import { ArrowUpRight, Layers3 } from "lucide-react";
 import { HuntingGrowthChart } from "@/components/HuntingGrowthChart";
+import { getMultiplierFactorStyle } from "@/components/multiplier-badge-styles";
 import {
   HUNTING_GROWTH,
   type HuntingGrowthKind,
   type HuntingGrowthRow,
 } from "@/lib/hunting-growth";
+import {
+  MULTIPLIER_FACTORS,
+  resolveMultiplierFactorHref,
+  type MultiplierFactorId,
+} from "@/lib/multiplier-data";
 
 const TRACK_META: Record<
   HuntingGrowthKind,
-  { bonusLabel: string; costUnit: string; color: string; showMultiplier: boolean }
+  {
+    bonusLabel: string;
+    costUnit: string;
+    color: string;
+    showMultiplier: boolean;
+    factorId?: MultiplierFactorId;
+  }
 > = {
   level: { bonusLabel: "血量加成", costUnit: "经验", color: "#f87171", showMultiplier: false },
-  attack: { bonusLabel: "攻击力加成", costUnit: "金币", color: "#e2c38b", showMultiplier: true },
+  attack: {
+    bonusLabel: "攻击力加成",
+    costUnit: "金币",
+    color: "#e2c38b",
+    showMultiplier: true,
+    factorId: "game-mode",
+  },
 };
+
+function FactorBar({ bonusLabel, factorId }: { bonusLabel: string; factorId: MultiplierFactorId }) {
+  const factorLabel = MULTIPLIER_FACTORS.find((factor) => factor.id === factorId)?.label ?? factorId;
+
+  return (
+    <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-zinc-700/70 px-4 py-2.5 sm:px-5">
+      <p className="text-sm text-zinc-400">
+        {bonusLabel}属于<span className="text-zinc-200">{factorLabel}</span>，对全部伤害生效
+      </p>
+      <Link
+        href={resolveMultiplierFactorHref(factorId, { view: "providers" })}
+        prefetch={false}
+        className={`inline-flex min-h-7 touch-manipulation items-center gap-1 rounded border px-2 py-1 text-xs font-semibold transition-[filter] hover:brightness-125 focus-visible:outline-none focus-visible:underline focus-visible:decoration-2 focus-visible:underline-offset-4 ${getMultiplierFactorStyle(factorId)}`}
+      >
+        <Layers3 aria-hidden="true" className="h-3.5 w-3.5" />
+        {factorLabel}
+        <ArrowUpRight aria-hidden="true" className="h-3 w-3 opacity-70" />
+      </Link>
+    </div>
+  );
+}
 
 function formatInteger(value: number): string {
   return value.toLocaleString("zh-CN");
@@ -108,6 +149,7 @@ export function HuntingGrowth({ kind }: { kind: HuntingGrowthKind }) {
 
   return (
     <section id={`growth-${kind}`} className="not-prose my-5 scroll-mt-20 overflow-hidden rounded-xl border border-zinc-700 bg-zinc-900/35">
+      {meta.factorId && <FactorBar bonusLabel={meta.bonusLabel} factorId={meta.factorId} />}
       <dl className="grid grid-cols-2 divide-zinc-700/70 border-b border-zinc-700/70 sm:grid-cols-4 sm:divide-x">
         <Stat
           label={hasBeyondShop ? "商店满级" : "满级"}
