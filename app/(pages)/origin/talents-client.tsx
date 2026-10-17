@@ -1,172 +1,317 @@
 "use client";
 
-import Image from "next/image";
-import { useState } from "react";
+import { X } from "lucide-react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { MultiplierBadges } from "@/components/MultiplierBadges";
+import {
+  TalentConnectorLines,
+  TalentDetails,
+  TalentLevelActions,
+  TalentLevelPreview,
+  TalentNode,
+  TalentWorkspace,
+  useTalentPreviewLevel,
+} from "@/components/season-talents/TalentEditor";
+import { revealLocatedTarget } from "@/lib/locate-target";
 import { getProviderRelationsForSource } from "@/lib/multiplier-data";
-import type { OriginTalent, OriginTalentCatalog, OriginTalentBranchId } from "@/lib/origin-talents";
+import {
+  getOriginTalentCost,
+  getOriginTalentTotals,
+  isOriginTalentUnlocked,
+  restoreOriginTalentLevels,
+  setOriginTalentLevel,
+  type OriginTalent,
+  type OriginTalentBranchId,
+  type OriginTalentCatalog,
+  type OriginTalentLevels,
+  type OriginTalentUnlockedRune,
+} from "@/lib/origin-talents";
 import { getAssetPath } from "@/lib/path";
 
-const branchStyles = {
-  1: { color: "#ef8c8c", text: "text-red-300", background: "bg-red-400/10", border: "border-red-400/50" },
-  2: { color: "#dcc46e", text: "text-amber-200", background: "bg-amber-300/10", border: "border-amber-300/50" },
-  3: { color: "#7dc6e4", text: "text-sky-300", background: "bg-sky-400/10", border: "border-sky-400/50" },
-  4: { color: "#e3ac68", text: "text-orange-300", background: "bg-orange-400/10", border: "border-orange-400/50" },
-} as const;
-const focusStyle = "outline-none focus-visible:underline focus-visible:decoration-2 focus-visible:underline-offset-4";
-const rowHeight = 138;
+const branchColors: Record<OriginTalentBranchId, string> = { 1: "#ef8c8c", 2: "#dcc46e", 3: "#7dc6e4", 4: "#e3ac68" };
+const runeColors = { 5: "#ef8d4f", 4: "#e2c38b", 3: "#c57acc" } as const;
+const storageKey = "nzm-wiki:origin:talents:v1";
+const desktopQuery = "(min-width: 1024px)";
+const rowCount = 8;
+const rowPx = 100;
+const nodePx = 66;
+const nodeStyle = { width: 62, height: nodePx };
+const nameClearance = 23;
+const chip = "inline-flex min-h-[26px] items-center gap-1.5 rounded border px-2 py-1 text-xs leading-4";
+const chipLink = `${chip} border-white/10 bg-white/5 text-zinc-200 transition-colors hover:border-white/25 hover:bg-white/10 hover:text-white`;
 
-function TalentIcon({ talent, selected = false }: { talent: OriginTalent; selected?: boolean }) {
-  const style = branchStyles[talent.branchId];
-  return <span className="relative block h-20 w-[92px] shrink-0">
-    <svg viewBox="0 0 92 80" aria-hidden="true" className="absolute inset-0 h-full w-full">
-      <polygon points="23.5,1.0289 68.5,1.0289 91,40 68.5,78.9711 23.5,78.9711 1,40"
-        fill={style.color} fillOpacity={selected ? 0.2 : 0.055}
-        stroke={style.color} strokeOpacity={selected ? 1 : 0.45} strokeWidth={selected ? 2 : 1} />
-    </svg>
-    <Image src={getAssetPath(talent.icon)} alt="" width={52} height={52}
-      className="absolute left-5 top-[14px] h-[52px] w-[52px] object-contain" />
-  </span>;
+function branchTheme(branchId: OriginTalentBranchId): CSSProperties {
+  const color = branchColors[branchId];
+  return { "--talent-accent": color, "--talent-accent-soft": `${color}1f`, "--talent-glow": `${color}55` } as CSSProperties;
 }
 
-function TalentTree({ talents, selectedId, onSelect }: {
-  talents: OriginTalent[];
-  selectedId: string;
-  onSelect: (talent: OriginTalent) => void;
-}) {
-  const positions = new Map(talents.map((talent) => {
-    const row = talents.filter((other) => other.row === talent.row);
-    return [talent.id, { x: row.length === 1 ? 50 : row.indexOf(talent) === 0 ? 25 : 75, y: (talent.row - 1) * rowHeight + 16 }];
-  }));
-  const height = Math.max(...talents.map((talent) => talent.row), 1) * rowHeight + 20;
-  return <div className="relative mx-auto w-full max-w-[420px]" style={{ height }}>
-    <svg aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full" viewBox={`0 0 100 ${height}`} preserveAspectRatio="none">
-      {talents.flatMap((talent) => talent.prerequisites.map((prerequisite) => {
-        const from = positions.get(prerequisite.id);
-        const to = positions.get(talent.id);
-        if (!from || !to) return null;
-        const highlighted = talent.id === selectedId || prerequisite.id === selectedId;
-        return <line key={`${prerequisite.id}-${talent.id}`}
-          x1={from.x} y1={from.y + 40} x2={to.x} y2={to.y + 40}
-          stroke={branchStyles[talent.branchId].color} strokeOpacity={highlighted ? 0.85 : 0.25}
-          strokeWidth={highlighted ? 1.5 : 1} vectorEffect="non-scaling-stroke" />;
-      }))}
-    </svg>
-    {talents.map((talent) => {
-      const position = positions.get(talent.id)!;
-      const selected = selectedId === talent.id;
-      return <div id={`talent-${talent.id}`} key={talent.id} style={{ left: `${position.x}%`, top: position.y }}
-        className="group absolute flex w-[46%] -translate-x-1/2 flex-col items-center text-center">
-        <button type="button" aria-pressed={selected}
-          aria-label={`${talent.name}，最高 ${talent.maxLevel} 级，查看详情`}
-          onClick={() => onSelect(talent)}
-          className={`flex w-full touch-manipulation flex-col items-center ${focusStyle}`}>
-          <span className="rounded-full bg-zinc-900 transition-colors group-hover:bg-zinc-800">
-            <TalentIcon talent={talent} selected={selected} />
-          </span>
-          <span className={`mt-1 max-w-full rounded bg-zinc-900 px-1 text-sm font-medium leading-5 ${selected ? branchStyles[talent.branchId].text : "text-zinc-200 group-hover:text-white"}`}>
-            {talent.name}
-          </span>
-          <span className="mt-1 rounded bg-zinc-900 px-1 text-xs leading-4 text-zinc-400">{talent.maxLevel} 级</span>
-        </button>
-      </div>;
-    })}
+function branchName(catalog: OriginTalentCatalog, branchId: OriginTalentBranchId) {
+  return catalog.branches.find((branch) => branch.id === branchId)?.name ?? "终极";
+}
+
+function columnFor(talent: OriginTalent, talents: readonly OriginTalent[]) {
+  const row = talents.filter((other) => other.branchId === talent.branchId && other.row === talent.row);
+  return row.length === 1 ? { start: 2, x: 50 } : row.indexOf(talent) === 0 ? { start: 1, x: 25 } : { start: 3, x: 75 };
+}
+
+function rowPercent(row: number, offset: number) {
+  return (((row - 0.5) * rowPx + offset) / (rowCount * rowPx)) * 100;
+}
+
+function DetailSection({ label, children }: { label: string; children: ReactNode }) {
+  return <div className="mt-3 border-t border-white/10 pt-3">
+    <div className="mb-2 text-xs font-medium leading-4 text-zinc-400">{label}</div>
+    {children}
   </div>;
 }
 
-function TalentDetails({ talent, catalog, showOperation }: {
+function RuneMaskIcon({ rune }: { rune: OriginTalentUnlockedRune }) {
+  const maskImage = `url("${getAssetPath(rune.icon)}")`;
+  return <span aria-hidden="true" className="block h-4 w-4 shrink-0"
+    style={{ backgroundColor: runeColors[rune.quality], maskImage, WebkitMaskImage: maskImage, maskSize: "contain",
+      WebkitMaskSize: "contain", maskRepeat: "no-repeat", WebkitMaskRepeat: "no-repeat", maskPosition: "center", WebkitMaskPosition: "center" }} />;
+}
+
+function OriginTalentDetails({ talent, catalog, levels, unlockedRunes, showOperation, onChangeLevel, onReset, onSelect, onClose }: {
   talent: OriginTalent;
   catalog: OriginTalentCatalog;
+  levels: OriginTalentLevels;
+  unlockedRunes: OriginTalentUnlockedRune[];
   showOperation: boolean;
+  onChangeLevel: (level: number) => void;
+  onReset: () => void;
+  onSelect: (talent: OriginTalent) => void;
+  onClose?: () => void;
 }) {
-  const [level, setLevel] = useState(1);
-  const selectedLevel = talent.levels.find((item) => item.level === level) ?? talent.levels[0];
-  const style = branchStyles[talent.branchId];
-  const branchName = catalog.branches.find((branch) => branch.id === talent.branchId)?.name ?? "终极";
-  const source = { type: "origin-talent" as const, id: talent.id };
-  const relations = getProviderRelationsForSource(source);
-  return <div className={`rounded-lg border bg-zinc-900 p-4 sm:p-5 ${style.border}`}>
-    <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(260px,0.65fr)]">
-      <div className="min-w-0">
-        <div className="flex items-center gap-3">
-          <TalentIcon talent={talent} selected />
-          <div className="min-w-0">
-            <p className={`mb-1 text-xs ${style.text}`}>{branchName}天赋</p>
-            <h3 className="break-words text-lg font-semibold text-white">{talent.name}</h3>
-            <p className="mt-1 text-xs text-zinc-400">最高 {talent.maxLevel} 级</p>
-            <MultiplierBadges relations={relations} variant="catalog-inline" showOperation={showOperation} className="float-none mt-2 ml-0 justify-start" />
-          </div>
+  const level = levels[talent.id] ?? 0;
+  const [previewLevel, setPreviewLevel] = useTalentPreviewLevel(talent.id, level);
+  const preview = talent.levels.find((item) => item.level === previewLevel) ?? talent.levels[0];
+  const unlocked = isOriginTalentUnlocked(talent, levels);
+  const relations = getProviderRelationsForSource({ type: "origin-talent", id: talent.id });
+  const byId = new Map(catalog.talents.map((item) => [item.id, item]));
+  const totalLevels = getOriginTalentTotals(catalog.talents, levels).level - level;
+  const talentButton = (target: OriginTalent, suffix?: string) =>
+    <button key={target.id} type="button" onClick={() => onSelect(target)} className={chipLink}>
+      {target.name}{suffix && <span className="text-zinc-400">{suffix}</span>}
+    </button>;
+  const previewCost = preview?.cost ?? 0;
+  const output = <output aria-label="当前等级">{level}/{talent.maxLevel}</output>;
+
+  return <div style={branchTheme(talent.branchId)} className="flex min-h-0 flex-col">
+    <TalentDetails season="origin" eyebrow={`${branchName(catalog, talent.branchId)}天赋`} hideImage name={talent.name} icon={talent.icon}
+      level={level} maxLevel={onClose ? undefined : talent.maxLevel} onReset={onReset}
+      headingActions={onClose && <span className="flex shrink-0 items-start gap-1">
+        {output}
+        <button type="button" onClick={onClose} aria-label="关闭天赋详情" title="关闭"
+          className="-mr-2 -mt-2 flex h-11 w-11 items-center justify-center text-zinc-400 hover:text-white">
+          <X aria-hidden="true" className="h-5 w-5" />
+        </button>
+      </span>}
+      actions={<TalentLevelActions name={talent.name} level={level} maxLevel={talent.maxLevel}
+        canDecrease={level > 0} canIncrease={unlocked && level < talent.maxLevel} onChange={onChangeLevel} />}>
+      {talent.maxLevel > 1 && <TalentLevelPreview level={previewLevel} maxLevel={talent.maxLevel} onChange={setPreviewLevel} />}
+      <div className="mt-3">
+        <div className="mb-1 text-xs font-medium leading-4 text-zinc-400">天赋效果</div>
+        <p className="whitespace-pre-line break-words text-zinc-100">{preview?.description ?? talent.description}</p>
+      </div>
+      {getOriginTalentCost(talent, talent.maxLevel) > 0 && <DetailSection label="升级消耗">
+        <div className="flex flex-wrap gap-1.5">
+          <span className={`${chip} border-white/10 bg-white/5 tabular-nums text-zinc-200`}>
+            {talent.maxLevel > 1 ? `${previewLevel} 级 ${previewCost}` : previewCost}
+          </span>
+          {talent.maxLevel > 1 && previewLevel > 1 && <span className={`${chip} border-white/10 bg-white/5 tabular-nums text-zinc-300`}>
+            累计 {getOriginTalentCost(talent, previewLevel)}
+          </span>}
         </div>
-        <p className="mt-3 whitespace-pre-line break-words text-sm leading-7 text-zinc-200">{selectedLevel?.description ?? talent.description}</p>
-      </div>
-      <div className="min-w-0 space-y-3">
-        <fieldset>
-          <legend className="mb-2 text-xs text-zinc-400">等级预览</legend>
-          <div className="flex flex-wrap gap-2">
-            {talent.levels.map((item) => <button key={item.level} type="button" aria-pressed={level === item.level}
-              onClick={() => setLevel(item.level)}
-              className={`min-h-11 min-w-11 rounded border px-3 text-sm transition-colors ${focusStyle} ${level === item.level ? `${style.border} ${style.background} ${style.text}` : "border-zinc-700 bg-zinc-800 text-zinc-300 hover:bg-zinc-700"}`}>
-              {item.level} 级
-            </button>)}
-          </div>
-        </fieldset>
-        {selectedLevel && <p className="text-sm text-zinc-300">本级升级材料消耗 <span className="font-medium tabular-nums text-white">{selectedLevel.cost}</span></p>}
-      </div>
-    </div>
+      </DetailSection>}
+      {unlockedRunes.length > 0 && <DetailSection label="解锁限定强化">
+        <div className="flex flex-wrap gap-1.5">
+          {unlockedRunes.map((rune) => <a key={rune.id} href={`#rune-${rune.id}`} className={chipLink}>
+            <RuneMaskIcon rune={rune} />{rune.name}
+          </a>)}
+        </div>
+      </DetailSection>}
+      {(talent.prerequisites.length > 1 || talent.requiredTotalLevels > 0) && <DetailSection label="解锁条件">
+        <div className="flex flex-wrap gap-1.5">
+          {talent.prerequisites.map((prerequisite) => {
+            const target = byId.get(prerequisite.id);
+            return target && talentButton(target, ` ${prerequisite.level} 级`);
+          })}
+          {talent.requiredTotalLevels > 0 && <span className={`${chip} border-white/10 bg-white/5 tabular-nums text-zinc-300`}>
+            其他天赋合计 {talent.requiredTotalLevels} 级（当前 {totalLevels}）
+          </span>}
+        </div>
+      </DetailSection>}
+      {relations.length > 0 && <DetailSection label="关联乘区">
+        <MultiplierBadges relations={relations} variant="catalog-compact" showOperation={showOperation} className="[&_a]:min-h-[26px]" />
+      </DetailSection>}
+    </TalentDetails>
   </div>;
 }
 
-export default function OriginTalentsClient({ catalog, showOperation }: { catalog: OriginTalentCatalog; showOperation: boolean }) {
+function BranchTree({ talents, levels, selectedId, onSelect, onIncrease }: {
+  talents: OriginTalent[];
+  levels: OriginTalentLevels;
+  selectedId: string;
+  onSelect: (talent: OriginTalent) => void;
+  onIncrease: (talent: OriginTalent) => void;
+}) {
+  const half = nodePx / 2;
+  const paths = talents.flatMap((talent) => talent.prerequisites.flatMap((prerequisite) => {
+    const parent = talents.find((item) => item.id === prerequisite.id);
+    if (!parent) return [];
+    const fromX = columnFor(parent, talents).x;
+    const toX = columnFor(talent, talents).x;
+    const fromY = rowPercent(parent.row, half + nameClearance);
+    const toY = rowPercent(talent.row, -half);
+    const midY = rowPercent(talent.row, -half - 7);
+    const active = (levels[parent.id] ?? 0) >= prerequisite.level && (levels[talent.id] ?? 0) > 0;
+    return [{ id: `${parent.id}-${talent.id}`, d: `M ${fromX} ${fromY} V ${midY} H ${toX} V ${toY}`, active,
+      style: { stroke: active ? "var(--talent-accent)" : "rgba(148,163,184,.32)", strokeWidth: active ? 1.5 : 1, opacity: 1 } }];
+  }));
+  return <div className="relative grid grid-cols-4" style={{ gridTemplateRows: `repeat(${rowCount}, ${rowPx}px)` }}>
+    <TalentConnectorLines paths={paths} />
+    {talents.map((talent) => <TalentNode key={talent.id} anchorId={`talent-${talent.id}`} className="scroll-mt-24"
+      node={talent} selected={selectedId === talent.id} level={levels[talent.id] ?? 0}
+      unlocked={isOriginTalentUnlocked(talent, levels)} onSelect={() => onSelect(talent)} onIncrease={() => onIncrease(talent)}
+      style={{ ...nodeStyle, gridColumn: `${columnFor(talent, talents).start} / span 2`, gridRow: talent.row }} />)}
+  </div>;
+}
+
+export default function OriginTalentsClient({ catalog, unlockedRunes, showOperation }: {
+  catalog: OriginTalentCatalog;
+  unlockedRunes: Record<string, OriginTalentUnlockedRune[]>;
+  showOperation: boolean;
+}) {
   const [selectedId, setSelectedId] = useState(catalog.talents[0]?.id ?? "");
-  const [activeBranch, setActiveBranch] = useState<OriginTalentBranchId>(1);
+  const [activeBranch, setActiveBranch] = useState<Exclude<OriginTalentBranchId, 4>>(1);
+  const [levels, setLevels] = useState<OriginTalentLevels>({});
+  const [storageReady, setStorageReady] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const selected = catalog.talents.find((talent) => talent.id === selectedId) ?? catalog.talents[0];
   const ultimate = catalog.talents.find((talent) => talent.branchId === 4);
-  const selectTalent = (talent: OriginTalent) => {
+  const totals = getOriginTalentTotals(catalog.talents, levels);
+
+  useEffect(() => {
+    const restoreSavedLevels = () => {
+      try {
+        const raw = window.localStorage.getItem(storageKey);
+        if (raw) setLevels(restoreOriginTalentLevels(catalog.talents, JSON.parse(raw)));
+      } catch {
+        // 存储不可用或内容损坏时保留空方案。
+      }
+      setStorageReady(true);
+    };
+    restoreSavedLevels();
+  }, [catalog.talents]);
+
+  useEffect(() => {
+    if (!storageReady) return;
+    try {
+      window.localStorage.setItem(storageKey, JSON.stringify({ version: 1, levels }));
+    } catch {
+      // 存储不可用时规划仍可在当前页面使用。
+    }
+  }, [levels, storageReady]);
+
+  useEffect(() => {
+    const focusLinkedTalent = () => {
+      const talent = catalog.talents.find((item) => `#talent-${item.id}` === window.location.hash);
+      if (!talent) return;
+      setSelectedId(talent.id);
+      if (talent.branchId !== 4) setActiveBranch(talent.branchId);
+      window.requestAnimationFrame(() => revealLocatedTarget(`talent-${talent.id}`));
+    };
+    focusLinkedTalent();
+    window.addEventListener("hashchange", focusLinkedTalent);
+    return () => window.removeEventListener("hashchange", focusLinkedTalent);
+  }, [catalog.talents]);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (dialogOpen) dialog?.showModal();
+    else if (dialog?.open) dialog.close();
+    return () => { if (dialog?.open) dialog.close(); };
+  }, [dialogOpen]);
+
+  const selectTalent = (talent: OriginTalent, fromTree = false) => {
     setSelectedId(talent.id);
     if (talent.branchId !== 4) setActiveBranch(talent.branchId);
+    window.history.replaceState(window.history.state, "", `#talent-${talent.id}`);
+    if (fromTree && !window.matchMedia(desktopQuery).matches) setDialogOpen(true);
+    else if (!fromTree) window.requestAnimationFrame(() => document.getElementById(`talent-${talent.id}`)
+      ?.scrollIntoView({ block: "nearest" }));
   };
+  const changeLevel = (talent: OriginTalent, level: number) =>
+    setLevels((current) => setOriginTalentLevel(catalog.talents, current, talent.id, level));
+  const increase = (talent: OriginTalent) => changeLevel(talent, (levels[talent.id] ?? 0) + 1);
+  const details = (onClose?: () => void) => selected && <OriginTalentDetails key={selected.id} talent={selected} catalog={catalog}
+    levels={levels} unlockedRunes={unlockedRunes[selected.id] ?? []} showOperation={showOperation} onClose={onClose}
+    onChangeLevel={(level) => changeLevel(selected, level)} onReset={() => setLevels({})}
+    onSelect={(talent) => selectTalent(talent)} />;
 
-  return <section id="talents" aria-label="原点天赋图鉴" className="space-y-4">
-    <div className="flex justify-end text-sm leading-6 text-zinc-400">
-      <span>{catalog.talents.length} 项天赋</span>
-    </div>
-    <div className="overflow-hidden rounded-lg border border-zinc-700 bg-zinc-900">
-      <div className="grid grid-cols-3 border-b border-zinc-700">
-        {catalog.branches.map((branch) => {
-          const style = branchStyles[branch.id];
-          return <div key={branch.id}>
-            <button type="button" aria-pressed={activeBranch === branch.id}
-              onClick={() => {
-                setActiveBranch(branch.id);
-                const firstTalent = catalog.talents.find((talent) => talent.branchId === branch.id);
-                if (firstTalent) setSelectedId(firstTalent.id);
-              }}
-              className={`min-h-12 w-full px-2 py-3 text-sm font-semibold transition-colors md:hidden ${focusStyle} ${activeBranch === branch.id ? `${style.background} ${style.text}` : "text-zinc-400 hover:bg-zinc-800"}`}>
-              {branch.name}
-            </button>
-            <h2 className={`hidden px-3 py-3 text-center text-base font-semibold md:block ${style.text} ${style.background}`}>{branch.name}</h2>
-          </div>;
-        })}
+  return <section id="talents" aria-label="原点天赋图鉴" className="space-y-3">
+    <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+      <p className="text-sm leading-6 text-zinc-400">
+        <span className="lg:hidden">点击节点查看详情并加点规划</span>
+        <span className="hidden lg:inline">点击节点查看详情，双击节点或在详情中加点规划</span>
+      </p>
+      <div aria-live="polite" className="flex flex-wrap gap-1.5">
+        <span className={`${chip} border-white/10 bg-white/5 tabular-nums text-zinc-200`}>已点 {totals.level}/{totals.maxLevel} 级</span>
+        <span className={`${chip} border-white/10 bg-white/5 tabular-nums text-zinc-200`}>材料 {totals.cost}/{totals.maxCost}</span>
       </div>
-      <div aria-label="天赋树，向下滚动浏览后续天赋" tabIndex={0}
-        className={`max-h-[52dvh] min-h-[320px] overflow-y-auto overscroll-contain md:max-h-[510px] ${focusStyle} focus-visible:bg-zinc-800/30`}>
-        <div className="grid md:grid-cols-3">
-          {catalog.branches.map((branch) => <div key={branch.id} aria-label={`${branch.name}天赋树`}
-            className={`min-w-0 md:border-r md:border-zinc-800 md:last:border-r-0 ${activeBranch === branch.id ? "block" : "hidden md:block"}`}>
-            <TalentTree talents={catalog.talents.filter((talent) => talent.branchId === branch.id)} selectedId={selectedId} onSelect={selectTalent} />
-          </div>)}
+    </div>
+    <div className="grid grid-cols-3 gap-2 lg:hidden">
+      {catalog.branches.map((branch) => {
+        const active = activeBranch === branch.id;
+        return <button key={branch.id} type="button" aria-pressed={active} style={branchTheme(branch.id)}
+          onClick={() => {
+            setActiveBranch(branch.id);
+            const first = catalog.talents.find((talent) => talent.branchId === branch.id);
+            if (first) setSelectedId(first.id);
+          }}
+          className={`min-h-11 touch-manipulation rounded border px-2 text-sm font-semibold transition-colors outline-none focus-visible:underline focus-visible:decoration-2 focus-visible:underline-offset-4 ${active
+            ? "border-[color:var(--talent-accent)] bg-[color:var(--talent-accent-soft)] text-[color:var(--talent-accent)]"
+            : "border-zinc-700 bg-zinc-800 text-zinc-300 hover:bg-zinc-700/70 hover:text-white"}`}>
+          {branch.name}
+        </button>;
+      })}
+    </div>
+    <div style={{ "--talent-frame": "#ffffff1f" } as CSSProperties}>
+      <TalentWorkspace details={<div className="hidden lg:sticky lg:top-[4.5rem] lg:flex lg:max-h-[calc(100dvh-9.5rem)] lg:flex-col">{details()}</div>}>
+        <div className="grid gap-3 lg:grid-cols-3">
+          {catalog.branches.map((branch) => {
+            const talents = catalog.talents.filter((talent) => talent.branchId === branch.id);
+            const branchTotals = getOriginTalentTotals(talents, levels);
+            return <div key={branch.id} aria-label={`${branch.name}天赋树`} style={branchTheme(branch.id)}
+              className={`min-w-0 rounded-lg border border-white/10 border-t-[color:var(--talent-accent)] bg-[linear-gradient(160deg,var(--talent-accent-soft),transparent_45%)] px-1 pb-3 ${activeBranch === branch.id ? "block" : "hidden lg:block"}`}>
+              <div className="flex items-baseline justify-between gap-2 px-2 pb-1 pt-2">
+                <h2 className="text-sm font-semibold text-[color:var(--talent-accent)]">{branch.name}</h2>
+                <span className="text-xs tabular-nums text-zinc-400">{branchTotals.level}/{branchTotals.maxLevel} 级 · 材料 {branchTotals.cost}</span>
+              </div>
+              <BranchTree talents={talents} levels={levels} selectedId={selected?.id ?? ""}
+                onSelect={(talent) => selectTalent(talent, true)} onIncrease={increase} />
+            </div>;
+          })}
         </div>
-      </div>
-      {ultimate && <button id={`talent-${ultimate.id}`} type="button" onClick={() => selectTalent(ultimate)} aria-pressed={selectedId === ultimate.id}
-        className={`flex min-h-24 w-full items-center gap-4 border-t border-zinc-700 px-4 py-3 text-left transition-colors sm:px-6 ${focusStyle} ${selectedId === ultimate.id ? "bg-orange-400/10" : "bg-zinc-800/40 hover:bg-zinc-800"}`}>
-          <TalentIcon talent={ultimate} selected={selectedId === ultimate.id} />
-          <span className="min-w-0 flex-1">
-            <span className="block text-xs text-orange-300">终极天赋</span>
-            <span className="mt-1 block break-words text-base font-semibold text-white">{ultimate.name}</span>
-          </span>
-          <span aria-hidden="true" className="text-xl text-zinc-400">›</span>
-      </button>}
+        {ultimate && <div style={branchTheme(4)}
+          className="mt-3 flex items-center gap-4 rounded-lg border border-white/10 border-t-[color:var(--talent-accent)] bg-[linear-gradient(160deg,var(--talent-accent-soft),transparent_45%)] px-4 pb-7 pt-3 sm:px-6">
+          <TalentNode anchorId={`talent-${ultimate.id}`} className="scroll-mt-24" node={ultimate} selected={selected?.id === ultimate.id}
+            level={levels[ultimate.id] ?? 0} unlocked={isOriginTalentUnlocked(ultimate, levels)} style={{ ...nodeStyle, margin: 0 }}
+            onSelect={() => selectTalent(ultimate, true)} onIncrease={() => increase(ultimate)} />
+          <div className="min-w-0">
+            <h2 className="text-sm font-semibold text-[color:var(--talent-accent)]">终极天赋</h2>
+            <p className="mt-1 text-xs leading-5 text-zinc-400">
+              其他天赋合计 {ultimate.requiredTotalLevels} 级后解锁（当前 {totals.level - (levels[ultimate.id] ?? 0)}）
+            </p>
+          </div>
+        </div>}
+      </TalentWorkspace>
     </div>
-    {selected && <TalentDetails key={selected.id} talent={selected} catalog={catalog} showOperation={showOperation} />}
+    <dialog ref={dialogRef} onClose={() => { setDialogOpen(false); document.getElementById(`talent-${selected?.id}`)?.focus(); }}
+      aria-label="天赋详情" className="m-auto max-h-[85dvh] w-[min(92vw,420px)] max-w-none overflow-y-auto rounded-lg border border-zinc-600 bg-zinc-950 p-0 text-white shadow-2xl backdrop:bg-black/70">
+      {dialogOpen && details(() => setDialogOpen(false))}
+    </dialog>
   </section>;
 }

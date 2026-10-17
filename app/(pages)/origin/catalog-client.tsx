@@ -3,7 +3,7 @@
 import { useState, useSyncExternalStore } from "react";
 import type { OriginAffixCatalog } from "@/lib/origin-affixes";
 import type { OriginRuneCatalog } from "@/lib/origin-runes";
-import type { OriginTalentCatalog } from "@/lib/origin-talents";
+import type { OriginTalentCatalog, OriginTalentUnlockedRune } from "@/lib/origin-talents";
 import OriginAffixesClient from "./affixes-client";
 import OriginRunesClient from "./client";
 import OriginTalentsClient from "./talents-client";
@@ -19,10 +19,11 @@ function subscribe(callback: () => void) {
   return () => window.removeEventListener("hashchange", callback);
 }
 
-export default function OriginCatalogClient({ runes, affixes, talents }: {
+export default function OriginCatalogClient({ runes, affixes, talents, unlockedRunes }: {
   runes: OriginRuneCatalog;
   affixes: OriginAffixCatalog;
   talents: OriginTalentCatalog;
+  unlockedRunes: Record<string, OriginTalentUnlockedRune[]>;
 }) {
   const active = useSyncExternalStore(subscribe, () => activeModule(window.location.hash), () => "runes");
   const [showOperation, setShowOperation] = useState(false);
@@ -46,7 +47,7 @@ export default function OriginCatalogClient({ runes, affixes, talents }: {
           {item.label}
         </a>)}
     </nav>
-    {active === "talents" ? <OriginTalentsClient catalog={talents} showOperation={showOperation} /> :
+    {active === "talents" ? <OriginTalentsClient catalog={talents} unlockedRunes={unlockedRunes} showOperation={showOperation} /> :
       active === "affixes" ? <OriginAffixesClient catalog={affixes} showOperation={showOperation} /> :
         <OriginRunesClient catalog={runes} showOperation={showOperation} onShowOperationChange={setShowOperation} />}
   </>;

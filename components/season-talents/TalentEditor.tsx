@@ -37,12 +37,12 @@ export function TalentPassiveSlot({ label = "被动天赋", name = "选择被动
 
 export interface TalentNodeView { id: string; name: string; icon: string; maxLevel: number; isRoot?: boolean }
 
-export function TalentNode({ node, selected, level, unlocked, mutuallyExcluded = false, onSelect, onIncrease, style, className = "", iconContent, preview = false }: {
+export function TalentNode({ node, selected, level, unlocked, mutuallyExcluded = false, onSelect, onIncrease, style, className = "", iconContent, preview = false, anchorId }: {
   node: TalentNodeView; selected: boolean; level: number; unlocked: boolean; mutuallyExcluded?: boolean;
-  onSelect: () => void; onIncrease?: () => void; style?: CSSProperties; className?: string; iconContent?: ReactNode; preview?: boolean;
+  onSelect: () => void; onIncrease?: () => void; style?: CSSProperties; className?: string; iconContent?: ReactNode; preview?: boolean; anchorId?: string;
 }) {
   const rapidUntil = useRef(0);
-  return <button type="button" id={`season-talent-node-${node.id}`} className={`${styles.theme} ${styles.node} ${className}`} style={style}
+  return <button type="button" id={anchorId ?? `season-talent-node-${node.id}`} className={`${styles.theme} ${styles.node} ${className}`} style={style}
     data-selected={selected} data-active={!!node.isRoot || level > 0} data-unlocked={unlocked} data-excluded={mutuallyExcluded}
     aria-pressed={selected} aria-label={preview ? `${node.name}，效果预览，最高 ${node.maxLevel} 级` : `${node.name}，${node.isRoot ? "根技能" : `${level}/${node.maxLevel} 级`}${mutuallyExcluded ? "，与已选天赋互斥" : unlocked ? "" : "，前置未满足"}`}
     onClick={() => onIncrease && Date.now() <= rapidUntil.current ? onIncrease() : onSelect()}
@@ -57,14 +57,14 @@ export function TalentNode({ node, selected, level, unlocked, mutuallyExcluded =
   </button>;
 }
 
-export function TalentDetails({ season, name, icon, level, maxLevel, children, actions, onReset, resetLabel = "重置方案", imageContent, headingActions, panelRef, id }: {
-  season: string; name: string; icon: string; level?: number; maxLevel?: number;
+export function TalentDetails({ season, eyebrow, name, icon, level, maxLevel, children, actions, onReset, resetLabel = "重置方案", imageContent, hideImage = false, headingActions, panelRef, id }: {
+  season: string; eyebrow?: string; name: string; icon: string; level?: number; maxLevel?: number;
   children: ReactNode; actions?: ReactNode; onReset: () => void; resetLabel?: string;
-  imageContent?: ReactNode; headingActions?: ReactNode; panelRef?: Ref<HTMLElement>; id?: string;
+  imageContent?: ReactNode; hideImage?: boolean; headingActions?: ReactNode; panelRef?: Ref<HTMLElement>; id?: string;
 }) {
   return <aside ref={panelRef} id={id} className={`${styles.theme} ${styles.details}`} aria-label="天赋详情" aria-live="polite">
-    <div className={styles.detailHeading}><div><small>{season.toUpperCase()} 赛季天赋详情</small><h2>{name}</h2></div>{headingActions}{maxLevel !== undefined && <output aria-label="当前等级">{level}/{maxLevel}</output>}</div>
-    <div className={styles.detailImage}>{imageContent ?? <Image src={getAssetPath(icon)} alt="" fill sizes="(min-width: 1024px) 320px, 100vw" />}</div>
+    <div className={styles.detailHeading}><div><small>{eyebrow ?? `${season.toUpperCase()} 赛季天赋详情`}</small><h2>{name}</h2></div>{headingActions}{maxLevel !== undefined && <output aria-label="当前等级">{level}/{maxLevel}</output>}</div>
+    {!hideImage && <div className={styles.detailImage}>{imageContent ?? <Image src={getAssetPath(icon)} alt="" fill sizes="(min-width: 1024px) 320px, 100vw" />}</div>}
     <div className={styles.detailBody}>{children}</div>
     <footer>{actions}<button type="button" className={styles.reset} onClick={onReset}><RotateCcw size={16} />{resetLabel}</button></footer>
   </aside>;

@@ -4,11 +4,13 @@ import catalog from "@/data/origin/runes.json";
 import talentCatalog from "@/data/origin/talents.json";
 import type { OriginAffixCatalog } from "@/lib/origin-affixes";
 import type { OriginRuneCatalog } from "@/lib/origin-runes";
-import type { OriginTalentCatalog } from "@/lib/origin-talents";
+import { resolveOriginTalentUnlockedRunes, type OriginTalentCatalog } from "@/lib/origin-talents";
 import OriginCatalogClient from "./catalog-client";
 
 const runes = catalog as OriginRuneCatalog;
 const affixes = affixCatalog as OriginAffixCatalog;
+const talents = talentCatalog as OriginTalentCatalog;
+const unlockedRunes = resolveOriginTalentUnlockedRunes(talents.talents, runes.runes);
 
 export const metadata: Metadata = {
   title: "原点图鉴",
@@ -22,7 +24,8 @@ export default function OriginPage() {
       <header className="mb-6">
         <h1 className="text-3xl font-bold text-white">原点图鉴</h1>
       </header>
-      <OriginCatalogClient runes={runes} affixes={affixes} talents={talentCatalog as OriginTalentCatalog} />
+      <OriginCatalogClient runes={runes} affixes={affixes} talents={talents}
+        unlockedRunes={unlockedRunes} />
     </main>
   );
 }
