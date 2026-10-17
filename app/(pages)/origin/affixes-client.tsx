@@ -67,7 +67,6 @@ export default function OriginAffixesClient({ catalog, showOperation }: { catalo
 
   return (
     <section id="affixes" aria-label="词条图鉴" className="scroll-mt-6">
-      <p className="mb-4 text-sm leading-6 text-zinc-400">描述为游戏内原文，数值未逐项核验；乘区标签来自词条被动的 Numerical 属性行。词条池、权重与适用武器尚未整理。</p>
       <div className="mb-5 rounded-lg border border-zinc-700 bg-zinc-800/50 p-4">
         <div role="search" className="relative mb-6 max-w-xl">
           <label htmlFor="origin-affix-search" className="sr-only">搜索词条名称、描述或 ID</label>

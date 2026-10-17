@@ -259,11 +259,7 @@ export default function OriginTalentsClient({ catalog, unlockedRunes, showOperat
     onSelect={(talent) => selectTalent(talent)} />;
 
   return <section id="talents" aria-label="原点天赋图鉴" className="space-y-3">
-    <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-      <p className="text-sm leading-6 text-zinc-400">
-        <span className="lg:hidden">点击节点查看详情并加点规划</span>
-        <span className="hidden lg:inline">点击节点查看详情，双击节点或在详情中加点规划</span>
-      </p>
+    <div className="flex justify-end">
       <div aria-live="polite" className="flex flex-wrap gap-1.5">
         <span className={`${chip} border-white/10 bg-white/5 tabular-nums text-zinc-200`}>已点 {totals.level}/{totals.maxLevel} 级</span>
         <span className={`${chip} border-white/10 bg-white/5 tabular-nums text-zinc-200`}>材料 {totals.cost}/{totals.maxCost}</span>
