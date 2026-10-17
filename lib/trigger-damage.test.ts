@@ -9,12 +9,13 @@ import {
   TRIGGER_DAMAGE_GROUPS,
 } from "@/lib/trigger-damage";
 
-test("触发伤害分组保留文章中的全部 55 项", () => {
-  assert.equal(TRIGGER_DAMAGE_GROUPS.current.length, 24);
-  assert.equal(TRIGGER_DAMAGE_GROUPS.overlimit.length, 10);
-  assert.equal(TRIGGER_DAMAGE_GROUPS.prototype.length, 20);
+test("触发伤害按 S4 状态分组", () => {
+  assert.equal(TRIGGER_DAMAGE_GROUPS.current.length, 14);
+  assert.equal(TRIGGER_DAMAGE_GROUPS.overlimit.length, 12);
+  assert.equal(TRIGGER_DAMAGE_GROUPS.offline.length, 14);
+  assert.equal(TRIGGER_DAMAGE_GROUPS.prototype.length, 21);
   assert.equal(TRIGGER_DAMAGE_GROUPS.historical.length, 1);
-  assert.equal(TRIGGER_DAMAGE_ENTRIES.length, 55);
+  assert.equal(TRIGGER_DAMAGE_ENTRIES.length, 62);
 });
 
 test("普通插件映射唯一且全部指向现有详情页", () => {
@@ -32,10 +33,10 @@ test("普通插件映射唯一且全部指向现有详情页", () => {
   }
 });
 
-test("旧版触发伤害参考记录可按原卡片 ID 查询，不约束当前卡池", () => {
+test("超限触发伤害可按当期卡片 ID 查询", () => {
   const entries = TRIGGER_DAMAGE_GROUPS.overlimit;
 
-  assert.equal(new Set(entries.map((entry) => entry.overlimitId)).size, 10);
+  assert.equal(new Set(entries.map((entry) => entry.overlimitId)).size, entries.length);
   for (const entry of entries) {
     assert.equal(
       getTriggerDamageByOverlimitId(entry.overlimitId)?.numericalId,
@@ -49,8 +50,11 @@ test("S4正式触发伤害采用已核验的配置，普通插件能按正式slu
   assert.equal(poison.damageValue, "350/秒");
   assert.equal(poison.toughness, 0.7);
   const impact = getTriggerDamageByPerkSlug("slot-4/近战冲击")!;
-  assert.equal(impact.damageValue, "375");
-  assert.equal(impact.toughness, 0.75);
+  assert.equal(impact.numericalId, "121800080");
+  assert.equal(impact.damageValue, "1250");
+  assert.equal(impact.toughness, 2.5);
+  assert.equal(getTriggerDamageByOverlimitId("1317229001")?.numericalId, "121800050");
+  assert.equal(getTriggerDamageByOverlimitId("1317232001")?.numericalId, "121800052");
   const electric = getTriggerDamageByPerkSlug("slot-4/连锁电环")!;
   assert.equal(electric.numericalId, "11010085");
   assert.equal(electric.damageValue, "50");
