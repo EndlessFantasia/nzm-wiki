@@ -777,6 +777,244 @@ body:has(.home-page) {
   transform: scaleX(1);
 }
 
+/* 致谢页：花眠落雪卡、长夜白黄金卡（与普通卡同尺寸，留在名单原位） */
+@property --credit-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
+@keyframes credit-spin {
+  to {
+    --credit-angle: 360deg;
+  }
+}
+
+@keyframes credit-text-flow {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes credit-gold-sweep {
+  0% {
+    background-position: 100% 0;
+  }
+  30%,
+  100% {
+    background-position: 0% 0;
+  }
+}
+
+@keyframes credit-sheen {
+  0% {
+    transform: translateX(-130%) skewX(-18deg);
+  }
+  28%,
+  100% {
+    transform: translateX(330%) skewX(-18deg);
+  }
+}
+
+@keyframes credit-snow-fall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+  12% {
+    opacity: 0.9;
+  }
+  50% {
+    transform: translate3d(10px, 55px, 0);
+  }
+  85% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-6px, 112px, 0);
+  }
+}
+
+.credit-frost {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(100deg, #0e1118 0%, #121722 45%, #1a2130 100%) padding-box,
+    conic-gradient(
+        from var(--credit-angle),
+        rgba(203, 213, 225, 0.28) 0turn,
+        rgba(203, 213, 225, 0.28) 0.76turn,
+        rgba(255, 255, 255, 0.95) 0.88turn,
+        rgba(203, 213, 225, 0.28) 1turn
+      )
+      border-box;
+  box-shadow: 0 10px 30px -18px rgba(148, 163, 184, 0.55);
+  animation: credit-spin 9s linear infinite;
+}
+
+/* 原图与 AI 续图按原图像素比例拼成一条：续图 1135 + 原图 1802 = 2937 宽、2000 高 */
+.credit-frost-strip {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 101%;
+  aspect-ratio: 2937 / 2000;
+  transform: translateY(-40%);
+  filter: brightness(0.82);
+}
+
+.credit-frost-ext,
+.credit-frost-ext-blur,
+.credit-frost-orig {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+
+.credit-frost-ext,
+.credit-frost-ext-blur {
+  left: 0;
+  width: 38.64%;
+}
+
+.credit-frost-orig {
+  right: 0;
+  width: 61.36%;
+}
+
+.credit-frost-ext-blur {
+  filter: blur(10px);
+  transform: scale(1.08);
+  transform-origin: right center;
+  -webkit-mask-image: linear-gradient(to right, #000 20%, transparent 95%);
+  mask-image: linear-gradient(to right, #000 20%, transparent 95%);
+}
+
+.credit-frost-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(12, 15, 22, 0.82) 0%,
+    rgba(12, 15, 22, 0.62) 28%,
+    rgba(12, 15, 22, 0.18) 52%,
+    transparent 66%
+  );
+}
+
+@media (max-width: 639px) {
+  .credit-frost-shade {
+    background: linear-gradient(
+      90deg,
+      rgba(12, 15, 22, 0.86) 0%,
+      rgba(12, 15, 22, 0.7) 40%,
+      rgba(12, 15, 22, 0.25) 68%,
+      transparent 85%
+    );
+  }
+}
+
+.credit-snow {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.credit-snow span {
+  position: absolute;
+  top: -8px;
+  width: var(--flake, 4px);
+  height: var(--flake, 4px);
+  border-radius: 9999px;
+  background: radial-gradient(circle, #fff 0 45%, rgba(255, 255, 255, 0.35) 70%, transparent 72%);
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+  opacity: 0;
+  animation: credit-snow-fall 7s linear infinite;
+}
+
+.credit-frost .credit-avatar-ring {
+  background: linear-gradient(135deg, #f8fafc, #94a3b8 50%, #e2e8f0);
+  box-shadow: 0 0 14px -2px rgba(226, 232, 240, 0.5);
+}
+
+.credit-frost .credit-name {
+  background: linear-gradient(90deg, #ffffff, #cbd5e1, #f1f5f9, #94a3b8, #ffffff) 0 0 / 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: credit-text-flow 8s linear infinite;
+}
+
+.credit-frost .credit-desc {
+  color: rgba(226, 232, 240, 0.82);
+  letter-spacing: 0.15em;
+}
+
+.credit-frost .credit-link-icon {
+  color: rgba(203, 213, 225, 0.55);
+}
+
+.credit-frost:hover .credit-link-icon {
+  color: #f1f5f9;
+}
+
+.credit-golden {
+  border-color: transparent;
+  background:
+    repeating-linear-gradient(135deg, rgba(251, 191, 36, 0.04) 0 1px, transparent 1px 8px) padding-box,
+    radial-gradient(ellipse 60% 120% at 0% 50%, rgba(245, 158, 11, 0.22), transparent 70%) padding-box,
+    linear-gradient(#16110a, #0d0b07) padding-box,
+    linear-gradient(120deg, #fde68a, #b45309 25%, #fef3c7 50%, #92400e 75%, #fcd34d) border-box;
+  box-shadow: 0 10px 32px -18px rgba(245, 158, 11, 0.7);
+}
+
+.credit-golden::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 30%;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(254, 243, 199, 0.13), transparent);
+  transform: translateX(-130%) skewX(-18deg);
+  animation: credit-sheen 6s ease-in-out 1s infinite;
+}
+
+.credit-golden .credit-avatar-ring {
+  background: linear-gradient(135deg, #fef3c7, #d97706 30%, #fde68a 55%, #78350f 78%, #fbbf24);
+  box-shadow: 0 0 16px -4px rgba(251, 191, 36, 0.6);
+}
+
+.credit-golden .credit-name {
+  background: linear-gradient(
+      100deg,
+      #d97706 0%,
+      #fcd34d 22%,
+      #fffbeb 38%,
+      #f59e0b 52%,
+      #fde68a 70%,
+      #d97706 100%
+    )
+    100% 0 / 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: credit-gold-sweep 6s ease-in-out 600ms infinite;
+}
+
+.credit-golden .credit-desc {
+  color: rgba(252, 211, 77, 0.85);
+  letter-spacing: 0.3em;
+}
+
+.credit-golden .credit-link-icon {
+  color: rgba(251, 191, 36, 0.6);
+}
+
+.credit-golden:hover .credit-link-icon {
+  color: #fde68a;
+}
+
 @media (prefers-reduced-motion: reduce) {
   dialog,
   dialog[open],
@@ -805,6 +1043,16 @@ body:has(.home-page) {
   .home-shortcuts,
   .home-logo-wrap::after {
     animation: none;
+  }
+
+  .credit-frost,
+  .credit-name,
+  .credit-golden::after {
+    animation: none;
+  }
+
+  .credit-snow {
+    display: none;
   }
 
   .home-backdrop img,

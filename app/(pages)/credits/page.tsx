@@ -39,7 +39,7 @@ const CORE_CONTRIBUTORS = [
     url: "https://space.bilibili.com/37696843",
     description: "只剩格调",
     avatarUrl: getAssetPath("/avatars/changyebai.webp"),
-    golden: true,
+    flair: "golden" as const,
   },
   {
     name: "花眠",
@@ -47,6 +47,10 @@ const CORE_CONTRIBUTORS = [
     url: "https://space.bilibili.com/386214988",
     description: "花眠摇情满落月",
     avatarUrl: getAssetPath("/avatars/huamian.webp"),
+    backgroundUrl: getAssetPath("/avatars/huamian-bg.webp"),
+    // 左侧由 AI 续画补齐，与原图分开存放
+    backgroundExtUrl: getAssetPath("/avatars/huamian-bg-ext.webp"),
+    flair: "frost" as const,
   },
   {
     name: "宅D博士",

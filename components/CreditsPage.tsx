@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Credit } from "@/components/Credit";
@@ -15,7 +15,9 @@ interface CoreContributor {
   fallbackAvatarUrl?: string | null;
   extraLink?: string;
   extraLabel?: string;
-  golden?: boolean;
+  flair?: "golden" | "frost";
+  backgroundUrl?: string;
+  backgroundExtUrl?: string;
 }
 
 interface ContentContributor {
@@ -85,36 +87,102 @@ function Avatar({
   );
 }
 
+const SNOWFLAKES = [
+  { left: "4%", delay: "0s", duration: "7s", size: "4px" },
+  { left: "12%", delay: "-4.2s", duration: "8.5s", size: "3px" },
+  { left: "21%", delay: "-1.8s", duration: "6.5s", size: "5px" },
+  { left: "29%", delay: "-6s", duration: "9s", size: "2px" },
+  { left: "37%", delay: "-3s", duration: "7.5s", size: "4px" },
+  { left: "46%", delay: "-5.4s", duration: "8s", size: "3px" },
+  { left: "54%", delay: "-0.8s", duration: "6s", size: "5px" },
+  { left: "62%", delay: "-7s", duration: "9.5s", size: "3px" },
+  { left: "70%", delay: "-2.4s", duration: "7s", size: "4px" },
+  { left: "78%", delay: "-4.8s", duration: "8.5s", size: "2px" },
+  { left: "86%", delay: "-1.2s", duration: "6.5s", size: "4px" },
+  { left: "94%", delay: "-3.6s", duration: "8s", size: "3px" },
+];
+
+function FrostDecor({
+  backgroundUrl,
+  backgroundExtUrl,
+}: {
+  backgroundUrl?: string;
+  backgroundExtUrl?: string;
+}) {
+  return (
+    <>
+      {backgroundUrl && backgroundExtUrl && (
+        <div className="credit-frost-strip" aria-hidden>
+          <div className="credit-frost-ext">
+            <Image src={backgroundExtUrl} alt="" fill sizes="200px" unoptimized />
+          </div>
+          <div className="credit-frost-ext-blur">
+            <Image src={backgroundExtUrl} alt="" fill sizes="200px" unoptimized />
+          </div>
+          <div className="credit-frost-orig">
+            <Image src={backgroundUrl} alt="" fill sizes="480px" unoptimized />
+          </div>
+        </div>
+      )}
+      <div className="credit-frost-shade" aria-hidden />
+      <div className="credit-snow" aria-hidden>
+        {SNOWFLAKES.map((f, i) => (
+          <span
+            key={i}
+            style={
+              {
+                left: f.left,
+                animationDelay: f.delay,
+                animationDuration: f.duration,
+                "--flake": f.size,
+              } as CSSProperties
+            }
+          />
+        ))}
+      </div>
+    </>
+  );
+}
+
 function CoreCard({ person }: { person: CoreContributor }) {
   const hasDesc = person.description.length > 0;
   const hasExtra = !!(person.extraLink && person.extraLabel);
+  const flair = person.flair;
 
   return (
     <div
-      className={`group flex items-center gap-4 rounded-xl border transition-colors p-4 ${
-        person.golden
-          ? "border-amber-400/40 bg-linear-to-br from-amber-500/15 via-yellow-500/5 to-zinc-900 hover:border-amber-300/60 hover:from-amber-500/20"
+      className={`group relative flex items-center gap-4 rounded-xl border transition-colors p-4 ${
+        flair
+          ? `credit-${flair} overflow-hidden`
           : "border-zinc-800 bg-zinc-800/40 hover:bg-zinc-800/70 hover:border-zinc-700"
       }`}
     >
-      <Avatar
-        src={person.avatarUrl}
-        fallbackSrc={person.fallbackAvatarUrl}
-        alt={person.name}
-        platform={person.platform}
-      />
-      <div className="flex-1 min-w-0">
+      {flair === "frost" && (
+        <FrostDecor
+          backgroundUrl={person.backgroundUrl}
+          backgroundExtUrl={person.backgroundExtUrl}
+        />
+      )}
+      <span className={flair ? "credit-avatar-ring relative z-10 rounded-full p-[2px]" : "contents"}>
+        <Avatar
+          src={person.avatarUrl}
+          fallbackSrc={person.fallbackAvatarUrl}
+          alt={person.name}
+          platform={person.platform}
+        />
+      </span>
+      <div className="relative z-10 flex-1 min-w-0">
         <a
           href={person.url}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 hover:text-white transition-colors"
         >
-          <span className={`font-semibold transition-colors truncate ${person.golden ? "text-amber-200 group-hover:text-amber-100" : "text-zinc-200 group-hover:text-white"}`}>
+          <span className={`font-semibold transition-colors truncate ${flair ? "credit-name" : "text-zinc-200 group-hover:text-white"}`}>
             {person.name}
           </span>
           <svg
-            className={`h-4 w-4 flex-shrink-0 transition-colors ${person.golden ? "text-amber-400/60 group-hover:text-amber-200" : "text-zinc-500 group-hover:text-zinc-300"}`}
+            className={`h-4 w-4 flex-shrink-0 transition-colors ${flair ? "credit-link-icon" : "text-zinc-500 group-hover:text-zinc-300"}`}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -128,7 +196,7 @@ function CoreCard({ person }: { person: CoreContributor }) {
           </svg>
         </a>
         {hasDesc && (
-          <p className={`text-sm transition-colors mt-0.5 ${person.golden ? "text-amber-300/80 group-hover:text-amber-200" : "text-zinc-400 group-hover:text-zinc-300"}`}>
+          <p className={`text-sm transition-colors mt-0.5 ${flair ? "credit-desc" : "text-zinc-400 group-hover:text-zinc-300"}`}>
             {person.description}
           </p>
         )}
