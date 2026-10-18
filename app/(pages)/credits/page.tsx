@@ -42,6 +42,13 @@ const CORE_CONTRIBUTORS = [
     golden: true,
   },
   {
+    name: "花眠",
+    platform: "bilibili" as const,
+    url: "https://space.bilibili.com/386214988",
+    description: "花眠摇情满落月",
+    avatarUrl: getAssetPath("/avatars/huamian.webp"),
+  },
+  {
     name: "宅D博士",
     platform: "bilibili" as const,
     url: "https://space.bilibili.com/85306978",
