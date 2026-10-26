@@ -22,6 +22,7 @@
 | 猎场 Buff 数据导入、图标或图鉴维护 | [`workflows/status-effect-import.md`](workflows/status-effect-import.md) | [`standards/weapon-numerical-v2.md`](standards/weapon-numerical-v2.md) | active |
 | 召唤物篇章、伤害、射速或关联索引维护 | [`workflows/summon-compendium.md`](workflows/summon-compendium.md) | [`architecture/multiplier-index.md`](architecture/multiplier-index.md)、[`workflows/status-effect-import.md`](workflows/status-effect-import.md) | active |
 | 武器 MDX 新增、修改或审计 | [`standards/weapon-mdx.md`](standards/weapon-mdx.md)、[`standards/weapon-numerical-v2.md`](standards/weapon-numerical-v2.md) | [`architecture/weapon-resolver.md`](architecture/weapon-resolver.md) | active |
+| 武器涂装数据与图标同步 | [`workflows/weapon-skins.md`](workflows/weapon-skins.md) | 无 | active |
 | 武器原表读取 | [`architecture/weapon-source-reader.md`](architecture/weapon-source-reader.md) | [`architecture/weapon-skill-charge.md`](architecture/weapon-skill-charge.md) | active |
 | Weapon Data Lock | [`architecture/weapon-data-lock.md`](architecture/weapon-data-lock.md) | [`architecture/weapon-source-reader.md`](architecture/weapon-source-reader.md) | active |
 | Weapon Resolver 或消费者 | [`architecture/weapon-resolver.md`](architecture/weapon-resolver.md)、[`standards/weapon-numerical-v2.md`](standards/weapon-numerical-v2.md) | [`architecture/weapon-data-lock.md`](architecture/weapon-data-lock.md) | active |

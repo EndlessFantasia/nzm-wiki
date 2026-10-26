@@ -58,6 +58,8 @@
     "benchmark:weapon-resolver": "tsx scripts/weapon-data/benchmark-resolver.ts",
     "weapon-data:lock": "tsx scripts/weapon-data/lock-cli.ts refresh",
     "weapon-data:check": "tsx scripts/weapon-data/lock-cli.ts check",
+    "weapon-skins:write": "tsx scripts/weapon-skins.ts --write",
+    "weapon-skins:check": "tsx scripts/weapon-skins.ts",
     "weapon-mode-diff:check": "tsx scripts/weapon-data/mode-diff-check.ts",
     "weapon-data:static-check": "tsx scripts/weapon-data/static-boundary.ts",
     "webp": "pnpm exec tsx ./scripts/optimize-images.ts public/",
