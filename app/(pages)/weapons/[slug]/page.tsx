@@ -7,6 +7,7 @@ import { WeaponExclusivePerks } from "@/components/WeaponExclusivePerks";
 import { WeaponDetailProvider } from "@/components/WeaponDetailContext";
 import { WeaponModeDiff as WeaponModeDiffTable } from "@/components/WeaponModeDiff";
 import { WeaponEffectValuesPanel } from "@/components/FireRateCatalog";
+// import { WeaponSkins } from "@/components/WeaponSkins";
 import {
   WeaponSkill,
 } from "@/components/WeaponSkill";
@@ -22,6 +23,7 @@ import {
   getResolvedWeaponDocument,
   getResolvedWeaponSlugs,
 } from "@/lib/weapons";
+// import { getWeaponSkins } from "@/lib/weapon-skins";
 
 export async function generateStaticParams() {
   return (await getResolvedWeaponSlugs("lc")).map((slug) => ({ slug }));
@@ -88,10 +90,13 @@ export default async function WeaponDetailPage({
       : "max-w-3xl";
   const customStyle = customWidth ? { maxWidth: pageWidth } : undefined;
   const exclusivePerks = (
-    <WeaponExclusivePerks
-      weaponName={document.weapon.title}
-      perks={getAllPerks()}
-    />
+    <>
+      <WeaponExclusivePerks
+        weaponName={document.weapon.title}
+        perks={getAllPerks()}
+      />
+      {/* <WeaponSkins skins={getWeaponSkins(weapon.slug)} /> */}
+    </>
   );
 
   const WeaponSkillForWeapon = ({ children }: { children: ReactNode }) => (
