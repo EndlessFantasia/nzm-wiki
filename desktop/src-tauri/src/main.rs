@@ -1,5 +1,6 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use serde::Serialize;
 use tauri::{
     menu::{CheckMenuItem, Menu, MenuItem, PredefinedMenuItem},
     tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
@@ -12,9 +13,26 @@ use tauri_plugin_window_state::StateFlags;
 
 const SITE_URL: &str = "https://nzm-wiki.com/";
 const SITE_HOST: &str = "nzm-wiki.com";
+const SETTINGS_PATH: &str = "/desktop/settings";
 const MAIN_WINDOW: &str = "main";
 
 struct PinItem(CheckMenuItem<Wry>);
+
+struct ShortcutStatus(Vec<ShortcutInfo>);
+
+#[derive(Clone, Serialize)]
+struct ShortcutInfo {
+    action: &'static str,
+    keys: &'static str,
+    registered: bool,
+}
+
+#[derive(Serialize)]
+struct SettingsState {
+    version: String,
+    pinned: bool,
+    shortcuts: Vec<ShortcutInfo>,
+}
 
 fn toggle_window_shortcut() -> Shortcut {
     Shortcut::new(Some(Modifiers::CONTROL | Modifiers::ALT), Code::KeyN)
@@ -22,6 +40,15 @@ fn toggle_window_shortcut() -> Shortcut {
 
 fn toggle_pin_shortcut() -> Shortcut {
     Shortcut::new(Some(Modifiers::CONTROL | Modifiers::ALT), Code::KeyT)
+}
+
+// 调试构建可用 NZM_DESKTOP_URL 指向本地 dev server 联调
+fn site_url() -> Url {
+    #[cfg(debug_assertions)]
+    if let Some(url) = std::env::var("NZM_DESKTOP_URL").ok().and_then(|url| url.parse().ok()) {
+        return url;
+    }
+    SITE_URL.parse().unwrap()
 }
 
 fn main_window(app: &AppHandle) -> Option<WebviewWindow> {
@@ -48,21 +75,50 @@ fn toggle_window(app: &AppHandle) {
     }
 }
 
-fn set_pinned(app: &AppHandle, pinned: bool) {
+fn apply_pinned(app: &AppHandle, pinned: bool) {
     if let Some(window) = main_window(app) {
         let _ = window.set_always_on_top(pinned);
     }
     let _ = app.state::<PinItem>().0.set_checked(pinned);
+    // 用 DOM 事件通知站点，不给线上页面开放 Tauri 事件监听权限
+    if let Some(window) = main_window(app) {
+        let _ = window.eval(format!(
+            "window.dispatchEvent(new CustomEvent('nzm-desktop:pinned-changed', {{ detail: {pinned} }}))"
+        ));
+    }
 }
 
 fn toggle_pinned(app: &AppHandle) {
     let pinned = app.state::<PinItem>().0.is_checked().unwrap_or(false);
-    set_pinned(app, !pinned);
+    apply_pinned(app, !pinned);
+}
+
+fn show_settings(app: &AppHandle) {
+    if let (Some(window), Ok(url)) = (main_window(app), site_url().join(SETTINGS_PATH)) {
+        let _ = window.navigate(url);
+        show_window(app);
+    }
+}
+
+#[tauri::command]
+fn get_settings_state(app: AppHandle) -> SettingsState {
+    SettingsState {
+        version: app.package_info().version.to_string(),
+        pinned: app.state::<PinItem>().0.is_checked().unwrap_or(false),
+        shortcuts: app.state::<ShortcutStatus>().0.clone(),
+    }
+}
+
+#[tauri::command]
+fn set_pinned(app: AppHandle, pinned: bool) {
+    apply_pinned(&app, pinned);
 }
 
 fn is_site_url(url: &Url) -> bool {
-    url.host_str()
-        .is_some_and(|host| host == SITE_HOST || host.ends_with(&format!(".{SITE_HOST}")))
+    let Some(host) = url.host_str() else { return false };
+    host == SITE_HOST
+        || host.ends_with(&format!(".{SITE_HOST}"))
+        || site_url().origin() == url.origin()
 }
 
 fn open_external(app: &AppHandle, url: &Url) {
@@ -72,7 +128,7 @@ fn open_external(app: &AppHandle, url: &Url) {
 fn build_main_window(app: &AppHandle) -> tauri::Result<WebviewWindow> {
     let nav_app = app.clone();
     let popup_app = app.clone();
-    WebviewWindowBuilder::new(app, MAIN_WINDOW, WebviewUrl::External(SITE_URL.parse().unwrap()))
+    WebviewWindowBuilder::new(app, MAIN_WINDOW, WebviewUrl::External(site_url()))
         .title("逆战：未来 Wiki")
         .inner_size(1280.0, 800.0)
         .min_inner_size(420.0, 480.0)
@@ -108,6 +164,7 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
     let pin = CheckMenuItem::with_id(app, "pin", "窗口置顶", true, false, Some("Ctrl+Alt+T"))?;
     let home = MenuItem::with_id(app, "home", "回到首页", true, None::<&str>)?;
     let reload = MenuItem::with_id(app, "reload", "刷新", true, None::<&str>)?;
+    let settings = MenuItem::with_id(app, "settings", "设置…", true, None::<&str>)?;
     let quit = MenuItem::with_id(app, "quit", "退出", true, None::<&str>)?;
     let menu = Menu::with_items(
         app,
@@ -118,6 +175,7 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
             &home,
             &reload,
             &PredefinedMenuItem::separator(app)?,
+            &settings,
             &quit,
         ],
     )?;
@@ -132,11 +190,11 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
             // 勾选状态在事件触发前已由菜单自行切换
             "pin" => {
                 let pinned = app.state::<PinItem>().0.is_checked().unwrap_or(false);
-                set_pinned(app, pinned);
+                apply_pinned(app, pinned);
             }
             "home" => {
                 if let Some(window) = main_window(app) {
-                    let _ = window.navigate(SITE_URL.parse().unwrap());
+                    let _ = window.navigate(site_url());
                     show_window(app);
                 }
             }
@@ -145,6 +203,7 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
                     let _ = window.eval("location.reload()");
                 }
             }
+            "settings" => show_settings(app),
             "quit" => app.exit(0),
             _ => {}
         })
@@ -190,18 +249,22 @@ fn main() {
                 })
                 .build(),
         )
+        .invoke_handler(tauri::generate_handler![get_settings_state, set_pinned])
         .setup(|app| {
             let handle = app.handle();
             build_tray(handle)?;
             build_main_window(handle)?;
-            for (shortcut, label) in [
-                (toggle_window_shortcut(), "Ctrl+Alt+N"),
-                (toggle_pin_shortcut(), "Ctrl+Alt+T"),
-            ] {
-                if let Err(err) = app.global_shortcut().register(shortcut) {
-                    eprintln!("快捷键 {label} 注册失败：{err}");
-                }
-            }
+            let shortcuts = [
+                (toggle_window_shortcut(), "显示/隐藏窗口", "Ctrl+Alt+N"),
+                (toggle_pin_shortcut(), "切换窗口置顶", "Ctrl+Alt+T"),
+            ]
+            .into_iter()
+            .map(|(shortcut, action, keys)| {
+                let registered = app.global_shortcut().register(shortcut).is_ok();
+                ShortcutInfo { action, keys, registered }
+            })
+            .collect();
+            app.manage(ShortcutStatus(shortcuts));
             Ok(())
         })
         .run(tauri::generate_context!())
