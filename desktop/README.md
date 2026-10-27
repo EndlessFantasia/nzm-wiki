@@ -30,10 +30,8 @@ $env:NZM_DESKTOP_URL = "https://nzm-wiki.com/"; pnpm desktop:dev
 
 站点页面能调用的命令只在 `capabilities/site.json` 中授权；新增命令时同时在 `build.rs` 的 `AppManifest` 和该 capability 中声明，站点侧经 `lib/desktop.ts` 调用，并容忍旧版桌面端缺少该命令。文件系统、进程等敏感能力不开放给站点。壳向站点推送状态用 DOM 自定义事件（如 `nzm-desktop:pinned-changed`），不开放 Tauri 事件权限。
 
-图标由 `desktop/app-icon.png`（1024×1024 方形 PNG）生成：
+图标源图为 `desktop/app-icon.png`（方形 PNG，建议 1024×1024）。下面的命令会裁出圆角、生成全部尺寸，并只保留 `tauri.conf.json` 引用的文件和托盘用的 `icon.png`；`build.rs` 监听 `icons/`，重新编译即可嵌入新图标：
 
 ```bash
 pnpm --filter nzm-wiki-desktop icon
 ```
-
-生成后只保留 `src-tauri/icons/` 下 `tauri.conf.json` 引用的文件和 `icon.png`。

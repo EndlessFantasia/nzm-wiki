@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tauri dev",
     "build": "tauri build",
-    "icon": "tauri icon app-icon.png"
+    "icon": "node scripts/build-icon.mjs"
   },
   "devDependencies": {
     "@tauri-apps/cli": "2.12.4"
