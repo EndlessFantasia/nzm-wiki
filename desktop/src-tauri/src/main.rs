@@ -318,7 +318,13 @@ fn main() {
                 )
                 .build(),
         )
-        .plugin(tauri_plugin_opener::init())
+        // 外链由 on_navigation/on_new_window 在 Rust 侧交给系统浏览器；
+        // 关闭插件注入的点击拦截脚本，否则它会从站点调用未授权的 open_url
+        .plugin(
+            tauri_plugin_opener::Builder::new()
+                .open_js_links_on_click(false)
+                .build(),
+        )
         .plugin(
             tauri_plugin_global_shortcut::Builder::new()
                 .with_handler(|app, shortcut, event| {
