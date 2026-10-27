@@ -21,6 +21,18 @@ const SITE_HOST: &str = "nzm-wiki.com";
 const SETTINGS_PATH: &str = "/desktop/settings";
 const MAIN_WINDOW: &str = "main";
 
+// 文档创建时标记桌面端，站点 CSS 据此调整滚动条等桌面专属样式，避免首屏闪烁
+const DESKTOP_INIT_SCRIPT: &str = r#"(() => {
+  const mark = () => document.documentElement?.setAttribute("data-desktop", "");
+  if (document.documentElement) return mark();
+  new MutationObserver((_, observer) => {
+    if (document.documentElement) {
+      mark();
+      observer.disconnect();
+    }
+  }).observe(document, { childList: true });
+})();"#;
+
 struct TrayItems {
     toggle: MenuItem<Wry>,
     pin: CheckMenuItem<Wry>,
@@ -177,6 +189,7 @@ fn build_main_window(app: &AppHandle) -> tauri::Result<WebviewWindow> {
         .inner_size(1280.0, 800.0)
         .min_inner_size(420.0, 480.0)
         .center()
+        .initialization_script(DESKTOP_INIT_SCRIPT)
         .on_navigation(move |url| match url.scheme() {
             "http" | "https" if !is_site_url(url) => {
                 open_external(&nav_app, url);
