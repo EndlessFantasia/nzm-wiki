@@ -1,11 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useIsDesktop } from "@/hooks/useIsDesktop";
 import {
   DESKTOP_PINNED_EVENT,
   invokeDesktop,
+  shortcutFromKeyEvent,
   type DesktopSettingsState,
+  type DesktopShortcut,
+  type DesktopShortcutAction,
 } from "@/lib/desktop";
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
@@ -55,6 +58,143 @@ function Switch({
   );
 }
 
+const textButtonClass =
+  "shrink-0 cursor-pointer rounded-md px-2.5 py-1 text-sm text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-white focus-visible:outline-none focus-visible:underline focus-visible:underline-offset-4 disabled:cursor-default disabled:text-zinc-600 disabled:hover:bg-transparent";
+
+function ShortcutSettings({
+  shortcuts,
+  onChange,
+}: {
+  shortcuts: DesktopShortcut[];
+  onChange: (shortcuts: DesktopShortcut[]) => void;
+}) {
+  const [recording, setRecording] = useState<DesktopShortcutAction | null>(null);
+  const [message, setMessage] = useState<{ action: DesktopShortcutAction; text: string } | null>(null);
+
+  useEffect(() => {
+    if (!recording) return;
+    let busy = false;
+    const pause = invokeDesktop<DesktopShortcut[]>("set_shortcuts_paused", { paused: true }).catch(() => {});
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      if (busy) return;
+      if (event.key === "Escape" && !event.ctrlKey && !event.altKey && !event.shiftKey) {
+        setRecording(null);
+        return;
+      }
+      const result = shortcutFromKeyEvent(event);
+      if (!result) return;
+      if ("error" in result) {
+        setMessage({ action: recording, text: result.error });
+        return;
+      }
+      busy = true;
+      void pause
+        .then(() => invokeDesktop<DesktopShortcut[]>("set_shortcut", { action: recording, keys: result.keys }))
+        .then((next) => {
+          onChange(next);
+          setMessage(null);
+        })
+        .catch((err: unknown) => setMessage({ action: recording, text: String(err) }))
+        .finally(() => setRecording(null));
+    };
+
+    window.addEventListener("keydown", onKeyDown, true);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown, true);
+      void pause
+        .then(() => invokeDesktop<DesktopShortcut[]>("set_shortcuts_paused", { paused: false }))
+        .then(onChange)
+        .catch(() => {});
+    };
+  }, [recording, onChange]);
+
+  const startRecording = (action: DesktopShortcutAction) => {
+    setMessage(null);
+    setRecording((current) => (current === action ? null : action));
+  };
+
+  const clearShortcut = (action: DesktopShortcutAction) => {
+    setRecording(null);
+    setMessage(null);
+    invokeDesktop<DesktopShortcut[]>("set_shortcut", { action, keys: null })
+      .then(onChange)
+      .catch((err: unknown) => setMessage({ action, text: String(err) }));
+  };
+
+  const resetAll = () => {
+    setRecording(null);
+    setMessage(null);
+    invokeDesktop<DesktopShortcut[]>("reset_shortcuts").then(onChange).catch(() => {});
+  };
+
+  const isDefault = shortcuts.every((shortcut) => shortcut.keys === shortcut.defaultKeys);
+
+  return (
+    <section>
+      <div className="mb-3 flex items-center justify-between gap-4">
+        <h2 className="text-sm font-medium tracking-wide text-zinc-500">全局快捷键</h2>
+        <button type="button" onClick={resetAll} disabled={isDefault} className={`-my-1 ${textButtonClass}`}>
+          恢复默认
+        </button>
+      </div>
+      <ul className="divide-y divide-zinc-800 rounded-lg border border-zinc-800 bg-zinc-900/60">
+        {shortcuts.map((shortcut) => {
+          const isRecording = recording === shortcut.action;
+          const rowMessage = message?.action === shortcut.action ? message.text : null;
+          return (
+            <li key={shortcut.action} className="px-4 py-3">
+              <div className="flex items-center justify-between gap-4">
+                <span className="min-w-0 text-zinc-200">{shortcut.label}</span>
+                <span className="flex items-center gap-3">
+                  {isRecording ? (
+                    <span className="text-sm text-zinc-500">Esc 取消</span>
+                  ) : !shortcut.keys || shortcut.registered ? null : (
+                    <span
+                      className="text-sm text-red-400"
+                      title="该组合键已被其他程序占用，可从托盘菜单使用对应功能"
+                    >
+                      被占用
+                    </span>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => startRecording(shortcut.action)}
+                    aria-label={`${shortcut.label}：${
+                      isRecording ? "正在录制，再次点击取消" : shortcut.keys ? `${shortcut.keys}，点击修改` : "未绑定，点击绑定"
+                    }`}
+                    title={isRecording ? "再次点击取消" : shortcut.keys ? "点击修改" : "点击绑定"}
+                    className={`min-w-24 cursor-pointer rounded border px-2 py-1 text-center font-mono text-xs transition-colors focus-visible:outline-none focus-visible:underline focus-visible:underline-offset-4 ${
+                      isRecording
+                        ? "border-emerald-500 bg-zinc-800 text-emerald-300"
+                        : shortcut.keys
+                          ? "border-zinc-700 bg-zinc-800 text-zinc-300 hover:border-zinc-500 hover:text-white"
+                          : "border-dashed border-zinc-600 text-zinc-500 hover:border-zinc-400 hover:text-zinc-300"
+                    }`}
+                  >
+                    {isRecording ? "按下组合键…" : (shortcut.keys ?? "未绑定")}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => clearShortcut(shortcut.action)}
+                    disabled={!shortcut.keys || isRecording}
+                    className={`${textButtonClass} ${!shortcut.keys || isRecording ? "invisible" : ""}`}
+                  >
+                    清除
+                  </button>
+                </span>
+              </div>
+              {rowMessage && <p className="mt-1 text-sm text-red-400">{rowMessage}</p>}
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}
+
 function DesktopSettingsPanel() {
   const [settings, setSettings] = useState<DesktopSettingsState | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -70,6 +210,10 @@ function DesktopSettingsPanel() {
     };
     window.addEventListener(DESKTOP_PINNED_EVENT, onPinnedChange);
     return () => window.removeEventListener(DESKTOP_PINNED_EVENT, onPinnedChange);
+  }, []);
+
+  const setShortcuts = useCallback((shortcuts: DesktopShortcut[]) => {
+    setSettings((current) => (current ? { ...current, shortcuts } : current));
   }, []);
 
   const setPinned = (pinned: boolean) => {
@@ -102,36 +246,13 @@ function DesktopSettingsPanel() {
         </div>
       </section>
 
-      <section>
-        <SectionTitle>全局快捷键</SectionTitle>
-        <ul className="divide-y divide-zinc-800 rounded-lg border border-zinc-800 bg-zinc-900/60">
-          {settings.shortcuts.map((shortcut) => (
-            <li key={shortcut.keys} className="flex items-center justify-between gap-4 px-4 py-3">
-              <span className="text-zinc-200">{shortcut.action}</span>
-              <span className="flex items-center gap-3">
-                {shortcut.registered ? (
-                  <span className="text-sm text-zinc-500">已启用</span>
-                ) : (
-                  <span
-                    className="text-sm text-red-400"
-                    title="该组合键已被其他程序占用，可从托盘菜单使用对应功能"
-                  >
-                    被占用
-                  </span>
-                )}
-                <kbd className="rounded border border-zinc-700 bg-zinc-800 px-1.5 py-0.5 text-xs text-zinc-400">
-                  {shortcut.keys}
-                </kbd>
-              </span>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <ShortcutSettings shortcuts={settings.shortcuts} onChange={setShortcuts} />
 
       <p className="text-sm text-zinc-600">NZM Wiki 桌面端 v{settings.version}</p>
     </div>
   );
 }
+
 
 export default function DesktopSettings() {
   const isDesktop = useIsDesktop();
