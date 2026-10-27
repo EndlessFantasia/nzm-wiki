@@ -248,11 +248,34 @@ function DesktopSettingsPanel() {
 
       <ShortcutSettings shortcuts={settings.shortcuts} onChange={setShortcuts} />
 
-      <p className="text-sm text-zinc-600">NZM Wiki 桌面端 v{settings.version}</p>
+      <AboutSettings version={settings.version} />
     </div>
   );
 }
 
+// 检查更新暂为占位，接入 updater 后替换点击逻辑
+function AboutSettings({ version }: { version: string }) {
+  const [notice, setNotice] = useState<string | null>(null);
+
+  return (
+    <section>
+      <SectionTitle>关于</SectionTitle>
+      <div className="flex items-center justify-between gap-4 rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3">
+        <span>
+          <span className="block text-zinc-200">桌面端版本</span>
+          <span className="mt-0.5 block text-sm text-zinc-500">v{version}{notice && ` · ${notice}`}</span>
+        </span>
+        <button
+          type="button"
+          onClick={() => setNotice("自动更新暂未接入")}
+          className={textButtonClass}
+        >
+          检查更新
+        </button>
+      </div>
+    </section>
+  );
+}
 
 export default function DesktopSettings() {
   const isDesktop = useIsDesktop();
