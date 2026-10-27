@@ -184,12 +184,24 @@ fn open_external(app: &AppHandle, url: &Url) {
     let _ = app.opener().open_url(url.as_str(), None::<&str>);
 }
 
+// 首次启动的窗口尺寸：1440×860，小屏上不超过主显示器可用区域的 90%；之后由 window-state 恢复
+fn default_window_size(app: &AppHandle) -> (f64, f64) {
+    let (mut width, mut height) = (1440.0_f64, 860.0_f64);
+    if let Ok(Some(monitor)) = app.primary_monitor() {
+        let area = monitor.work_area().size.to_logical::<f64>(monitor.scale_factor());
+        width = width.min(area.width * 0.9);
+        height = height.min(area.height * 0.9);
+    }
+    (width, height)
+}
+
 fn build_main_window(app: &AppHandle) -> tauri::Result<WebviewWindow> {
     let nav_app = app.clone();
     let popup_app = app.clone();
+    let (width, height) = default_window_size(app);
     let window = WebviewWindowBuilder::new(app, MAIN_WINDOW, WebviewUrl::External(site_url()))
         .title("逆战未来维基")
-        .inner_size(1280.0, 800.0)
+        .inner_size(width, height)
         .min_inner_size(420.0, 480.0)
         .center()
         // 站点顶栏兼任标题栏（拖动区域与窗口按钮由站点在桌面端渲染）
