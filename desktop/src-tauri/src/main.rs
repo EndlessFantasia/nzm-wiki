@@ -1,15 +1,18 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod shortcuts;
+
 use std::sync::OnceLock;
 
 use serde::Serialize;
+use shortcuts::{Action, ShortcutInfo, Shortcuts};
 use tauri::{
     menu::{CheckMenuItem, Menu, MenuItem, PredefinedMenuItem},
     tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
     webview::NewWindowResponse,
     AppHandle, Manager, Url, WebviewUrl, WebviewWindow, WebviewWindowBuilder, Wry,
 };
-use tauri_plugin_global_shortcut::{Code, GlobalShortcutExt, Modifiers, Shortcut, ShortcutState};
+use tauri_plugin_global_shortcut::ShortcutState;
 use tauri_plugin_opener::OpenerExt;
 use tauri_plugin_window_state::StateFlags;
 
@@ -18,15 +21,9 @@ const SITE_HOST: &str = "nzm-wiki.com";
 const SETTINGS_PATH: &str = "/desktop/settings";
 const MAIN_WINDOW: &str = "main";
 
-struct PinItem(CheckMenuItem<Wry>);
-
-struct ShortcutStatus(Vec<ShortcutInfo>);
-
-#[derive(Clone, Serialize)]
-struct ShortcutInfo {
-    action: &'static str,
-    keys: &'static str,
-    registered: bool,
+struct TrayItems {
+    toggle: MenuItem<Wry>,
+    pin: CheckMenuItem<Wry>,
 }
 
 #[derive(Serialize)]
@@ -34,14 +31,6 @@ struct SettingsState {
     version: String,
     pinned: bool,
     shortcuts: Vec<ShortcutInfo>,
-}
-
-fn toggle_window_shortcut() -> Shortcut {
-    Shortcut::new(Some(Modifiers::CONTROL | Modifiers::ALT), Code::KeyN)
-}
-
-fn toggle_pin_shortcut() -> Shortcut {
-    Shortcut::new(Some(Modifiers::CONTROL | Modifiers::ALT), Code::KeyT)
 }
 
 static SITE: OnceLock<Url> = OnceLock::new();
@@ -92,7 +81,7 @@ fn apply_pinned(app: &AppHandle, pinned: bool) {
     if let Some(window) = main_window(app) {
         let _ = window.set_always_on_top(pinned);
     }
-    let _ = app.state::<PinItem>().0.set_checked(pinned);
+    let _ = app.state::<TrayItems>().pin.set_checked(pinned);
     // 用 DOM 事件通知站点，不给线上页面开放 Tauri 事件监听权限
     if let Some(window) = main_window(app) {
         let _ = window.eval(format!(
@@ -102,8 +91,21 @@ fn apply_pinned(app: &AppHandle, pinned: bool) {
 }
 
 fn toggle_pinned(app: &AppHandle) {
-    let pinned = app.state::<PinItem>().0.is_checked().unwrap_or(false);
+    let pinned = app.state::<TrayItems>().pin.is_checked().unwrap_or(false);
     apply_pinned(app, !pinned);
+}
+
+fn update_tray_accelerators(app: &AppHandle) {
+    let items = app.state::<TrayItems>();
+    let shortcuts = app.state::<Shortcuts>();
+    let toggle_keys = shortcuts.keys(Action::ToggleWindow);
+    if items.toggle.set_accelerator(toggle_keys.as_deref()).is_err() {
+        let _ = items.toggle.set_accelerator(None::<&str>);
+    }
+    let pin_keys = shortcuts.keys(Action::TogglePin);
+    if items.pin.set_accelerator(pin_keys.as_deref()).is_err() {
+        let _ = items.pin.set_accelerator(None::<&str>);
+    }
 }
 
 fn show_settings(app: &AppHandle) {
@@ -117,14 +119,43 @@ fn show_settings(app: &AppHandle) {
 fn get_settings_state(app: AppHandle) -> SettingsState {
     SettingsState {
         version: app.package_info().version.to_string(),
-        pinned: app.state::<PinItem>().0.is_checked().unwrap_or(false),
-        shortcuts: app.state::<ShortcutStatus>().0.clone(),
+        pinned: app.state::<TrayItems>().pin.is_checked().unwrap_or(false),
+        shortcuts: app.state::<Shortcuts>().infos(),
     }
 }
 
 #[tauri::command]
 fn set_pinned(app: AppHandle, pinned: bool) {
     apply_pinned(&app, pinned);
+}
+
+// 快捷键命令保持同步执行（主线程），注册热键与热键回调不会交错
+#[tauri::command]
+fn set_shortcut(app: AppHandle, action: Action, keys: Option<String>) -> Result<Vec<ShortcutInfo>, String> {
+    let shortcuts = app.state::<Shortcuts>();
+    shortcuts.set(&app, action, keys)?;
+    update_tray_accelerators(&app);
+    Ok(shortcuts.infos())
+}
+
+#[tauri::command]
+fn reset_shortcuts(app: AppHandle) -> Vec<ShortcutInfo> {
+    let shortcuts = app.state::<Shortcuts>();
+    shortcuts.reset(&app);
+    update_tray_accelerators(&app);
+    shortcuts.infos()
+}
+
+// 录制新组合键期间暂停全局热键，否则按下已绑定的组合会被系统拦截，页面收不到按键
+#[tauri::command]
+fn set_shortcuts_paused(app: AppHandle, paused: bool) -> Vec<ShortcutInfo> {
+    let shortcuts = app.state::<Shortcuts>();
+    if paused {
+        shortcuts.unregister_all(&app);
+    } else {
+        shortcuts.register_all(&app);
+    }
+    shortcuts.infos()
 }
 
 fn is_site_url(url: &Url) -> bool {
@@ -151,7 +182,11 @@ fn build_main_window(app: &AppHandle) -> tauri::Result<WebviewWindow> {
                 open_external(&nav_app, url);
                 false
             }
-            "http" | "https" | "about" | "data" | "blob" => true,
+            "http" | "https" | "about" | "data" | "blob" => {
+                // 页面在录制快捷键途中刷新或跳走时恢复热键
+                nav_app.state::<Shortcuts>().register_all(&nav_app);
+                true
+            }
             _ => {
                 open_external(&nav_app, url);
                 false
@@ -173,8 +208,8 @@ fn build_main_window(app: &AppHandle) -> tauri::Result<WebviewWindow> {
 }
 
 fn build_tray(app: &AppHandle) -> tauri::Result<()> {
-    let toggle = MenuItem::with_id(app, "toggle", "显示/隐藏", true, Some("Ctrl+Alt+N"))?;
-    let pin = CheckMenuItem::with_id(app, "pin", "窗口置顶", true, false, Some("Ctrl+Alt+T"))?;
+    let toggle = MenuItem::with_id(app, "toggle", "显示/隐藏", true, None::<&str>)?;
+    let pin = CheckMenuItem::with_id(app, "pin", "窗口置顶", true, false, None::<&str>)?;
     let home = MenuItem::with_id(app, "home", "回到首页", true, None::<&str>)?;
     let reload = MenuItem::with_id(app, "reload", "刷新", true, None::<&str>)?;
     let settings = MenuItem::with_id(app, "settings", "设置…", true, None::<&str>)?;
@@ -192,7 +227,8 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
             &quit,
         ],
     )?;
-    app.manage(PinItem(pin));
+    app.manage(TrayItems { toggle, pin });
+    update_tray_accelerators(app);
 
     let mut tray = TrayIconBuilder::with_id("main")
         .tooltip("逆战：未来 Wiki")
@@ -202,7 +238,7 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
             "toggle" => toggle_window(app),
             // 勾选状态在事件触发前已由菜单自行切换
             "pin" => {
-                let pinned = app.state::<PinItem>().0.is_checked().unwrap_or(false);
+                let pinned = app.state::<TrayItems>().pin.is_checked().unwrap_or(false);
                 apply_pinned(app, pinned);
             }
             "home" => {
@@ -254,31 +290,28 @@ fn main() {
                     if event.state() != ShortcutState::Pressed {
                         return;
                     }
-                    if *shortcut == toggle_window_shortcut() {
-                        toggle_window(app);
-                    } else if *shortcut == toggle_pin_shortcut() {
-                        toggle_pinned(app);
+                    match app.state::<Shortcuts>().action_for(shortcut) {
+                        Some(Action::ToggleWindow) => toggle_window(app),
+                        Some(Action::TogglePin) => toggle_pinned(app),
+                        None => {}
                     }
                 })
                 .build(),
         )
-        .invoke_handler(tauri::generate_handler![get_settings_state, set_pinned])
+        .invoke_handler(tauri::generate_handler![
+            get_settings_state,
+            set_pinned,
+            set_shortcut,
+            reset_shortcuts,
+            set_shortcuts_paused
+        ])
         .setup(|app| {
             let handle = app.handle();
             let _ = SITE.set(resolve_site_url(handle));
+            app.manage(Shortcuts::load(handle));
             build_tray(handle)?;
             build_main_window(handle)?;
-            let shortcuts = [
-                (toggle_window_shortcut(), "显示/隐藏窗口", "Ctrl+Alt+N"),
-                (toggle_pin_shortcut(), "切换窗口置顶", "Ctrl+Alt+T"),
-            ]
-            .into_iter()
-            .map(|(shortcut, action, keys)| {
-                let registered = app.global_shortcut().register(shortcut).is_ok();
-                ShortcutInfo { action, keys, registered }
-            })
-            .collect();
-            app.manage(ShortcutStatus(shortcuts));
+            app.state::<Shortcuts>().register_all(handle);
             Ok(())
         })
         .run(tauri::generate_context!())

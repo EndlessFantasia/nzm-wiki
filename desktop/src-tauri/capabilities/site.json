@@ -1,10 +1,16 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "site",
-  "description": "站点设置页可读取桌面端状态并切换置顶；不要向站点开放文件、进程等敏感能力",
+  "description": "站点设置页可读取桌面端状态、切换置顶和修改快捷键；不要向站点开放文件、进程等敏感能力",
   "windows": ["main"],
   "remote": {
     "urls": ["https://nzm-wiki.com/*", "https://*.nzm-wiki.com/*", "http://localhost:3000/*"]
   },
-  "permissions": ["allow-get-settings-state", "allow-set-pinned"]
+  "permissions": [
+    "allow-get-settings-state",
+    "allow-set-pinned",
+    "allow-set-shortcut",
+    "allow-reset-shortcuts",
+    "allow-set-shortcuts-paused"
+  ]
 }

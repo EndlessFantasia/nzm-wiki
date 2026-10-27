@@ -4,8 +4,7 @@ Tauri 2 壳，直接加载线上站点 `https://nzm-wiki.com/`，不打包 `out/
 
 ## 功能
 
-- `Ctrl+Alt+N`：显示/隐藏窗口（全局快捷键）
-- `Ctrl+Alt+T`：切换窗口置顶
+- 全局快捷键：默认 `Ctrl+Alt+N` 显示/隐藏窗口、`Ctrl+Alt+T` 切换置顶；可在设置页修改或清除，须含 Ctrl/Alt（单独 F1–F24 除外），保存在 `%APPDATA%\com.nzm-wiki.desktop\settings.json`
 - 托盘菜单：显示/隐藏、窗口置顶、回到首页、刷新、设置、退出；左键单击托盘图标切换显示
 - 设置页：站内路由 `/desktop/settings`（`components/DesktopSettings.tsx`），从站点顶栏齿轮（仅桌面端渲染）或托盘菜单进入
 - 记住窗口位置和尺寸；重复启动时聚焦已有窗口
