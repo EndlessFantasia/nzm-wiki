@@ -1,39 +1,20 @@
-"""Print decoded Blueprint expressions compactly, retaining statement offsets.
-
-This is a display helper, not a decompiler or execution proof. Branches and
-native function semantics must be checked against the original JSON.
-"""
-import argparse
+"""Compatibility entry for the NZM Toolkit bytecode display helper."""
 import json
+import os
 from pathlib import Path
+import runpy
+import subprocess
 
-
-def compact(value):
-    if isinstance(value, list):
-        return [compact(item) for item in value]
-    if not isinstance(value, dict):
-        return value
-    if "Property" in value and "Owner" in value:
-        return value["Property"].get("Name")
-    if "ObjectName" in value:
-        return value["ObjectName"]
-    if "Path" in value and "ResolvedOwner" in value:
-        return ".".join(value["Path"])
-    return {key: compact(item) for key, item in value.items()
-            if key not in ("ObjectPath", "StatementIndex")}
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("path", type=Path)
-    parser.add_argument("--function", default="", help="Function name substring")
-    parser.add_argument("--match", default="", help="Only expressions containing this text")
-    args = parser.parse_args()
-    for export in json.loads(args.path.read_text(encoding="utf-8-sig")):
-        if args.function not in export["Name"] or not export.get("ScriptBytecode"):
-            continue
-        print("FUNCTION", export["Name"])
-        for expression in export["ScriptBytecode"]:
-            text = json.dumps(compact(expression), ensure_ascii=False)
-            if args.match in text:
-                print(expression.get("StatementIndex", "?"), text)
+root = os.environ.get('NZM_TOOLKIT_ROOT')
+if not root:
+    skill = Path.home() / '.agents/skills/nzm-assets'
+    if skill.exists():
+        root = str(skill.resolve().parents[1])
+if not root or not (Path(root) / 'runtime/BUILDINFO.json').is_file():
+    raise SystemExit('Install lostlightll/nzm-toolkit; see docs/workflows/nzm-toolkit.md')
+lock = Path(__file__).resolve().parents[1] / 'nzm-toolkit.json'
+if lock.exists():
+    revision = subprocess.check_output(['git', '-C', root, 'rev-parse', 'HEAD'], text=True).strip()
+    if revision != json.loads(lock.read_text(encoding='utf-8'))['revision']:
+        raise SystemExit('NZM Toolkit revision differs from nzm-toolkit.json')
+runpy.run_path(str(Path(root) / 'tools/summarize-nzm-bytecode.py'), run_name='__main__')

@@ -26,7 +26,7 @@ kismet/
 & scripts/inspect-nzm-bytecode.ps1 -Assets 'NZM/Content/exact/path.uasset' -Dataset live -SourceLabel '已核实的版本标识'
 ```
 
-使用实际搜索结果替换示例路径。默认程序集为 `MD/_local/nzm-assets/tools/FModel.Cli.dll`，配置为 `MD/_local/nzm-assets/nzm.json`，都相对于项目根目录解析，不依赖启动命令时的当前目录。程序集应来自完整的兼容 CLI 安装，连同依赖保留在工具目录；这些本地文件不提交。其他安装用 `-AssemblyPath`、`-ProfilePath`；显式传入的相对路径也以项目根目录为基准，仍支持绝对路径覆盖。程序集与 PowerShell/.NET 须兼容。赛季入口 `scripts/s0s1-season-talents/export-taboo-script.ps1` 委托同一导出器并复用默认值，保留原有参数和包含 `output` 的 JSON 返回格式。
+使用实际搜索结果替换示例路径。默认程序集来自固定版本 Toolkit 的 `runtime/libraries/FModel.Cli.dll`，私有配置仍为本项目的 `MD/_local/nzm-assets/nzm.json`。安装和版本核对见 [NZM Toolkit](nzm-toolkit.md)。其他安装用 `-AssemblyPath`、`-ProfilePath`；显式传入的相对路径以项目根目录为基准，仍支持绝对路径覆盖。程序集与 PowerShell/.NET 须兼容。赛季入口 `scripts/s0s1-season-talents/export-taboo-script.ps1` 委托同一导出器并复用默认值，保留原有参数和包含 `output` 的 JSON 返回格式。
 
 每次导出写入 `manifest.json`：环境、可选版本标签、时间、请求资产、工具程序集哈希、状态和已导出文件的 SHA-256。只记录必要来源信息，不序列化 profile。`exported` 只表示导出请求完成，不证明所有函数解析完整；失败快照标为 `failed`，未正常结束的快照保留 `in-progress`。读取时仍须检查目标函数的 `ScriptBytecode` 和解析诊断。
 
@@ -36,6 +36,6 @@ kismet/
 
 - 定位文件可用 `rg --files --no-ignore kismet`，再按目标资产名筛选；内容搜索也须显式包含忽略文件。
 - 引用具体快照文件、对象/函数及字段或原始指令定位；复核时与 manifest 哈希比对。
-- 字节码判读见 [Kismet 使用规范](../../.agents/skills/nzm-uasset/references/kismet.md)。摘要、伪代码、人工分析和临时文件放 `MD/_local/nzm-uasset/<主题>/`，指向原始快照，不写回参考 JSON。
+- 字节码判读使用已安装 Toolkit 的 `skills/nzm-uasset/references/kismet.md`，接入方式见 [NZM Toolkit](nzm-toolkit.md)。摘要、伪代码、人工分析和临时文件放 `MD/_local/nzm-uasset/<主题>/`，指向原始快照，不写回参考 JSON。
 - `.uasset` 原始包保留在 `nzm-assets` 的导出位置；参考库不存放 profile、mappings、工具副本或构建缓存。
 - 历史 `MD/_local/nzm-bytecode/`、`nzm-assets/s1-kismet-*` 及主题目录继续作为旧引用使用。归档旧证据时先核对来源、哈希及调用方，再新增对应快照与原路径记录；未知环境归入 `unknown`。此次目录统一不批量移动旧文件。

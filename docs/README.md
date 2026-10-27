@@ -14,10 +14,10 @@
 | 任务范围 | Required | Optional | 状态 |
 | :--- | :--- | :--- | :---: |
 | 日常内容编辑后的派生数据同步、开发启动 | [`workflows/content-sync.md`](workflows/content-sync.md) | [`architecture/content-evidence-notes.md`](architecture/content-evidence-notes.md) | active |
-| 本地 .uasset / .uexp 转 JSON | [本地转换流程](../.agents/skills/nzm-uasset/references/local-json.md) | [nzm-uasset](../.agents/skills/nzm-uasset/SKILL.md) | active |
-| pak 更新概览、容器条目或前版对比 | [按需 pak 分析](../.agents/skills/nzm-assets/references/pak-analysis.md) | [nzm-uasset](../.agents/skills/nzm-uasset/SKILL.md) | active |
-| Lua 脚本行为或函数版本差异 | [Lua 分析流程](../.agents/skills/nzm-assets/references/lua-analysis.md) | [按需 pak 分析](../.agents/skills/nzm-assets/references/pak-analysis.md) | active |
-| Kismet 字节码导出、读取或参考库维护 | [`workflows/kismet-evidence.md`](workflows/kismet-evidence.md) | [nzm-uasset](../.agents/skills/nzm-uasset/SKILL.md) | active |
+| 本地 .uasset / .uexp 转 JSON | [Toolkit 接入与本地转换入口](workflows/nzm-toolkit.md) | 已安装 Toolkit 的 `nzm-uasset` | active |
+| pak 更新概览、容器条目或前版对比 | [Toolkit 接入与 pak 分析入口](workflows/nzm-toolkit.md) | 已安装 Toolkit 的 `nzm-assets` | active |
+| Lua 脚本行为或函数版本差异 | [Toolkit 接入与 Lua 分析入口](workflows/nzm-toolkit.md) | 已安装 Toolkit 的 `nzm-assets` | active |
+| Kismet 字节码导出、读取或参考库维护 | [`workflows/kismet-evidence.md`](workflows/kismet-evidence.md)、[Toolkit 接入](workflows/nzm-toolkit.md) | 已安装 Toolkit 的 `nzm-uasset` | active |
 | 塔防陷阱详情、伤害及实测对照维护 | [`workflows/trap-content-audit.md`](workflows/trap-content-audit.md) | 无 | active |
 | 猎场 Buff 数据导入、图标或图鉴维护 | [`workflows/status-effect-import.md`](workflows/status-effect-import.md) | [`standards/weapon-numerical-v2.md`](standards/weapon-numerical-v2.md) | active |
 | 召唤物篇章、伤害、射速或关联索引维护 | [`workflows/summon-compendium.md`](workflows/summon-compendium.md) | [`architecture/multiplier-index.md`](architecture/multiplier-index.md)、[`workflows/status-effect-import.md`](workflows/status-effect-import.md) | active |
