@@ -32,12 +32,14 @@
 }
 
 html {
+  --site-header-height: 3.5rem;
   overflow-y: auto;
   scrollbar-gutter: stable;
 }
 
-/* 桌面端（data-desktop 由 Tauri 壳注入）：不常驻预留滚动条槽位，避免无滚动页面右侧留白 */
+/* 桌面端（data-desktop 由 Tauri 壳注入）：顶栏兼任标题栏，压低高度；不常驻预留滚动条槽位，避免无滚动页面右侧留白 */
 html[data-desktop] {
+  --site-header-height: 2.75rem;
   scrollbar-gutter: auto;
 }
 

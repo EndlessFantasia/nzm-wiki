@@ -580,9 +580,9 @@ export function BuildGuideEditor({
   );
 
   return (
-    <div className="min-h-[calc(100dvh-3.5rem)] bg-background text-zinc-100">
+    <div className="min-h-[calc(100dvh-var(--site-header-height))] bg-background text-zinc-100">
       <form onSubmit={handleSave}>
-        <header className="sticky top-14 z-30 border-b border-zinc-800 bg-background/95 backdrop-blur-sm">
+        <header className="sticky top-(--site-header-height) z-30 border-b border-zinc-800 bg-background/95 backdrop-blur-sm">
           <div className="mx-auto flex max-w-[1600px] flex-wrap items-center gap-3 px-4 py-3 sm:px-6 xl:px-8">
             <a
               href={getAssetPath("/editor")}

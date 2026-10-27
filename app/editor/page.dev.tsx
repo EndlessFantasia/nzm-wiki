@@ -14,7 +14,7 @@ export default function EditorPage() {
   if (process.env.NODE_ENV !== "development") notFound();
 
   return (
-    <main className="min-h-[calc(100dvh-3.5rem)] bg-background text-zinc-100">
+    <main className="min-h-[calc(100dvh-var(--site-header-height))] bg-background text-zinc-100">
       <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-12">
         <header className="border-b border-zinc-800 pb-6">
           <h1 className="text-2xl font-semibold text-white sm:text-3xl">

@@ -292,7 +292,7 @@ function SiteSidebar({
     <aside className="fixed inset-y-0 left-0 z-40 hidden w-[var(--site-sidebar-width)] flex-col border-r border-zinc-700 bg-surface-1 shadow-[8px_0_28px_rgba(0,0,0,0.14)] xl:flex">
       <div
         data-tauri-drag-region="deep"
-        className="flex h-14 shrink-0 items-center border-b border-zinc-700 px-4"
+        className="flex h-(--site-header-height) shrink-0 items-center border-b border-zinc-700 px-4"
       >
         <Brand />
       </div>
@@ -368,7 +368,7 @@ function SiteHeader({
   return (
     <header
       data-tauri-drag-region="deep"
-      className="sticky top-0 z-40 h-14 border-b border-zinc-700 bg-surface-1/95 backdrop-blur"
+      className="sticky top-0 z-40 h-(--site-header-height) border-b border-zinc-700 bg-surface-1/95 backdrop-blur"
     >
       <div className="flex h-full w-full items-center justify-between gap-2 px-3 sm:px-4 xl:px-6">
         <div className="flex min-w-0 items-center">
