@@ -10,6 +10,7 @@ import {
   BossDifficultyProvider,
   useBossDifficulty,
 } from "@/components/BossDifficultyProvider";
+import DesktopSettingsButton from "@/components/DesktopSettingsButton";
 import { canReturnToCatalog } from "@/lib/catalog-navigation";
 import { getAssetPath } from "@/lib/path";
 import {
@@ -435,6 +436,7 @@ function SiteHeader({
           >
             <Github aria-hidden="true" className="h-4 w-4" />
           </a>
+          <DesktopSettingsButton />
           <button
             type="button"
             onClick={onOpenDrawer}
