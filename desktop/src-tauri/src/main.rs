@@ -1,5 +1,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use std::sync::OnceLock;
+
 use serde::Serialize;
 use tauri::{
     menu::{CheckMenuItem, Menu, MenuItem, PredefinedMenuItem},
@@ -42,13 +44,24 @@ fn toggle_pin_shortcut() -> Shortcut {
     Shortcut::new(Some(Modifiers::CONTROL | Modifiers::ALT), Code::KeyT)
 }
 
-// 调试构建可用 NZM_DESKTOP_URL 指向本地 dev server 联调
-fn site_url() -> Url {
+static SITE: OnceLock<Url> = OnceLock::new();
+
+// tauri dev 默认加载 devUrl（本地站点）；调试构建可用 NZM_DESKTOP_URL 覆盖
+fn resolve_site_url(app: &AppHandle) -> Url {
     #[cfg(debug_assertions)]
     if let Some(url) = std::env::var("NZM_DESKTOP_URL").ok().and_then(|url| url.parse().ok()) {
         return url;
     }
+    if tauri::is_dev() {
+        if let Some(url) = app.config().build.dev_url.clone() {
+            return url;
+        }
+    }
     SITE_URL.parse().unwrap()
+}
+
+fn site_url() -> Url {
+    SITE.get().cloned().unwrap_or_else(|| SITE_URL.parse().unwrap())
 }
 
 fn main_window(app: &AppHandle) -> Option<WebviewWindow> {
@@ -252,6 +265,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![get_settings_state, set_pinned])
         .setup(|app| {
             let handle = app.handle();
+            let _ = SITE.set(resolve_site_url(handle));
             build_tray(handle)?;
             build_main_window(handle)?;
             let shortcuts = [

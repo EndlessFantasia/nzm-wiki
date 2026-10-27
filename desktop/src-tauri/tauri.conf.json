@@ -4,7 +4,12 @@
   "version": "0.1.0",
   "identifier": "com.nzm-wiki.desktop",
   "build": {
-    "frontendDist": "https://nzm-wiki.com/"
+    "frontendDist": "https://nzm-wiki.com/",
+    "devUrl": "http://localhost:3000",
+    "beforeDevCommand": {
+      "script": "node scripts/ensure-site-dev.mjs",
+      "wait": false
+    }
   },
   "app": {
     "withGlobalTauri": true,

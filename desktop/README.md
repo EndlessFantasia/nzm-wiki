@@ -18,14 +18,14 @@ Tauri 2 壳，直接加载线上站点 `https://nzm-wiki.com/`，不打包 `out/
 需要 Rust 工具链（MSVC）和 WebView2（Windows 11 自带）。
 
 ```bash
-pnpm desktop:dev    # 调试运行
-pnpm desktop:build  # 产出 NSIS 安装包到 desktop/src-tauri/target/release/bundle/nsis/
+pnpm desktop:dev    # 调试运行，加载本地站点 http://localhost:3000
+pnpm desktop:build  # 产出 NSIS 安装包到 desktop/src-tauri/target/release/bundle/nsis/，加载线上站点
 ```
 
-调试构建可用 `NZM_DESKTOP_URL` 让主窗口加载本地站点，配合 `pnpm dev` 联调站点侧的桌面端功能：
+`desktop:dev` 启动前会检查 3000 端口：已有站点 dev server 就复用，否则自动在仓库根目录运行 `pnpm dev`，退出时一并关闭。调试构建可用 `NZM_DESKTOP_URL` 改为加载其他地址，例如对照线上：
 
 ```powershell
-$env:NZM_DESKTOP_URL = "http://localhost:3000/"; pnpm desktop:dev
+$env:NZM_DESKTOP_URL = "https://nzm-wiki.com/"; pnpm desktop:dev
 ```
 
 站点页面能调用的命令只在 `capabilities/site.json` 中授权；新增命令时同时在 `build.rs` 的 `AppManifest` 和该 capability 中声明，站点侧经 `lib/desktop.ts` 调用，并容忍旧版桌面端缺少该命令。文件系统、进程等敏感能力不开放给站点。壳向站点推送状态用 DOM 自定义事件（如 `nzm-desktop:pinned-changed`），不开放 Tauri 事件权限。
