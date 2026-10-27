@@ -194,6 +194,10 @@ fn build_main_window(app: &AppHandle) -> tauri::Result<WebviewWindow> {
         .center()
         // 站点顶栏兼任标题栏（拖动区域与窗口按钮由站点在桌面端渲染）
         .decorations(false)
+        // 悬浮滚动条不占宽度，顶栏可铺满窗口；前半段是 wry 的默认参数，设置后会被覆盖，需保留
+        .additional_browser_args(
+            "--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection --enable-features=OverlayScrollbar",
+        )
         .initialization_script(DESKTOP_INIT_SCRIPT)
         .on_navigation(move |url| match url.scheme() {
             "http" | "https" if !is_site_url(url) => {
