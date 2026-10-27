@@ -61,6 +61,11 @@ next-env.d.ts
 /tmp/
 /.wrangler/
 
+# tauri desktop shell
+/desktop/node_modules/
+/desktop/src-tauri/target/
+/desktop/src-tauri/gen/
+
 # Python bytecode caches
 __pycache__/
 *.py[cod]

@@ -9,6 +9,8 @@
     "sync": "tsx scripts/sync-content.ts",
     "build": "tsx scripts/build-static.ts",
     "start": "next start",
+    "desktop:dev": "pnpm --filter nzm-wiki-desktop dev",
+    "desktop:build": "pnpm --filter nzm-wiki-desktop build",
     "lint": "eslint",
     "test:perk-release": "tsx --test lib/perk-release.test.ts scripts/perks/release.test.ts",
     "num-skills:project": "tsx scripts/num-skills/project.ts write",
