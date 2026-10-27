@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "NZM Wiki",
+  "productName": "逆战未来维基",
   "version": "0.1.0",
   "identifier": "com.nzm-wiki.desktop",
   "build": {

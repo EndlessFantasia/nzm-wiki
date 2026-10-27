@@ -287,7 +287,7 @@ export default function DesktopSettings() {
         <DesktopSettingsPanel />
       ) : (
         <p className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3 text-sm text-zinc-400">
-          这里是 NZM Wiki 桌面端的设置页，需要在桌面端中打开。
+          这里是逆战未来维基桌面端的设置页，需要在桌面端中打开。
         </p>
       )}
     </div>

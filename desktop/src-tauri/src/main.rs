@@ -188,7 +188,7 @@ fn build_main_window(app: &AppHandle) -> tauri::Result<WebviewWindow> {
     let nav_app = app.clone();
     let popup_app = app.clone();
     let window = WebviewWindowBuilder::new(app, MAIN_WINDOW, WebviewUrl::External(site_url()))
-        .title("逆战：未来 Wiki")
+        .title("逆战未来维基")
         .inner_size(1280.0, 800.0)
         .min_inner_size(420.0, 480.0)
         .center()
@@ -263,7 +263,7 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
     update_tray_accelerators(app);
 
     let mut tray = TrayIconBuilder::with_id("main")
-        .tooltip("逆战：未来 Wiki")
+        .tooltip("逆战未来维基")
         .menu(&menu)
         .show_menu_on_left_click(false)
         .on_menu_event(|app, event| match event.id().as_ref() {
@@ -350,5 +350,5 @@ fn main() {
             Ok(())
         })
         .run(tauri::generate_context!())
-        .expect("启动 NZM Wiki 桌面端失败");
+        .expect("启动逆战未来维基桌面端失败");
 }
