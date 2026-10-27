@@ -2,7 +2,10 @@
 
 mod shortcuts;
 
-use std::sync::OnceLock;
+use std::sync::{
+    atomic::{AtomicBool, Ordering},
+    OnceLock,
+};
 
 use serde::Serialize;
 use shortcuts::{Action, ShortcutInfo, Shortcuts};
@@ -10,7 +13,7 @@ use tauri::{
     menu::{CheckMenuItem, Menu, MenuItem, PredefinedMenuItem},
     tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
     webview::NewWindowResponse,
-    AppHandle, Manager, Url, WebviewUrl, WebviewWindow, WebviewWindowBuilder, Wry,
+    AppHandle, Manager, Url, WebviewUrl, WebviewWindow, WebviewWindowBuilder, WindowEvent, Wry,
 };
 use tauri_plugin_global_shortcut::ShortcutState;
 use tauri_plugin_opener::OpenerExt;
@@ -184,11 +187,13 @@ fn open_external(app: &AppHandle, url: &Url) {
 fn build_main_window(app: &AppHandle) -> tauri::Result<WebviewWindow> {
     let nav_app = app.clone();
     let popup_app = app.clone();
-    WebviewWindowBuilder::new(app, MAIN_WINDOW, WebviewUrl::External(site_url()))
+    let window = WebviewWindowBuilder::new(app, MAIN_WINDOW, WebviewUrl::External(site_url()))
         .title("逆战：未来 Wiki")
         .inner_size(1280.0, 800.0)
         .min_inner_size(420.0, 480.0)
         .center()
+        // 站点顶栏兼任标题栏（拖动区域与窗口按钮由站点在桌面端渲染）
+        .decorations(false)
         .initialization_script(DESKTOP_INIT_SCRIPT)
         .on_navigation(move |url| match url.scheme() {
             "http" | "https" if !is_site_url(url) => {
@@ -217,7 +222,21 @@ fn build_main_window(app: &AppHandle) -> tauri::Result<WebviewWindow> {
             }
             NewWindowResponse::Deny
         })
-        .build()
+        .build()?;
+
+    let observed = window.clone();
+    let maximized = AtomicBool::new(window.is_maximized().unwrap_or(false));
+    window.on_window_event(move |event| {
+        if let WindowEvent::Resized(_) = event {
+            let now = observed.is_maximized().unwrap_or(false);
+            if maximized.swap(now, Ordering::Relaxed) != now {
+                let _ = observed.eval(format!(
+                    "window.dispatchEvent(new CustomEvent('nzm-desktop:maximized-changed', {{ detail: {now} }}))"
+                ));
+            }
+        }
+    });
+    Ok(window)
 }
 
 fn build_tray(app: &AppHandle) -> tauri::Result<()> {
@@ -293,7 +312,10 @@ fn main() {
         }))
         .plugin(
             tauri_plugin_window_state::Builder::default()
-                .with_state_flags(StateFlags::all().difference(StateFlags::VISIBLE))
+                // 不恢复可见性和边框：避免启动即隐藏，或旧状态把系统标题栏带回来
+                .with_state_flags(
+                    StateFlags::all().difference(StateFlags::VISIBLE | StateFlags::DECORATIONS),
+                )
                 .build(),
         )
         .plugin(tauri_plugin_opener::init())

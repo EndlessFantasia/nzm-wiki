@@ -1,7 +1,7 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "site",
-  "description": "站点设置页可读取桌面端状态、切换置顶和修改快捷键；不要向站点开放文件、进程等敏感能力",
+  "description": "站点可读取桌面端状态、切换置顶、修改快捷键，并作为标题栏拖动和控制窗口；不要向站点开放文件、进程等敏感能力",
   "windows": ["main"],
   "remote": {
     "urls": ["https://nzm-wiki.com/*", "https://*.nzm-wiki.com/*", "http://localhost:3000/*"]
@@ -11,6 +11,12 @@
     "allow-set-pinned",
     "allow-set-shortcut",
     "allow-reset-shortcuts",
-    "allow-set-shortcuts-paused"
+    "allow-set-shortcuts-paused",
+    "core:window:allow-start-dragging",
+    "core:window:allow-internal-toggle-maximize",
+    "core:window:allow-minimize",
+    "core:window:allow-toggle-maximize",
+    "core:window:allow-is-maximized",
+    "core:window:allow-close"
   ]
 }

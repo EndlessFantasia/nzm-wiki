@@ -41,6 +41,13 @@ html[data-desktop] {
   scrollbar-gutter: auto;
 }
 
+/* 桌面端窄窗口要给窗口按钮让位 */
+@media (width < 40rem) {
+  html[data-desktop] .desktop-compact-hidden {
+    display: none;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

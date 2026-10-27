@@ -1,8 +1,18 @@
 // 桌面端（desktop/ 下的 Tauri 壳）注入的全局 API。命令需在 desktop/src-tauri/capabilities/site.json 中授权。
 
+type TauriWindow = {
+  minimize: () => Promise<void>;
+  toggleMaximize: () => Promise<void>;
+  isMaximized: () => Promise<boolean>;
+  close: () => Promise<void>;
+};
+
 type TauriGlobal = {
   core: {
     invoke: <T>(command: string, args?: Record<string, unknown>) => Promise<T>;
+  };
+  window: {
+    getCurrentWindow: () => TauriWindow;
   };
 };
 
@@ -31,6 +41,7 @@ export type DesktopSettingsState = {
 
 export const DESKTOP_SETTINGS_PATH = "/desktop/settings";
 export const DESKTOP_PINNED_EVENT = "nzm-desktop:pinned-changed";
+export const DESKTOP_MAXIMIZED_EVENT = "nzm-desktop:maximized-changed";
 
 export function isDesktopApp() {
   return typeof window !== "undefined" && typeof window.__TAURI__?.core?.invoke === "function";
@@ -50,6 +61,10 @@ export function shortcutFromKeyEvent(event: KeyboardEvent): { keys: string } | {
   const key = /^Key[A-Z]$/.test(code) ? code.slice(3) : /^Digit\d$/.test(code) ? code.slice(5) : code;
   const parts = [event.ctrlKey && "Ctrl", event.altKey && "Alt", event.shiftKey && "Shift", key];
   return { keys: parts.filter(Boolean).join("+") };
+}
+
+export function desktopWindow() {
+  return window.__TAURI__?.window.getCurrentWindow() ?? null;
 }
 
 export function invokeDesktop<T>(command: string, args?: Record<string, unknown>) {
