@@ -92,7 +92,14 @@ function Brand({ compact = false }: { compact?: boolean }) {
         alt=""
         width={compact ? 26 : 30}
         height={compact ? 26 : 30}
-        className="h-auto shrink-0"
+        className="web-only h-auto shrink-0"
+      />
+      <Image
+        src={getAssetPath("/desktop/avatar.webp")}
+        alt=""
+        width={compact ? 24 : 28}
+        height={compact ? 24 : 28}
+        className="desktop-only shrink-0 rounded-[22%]"
       />
       <span className={`truncate font-bold ${compact ? "text-lg" : "text-base"}`}>
         逆战未来 维基

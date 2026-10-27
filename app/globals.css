@@ -43,6 +43,12 @@ html[data-desktop] {
   scrollbar-gutter: auto;
 }
 
+/* 按 data-desktop 切换网页端/桌面端专属内容；标记在水合前注入，不会闪烁 */
+html:not([data-desktop]) .desktop-only,
+html[data-desktop] .web-only {
+  display: none;
+}
+
 /* 桌面端窄窗口要给窗口按钮让位 */
 @media (width < 40rem) {
   html[data-desktop] .desktop-compact-hidden {

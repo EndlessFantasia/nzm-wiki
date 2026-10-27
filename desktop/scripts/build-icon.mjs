@@ -1,6 +1,7 @@
-// 由 app-icon.png 生成圆角图标，再交给 tauri icon 输出并清理用不到的尺寸
+// 由 app-icon.png 生成圆角图标，再交给 tauri icon 输出并清理用不到的尺寸；
+// 同时输出站点在桌面端左上角使用的头像
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, rmSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -11,6 +12,7 @@ const RADIUS = Math.round(SIZE * 0.22);
 
 const desktopDir = fileURLToPath(new URL("..", import.meta.url));
 const iconsDir = join(desktopDir, "src-tauri", "icons");
+const avatarDir = join(desktopDir, "..", "public", "desktop");
 const workDir = mkdtempSync(join(tmpdir(), "nzm-icon-"));
 const rounded = join(workDir, "app-icon-rounded.png");
 
@@ -40,6 +42,9 @@ try {
   for (const size of [30, 44, 71, 89, 107, 142, 150, 284, 310]) {
     rmSync(join(iconsDir, `Square${size}x${size}Logo.png`), { force: true });
   }
+
+  mkdirSync(avatarDir, { recursive: true });
+  await sharp(rounded).resize(128, 128).webp({ quality: 90 }).toFile(join(avatarDir, "avatar.webp"));
 } finally {
   rmSync(workDir, { recursive: true, force: true });
 }
