@@ -5,6 +5,8 @@ to refs. No containers are copied. Apply requires an explicit separate invocatio
 old reference files are backed up and concurrent reference changes are rejected.
 Use -Asset with exact uasset/luac paths to select assets from mixed containers;
 unselected entries are recorded in the manifest instead of exported.
+Pass every unwanted container through -ExcludeContainer; multiple exclusions
+require a CLI assembly with native ExcludedContainers support.
 #>
 param(
     [Parameter(Mandatory)][ValidateSet('Stage', 'Apply')][string]$Mode,
@@ -13,7 +15,7 @@ param(
     [string[]]$Asset,
     [string]$AssemblyPath = 'D:/Workspace/FModel/FModel.Cli/bin/Release/net10.0/FModel.Cli.dll',
     [string]$ProfilePath = 'MD/_local/nzm-assets/nzm.json',
-    [string]$ExcludeContainer = 'P_1.0.50.485.0_Patch_Season_4261608_P.pak',
+    [string[]]$ExcludeContainer = @('P_1.0.50.485.0_Patch_Season_4261608_P.pak'),
     [ValidateRange(1, 1000)][int]$MaxAssets = 200
 )
 $ErrorActionPreference = 'Stop'
@@ -93,17 +95,29 @@ $profile = [Newtonsoft.Json.JsonConvert]::DeserializeObject([IO.File]::ReadAllTe
 $profileBase = Split-Path -Parent $ProfilePath
 $profile.Directory = [IO.Path]::GetFullPath($profile.Directory, $profileBase)
 if ($profile.Mappings) { $profile.Mappings = [IO.Path]::GetFullPath($profile.Mappings, $profileBase) }
+$exclusions = @($ExcludeContainer | Sort-Object -Unique)
+if ($profileType.GetProperty('ExcludedContainers')) {
+    $profile.ExcludedContainers = @($profile.ExcludedContainers + $exclusions | Sort-Object -Unique)
+    $exclusions = @($profile.ExcludedContainers)
+    $singleExclusion = $null
+} else {
+    if ($exclusions.Count -gt 1) { throw 'Multiple exclusions require a CLI with ExcludedContainers support.' }
+    $singleExclusion = if ($exclusions.Count) { $exclusions[0] } else { $null }
+}
 $profile.OutputDirectory = SafePath $OutputRoot 'exports'
-$manifest = [ordered]@{schemaVersion=1; status='in-progress'; destination=$destinationRoot; excludedContainer=$ExcludeContainer; toolSha256=(Hash $AssemblyPath); containers=@(); assets=@(); skippedEntries=@(); files=@()}
+$manifest = [ordered]@{schemaVersion=1; status='in-progress'; destination=$destinationRoot; excludedContainers=$exclusions; toolSha256=(Hash $AssemblyPath); containers=@(); assets=@(); skippedEntries=@(); files=@()}
 $session = $null
 $stdout = [Console]::Out
 [Console]::SetOut([IO.TextWriter]::Null)
 try {
-    $session = $constructor.Invoke([object[]]@($profile, $true, $ExcludeContainer))
+    $session = $constructor.Invoke([object[]]@($profile, $true, $singleExclusion))
     $session.Provider.ReadScriptData = $false
     $mount = $session.MountSummary()
     if ($mount.unloaded -ne 0 -or $mount.missingKeyGuids.Count -ne 0) { throw 'Mount incomplete.' }
     $manifest.mount = $mount
+    $manifest.mountedContainers = @($session.Provider.MountedVfs | ForEach-Object Name | Sort-Object)
+    if (@($manifest.mountedContainers | Where-Object { $_ -in $exclusions }).Count) { throw 'Excluded container is still mounted.' }
+    if (@($manifest.mountedContainers | Where-Object { $_ -like 'NZM_*.pak' }).Count) { throw 'Custom NZM Mod containers must be explicitly excluded.' }
     [IO.Directory]::CreateDirectory($OutputRoot) | Out-Null
     $assets = @{}
     foreach ($name in $Container | Sort-Object -Unique) {
