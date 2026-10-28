@@ -10,6 +10,7 @@ Tauri 2 壳，直接加载线上站点 `https://nzm-wiki.com/`，不打包 `out/
 - 无系统标题栏：站点顶栏兼任标题栏（`data-tauri-drag-region="deep"`），右侧窗口按钮由 `components/DesktopWindowControls.tsx` 在桌面端渲染；壳在文档创建时给 `<html>` 加 `data-desktop`，供站点 CSS 区分桌面端
 - 启动画面：主窗口隐藏加载站点，期间显示内置的 `src-tauri/splash/index.html`（自定义协议 `splash`，不走网络）；加载完成后至少停留 0.5 秒再淡出，10 秒仍未完成则直接显示主窗口
 - 关闭到托盘：关闭按钮默认只隐藏窗口，进程常驻，再次呼出无需重新加载；可在设置页关闭，退出走托盘菜单
+- 站点更新检查（`components/DesktopUpdateNotice.tsx`）：构建时 `scripts/build-static.ts` 生成版本号，注入页面并写出 `site-version.json`；隐藏在托盘时每 10 分钟、呼出时（间隔 ≥1 分钟）检查，发现新部署直接重载；前台使用时每 30 分钟或站内跳转（间隔 ≥5 分钟）检查，只在顶栏提示，下次点站内链接改为整页加载。有未保存编辑的页面通过取消 `nzm-desktop:before-auto-reload` 事件阻止自动重载
 - 记住窗口位置和尺寸；重复启动时聚焦已有窗口
 - 站外链接和 `target="_blank"` 的站外链接交给系统浏览器打开
 

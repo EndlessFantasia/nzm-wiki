@@ -22,6 +22,7 @@ import type {
 import type {
   BuildGuideSource,
 } from "@/lib/build-guides";
+import { DESKTOP_BEFORE_AUTO_RELOAD_EVENT } from "@/lib/desktop";
 import { getAssetPath } from "@/lib/path";
 import { matchPinyin } from "@/lib/pinyin";
 
@@ -431,8 +432,16 @@ export function BuildGuideEditor({
       if (!dirty) return;
       event.preventDefault();
     };
+    // 桌面端发现新部署时不自动重载有未保存编辑的页面
+    const preventAutoReload = (event: Event) => {
+      if (dirty) event.preventDefault();
+    };
     window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener(DESKTOP_BEFORE_AUTO_RELOAD_EVENT, preventAutoReload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener(DESKTOP_BEFORE_AUTO_RELOAD_EVENT, preventAutoReload);
+    };
   }, [dirty]);
 
   const updateSource = <K extends keyof BuildGuideSource>(

@@ -11,6 +11,7 @@ import {
   useBossDifficulty,
 } from "@/components/BossDifficultyProvider";
 import DesktopSettingsButton from "@/components/DesktopSettingsButton";
+import DesktopUpdateNotice from "@/components/DesktopUpdateNotice";
 import DesktopWindowControls from "@/components/DesktopWindowControls";
 import { canReturnToCatalog } from "@/lib/catalog-navigation";
 import { getAssetPath } from "@/lib/path";
@@ -305,6 +306,7 @@ function SiteHeader({
           >
             <Github aria-hidden="true" className="h-4 w-4" />
           </a>
+          <DesktopUpdateNotice />
           <DesktopSettingsButton />
           <button
             type="button"

@@ -44,6 +44,10 @@ export type DesktopSettingsState = {
 export const DESKTOP_SETTINGS_PATH = "/desktop/settings";
 export const DESKTOP_PINNED_EVENT = "nzm-desktop:pinned-changed";
 export const DESKTOP_MAXIMIZED_EVENT = "nzm-desktop:maximized-changed";
+// 窗口隐藏到托盘或重新呼出（detail 为是否可见）
+export const DESKTOP_VISIBILITY_EVENT = "nzm-desktop:visibility-changed";
+// 自动重载前派发；有未保存编辑的页面调用 preventDefault 阻止
+export const DESKTOP_BEFORE_AUTO_RELOAD_EVENT = "nzm-desktop:before-auto-reload";
 
 export function isDesktopApp() {
   return typeof window !== "undefined" && typeof window.__TAURI__?.core?.invoke === "function";
