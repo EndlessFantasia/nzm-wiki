@@ -444,7 +444,13 @@ details:not(.multiplier-badge-stack):not([open])::details-content {
   }
 }
 
-/* 快照裁到页面区域内：天赋页等的 fixed 全屏背景会被一起截进快照，否则过渡时会盖住侧边栏和顶栏 */
+/* 滚动后的旧页面快照可能从视口上方开始，整个过渡层都须避开常驻导航。 */
+::view-transition {
+  /* React 会将过渡层高度设为 0，使用视口坐标，避免按盒子高度裁掉全部动画。 */
+  clip-path: rect(var(--site-header-height) 100vw 100dvh var(--site-sidebar-width));
+}
+
+/* 快照裁到页面区域内：天赋页等的 fixed 全屏背景会被一起截进快照。 */
 ::view-transition-group(.page-enter),
 ::view-transition-group(.page-exit) {
   overflow: clip;
