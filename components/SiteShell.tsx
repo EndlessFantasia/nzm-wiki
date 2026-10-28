@@ -156,7 +156,7 @@ function SiteNavigation({
 
 function SiteSidebar({ activeItemId }: { activeItemId: SiteNavItem["id"] | null }) {
   return (
-    <aside className="fixed inset-y-0 left-0 z-40 hidden w-(--site-sidebar-width) flex-col border-r border-zinc-700 bg-surface-1 shadow-[8px_0_28px_rgba(0,0,0,0.14)] xl:flex">
+    <aside className="fixed inset-y-0 left-0 z-40 hidden w-(--site-sidebar-width) flex-col border-r border-zinc-700 bg-surface-1 shadow-[8px_0_28px_rgba(0,0,0,0.14)] lg:flex">
       <div
         data-tauri-drag-region="deep"
         className="flex h-(--site-header-height) shrink-0 items-center border-b border-zinc-700 px-4"
@@ -189,7 +189,7 @@ function MobileNavigationDialog({
       onClick={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}
-      className="site-nav-dialog fixed inset-y-0 left-0 right-auto m-0 h-dvh max-h-none w-[min(84vw,20rem)] max-w-none overflow-hidden border-0 border-r border-zinc-700 bg-surface-1 p-0 text-foreground shadow-2xl backdrop:bg-black/60 backdrop:backdrop-blur-[1px] xl:hidden"
+      className="site-nav-dialog fixed inset-y-0 left-0 right-auto m-0 h-dvh max-h-none w-[min(84vw,20rem)] max-w-none overflow-hidden border-0 border-r border-zinc-700 bg-surface-1 p-0 text-foreground shadow-2xl backdrop:bg-black/60 backdrop:backdrop-blur-[1px] lg:hidden"
     >
       <div className="flex h-full flex-col">
         <div className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-zinc-700 px-4">
@@ -249,16 +249,16 @@ function SiteHeader({
                   router.back();
                 }
               }}
-              className="flex h-11 w-11 shrink-0 touch-manipulation items-center justify-center rounded-md text-zinc-300 transition-colors hover:bg-zinc-800 hover:text-white focus-visible:outline-none focus-visible:underline xl:hidden"
+              className="flex h-11 w-11 shrink-0 touch-manipulation items-center justify-center rounded-md text-zinc-300 transition-colors hover:bg-zinc-800 hover:text-white focus-visible:outline-none focus-visible:underline lg:hidden"
             >
               <ArrowLeft aria-hidden="true" className="h-5 w-5" />
             </Link>
           )}
-          <div className={mobileBackLink ? "hidden" : "xl:hidden"}>
+          <div className={mobileBackLink ? "hidden" : "lg:hidden"}>
             <Brand compact />
           </div>
           {itemLabel && (
-            <div className="hidden items-center gap-2 text-sm xl:flex">
+            <div className="hidden items-center gap-2 text-sm lg:flex">
               {sectionLabel && (
                 <>
                   <span className="text-zinc-500">{sectionLabel}</span>
@@ -313,7 +313,7 @@ function SiteHeader({
             aria-expanded={drawerOpen}
             aria-label="打开导航"
             title="导航"
-            className="flex h-11 w-11 touch-manipulation items-center justify-center rounded-md text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-white focus-visible:outline-none focus-visible:underline xl:hidden"
+            className="flex h-11 w-11 touch-manipulation items-center justify-center rounded-md text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-white focus-visible:outline-none focus-visible:underline lg:hidden"
           >
             <Menu aria-hidden="true" className="h-5 w-5" />
           </button>
@@ -371,7 +371,7 @@ function SiteShellContent({ children }: { children: React.ReactNode }) {
   }, [drawerOpen]);
 
   useEffect(() => {
-    const desktopQuery = window.matchMedia("(min-width: 1280px)");
+    const desktopQuery = window.matchMedia("(min-width: 1024px)");
     const closeAtDesktop = (event: MediaQueryListEvent) => {
       if (event.matches) closeDrawer();
     };
@@ -384,7 +384,7 @@ function SiteShellContent({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-dvh">
       <SiteSidebar activeItemId={resolvedNavigation?.activeItemId ?? null} />
-      <div className="min-w-0 xl:pl-(--site-sidebar-width) xl:[container-type:inline-size]">
+      <div className="min-w-0 lg:pl-(--site-sidebar-width) lg:[container-type:inline-size]">
         <SiteHeader
           pathname={pathname}
           sectionLabel={resolvedNavigation?.sectionLabel ?? null}

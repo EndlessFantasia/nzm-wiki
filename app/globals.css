@@ -38,8 +38,8 @@ html {
   scrollbar-gutter: stable;
 }
 
-/* 侧栏 ≥1280px 常驻，更窄时收进抽屉 */
-@media (width >= 80rem) {
+/* 侧栏 ≥1024px 常驻，更窄时收进抽屉 */
+@media (width >= 64rem) {
   html {
     --site-sidebar-width: 11.5rem;
   }
