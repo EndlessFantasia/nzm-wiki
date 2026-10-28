@@ -36,6 +36,8 @@ export type DesktopShortcut = {
 export type DesktopSettingsState = {
   version: string;
   pinned: boolean;
+  // 旧版桌面端没有该字段
+  closeToTray?: boolean;
   shortcuts: DesktopShortcut[];
 };
 

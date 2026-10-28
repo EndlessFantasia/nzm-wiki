@@ -13,6 +13,7 @@ use std::{
     time::{Duration, Instant},
 };
 
+use config::Preferences;
 use serde::Serialize;
 use shortcuts::{Action, ShortcutInfo, Shortcuts};
 use tauri::{
@@ -60,9 +61,11 @@ struct TrayItems {
 }
 
 #[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
 struct SettingsState {
     version: String,
     pinned: bool,
+    close_to_tray: bool,
     shortcuts: Vec<ShortcutInfo>,
 }
 
@@ -105,7 +108,22 @@ fn show_window(app: &AppHandle) {
         let _ = window.unminimize();
         let _ = window.show();
         let _ = window.set_focus();
+        notify_visibility(&window, true);
     }
+}
+
+fn hide_window(app: &AppHandle) {
+    if let Some(window) = main_window(app) {
+        let _ = window.hide();
+        notify_visibility(&window, false);
+    }
+}
+
+// 站点据此决定发现新部署时是后台静默重载还是只提示（components/DesktopUpdateNotice.tsx）
+fn notify_visibility(window: &WebviewWindow, visible: bool) {
+    let _ = window.eval(format!(
+        "window.dispatchEvent(new CustomEvent('nzm-desktop:visibility-changed', {{ detail: {visible} }}))"
+    ));
 }
 
 fn toggle_window(app: &AppHandle) {
@@ -114,7 +132,7 @@ fn toggle_window(app: &AppHandle) {
     let minimized = window.is_minimized().unwrap_or(false);
     let focused = window.is_focused().unwrap_or(false);
     if visible && !minimized && focused {
-        let _ = window.hide();
+        hide_window(app);
     } else {
         show_window(app);
     }
@@ -163,6 +181,7 @@ fn get_settings_state(app: AppHandle) -> SettingsState {
     SettingsState {
         version: app.package_info().version.to_string(),
         pinned: app.state::<TrayItems>().pin.is_checked().unwrap_or(false),
+        close_to_tray: app.state::<Preferences>().close_to_tray(),
         shortcuts: app.state::<Shortcuts>().infos(),
     }
 }
@@ -170,6 +189,11 @@ fn get_settings_state(app: AppHandle) -> SettingsState {
 #[tauri::command]
 fn set_pinned(app: AppHandle, pinned: bool) {
     apply_pinned(&app, pinned);
+}
+
+#[tauri::command]
+fn set_close_to_tray(app: AppHandle, enabled: bool) {
+    app.state::<Preferences>().set_close_to_tray(&app, enabled);
 }
 
 // 快捷键命令保持同步执行（主线程），注册热键与热键回调不会交错
@@ -334,8 +358,8 @@ fn build_main_window(app: &AppHandle) -> tauri::Result<WebviewWindow> {
 
     let observed = window.clone();
     let maximized = AtomicBool::new(window.is_maximized().unwrap_or(false));
-    window.on_window_event(move |event| {
-        if let WindowEvent::Resized(_) = event {
+    window.on_window_event(move |event| match event {
+        WindowEvent::Resized(_) => {
             let now = observed.is_maximized().unwrap_or(false);
             if maximized.swap(now, Ordering::Relaxed) != now {
                 let _ = observed.eval(format!(
@@ -343,6 +367,15 @@ fn build_main_window(app: &AppHandle) -> tauri::Result<WebviewWindow> {
                 ));
             }
         }
+        // 关闭按钮默认只隐藏到托盘，进程常驻，下次呼出无需重新加载站点
+        WindowEvent::CloseRequested { api, .. } => {
+            let app = observed.app_handle();
+            if app.state::<Preferences>().close_to_tray() {
+                api.prevent_close();
+                hide_window(app);
+            }
+        }
+        _ => {}
     });
     Ok(window)
 }
@@ -452,6 +485,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             get_settings_state,
             set_pinned,
+            set_close_to_tray,
             set_shortcut,
             reset_shortcuts,
             set_shortcuts_paused
@@ -465,6 +499,7 @@ fn main() {
             });
             build_splash_window(handle)?;
             app.manage(Shortcuts::load(handle));
+            app.manage(Preferences::load(handle));
             build_tray(handle)?;
             build_main_window(handle)?;
             app.state::<Shortcuts>().register_all(handle);

@@ -223,6 +223,13 @@ function DesktopSettingsPanel() {
     );
   };
 
+  const setCloseToTray = (closeToTray: boolean) => {
+    setSettings((current) => (current ? { ...current, closeToTray } : current));
+    invokeDesktop("set_close_to_tray", { enabled: closeToTray }).catch(() =>
+      setSettings((current) => (current ? { ...current, closeToTray: !closeToTray } : current)),
+    );
+  };
+
   if (error) {
     return (
       <p className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3 text-sm text-zinc-400">
@@ -236,13 +243,21 @@ function DesktopSettingsPanel() {
     <div className="space-y-8">
       <section>
         <SectionTitle>窗口</SectionTitle>
-        <div className="rounded-lg border border-zinc-800 bg-zinc-900/60">
+        <div className="divide-y divide-zinc-800 rounded-lg border border-zinc-800 bg-zinc-900/60">
           <Switch
             checked={settings.pinned}
             label="窗口置顶"
             hint="游戏需使用窗口化或无边框模式，独占全屏下无法覆盖游戏画面"
             onChange={setPinned}
           />
+          {settings.closeToTray !== undefined && (
+            <Switch
+              checked={settings.closeToTray}
+              label="关闭时最小化到托盘"
+              hint="窗口常驻托盘，再次打开无需重新加载；彻底退出请用托盘菜单"
+              onChange={setCloseToTray}
+            />
+          )}
         </div>
       </section>
 

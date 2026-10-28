@@ -1,4 +1,8 @@
-use std::{fs, path::PathBuf};
+use std::{
+    fs,
+    path::PathBuf,
+    sync::atomic::{AtomicBool, Ordering},
+};
 
 use serde_json::{Map, Value};
 use tauri::{AppHandle, Manager};
@@ -24,5 +28,27 @@ pub fn write(app: &AppHandle, key: &str, value: Value) {
     }
     if let Ok(text) = serde_json::to_string_pretty(&config) {
         let _ = fs::write(path, text);
+    }
+}
+
+const CLOSE_TO_TRAY: &str = "closeToTray";
+
+pub struct Preferences {
+    close_to_tray: AtomicBool,
+}
+
+impl Preferences {
+    pub fn load(app: &AppHandle) -> Self {
+        let close_to_tray = read(app).get(CLOSE_TO_TRAY).and_then(Value::as_bool).unwrap_or(true);
+        Self { close_to_tray: AtomicBool::new(close_to_tray) }
+    }
+
+    pub fn close_to_tray(&self) -> bool {
+        self.close_to_tray.load(Ordering::Relaxed)
+    }
+
+    pub fn set_close_to_tray(&self, app: &AppHandle, enabled: bool) {
+        self.close_to_tray.store(enabled, Ordering::Relaxed);
+        write(app, CLOSE_TO_TRAY, Value::Bool(enabled));
     }
 }
