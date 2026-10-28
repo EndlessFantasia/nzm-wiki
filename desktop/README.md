@@ -35,6 +35,15 @@ $env:NZM_DESKTOP_URL = "https://nzm-wiki.com/"; pnpm desktop:dev
 
 站点页面能调用的命令只在 `capabilities/site.json` 中授权；新增命令时同时在 `build.rs` 的 `AppManifest` 和该 capability 中声明，站点侧经 `lib/desktop.ts` 调用，并容忍旧版桌面端缺少该命令。文件系统、进程等敏感能力不开放给站点。壳向站点推送状态用 DOM 自定义事件（如 `nzm-desktop:pinned-changed`），不开放 Tauri 事件权限。
 
+## 发布新版本
+
+1. 同步修改 `src-tauri/tauri.conf.json`、`src-tauri/Cargo.toml` 和 `package.json` 中的版本号并提交。
+2. 推送标签 `desktop-v<版本号>`（与 `tauri.conf.json` 不一致时工作流直接失败）。`.github/workflows/desktop-release.yml` 会构建 NSIS 安装包、签名，并连同 `latest.json` 发布为 GitHub Release；已安装的桌面端随后会收到更新。
+
+更新签名私钥在仓库外的 `%USERPROFILE%\.tauri\nzm-wiki-desktop.key`（无密码），需把文件内容配置为仓库 Secret `TAURI_SIGNING_PRIVATE_KEY`；公钥写在 `tauri.conf.json` 的 `plugins.updater.pubkey`。私钥丢失后已安装的客户端无法再验证新版本，只能手动重装，务必另行备份。签名只在发布构建中通过 `src-tauri/tauri.release.conf.json` 开启，本地 `pnpm desktop:build` 不需要私钥。
+
+Release 托管在 GitHub，国内网络下检查或下载更新可能失败，失败时设置页会提示，可稍后重试。
+
 图标源图为 `desktop/app-icon.png`（方形 PNG，建议 1024×1024）。下面的命令会裁出圆角、生成全部尺寸，并只保留 `tauri.conf.json` 引用的文件和托盘用的 `icon.png`；`build.rs` 监听 `icons/`，重新编译即可嵌入新图标：
 
 ```bash

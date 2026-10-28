@@ -1,0 +1,60 @@
+name: Desktop Release
+
+# 推送 desktop-v<版本号> 标签时构建桌面端安装包，签名后连同 latest.json 发布到 GitHub Release；
+# 已安装的桌面端通过 releases/latest/download/latest.json 检查更新
+on:
+  push:
+    tags:
+      - "desktop-v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup pnpm and Node.js
+        uses: pnpm/setup@v2
+        with:
+          runtime: node@22
+          cache: true
+          install: true
+
+      - name: Check tag matches app version
+        shell: bash
+        run: |
+          version=$(node -p "require('./desktop/src-tauri/tauri.conf.json').version")
+          if [ "${GITHUB_REF_NAME}" != "desktop-v${version}" ]; then
+            echo "标签 ${GITHUB_REF_NAME} 与 tauri.conf.json 中的版本 ${version} 不一致"
+            exit 1
+          fi
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust build
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: desktop/src-tauri
+
+      - name: Build and publish
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        with:
+          projectPath: desktop
+          tauriScript: pnpm tauri
+          # 只在发布构建中生成更新签名，本地 pnpm desktop:build 不需要私钥
+          args: --config src-tauri/tauri.release.conf.json
+          tagName: ${{ github.ref_name }}
+          releaseName: 逆战未来维基桌面端 ${{ github.ref_name }}
+          releaseBody: 安装包见下方 Assets；已安装的桌面端会自动提示更新。
+          releaseDraft: false
+          prerelease: false
+          includeUpdaterJson: true
