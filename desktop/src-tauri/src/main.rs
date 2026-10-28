@@ -2,17 +2,23 @@
 
 mod shortcuts;
 
-use std::sync::{
-    atomic::{AtomicBool, Ordering},
-    OnceLock,
+use std::{
+    borrow::Cow,
+    sync::{
+        atomic::{AtomicBool, Ordering},
+        OnceLock,
+    },
+    thread,
+    time::{Duration, Instant},
 };
 
 use serde::Serialize;
 use shortcuts::{Action, ShortcutInfo, Shortcuts};
 use tauri::{
+    http::{header::CONTENT_TYPE, Request, Response},
     menu::{CheckMenuItem, Menu, MenuItem, PredefinedMenuItem},
     tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
-    webview::NewWindowResponse,
+    webview::{NewWindowResponse, PageLoadEvent},
     AppHandle, Manager, Url, WebviewUrl, WebviewWindow, WebviewWindowBuilder, WindowEvent, Wry,
 };
 use tauri_plugin_global_shortcut::ShortcutState;
@@ -23,6 +29,17 @@ const SITE_URL: &str = "https://nzm-wiki.com/";
 const SITE_HOST: &str = "nzm-wiki.com";
 const SETTINGS_PATH: &str = "/desktop/settings";
 const MAIN_WINDOW: &str = "main";
+const SPLASH_WINDOW: &str = "splash";
+// 悬浮滚动条不占宽度，顶栏可铺满窗口；前半段是 wry 的默认参数，设置后会被覆盖，需保留。
+// 同一数据目录下的 WebView2 参数必须一致，启动画面与主窗口共用
+const BROWSER_ARGS: &str =
+    "--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection --enable-features=OverlayScrollbar";
+const SPLASH_HTML: &[u8] = include_bytes!("../splash/index.html");
+const SPLASH_AVATAR: &[u8] = include_bytes!("../icons/128x128@2x.png");
+// 站点秒开时也让动画完整播一轮；站点迟迟加载不完则到时直接显示主窗口
+const SPLASH_MIN: Duration = Duration::from_millis(1200);
+const SPLASH_TIMEOUT: Duration = Duration::from_secs(10);
+const SPLASH_FADE: Duration = Duration::from_millis(220);
 
 // 文档创建时标记桌面端，站点 CSS 据此调整滚动条等桌面专属样式，避免首屏闪烁
 const DESKTOP_INIT_SCRIPT: &str = r#"(() => {
@@ -46,6 +63,11 @@ struct SettingsState {
     version: String,
     pinned: bool,
     shortcuts: Vec<ShortcutInfo>,
+}
+
+struct Splash {
+    shown_at: Instant,
+    done: AtomicBool,
 }
 
 static SITE: OnceLock<Url> = OnceLock::new();
@@ -73,6 +95,11 @@ fn main_window(app: &AppHandle) -> Option<WebviewWindow> {
 }
 
 fn show_window(app: &AppHandle) {
+    // 启动画面期间被托盘或热键唤出时直接收起启动画面
+    app.state::<Splash>().done.store(true, Ordering::Relaxed);
+    if let Some(splash) = app.get_webview_window(SPLASH_WINDOW) {
+        let _ = splash.close();
+    }
     if let Some(window) = main_window(app) {
         let _ = window.unminimize();
         let _ = window.show();
@@ -195,6 +222,66 @@ fn default_window_size(app: &AppHandle) -> (f64, f64) {
     (width, height)
 }
 
+fn splash_protocol(request: Request<Vec<u8>>) -> Response<Cow<'static, [u8]>> {
+    let (body, mime) = match request.uri().path() {
+        "/avatar.png" => (SPLASH_AVATAR, "image/png"),
+        _ => (SPLASH_HTML, "text/html; charset=utf-8"),
+    };
+    Response::builder()
+        .header(CONTENT_TYPE, mime)
+        .body(Cow::Borrowed(body))
+        .unwrap()
+}
+
+// Windows 上的自定义协议通过 http://<scheme>.localhost 访问
+fn splash_url() -> Url {
+    let url = if cfg!(windows) { "http://splash.localhost/" } else { "splash://localhost/" };
+    url.parse().unwrap()
+}
+
+fn build_splash_window(app: &AppHandle) -> tauri::Result<()> {
+    WebviewWindowBuilder::new(app, SPLASH_WINDOW, WebviewUrl::CustomProtocol(splash_url()))
+        .title("逆战未来维基")
+        .inner_size(380.0, 260.0)
+        .center()
+        .decorations(false)
+        // 圆角卡片和阴影由页面绘制，窗口本身透明且不要系统阴影
+        .transparent(true)
+        .shadow(false)
+        .resizable(false)
+        .skip_taskbar(true)
+        .additional_browser_args(BROWSER_ARGS)
+        .build()?;
+    let app = app.clone();
+    thread::spawn(move || {
+        thread::sleep(SPLASH_TIMEOUT);
+        finish_splash(&app);
+    });
+    Ok(())
+}
+
+// 主窗口首次加载完成（或超时）后显示主窗口，启动画面淡出后关闭
+fn finish_splash(app: &AppHandle) {
+    let splash = app.state::<Splash>();
+    if splash.done.swap(true, Ordering::Relaxed) {
+        return;
+    }
+    let wait = SPLASH_MIN.saturating_sub(splash.shown_at.elapsed());
+    let app = app.clone();
+    thread::spawn(move || {
+        thread::sleep(wait);
+        if let Some(window) = main_window(&app) {
+            let _ = window.show();
+            let _ = window.set_focus();
+        }
+        if let Some(splash) = app.get_webview_window(SPLASH_WINDOW) {
+            let _ = splash.eval("document.body.classList.add('leave')");
+            thread::sleep(SPLASH_FADE);
+            let _ = splash.close();
+        }
+    });
+}
+
 fn build_main_window(app: &AppHandle) -> tauri::Result<WebviewWindow> {
     let nav_app = app.clone();
     let popup_app = app.clone();
@@ -204,13 +291,17 @@ fn build_main_window(app: &AppHandle) -> tauri::Result<WebviewWindow> {
         .inner_size(width, height)
         .min_inner_size(420.0, 480.0)
         .center()
+        // 站点加载完成前由启动画面占位
+        .visible(false)
         // 站点顶栏兼任标题栏（拖动区域与窗口按钮由站点在桌面端渲染）
         .decorations(false)
-        // 悬浮滚动条不占宽度，顶栏可铺满窗口；前半段是 wry 的默认参数，设置后会被覆盖，需保留
-        .additional_browser_args(
-            "--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection --enable-features=OverlayScrollbar",
-        )
+        .additional_browser_args(BROWSER_ARGS)
         .initialization_script(DESKTOP_INIT_SCRIPT)
+        .on_page_load(|window, payload| {
+            if payload.event() == PageLoadEvent::Finished {
+                finish_splash(window.app_handle());
+            }
+        })
         .on_navigation(move |url| match url.scheme() {
             "http" | "https" if !is_site_url(url) => {
                 open_external(&nav_app, url);
@@ -328,6 +419,7 @@ fn main() {
         }))
         .plugin(
             tauri_plugin_window_state::Builder::default()
+                .with_denylist(&[SPLASH_WINDOW])
                 // 不恢复可见性和边框：避免启动即隐藏，或旧状态把系统标题栏带回来
                 .with_state_flags(
                     StateFlags::all().difference(StateFlags::VISIBLE | StateFlags::DECORATIONS),
@@ -355,6 +447,7 @@ fn main() {
                 })
                 .build(),
         )
+        .register_uri_scheme_protocol("splash", |_ctx, request| splash_protocol(request))
         .invoke_handler(tauri::generate_handler![
             get_settings_state,
             set_pinned,
@@ -365,6 +458,11 @@ fn main() {
         .setup(|app| {
             let handle = app.handle();
             let _ = SITE.set(resolve_site_url(handle));
+            app.manage(Splash {
+                shown_at: Instant::now(),
+                done: AtomicBool::new(false),
+            });
+            build_splash_window(handle)?;
             app.manage(Shortcuts::load(handle));
             build_tray(handle)?;
             build_main_window(handle)?;

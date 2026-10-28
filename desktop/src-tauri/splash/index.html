@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>逆战未来维基</title>
+    <style>
+      :root {
+        --surface: #141516;
+        --border: rgb(255 255 255 / 0.08);
+        --foreground: #f0efed;
+        --muted: rgb(240 239 237 / 0.45);
+        --accent: #d1ac69;
+        --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+
+      html,
+      body {
+        height: 100%;
+        background: transparent;
+        overflow: hidden;
+        user-select: none;
+        cursor: default;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+        padding: 20px;
+        font-family: "Microsoft YaHei UI", "Segoe UI", system-ui, sans-serif;
+        color: var(--foreground);
+      }
+
+      .card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: radial-gradient(120% 90% at 50% 0%, rgb(209 172 105 / 0.08), transparent 60%), var(--surface);
+        box-shadow: 0 12px 32px rgb(0 0 0 / 0.45);
+        animation: card-in 420ms var(--ease-out) both;
+      }
+
+      .avatar {
+        position: relative;
+        width: 72px;
+        height: 72px;
+        animation: rise 560ms var(--ease-out) 80ms both;
+      }
+
+      .avatar img {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      .avatar::after {
+        content: "";
+        position: absolute;
+        inset: -6px;
+        border-radius: 26%;
+        box-shadow: 0 0 0 1px rgb(209 172 105 / 0.35), 0 0 24px rgb(209 172 105 / 0.18);
+        opacity: 0;
+        animation: glow 2.4s ease-in-out 700ms infinite;
+      }
+
+      h1 {
+        margin-top: 18px;
+        font-size: 17px;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        animation: rise 560ms var(--ease-out) 180ms both;
+      }
+
+      .track {
+        position: relative;
+        width: 132px;
+        height: 2px;
+        margin-top: 18px;
+        border-radius: 1px;
+        background: rgb(255 255 255 / 0.08);
+        overflow: hidden;
+        animation: fade 400ms ease 320ms both;
+      }
+
+      .track::before {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 40%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        animation: slide 1.3s ease-in-out infinite;
+      }
+
+      p {
+        margin-top: 10px;
+        font-size: 12px;
+        color: var(--muted);
+        letter-spacing: 0.04em;
+        animation: fade 400ms ease 380ms both;
+      }
+
+      body.leave .card {
+        animation: card-out 220ms ease-in both;
+      }
+
+      @keyframes card-in {
+        from {
+          opacity: 0;
+          transform: scale(0.96);
+        }
+      }
+
+      @keyframes card-out {
+        to {
+          opacity: 0;
+          transform: scale(0.98);
+        }
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+      }
+
+      @keyframes fade {
+        from {
+          opacity: 0;
+        }
+      }
+
+      @keyframes glow {
+        50% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slide {
+        from {
+          transform: translateX(-100%);
+        }
+        to {
+          transform: translateX(250%);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .card,
+        .avatar,
+        h1,
+        .track,
+        p,
+        body.leave .card {
+          animation-name: fade;
+        }
+
+        .avatar::after,
+        .track::before {
+          animation: none;
+        }
+
+        .track::before {
+          inset: 0;
+          width: auto;
+          opacity: 0.5;
+        }
+      }
+    </style>
+  </head>
+  <body oncontextmenu="return false">
+    <main class="card">
+      <div class="avatar"><img src="avatar.png" alt="" draggable="false" /></div>
+      <h1>逆战未来维基</h1>
+      <div class="track"></div>
+      <p>正在加载站点</p>
+    </main>
+  </body>
+</html>
