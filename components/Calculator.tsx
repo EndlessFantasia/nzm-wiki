@@ -1,118 +1,152 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Calculator as CalculatorIcon, Eraser, X } from "lucide-react";
+import { flushSync } from "react-dom";
+import { Calculator as CalculatorIcon, Eraser, Plus, X } from "lucide-react";
 
-// 帮助信息
-const HELP_TEXT = [
-  "支持: + - * × / ^ () % 和变量",
-  "示例: 2+3, x=10, x*2, _+1, 25%",
-  "_ 表示上次结果",
-  "变量存储公式，引用时自动重新计算",
-  "",
-  "命令: ",
-  "- 清屏: clear/cl (保留变量)",
-  "- 重置: reset (清屏+清空变量)",
-  "- 查看公式: show <变量名>",
-  "- 显示帮助: help",
-  "- 退出: exit/q",
+const STORAGE_KEY = "nzm-multiplier-calculator";
+
+type CalculatorMode = "multiplier" | "general";
+type RowsKey = "extras" | "lines";
+type ZoneCondition = "weak" | "crit" | "superCrit";
+
+interface CalculatorRow {
+  id: number;
+  label: string;
+  expr: string;
+  placeholder?: string;
+}
+
+// bonus：同乘区加算后 1 + Σ；direct：直接作为倍率
+interface ZoneDefinition {
+  id: string;
+  label: string;
+  kind: "bonus" | "direct";
+  placeholder: string;
+  defaultExpr?: string;
+  condition?: ZoneCondition;
+  note: string;
+}
+
+// 顺序与「游戏乘区」页的伤害公式一致
+const ZONES: ZoneDefinition[] = [
+  { id: "weakpoint", label: "弱点倍率", kind: "direct", placeholder: "1.8", condition: "weak", note: "武器类型自带：狙 1.8，射手/激光/弓 1.5，步冲机手 1.3，霰弹/近战 1.2，榴弹/喷射 1.1" },
+  { id: "game-mode", label: "游戏模式", kind: "bonus", placeholder: "30%", note: "猎场商店攻击力、超限猎场羁绊增伤等" },
+  { id: "dilution", label: "大稀释", kind: "bonus", placeholder: "40% 25%", note: "全伤害、武器伤害、射击/爆炸/技能伤害等，同类加算" },
+  { id: "element", label: "元素", kind: "bonus", placeholder: "5%", note: "本次伤害对应元素的增伤" },
+  { id: "weakness", label: "弱点增伤", kind: "bonus", placeholder: "50%", condition: "weak", note: "与弱点倍率独立互乘" },
+  { id: "critical", label: "暴伤", kind: "bonus", placeholder: "50%", defaultExpr: "50%", condition: "crit", note: "角色基础暴伤 50%，其余暴伤加成写在后面" },
+  { id: "super-critical", label: "会心", kind: "direct", placeholder: "2", defaultExpr: "2", condition: "superCrit", note: "暴击后触发会心，当前会心倍率为 2 倍" },
+  { id: "correction", label: "特殊修正", kind: "bonus", placeholder: "0%", note: "作用于具体伤害事件，可增可减" },
+  { id: "vulnerability", label: "易伤", kind: "bonus", placeholder: "5%", note: "目标承受伤害增加" },
+  { id: "element-vulnerability", label: "元素易伤", kind: "bonus", placeholder: "5%", note: "目标对应元素承伤增加" },
 ];
 
-// 简单的表达式解析器，支持四则运算、幂运算、公式变量和 _ 表示上一次结果
-function evaluate(
-  expr: string,
-  formulas: Record<string, string>,
-  evaluating: Set<string> = new Set(), // 正在求值的变量，用于检测循环引用
-): { value: number; error?: string } {
+const CONDITION_OPTIONS: { value: ZoneCondition; label: string }[] = [
+  { value: "weak", label: "弱点" },
+  { value: "crit", label: "暴击" },
+  { value: "superCrit", label: "会心" },
+];
+
+interface CalculatorState {
+  mode: CalculatorMode;
+  base: string;
+  zones: Record<string, string>;
+  conditions: Record<ZoneCondition, boolean>;
+  extras: CalculatorRow[];
+  lines: CalculatorRow[];
+}
+
+const DEFAULT_ZONES: Record<string, string> = Object.fromEntries(
+  ZONES.map((zone) => [zone.id, zone.defaultExpr ?? ""]),
+);
+
+const DEFAULT_CONDITIONS: Record<ZoneCondition, boolean> = {
+  weak: true,
+  crit: true,
+  superCrit: false,
+};
+
+const DEFAULT_LINES: CalculatorRow[] = [
+  { id: 1, label: "", expr: "", placeholder: "12*(1-30%)" },
+];
+
+const DEFAULT_STATE: CalculatorState = {
+  mode: "general",
+  base: "",
+  zones: DEFAULT_ZONES,
+  conditions: DEFAULT_CONDITIONS,
+  extras: [],
+  lines: DEFAULT_LINES,
+};
+
+const MODE_OPTIONS: { value: CalculatorMode; label: string }[] = [
+  { value: "general", label: "通用" },
+  { value: "multiplier", label: "乘区" },
+];
+
+// 全角字符、× ÷、千分位和省略乘号统一成可计算的表达式
+function normalize(expr: string): string {
+  return expr
+    .replace(/[！-～]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xfee0))
+    .replace(/[×xX]/g, "*")
+    .replace(/÷/g, "/")
+    .replace(/\s+/g, "")
+    .replace(/(\d),(?=\d{3}(?!\d))/g, "$1")
+    .replace(/(\d+(?:\.\d+)?)%/g, "($1/100)")
+    .replace(/\^/g, "**")
+    .replace(/\)\(/g, ")*(")
+    .replace(/(\d)\(/g, "$1*(")
+    .replace(/\)(\d)/g, ")*$1")
+    .replace(/^\*/, "");
+}
+
+function evaluate(expr: string): number | null {
+  if (!/^[\d+\-*/().]+$/.test(expr)) return null;
   try {
-    let processed = expr.trim();
-
-    // 移除尾部多余的等号
-    processed = processed.replace(/=+\s*$/, "");
-
-    // 处理百分号：25% -> 0.25
-    processed = processed.replace(/(\d+(?:\.\d+)?)\s*%/g, (_, num) => `(${parseFloat(num) / 100})`);
-
-    // 递归展开所有变量
-    // 按变量名长度降序排列，避免短变量名先匹配导致长变量名无法匹配
-    const sortedFormulas = Object.entries(formulas).sort((a, b) => b[0].length - a[0].length);
-
-    for (const [name, formula] of sortedFormulas) {
-      const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      const regex = new RegExp(
-        `(?<![a-zA-Z0-9_\u4e00-\u9fff])${escapedName}(?![a-zA-Z0-9_\u4e00-\u9fff])`,
-        "g",
-      );
-
-      if (regex.test(processed)) {
-        // 检测循环引用
-        if (evaluating.has(name)) {
-          return { value: NaN, error: `循环引用: ${name}` };
-        }
-
-        // 递归求值该变量的公式
-        const subResult = evaluate(formula, formulas, new Set([...evaluating, name]));
-        if (subResult.error) {
-          return subResult;
-        }
-
-        // 重新创建 regex（因为 test 会改变 lastIndex）
-        const replaceRegex = new RegExp(
-          `(?<![a-zA-Z0-9_\u4e00-\u9fff])${escapedName}(?![a-zA-Z0-9_\u4e00-\u9fff])`,
-          "g",
-        );
-        processed = processed.replace(replaceRegex, `(${subResult.value})`);
-      }
-    }
-
-    // 支持 × 作为乘法
-    processed = processed.replace(/×/g, "*");
-
-    // 支持 ^ 作为幂运算
-    processed = processed.replace(/\^/g, "**");
-
-    // 安全检查：只允许数字、运算符、括号、空格
-    if (!/^[\d+\-*/().%\s*]+$/.test(processed)) {
-      return { value: NaN, error: "无效表达式" };
-    }
-
-    // 使用 Function 构造器计算（比 eval 稍微安全一点）
-    const result = new Function(`return (${processed})`)();
-
-    if (typeof result !== "number" || !isFinite(result)) {
-      return { value: NaN, error: "计算错误" };
-    }
-
-    // 修正浮点精度问题（保留 10 位有效数字）
-    return { value: parseFloat(result.toPrecision(10)) };
+    const result = new Function(`return (${expr})`)();
+    return typeof result === "number" && isFinite(result) ? result : null;
   } catch {
-    return { value: NaN, error: "语法错误" };
+    return null;
   }
 }
 
-// 解析赋值语句 x = 123 或 x = 1 + 2 或 x 123（支持中文变量名）
-function parseAssignment(
-  input: string,
-): { varName: string; expr: string } | null {
-  // 标准赋值: x = 123
-  const matchEquals = input.match(/^([a-zA-Z_\u4e00-\u9fff][a-zA-Z0-9_\u4e00-\u9fff]*)\s*=\s*(.+)$/);
-  if (matchEquals) {
-    return { varName: matchEquals[1], expr: matchEquals[2] };
-  }
-  // 省略等号: x 123 (变量名后跟空格和数字/表达式)
-  const matchSpace = input.match(/^([a-zA-Z_\u4e00-\u9fff][a-zA-Z0-9_\u4e00-\u9fff]*)\s+(\d.*)$/);
-  if (matchSpace) {
-    return { varName: matchSpace[1], expr: matchSpace[2] };
-  }
-  return null;
+// bonus 乘区：30% 20% → ×1.5（空格分隔视为相加），没写 % 时整体按百分数（30 20 → ×1.5），× 开头时直接作为倍率
+function parseZone(input: string, kind: ZoneDefinition["kind"]): number | null | undefined {
+  const trimmed = input.trim();
+  if (!trimmed) return undefined;
+  if (kind === "direct" || /^[×xX*＊]/.test(trimmed)) return parseExpression(trimmed);
+  const value = parseExpression(trimmed.replace(/([\d%％)）])\s+(?=[\d.(（])/g, "$1+"));
+  if (typeof value !== "number") return value;
+  return 1 + (/[%％]/.test(trimmed) ? value : value / 100);
 }
 
-interface HistoryItem {
-  input: string;
-  output: string | string[];
-  isError: boolean;
-  isSystem?: boolean;
-  isAssignment?: boolean; // 是否是赋值语句（不显示输出）
+function parseExpression(input: string): number | null | undefined {
+  const s = normalize(input);
+  if (!s) return undefined;
+  return evaluate(s);
+}
+
+function formatNumber(value: number, maxFractionDigits: number): string {
+  return value.toLocaleString("zh-CN", { maximumFractionDigits: maxFractionDigits });
+}
+
+function loadState(): CalculatorState | null {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as Partial<CalculatorState>;
+    return {
+      mode: parsed.mode === "multiplier" ? "multiplier" : "general",
+      base: typeof parsed.base === "string" ? parsed.base : "",
+      zones: { ...DEFAULT_ZONES, ...parsed.zones },
+      conditions: { ...DEFAULT_CONDITIONS, ...parsed.conditions },
+      extras: Array.isArray(parsed.extras) ? parsed.extras : [],
+      lines: Array.isArray(parsed.lines) && parsed.lines.length > 0 ? parsed.lines : DEFAULT_LINES,
+    };
+  } catch {
+    return null;
+  }
 }
 
 interface CalculatorProps {
@@ -125,20 +159,17 @@ export function Calculator({
   onOpenChange,
 }: CalculatorProps = {}) {
   const [internalOpen, setInternalOpen] = useState(false);
-  const [input, setInput] = useState("");
-  const [history, setHistory] = useState<HistoryItem[]>([]);
-  const [formulas, setFormulas] = useState<Record<string, string>>({ _: "0" });
-  const [historyIndex, setHistoryIndex] = useState(-1);
+  const [state, setState] = useState<CalculatorState>(DEFAULT_STATE);
+  const [loaded, setLoaded] = useState(false);
   const [iconPosition, setIconPosition] = useState({ right: 16, bottom: 16 });
   const [windowPosition, setWindowPosition] = useState({ right: 16, bottom: 16 });
-  const [size, setSize] = useState({ width: 320, height: 300 });
+  const [size, setSize] = useState({ width: 340, height: 480 });
   const [isDragging, setIsDragging] = useState<false | "icon" | "window">(false);
   const [isResizing, setIsResizing] = useState<false | "nw" | "se">(false);
   const dragStartRef = useRef({ mouseX: 0, mouseY: 0, right: 0, bottom: 0 });
   const resizeStartRef = useRef({ mouseX: 0, mouseY: 0, width: 0, height: 0, right: 0, bottom: 0 });
   const hasDraggedRef = useRef(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const historyRef = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
 
   // 支持外部控制和内部控制
   const isOpen = externalOpen !== undefined ? externalOpen : internalOpen;
@@ -152,19 +183,36 @@ export function Calculator({
     [onOpenChange],
   );
 
-  // 自动滚动到底部
   useEffect(() => {
-    if (historyRef.current) {
-      historyRef.current.scrollTop = historyRef.current.scrollHeight;
-    }
-  }, [history]);
+    const restoreSavedState = () => {
+      const saved = loadState();
+      if (saved) setState(saved);
+      setLoaded(true);
+    };
+    restoreSavedState();
+  }, []);
 
-  // 打开时聚焦输入框
   useEffect(() => {
-    if (isOpen && inputRef.current) {
+    if (!loaded) return;
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch {
+      // 存储不可用时只保留当前会话
+    }
+  }, [state, loaded]);
+
+  const focusFirstValueInput = useCallback(() => {
+    setTimeout(() => {
+      bodyRef.current?.querySelector<HTMLInputElement>("input[data-value]")?.focus();
+    }, 0);
+  }, []);
+
+  // 打开时聚焦第一个输入框
+  useEffect(() => {
+    if (isOpen) {
       // 延迟聚焦，等待动画完成
       const timer = setTimeout(() => {
-        inputRef.current?.focus();
+        bodyRef.current?.querySelector<HTMLInputElement>("input[data-value]")?.focus();
       }, 100);
       return () => clearTimeout(timer);
     }
@@ -300,12 +348,12 @@ export function Calculator({
       if (isResizing === "nw") {
         // 左上角：鼠标向左/上移动增大
         newWidth = Math.max(280, Math.min(600, resizeStartRef.current.width + deltaX));
-        newHeight = Math.max(200, Math.min(500, resizeStartRef.current.height + deltaY));
+        newHeight = Math.max(240, Math.min(600, resizeStartRef.current.height + deltaY));
         setSize({ width: newWidth, height: newHeight });
       } else {
         // 右下角：鼠标向右/下移动增大
         newWidth = Math.max(280, Math.min(600, resizeStartRef.current.width - deltaX));
-        newHeight = Math.max(200, Math.min(500, resizeStartRef.current.height - deltaY));
+        newHeight = Math.max(240, Math.min(600, resizeStartRef.current.height - deltaY));
 
         // 基于初始位置计算新位置，保持右下角固定
         const widthDelta = newWidth - resizeStartRef.current.width;
@@ -332,147 +380,123 @@ export function Calculator({
     };
   }, [isResizing]);
 
-  const clearScreen = useCallback(() => {
-    setHistory([]);
-  }, []);
+  const isGeneral = state.mode === "general";
+  const rowsKey: RowsKey = isGeneral ? "lines" : "extras";
 
-  const resetAll = useCallback(() => {
-    setHistory([]);
-    setFormulas({ _: "0" });
-  }, []);
-
-  const handleSubmit = useCallback(() => {
-    const trimmed = input.trim().toLowerCase();
-    if (!trimmed) return;
-
-    // 处理命令
-    if (trimmed === "clear" || trimmed === "cl") {
-      clearScreen();
-      setInput("");
-      return;
-    }
-
-    if (trimmed === "reset") {
-      resetAll();
-      setInput("");
-      return;
-    }
-
-    if (trimmed === "help") {
-      setHistory((prev) => [
-        ...prev,
-        { input: "help", output: HELP_TEXT, isError: false, isSystem: true },
-      ]);
-      setInput("");
-      setHistoryIndex(-1);
-      return;
-    }
-
-    if (trimmed === "exit" || trimmed === "quit" || trimmed === "q") {
-      setIsOpen(false);
-      setInput("");
-      return;
-    }
-
-    // show 命令：查看公式定义
-    if (trimmed.startsWith("show ")) {
-      const varName = input.trim().slice(5).trim(); // 使用原始大小写
-      const formula = formulas[varName];
-      const showOutput = formula !== undefined
-        ? `${varName} = ${formula}`
-        : `变量 ${varName} 未定义`;
-      setHistory((prev) => [
-        ...prev,
-        { input: input.trim(), output: showOutput, isError: formula === undefined, isSystem: true },
-      ]);
-      setInput("");
-      setHistoryIndex(-1);
-      return;
-    }
-
-    // 恢复原始大小写进行计算
-    const originalInput = input.trim();
-    let output: string;
-    let isError = false;
-
-    // 检查是否是赋值语句
-    const assignment = parseAssignment(originalInput);
-    let isAssignment = false;
-
-    if (assignment) {
-      const { varName, expr } = assignment;
-      const result = evaluate(expr, formulas);
-
-      if (result.error) {
-        output = result.error;
-        isError = true;
-      } else {
-        output = String(result.value);
-        isAssignment = true; // 标记为赋值语句
-        // 存储公式字符串而非计算结果
-        setFormulas((prev) => ({
-          ...prev,
-          [varName]: expr,
-          _: String(result.value),
-        }));
-      }
-    } else {
-      const result = evaluate(originalInput, formulas);
-
-      if (result.error) {
-        output = result.error;
-        isError = true;
-      } else {
-        output = String(result.value);
-        setFormulas((prev) => ({ ...prev, _: String(result.value) }));
-      }
-    }
-
-    setHistory((prev) => [...prev, { input: originalInput, output, isError, isAssignment }]);
-    setInput("");
-    setHistoryIndex(-1);
-  }, [input, formulas, clearScreen, resetAll, setIsOpen]);
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleSubmit();
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      const inputHistory = history.filter((h) => !h.isSystem);
-      if (inputHistory.length > 0) {
-        const newIndex =
-          historyIndex === -1
-            ? inputHistory.length - 1
-            : Math.max(0, historyIndex - 1);
-        setHistoryIndex(newIndex);
-        setInput(inputHistory[newIndex].input);
-      }
-    } else if (e.key === "ArrowDown") {
-      e.preventDefault();
-      const inputHistory = history.filter((h) => !h.isSystem);
-      if (historyIndex !== -1) {
-        const newIndex = historyIndex + 1;
-        if (newIndex >= inputHistory.length) {
-          setHistoryIndex(-1);
-          setInput("");
-        } else {
-          setHistoryIndex(newIndex);
-          setInput(inputHistory[newIndex].input);
-        }
-      }
-    } else if (e.key === "Escape") {
-      setIsOpen(false);
-    }
+  const setMode = (mode: CalculatorMode) => {
+    setState((prev) => ({ ...prev, mode }));
+    focusFirstValueInput();
   };
 
-  // 获取当前定义的公式（排除 _），并计算当前值
-  const userFormulas = Object.entries(formulas)
-    .filter(([k]) => k !== "_")
-    .map(([name, formula]) => {
-      const result = evaluate(formula, formulas);
-      return { name, formula, value: result.error ? "?" : result.value };
+  const resetCurrent = () => {
+    setState((prev) =>
+      prev.mode === "general"
+        ? { ...prev, lines: DEFAULT_LINES }
+        : { ...prev, base: "", zones: DEFAULT_ZONES, conditions: DEFAULT_CONDITIONS, extras: [] },
+    );
+    focusFirstValueInput();
+  };
+
+  const setBase = (base: string) => setState((prev) => ({ ...prev, base }));
+
+  const setZone = (id: string, expr: string) =>
+    setState((prev) => ({ ...prev, zones: { ...prev.zones, [id]: expr } }));
+
+  const toggleCondition = (condition: ZoneCondition) =>
+    setState((prev) => ({
+      ...prev,
+      conditions: { ...prev.conditions, [condition]: !prev.conditions[condition] },
+    }));
+
+  const updateRow = (id: number, field: "label" | "expr", value: string) => {
+    setState((prev) => ({
+      ...prev,
+      [rowsKey]: prev[rowsKey].map((row) => (row.id === id ? { ...row, [field]: value } : row)),
+    }));
+  };
+
+  const removeRow = (id: number) => {
+    setState((prev) => {
+      const next = prev[rowsKey].filter((row) => row.id !== id);
+      return { ...prev, [rowsKey]: rowsKey === "lines" && next.length === 0 ? DEFAULT_LINES : next };
     });
+  };
+
+  const addRow = () => {
+    const id = Math.max(0, ...state[rowsKey].map((row) => row.id)) + 1;
+    const row = { id, label: isGeneral ? "" : "乘区", expr: "" };
+    // 同步提交后立即聚焦，避免连续输入落到上一行
+    flushSync(() => {
+      setState((prev) => ({ ...prev, [rowsKey]: [...prev[rowsKey], row] }));
+    });
+    const inputs = bodyRef.current?.querySelectorAll<HTMLInputElement>("input[data-value]");
+    inputs?.[inputs.length - 1]?.focus();
+  };
+
+  // Enter 跳到下一个数值框，最后一行回车新增一行
+  const handleValueKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Escape") {
+      setIsOpen(false);
+      return;
+    }
+    if (e.key !== "Enter") return;
+    e.preventDefault();
+    const inputs = Array.from(
+      bodyRef.current?.querySelectorAll<HTMLInputElement>("input[data-value]") ?? [],
+    );
+    const next = inputs[inputs.indexOf(e.currentTarget) + 1];
+    if (next) next.focus();
+    else if (isGeneral) addRow();
+  };
+
+  // 乘区模式：未触发条件的乘区按 ×1 处理
+  const baseValue = parseExpression(state.base);
+  const zoneValues = ZONES.map((zone) => ({
+    ...zone,
+    active: !zone.condition || state.conditions[zone.condition],
+    value: parseZone(state.zones[zone.id] ?? "", zone.kind),
+  }));
+  const extraValues = state.extras.map((row) => ({ ...row, value: parseZone(row.expr, "bonus") }));
+  const validFactors = [
+    ...zoneValues.filter((zone) => zone.active),
+    ...extraValues,
+  ].filter((row): row is typeof row & { value: number } => typeof row.value === "number" && row.value !== 1);
+  const totalMultiplier = validFactors.reduce((acc, row) => acc * row.value, 1);
+  const multiplierResult = typeof baseValue === "number" ? baseValue * totalMultiplier : null;
+  const multiplierFormula = [
+    ...(typeof baseValue === "number" ? [formatNumber(baseValue, 4)] : []),
+    ...validFactors.map((row) => formatNumber(row.value, 4)),
+  ].join(" × ");
+  const activeConditionLabel = CONDITION_OPTIONS.filter((option) => state.conditions[option.value])
+    .map((option) => option.label)
+    .join(" · ");
+
+  // 通用模式：_ 引用上一条有内容的结果，底部合计所有行
+  const lineValues: (CalculatorRow & { value: number | null | undefined })[] = [];
+  let previousValue: number | null | undefined;
+  for (const line of state.lines) {
+    let value: number | null | undefined;
+    if (line.expr.includes("_")) {
+      value =
+        typeof previousValue === "number"
+          ? parseExpression(line.expr.replace(/_/g, `(${previousValue})`))
+          : null;
+    } else {
+      value = parseExpression(line.expr);
+    }
+    lineValues.push({ ...line, value });
+    if (value !== undefined) previousValue = value;
+  }
+  const validLines = lineValues.filter(
+    (line): line is CalculatorRow & { value: number } => typeof line.value === "number",
+  );
+  const lineSum = validLines.reduce((acc, line) => acc + line.value, 0);
+  const sumFormula =
+    validLines.length > 1
+      ? validLines
+          .map((line) => (line.value < 0 ? `(${formatNumber(line.value, 4)})` : formatNumber(line.value, 4)))
+          .join(" + ")
+      : "";
 
   // 计算窗口的安全位置，确保在可视范围内
   const getWindowStyle = useCallback(() => {
@@ -504,6 +528,61 @@ export function Calculator({
     return { right, bottom };
   }, [windowPosition, size]);
 
+  const valueInputClass = (invalid: boolean) =>
+    `w-full min-w-0 rounded-md border bg-zinc-800 py-1.5 pl-2.5 ${isGeneral ? "pr-20" : "pr-14"} text-sm tabular-nums text-zinc-100 outline-none transition-colors placeholder:text-zinc-600 focus:border-zinc-400 ${
+      invalid ? "border-red-500/60" : "border-zinc-700"
+    }`;
+
+  const renderRow = (
+    row: CalculatorRow & { value: number | null | undefined },
+    hint: string,
+    fallbackPlaceholder: string,
+  ) => (
+    <div key={row.id} className="group flex items-center gap-2">
+      <input
+        type="text"
+        value={row.label}
+        onChange={(e) => updateRow(row.id, "label", e.target.value)}
+        className="w-16 shrink-0 rounded border border-transparent bg-transparent px-1 py-0.5 text-sm text-zinc-400 outline-none transition-colors placeholder:text-zinc-700 hover:border-zinc-700 focus:border-zinc-500 focus:text-zinc-200"
+        placeholder={isGeneral ? "备注" : undefined}
+        title="点击改名"
+        spellCheck={false}
+      />
+      <div className="relative min-w-0 flex-1">
+        <input
+          data-value
+          type="text"
+          value={row.expr}
+          onChange={(e) => updateRow(row.id, "expr", e.target.value)}
+          onKeyDown={handleValueKeyDown}
+          className={valueInputClass(row.value === null)}
+          placeholder={row.placeholder ?? fallbackPlaceholder}
+          autoComplete="off"
+          spellCheck={false}
+        />
+        <span
+          className={`pointer-events-none absolute right-2.5 top-1/2 max-w-[4.5rem] -translate-y-1/2 truncate text-xs tabular-nums ${
+            row.value === null
+              ? "text-red-400"
+              : typeof row.value === "number"
+                ? isGeneral ? "text-amber-200/80" : "text-zinc-400"
+                : "text-zinc-600"
+          }`}
+        >
+          {row.value === null ? "无法识别" : hint}
+        </span>
+      </div>
+      <button
+        type="button"
+        onClick={() => removeRow(row.id)}
+        className="flex h-6 w-6 shrink-0 items-center justify-center rounded text-zinc-600 opacity-0 outline-none transition-opacity hover:bg-zinc-800 hover:text-red-400 focus-visible:opacity-100 group-hover:opacity-100"
+        title="删除这一行"
+      >
+        <X className="h-3.5 w-3.5" />
+      </button>
+    </div>
+  );
+
   return (
     <>
       {/* 折叠按钮 - 可拖拽 */}
@@ -522,7 +601,7 @@ export function Calculator({
             onMouseDown={handleIconMouseDown}
             onClick={handleButtonClick}
             className={`flex h-12 w-12 items-center justify-center rounded-full bg-zinc-800 text-zinc-300 shadow-lg ring-1 ring-zinc-700 transition-all hover:bg-zinc-700 hover:text-white hover:scale-110 ${isDragging === "icon" ? "cursor-grabbing" : "cursor-grab"}`}
-            title="计算器 (Ctrl+Shift+P)"
+            title="计算器"
           >
             <CalculatorIcon className="h-6 w-6 pointer-events-none" />
           </div>
@@ -556,19 +635,35 @@ export function Calculator({
 
         {/* 标题栏 - 可拖拽 */}
         <div
-          className={`flex items-center justify-between border-b border-zinc-700 bg-zinc-800 px-3 py-2 ${
+          className={`flex items-center justify-between border-b border-zinc-700 bg-zinc-800 px-3 py-1.5 ${
             isDragging === "window" ? "cursor-grabbing" : "cursor-grab"
           }`}
           onMouseDown={handleWindowMouseDown}
         >
-          <span className="text-sm font-medium text-zinc-300 select-none">
-            计算器
-          </span>
+          <div
+            className="flex rounded-md bg-zinc-900/70 p-0.5 text-xs"
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            {MODE_OPTIONS.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => setMode(option.value)}
+                className={`rounded px-2.5 py-1 outline-none transition-colors focus-visible:underline ${
+                  state.mode === option.value
+                    ? "bg-zinc-700 text-zinc-100"
+                    : "text-zinc-500 hover:text-zinc-300"
+                }`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
           <div className="flex gap-1" onMouseDown={(e) => e.stopPropagation()}>
             <button
-              onClick={resetAll}
+              onClick={resetCurrent}
               className="rounded p-1 text-zinc-500 hover:bg-zinc-700 hover:text-zinc-300"
-              title="重置 (清屏+清空变量)"
+              title="清空当前页"
             >
               <Eraser className="h-4 w-4" />
             </button>
@@ -582,93 +677,158 @@ export function Calculator({
           </div>
         </div>
 
-        {/* 变量显示区 */}
-        {userFormulas.length > 0 && (
-          <div className="flex flex-wrap gap-1 border-b border-zinc-800 bg-zinc-850 px-2 py-1.5">
-            {userFormulas.map(({ name, value }) => (
-              <span
-                key={name}
-                className="rounded bg-zinc-800 px-1.5 py-0.5 text-xs text-zinc-400"
-                title={`show ${name} 查看公式`}
-              >
-                {name}={value}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {/* 历史记录 */}
-        <div
-          ref={historyRef}
-          className="flex-1 overflow-y-auto bg-zinc-950 p-2 font-mono text-sm"
-        >
-          {history.length === 0 ? (
-            <div className="text-xs text-zinc-600">
-              <p>
-                输入: <span className="text-zinc-400">help</span> 查看详细帮助
-              </p>
-              <p>支持: + - * / ^ () 和变量</p>
-              <p>注意: _ 为默认变量，表示上次计算结果</p>
-              <p>示例: 2+3, x=10, x*2, _+1, x=1</p>
-            </div>
+        {/* 输入区 */}
+        <div ref={bodyRef} className="flex-1 space-y-1.5 overflow-y-auto p-3">
+          {isGeneral ? (
+            lineValues.map((line) =>
+              renderRow(
+                line,
+                typeof line.value === "number" ? `= ${formatNumber(line.value, 4)}` : "",
+                "_ 引用上一行",
+              ),
+            )
           ) : (
-            history.map((item, i) => (
-              <div key={i} className="mb-1">
-                {item.isAssignment ? (
-                  // 赋值语句：只显示输入
-                  <div className="text-zinc-400">
-                    <span className="text-zinc-600">&gt; </span>
-                    {item.input}
-                  </div>
-                ) : item.isSystem ? (
-                  // 系统命令（如 help, show）
-                  <>
-                    <div className="text-zinc-400">
-                      <span className="text-zinc-600">&gt; </span>
-                      {item.input}
-                    </div>
-                    <div className={item.isError ? "text-red-400" : "text-zinc-500"}>
-                      {Array.isArray(item.output) ? (
-                        item.output.map((line, j) => (
-                          <div key={j}>{line || "\u00A0"}</div>
-                        ))
-                      ) : (
-                        <div>{item.output}</div>
-                      )}
-                    </div>
-                  </>
-                ) : (
-                  // 普通表达式：输入 = 结果 在同一行
-                  <div className="text-zinc-400">
-                    <span className="text-zinc-600">&gt; </span>
-                    {item.input}
-                    <span className="text-zinc-600"> = </span>
-                    <span className={item.isError ? "text-red-400" : "text-amber-200"}>
-                      {item.output}
+            <>
+              <div className="mb-2.5 flex items-center gap-1.5">
+                <span className="mr-0.5 text-xs text-zinc-500">触发</span>
+                {CONDITION_OPTIONS.map((option) => {
+                  const active = state.conditions[option.value];
+                  return (
+                    <button
+                      key={option.value}
+                      type="button"
+                      aria-pressed={active}
+                      onClick={() => toggleCondition(option.value)}
+                      className={`rounded border px-2 py-0.5 text-xs outline-none transition-colors focus-visible:underline ${
+                        active
+                          ? "border-amber-500/40 bg-amber-500/10 text-amber-200"
+                          : "border-zinc-700 text-zinc-500 hover:text-zinc-300"
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-16 shrink-0 px-1 text-sm text-zinc-300" title="武器白值 × 模式攻击力（猎场 500，塔防 400）">
+                  基础伤害
+                </span>
+                <div className="relative min-w-0 flex-1">
+                  <input
+                    data-value
+                    type="text"
+                    inputMode="decimal"
+                    value={state.base}
+                    onChange={(e) => setBase(e.target.value)}
+                    onKeyDown={handleValueKeyDown}
+                    className={valueInputClass(baseValue === null)}
+                    placeholder="0.52×500"
+                    autoComplete="off"
+                    spellCheck={false}
+                  />
+                  {typeof baseValue === "number" && (
+                    <span className="pointer-events-none absolute right-2.5 top-1/2 max-w-[4.5rem] -translate-y-1/2 truncate text-xs tabular-nums text-zinc-400">
+                      = {formatNumber(baseValue, 2)}
+                    </span>
+                  )}
+                </div>
+                <span className="w-6 shrink-0" />
+              </div>
+              {zoneValues.map((zone) => (
+                <div
+                  key={zone.id}
+                  className={`flex items-center gap-2 transition-opacity ${zone.active ? "" : "opacity-40"}`}
+                >
+                  <span className="w-16 shrink-0 cursor-help px-1 text-sm text-zinc-400" title={zone.note}>
+                    {zone.label}
+                  </span>
+                  <div className="relative min-w-0 flex-1">
+                    <input
+                      data-value
+                      type="text"
+                      value={state.zones[zone.id] ?? ""}
+                      onChange={(e) => setZone(zone.id, e.target.value)}
+                      onKeyDown={handleValueKeyDown}
+                      className={valueInputClass(zone.value === null)}
+                      placeholder={zone.placeholder}
+                      title={zone.note}
+                      autoComplete="off"
+                      spellCheck={false}
+                    />
+                    <span
+                      className={`pointer-events-none absolute right-2.5 top-1/2 max-w-[4.5rem] -translate-y-1/2 truncate text-xs tabular-nums ${
+                        zone.value === null
+                          ? "text-red-400"
+                          : typeof zone.value === "number" && zone.active
+                            ? "text-zinc-400"
+                            : "text-zinc-600"
+                      }`}
+                    >
+                      {zone.value === null
+                        ? "无法识别"
+                        : zone.active
+                          ? `×${formatNumber(typeof zone.value === "number" ? zone.value : 1, 4)}`
+                          : "未触发"}
                     </span>
                   </div>
-                )}
-              </div>
-            ))
+                  <span className="w-6 shrink-0" />
+                </div>
+              ))}
+              {extraValues.map((row) =>
+                renderRow(
+                  row,
+                  `×${formatNumber(typeof row.value === "number" ? row.value : 1, 4)}`,
+                  "20%",
+                ),
+              )}
+            </>
           )}
+
+          <button
+            type="button"
+            onClick={addRow}
+            className="ml-18 flex items-center gap-1 rounded px-1 py-1 text-xs text-zinc-500 outline-none transition-colors hover:text-zinc-300 focus-visible:underline"
+          >
+            <Plus className="h-3.5 w-3.5" />
+            {isGeneral ? "添加一行" : "自定义乘区"}
+          </button>
         </div>
 
-        {/* 输入框 */}
-        <div className="border-t border-zinc-800 bg-zinc-900 p-2">
-          <div className="flex items-center gap-2">
-            <span className="text-zinc-600">&gt;</span>
-            <input
-              ref={inputRef}
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              className="flex-1 bg-transparent font-mono text-sm text-zinc-200 outline-none placeholder:text-zinc-700"
-              placeholder="输入表达式或命令..."
-              autoComplete="off"
-              spellCheck={false}
-            />
-          </div>
+        {/* 结果 */}
+        <div className="border-t border-zinc-800 bg-zinc-950 px-3 py-2.5">
+          {isGeneral ? (
+            <>
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="text-xs text-zinc-500">
+                  {validLines.length > 1 ? `合计 · ${validLines.length} 项` : "结果"}
+                </span>
+                <span className="text-xl font-semibold tabular-nums text-amber-200">
+                  {formatNumber(lineSum, 4)}
+                </span>
+              </div>
+              <div className="mt-0.5 truncate text-right text-xs tabular-nums text-zinc-600" title={sumFormula}>
+                {sumFormula || "回车算下一行，所有行自动相加"}
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="text-xs text-zinc-500">
+                  {multiplierResult !== null ? "结果" : "总倍率"}
+                  {activeConditionLabel && ` · ${activeConditionLabel}`}
+                </span>
+                <span className="text-xl font-semibold tabular-nums text-amber-200">
+                  {multiplierResult !== null
+                    ? formatNumber(multiplierResult, 2)
+                    : `×${formatNumber(totalMultiplier, 4)}`}
+                </span>
+              </div>
+              <div className="mt-0.5 truncate text-right text-xs tabular-nums text-zinc-600" title={multiplierFormula}>
+                {multiplierFormula || "同乘区加算，% 可省略：30 20 = ×1.5"}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>

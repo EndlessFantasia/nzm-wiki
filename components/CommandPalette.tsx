@@ -329,7 +329,7 @@ export function useCommands(options: {
     commands.push({
       id: "calculator",
       name: "打开计算器",
-      description: "打开右下角的计算器工具",
+      description: "通用多行计算与乘区连乘",
       icon: <Calculator className="h-4 w-4" />,
       action: options.onOpenCalculator,
     });
