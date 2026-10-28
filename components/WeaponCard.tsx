@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Image from "next/image";
+import { Calculator as CalculatorIcon } from "lucide-react";
 import { CatalogLink } from "@/components/CatalogLink";
 import { FadeInImage } from "@/components/FadeInImage";
 import { DamageSourceMultiplierBadges } from "@/components/MultiplierBadges";
@@ -10,6 +11,11 @@ import type { ElementType } from "@/types";
 import { getAssetPath } from "@/lib/path";
 import { revealLocatedTarget } from "@/lib/locate-target";
 import { buildDamageProfile } from "@/lib/multiplier-data";
+import {
+  importToCalculator,
+  useCalculatorOpen,
+  type CalculatorImport,
+} from "@/lib/calculator-bridge";
 import {
   getHealthSettlementDefinition,
   type WeaponHealthSettlementType,
@@ -715,11 +721,13 @@ export function ModeStats({
   showName,
   compact,
   hpMultiplier = 500,
+  weaponTitle,
 }: {
   mode: ConsumerDamageSource;
   showName: boolean;
   compact?: boolean;
   hpMultiplier?: number;
+  weaponTitle?: string;
 }) {
   const rpm = getResolvedFieldValue(mode.fire.rpm);
   const interval = getResolvedFieldValue(mode.fire.interval);
@@ -801,6 +809,19 @@ export function ModeStats({
   }
 
   const healthLabel = healthDefinition?.label ?? "伤害";
+  const damageBase = getResolvedFieldValue(mode.damage.base);
+  const importPayload: CalculatorImport | undefined =
+    damageBase === undefined
+      ? undefined
+      : {
+          source: [weaponTitle, mode.name].filter(Boolean).join(" · "),
+          baseDamage: damageBase * hpMultiplier,
+          pellets: getResolvedFieldValue(mode.fire.pellets),
+          weaknessMultiplier,
+          enableWeakness,
+          enableCritical,
+        };
+  const damageImportAction = <ImportToCalculatorButton payload={importPayload} />;
   const burstCycleDuration = getBurstCycleDuration(
     subFireCount,
     interval,
@@ -883,7 +904,11 @@ export function ModeStats({
         </div>
       ) : (interval === undefined || interval === 0) && attackInterval === undefined ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-3 gap-y-1.5 text-sm">
-          <Stat label={healthLabel} value={formatDamage(mode, hpMultiplier)} />
+          <Stat
+            label={healthLabel}
+            value={formatDamage(mode, hpMultiplier)}
+            action={damageImportAction}
+          />
           <Stat label="单发破韧值" value={formatPrecise(toughness)} />
           <Stat label="弱点倍率" value={enableWeakness ? formatValue(weaknessMultiplier) : "-"} />
           <Stat
@@ -899,7 +924,11 @@ export function ModeStats({
         </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-3 gap-y-1.5 text-sm">
-          <Stat label={healthLabel} value={formatDamage(mode, hpMultiplier)} />
+          <Stat
+            label={healthLabel}
+            value={formatDamage(mode, hpMultiplier)}
+            action={damageImportAction}
+          />
           <Stat label="单发破韧值" value={formatPrecise(toughness)} />
           <Stat label="弱点倍率" value={enableWeakness ? formatValue(weaknessMultiplier) : "-"} />
           <Stat
@@ -928,12 +957,32 @@ export function ModeStats({
   );
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Stat({ label, value, action }: { label: string; value: string; action?: ReactNode }) {
   return (
     <div className="flex justify-between gap-1">
-      <span className="text-zinc-500 shrink-0">{label}</span>
+      <span className="text-zinc-500 shrink-0">
+        {label}
+        {action}
+      </span>
       <span className="text-white text-right tabular-nums">{value}</span>
     </div>
+  );
+}
+
+// 仅在浮动计算器打开时显示
+function ImportToCalculatorButton({ payload }: { payload: CalculatorImport | undefined }) {
+  const calculatorOpen = useCalculatorOpen();
+  if (!calculatorOpen || !payload) return null;
+  return (
+    <button
+      type="button"
+      onClick={() => importToCalculator(payload)}
+      title="导入计算器"
+      aria-label={`将${payload.source}导入计算器`}
+      className="ml-1 hidden h-4 w-4 items-center justify-center rounded align-[-2px] text-zinc-500 outline-none transition-colors hover:text-amber-200 focus-visible:text-amber-200 md:inline-flex"
+    >
+      <CalculatorIcon className="h-3.5 w-3.5" />
+    </button>
   );
 }
 
@@ -941,10 +990,12 @@ function SkillSection({
   modes,
   primaryModes,
   hpMultiplier = 500,
+  weaponTitle,
 }: {
   modes: readonly ConsumerDamageSource[];
   primaryModes: readonly ConsumerDamageSource[];
   hpMultiplier?: number;
+  weaponTitle?: string;
 }) {
   const [expanded, setExpanded] = useState(false);
   const collapsible = modes.length > 3;
@@ -990,6 +1041,7 @@ function SkillSection({
             showName
             compact={isVariant && !isRecovery}
             hpMultiplier={hpMultiplier}
+            weaponTitle={weaponTitle}
           />
         );
       })}
@@ -1144,6 +1196,7 @@ export function WeaponDetailCard() {
             mode={m}
             showName
             hpMultiplier={hpMul}
+            weaponTitle={weapon.title}
           />
         ))
       ) : (
@@ -1158,13 +1211,23 @@ export function WeaponDetailCard() {
           >
             {primaryModes[0]!.name}
           </h2>
-          <ModeStats mode={primaryModes[0]!} showName={false} hpMultiplier={hpMul} />
+          <ModeStats
+            mode={primaryModes[0]!}
+            showName={false}
+            hpMultiplier={hpMul}
+            weaponTitle={weapon.title}
+          />
         </div>
       )}
 
       {/* 技能 / 特殊效果 */}
       {specialModes.length > 0 && (
-        <SkillSection modes={specialModes} primaryModes={primaryModes} hpMultiplier={hpMul} />
+        <SkillSection
+          modes={specialModes}
+          primaryModes={primaryModes}
+          hpMultiplier={hpMul}
+          weaponTitle={weapon.title}
+        />
       )}
 
       {/* 武器衰减 */}

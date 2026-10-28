@@ -4,12 +4,17 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { flushSync } from "react-dom";
 import { Calculator as CalculatorIcon, ChevronDown, Eraser, Plus, X } from "lucide-react";
 import { HUNTING_GROWTH } from "@/lib/hunting-growth";
+import {
+  CALCULATOR_IMPORT_EVENT,
+  setCalculatorOpen,
+  type CalculatorImport,
+} from "@/lib/calculator-bridge";
 
 const STORAGE_KEY = "nzm-multiplier-calculator";
 
 type CalculatorMode = "multiplier" | "general";
 type RowsKey = "extras" | "lines";
-type ZoneCondition = "weak" | "crit" | "superCrit";
+type ZoneCondition = "pellets" | "weak" | "crit" | "superCrit";
 
 interface CalculatorRow {
   id: number;
@@ -31,6 +36,7 @@ interface ZoneDefinition {
 
 // 顺序与「游戏乘区」页的伤害公式一致
 const ZONES: ZoneDefinition[] = [
+  { id: "pellets", label: "弹丸", kind: "direct", placeholder: "8", condition: "pellets", note: "多弹丸武器每次射击的弹丸数，全部命中时启用" },
   { id: "weakpoint", label: "弱点倍率", kind: "direct", placeholder: "1.8", condition: "weak", note: "武器类型自带：狙 1.8，射手/激光/弓 1.5，步冲机手 1.3，霰弹/近战 1.2，榴弹/喷射 1.1" },
   { id: "game-mode", label: "游戏模式", kind: "bonus", placeholder: "30%", note: "右侧选猎场商店攻击力等级；输入框填超限羁绊等其他加成，两者相加" },
   { id: "dilution", label: "大稀释", kind: "bonus", placeholder: "40% 25%", note: "全伤害、武器伤害、射击/爆炸/技能伤害等，同类加算" },
@@ -44,6 +50,7 @@ const ZONES: ZoneDefinition[] = [
 ];
 
 const CONDITION_OPTIONS: { value: ZoneCondition; label: string }[] = [
+  { value: "pellets", label: "弹丸" },
   { value: "weak", label: "弱点" },
   { value: "crit", label: "暴击" },
   { value: "superCrit", label: "会心" },
@@ -52,6 +59,7 @@ const CONDITION_OPTIONS: { value: ZoneCondition; label: string }[] = [
 interface CalculatorState {
   mode: CalculatorMode;
   base: string;
+  source: string;
   zones: Record<string, string>;
   conditions: Record<ZoneCondition, boolean>;
   shopAttackLevel: number;
@@ -64,6 +72,7 @@ const DEFAULT_ZONES: Record<string, string> = Object.fromEntries(
 );
 
 const DEFAULT_CONDITIONS: Record<ZoneCondition, boolean> = {
+  pellets: false,
   weak: true,
   crit: true,
   superCrit: false,
@@ -80,9 +89,19 @@ function formatShopAttack(bonus: number): string {
   return bonus > 0 ? `+${Math.round(bonus * 100)}%` : "0%";
 }
 
+// 弹丸乘区只在导入多弹丸来源或已有内容时显示
+function isZoneVisible(zoneId: string, zones: Record<string, string>): boolean {
+  return zoneId !== "pellets" || Boolean(zones.pellets?.trim());
+}
+
+function formatImportNumber(value: number): string {
+  return String(Number(value.toFixed(4)));
+}
+
 const DEFAULT_STATE: CalculatorState = {
   mode: "general",
   base: "",
+  source: "",
   zones: DEFAULT_ZONES,
   conditions: DEFAULT_CONDITIONS,
   shopAttackLevel: 0,
@@ -152,6 +171,7 @@ function loadState(): CalculatorState | null {
     return {
       mode: parsed.mode === "multiplier" ? "multiplier" : "general",
       base: typeof parsed.base === "string" ? parsed.base : "",
+      source: typeof parsed.source === "string" ? parsed.source : "",
       zones,
       conditions: { ...DEFAULT_CONDITIONS, ...parsed.conditions },
       shopAttackLevel: SHOP_ATTACK.rows.some((row) => row.level === parsed.shopAttackLevel)
@@ -218,6 +238,41 @@ export function Calculator({
       // 存储不可用时只保留当前会话
     }
   }, [state, loaded]);
+
+  useEffect(() => {
+    setCalculatorOpen(isOpen);
+  }, [isOpen]);
+
+  // 页面导入伤害来源：替换武器相关字段，保留其他乘区
+  useEffect(() => {
+    const handleImport = (event: Event) => {
+      const data = (event as CustomEvent<CalculatorImport>).detail;
+      setState((prev) => ({
+        ...prev,
+        mode: "multiplier",
+        base: formatImportNumber(data.baseDamage),
+        source: data.source,
+        zones: {
+          ...prev.zones,
+          pellets: data.pellets && data.pellets > 1 ? String(data.pellets) : "",
+          weakpoint:
+            data.enableWeakness && data.weaknessMultiplier !== undefined
+              ? formatImportNumber(data.weaknessMultiplier)
+              : "",
+        },
+        conditions: {
+          ...prev.conditions,
+          pellets: false,
+          weak: data.enableWeakness,
+          crit: data.enableCritical,
+          superCrit: data.enableCritical && prev.conditions.superCrit,
+        },
+      }));
+      setIsOpen(true);
+    };
+    window.addEventListener(CALCULATOR_IMPORT_EVENT, handleImport);
+    return () => window.removeEventListener(CALCULATOR_IMPORT_EVENT, handleImport);
+  }, [setIsOpen]);
 
   const focusFirstValueInput = useCallback(() => {
     setTimeout(() => {
@@ -413,6 +468,7 @@ export function Calculator({
         : {
             ...prev,
             base: "",
+            source: "",
             zones: DEFAULT_ZONES,
             conditions: DEFAULT_CONDITIONS,
             shopAttackLevel: 0,
@@ -422,7 +478,7 @@ export function Calculator({
     focusFirstValueInput();
   };
 
-  const setBase = (base: string) => setState((prev) => ({ ...prev, base }));
+  const setBase = (base: string) => setState((prev) => ({ ...prev, base, source: "" }));
 
   const setZone = (id: string, expr: string) =>
     setState((prev) => ({ ...prev, zones: { ...prev.zones, [id]: expr } }));
@@ -749,7 +805,7 @@ export function Calculator({
             <>
               <div className="mb-2.5 flex items-center gap-1.5">
                 <span className="mr-0.5 text-xs text-zinc-500">触发</span>
-                {CONDITION_OPTIONS.map((option) => {
+                {CONDITION_OPTIONS.filter((option) => isZoneVisible(option.value, state.zones)).map((option) => {
                   const active = state.conditions[option.value];
                   return (
                     <button
@@ -793,7 +849,12 @@ export function Calculator({
                 </div>
                 <span className="w-6 shrink-0" />
               </div>
-              {zoneValues.map((zone) => (
+              {state.source && (
+                <p className="-mt-0.5 truncate pl-18 text-xs text-zinc-500" title={state.source}>
+                  来自 {state.source}
+                </p>
+              )}
+              {zoneValues.filter((zone) => isZoneVisible(zone.id, state.zones)).map((zone) => (
                 <div
                   key={zone.id}
                   className={`flex items-center gap-2 transition-opacity ${zone.active ? "" : "opacity-40"}`}
