@@ -39,6 +39,7 @@ const ZONES: ZoneDefinition[] = [
   { id: "pellets", label: "弹丸", kind: "direct", placeholder: "8", condition: "pellets", note: "多弹丸武器每次射击的弹丸数，全部命中时启用" },
   { id: "weakpoint", label: "弱点倍率", kind: "direct", placeholder: "1.8", condition: "weak", note: "武器类型自带：狙 1.8，射手/激光/弓 1.5，步冲机手 1.3，霰弹/近战 1.2，榴弹/喷射 1.1" },
   { id: "game-mode", label: "游戏模式", kind: "bonus", placeholder: "30%", note: "右侧选猎场商店攻击力等级；输入框填超限羁绊等其他加成，两者相加" },
+  { id: "attack", label: "攻击力", kind: "bonus", placeholder: "10%", note: "攻击力增幅，通过攻击属性倍率独立参与伤害结算" },
   { id: "dilution", label: "大稀释", kind: "bonus", placeholder: "40% 25%", note: "全伤害、武器伤害、射击/爆炸/技能伤害等，同类加算" },
   { id: "element", label: "元素", kind: "bonus", placeholder: "5%", note: "本次伤害对应元素的增伤" },
   { id: "weakness", label: "弱点增伤", kind: "bonus", placeholder: "50%", condition: "weak", note: "与弱点倍率独立互乘" },
