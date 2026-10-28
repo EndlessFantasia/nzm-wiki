@@ -58,3 +58,5 @@ jobs:
           releaseDraft: false
           prerelease: false
           includeUpdaterJson: true
+          # 产品名是中文，GitHub 会把上传文件名里的非 ASCII 字符替换掉，导致 tauri-action 找不到资源而跳过 latest.json
+          assetNamePattern: nzm-wiki-desktop_[version]_[arch][setup][ext]
