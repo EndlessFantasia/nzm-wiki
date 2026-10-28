@@ -14,6 +14,7 @@ import DesktopSettingsButton from "@/components/DesktopSettingsButton";
 import DesktopUpdateNotice from "@/components/DesktopUpdateNotice";
 import DesktopWindowControls from "@/components/DesktopWindowControls";
 import { canReturnToCatalog } from "@/lib/catalog-navigation";
+import { DESKTOP_CALCULATOR_PATH } from "@/lib/desktop";
 import { getAssetPath } from "@/lib/path";
 import {
   resolveSiteNavigation,
@@ -409,6 +410,9 @@ function SiteShellContent({ children }: { children: React.ReactNode }) {
 }
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  // 桌面端独立计算器窗口不需要顶栏和侧栏
+  if (pathname === DESKTOP_CALCULATOR_PATH) return children;
   return (
     <BossDifficultyProvider>
       <SiteShellContent>{children}</SiteShellContent>

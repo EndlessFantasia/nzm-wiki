@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { DESKTOP_CALCULATOR_PATH } from "@/lib/desktop";
 
 export default function PagesLayout({
   children,
@@ -18,6 +19,8 @@ export default function PagesLayout({
     pathname === "/season-talents" ||
     pathname === "/builds" ||
     pathname === "/posts";
+
+  if (pathname === DESKTOP_CALCULATOR_PATH) return children;
 
   return (
     <div

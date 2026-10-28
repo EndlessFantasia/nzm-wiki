@@ -3,12 +3,16 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { flushSync } from "react-dom";
 import { Calculator as CalculatorIcon, ChevronDown, Eraser, Plus, X } from "lucide-react";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
 import { HUNTING_GROWTH } from "@/lib/hunting-growth";
 import {
+  CALCULATOR_CHANNEL,
   CALCULATOR_IMPORT_EVENT,
+  CALCULATOR_OPEN_EVENT,
   setCalculatorOpen,
   type CalculatorImport,
 } from "@/lib/calculator-bridge";
+import { DESKTOP_CALCULATOR_EVENT, invokeDesktop } from "@/lib/desktop";
 
 const STORAGE_KEY = "nzm-multiplier-calculator";
 
@@ -186,41 +190,26 @@ function loadState(): CalculatorState | null {
   }
 }
 
-interface CalculatorProps {
-  externalOpen?: boolean;
-  onOpenChange?: (open: boolean) => void;
+interface CalculatorPanelProps {
+  // 变为 true 时聚焦第一个输入框
+  active: boolean;
+  onClose: () => void;
+  // 站内浮窗传入拖动处理；不传时标题栏作为桌面端独立窗口的拖动区域
+  onHeaderMouseDown?: (e: React.MouseEvent) => void;
+  headerClassName?: string;
 }
 
-export function Calculator({
-  externalOpen,
-  onOpenChange,
-}: CalculatorProps = {}) {
-  const [internalOpen, setInternalOpen] = useState(false);
+export function CalculatorPanel({
+  active,
+  onClose,
+  onHeaderMouseDown,
+  headerClassName = "",
+}: CalculatorPanelProps) {
   const [state, setState] = useState<CalculatorState>(DEFAULT_STATE);
   const [loaded, setLoaded] = useState(false);
-  const [iconPosition, setIconPosition] = useState({ right: 16, bottom: 16 });
-  const [windowPosition, setWindowPosition] = useState({ right: 16, bottom: 16 });
-  const [size, setSize] = useState({ width: 380, height: 480 });
-  const [isDragging, setIsDragging] = useState<false | "icon" | "window">(false);
-  const [isResizing, setIsResizing] = useState<false | "nw" | "se">(false);
-  const dragStartRef = useRef({ mouseX: 0, mouseY: 0, right: 0, bottom: 0 });
-  const resizeStartRef = useRef({ mouseX: 0, mouseY: 0, width: 0, height: 0, right: 0, bottom: 0 });
-  const hasDraggedRef = useRef(false);
   const bodyRef = useRef<HTMLDivElement>(null);
   const [shopMenuOpen, setShopMenuOpen] = useState(false);
   const shopMenuRef = useRef<HTMLDivElement>(null);
-
-  // 支持外部控制和内部控制
-  const isOpen = externalOpen !== undefined ? externalOpen : internalOpen;
-  const setIsOpen = useCallback(
-    (open: boolean) => {
-      if (onOpenChange) {
-        onOpenChange(open);
-      }
-      setInternalOpen(open);
-    },
-    [onOpenChange],
-  );
 
   useEffect(() => {
     const restoreSavedState = () => {
@@ -239,10 +228,6 @@ export function Calculator({
       // 存储不可用时只保留当前会话
     }
   }, [state, loaded]);
-
-  useEffect(() => {
-    setCalculatorOpen(isOpen);
-  }, [isOpen]);
 
   // 页面导入伤害来源：替换武器相关字段，保留其他乘区
   useEffect(() => {
@@ -269,11 +254,10 @@ export function Calculator({
           superCrit: data.enableCritical && prev.conditions.superCrit,
         },
       }));
-      setIsOpen(true);
     };
     window.addEventListener(CALCULATOR_IMPORT_EVENT, handleImport);
     return () => window.removeEventListener(CALCULATOR_IMPORT_EVENT, handleImport);
-  }, [setIsOpen]);
+  }, []);
 
   const focusFirstValueInput = useCallback(() => {
     setTimeout(() => {
@@ -283,176 +267,14 @@ export function Calculator({
 
   // 打开时聚焦第一个输入框
   useEffect(() => {
-    if (isOpen) {
+    if (active) {
       // 延迟聚焦，等待动画完成
       const timer = setTimeout(() => {
         bodyRef.current?.querySelector<HTMLInputElement>("input[data-value]")?.focus();
       }, 100);
       return () => clearTimeout(timer);
     }
-  }, [isOpen]);
-
-  // Icon 拖拽开始
-  const handleIconMouseDown = useCallback(
-    (e: React.MouseEvent) => {
-      e.preventDefault();
-      hasDraggedRef.current = false;
-      dragStartRef.current = {
-        mouseX: e.clientX,
-        mouseY: e.clientY,
-        right: iconPosition.right,
-        bottom: iconPosition.bottom,
-      };
-      setIsDragging("icon");
-    },
-    [iconPosition],
-  );
-
-  // 窗口拖拽开始
-  const handleWindowMouseDown = useCallback(
-    (e: React.MouseEvent) => {
-      e.preventDefault();
-      dragStartRef.current = {
-        mouseX: e.clientX,
-        mouseY: e.clientY,
-        right: windowPosition.right,
-        bottom: windowPosition.bottom,
-      };
-      setIsDragging("window");
-    },
-    [windowPosition],
-  );
-
-  // 拖拽移动和结束
-  useEffect(() => {
-    if (!isDragging) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const deltaX = dragStartRef.current.mouseX - e.clientX;
-      const deltaY = dragStartRef.current.mouseY - e.clientY;
-
-      // 如果移动超过 5px，标记为拖拽（仅对 icon 有意义）
-      if (Math.abs(deltaX) > 5 || Math.abs(deltaY) > 5) {
-        hasDraggedRef.current = true;
-      }
-
-      const newRight = Math.max(
-        0,
-        Math.min(window.innerWidth - 60, dragStartRef.current.right + deltaX),
-      );
-      const newBottom = Math.max(
-        0,
-        Math.min(window.innerHeight - 60, dragStartRef.current.bottom + deltaY),
-      );
-
-      if (isDragging === "icon") {
-        setIconPosition({ right: newRight, bottom: newBottom });
-      } else {
-        setWindowPosition({ right: newRight, bottom: newBottom });
-      }
-    };
-
-    const handleMouseUp = () => {
-      setIsDragging(false);
-    };
-
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [isDragging]);
-
-  // 处理点击打开（区分拖拽和点击）
-  const handleButtonClick = useCallback(() => {
-    if (!hasDraggedRef.current) {
-      setIsOpen(true);
-    }
-  }, [setIsOpen]);
-
-  // 调整大小开始（左上角）
-  const handleResizeNWMouseDown = useCallback(
-    (e: React.MouseEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-      resizeStartRef.current = {
-        mouseX: e.clientX,
-        mouseY: e.clientY,
-        width: size.width,
-        height: size.height,
-        right: windowPosition.right,
-        bottom: windowPosition.bottom,
-      };
-      setIsResizing("nw");
-    },
-    [size, windowPosition],
-  );
-
-  // 调整大小开始（右下角）
-  const handleResizeSEMouseDown = useCallback(
-    (e: React.MouseEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-      resizeStartRef.current = {
-        mouseX: e.clientX,
-        mouseY: e.clientY,
-        width: size.width,
-        height: size.height,
-        right: windowPosition.right,
-        bottom: windowPosition.bottom,
-      };
-      setIsResizing("se");
-    },
-    [size, windowPosition],
-  );
-
-  // 调整大小移动和结束
-  useEffect(() => {
-    if (!isResizing) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const deltaX = resizeStartRef.current.mouseX - e.clientX;
-      const deltaY = resizeStartRef.current.mouseY - e.clientY;
-
-      let newWidth: number;
-      let newHeight: number;
-
-      if (isResizing === "nw") {
-        // 左上角：鼠标向左/上移动增大
-        newWidth = Math.max(280, Math.min(600, resizeStartRef.current.width + deltaX));
-        newHeight = Math.max(240, Math.min(600, resizeStartRef.current.height + deltaY));
-        setSize({ width: newWidth, height: newHeight });
-      } else {
-        // 右下角：鼠标向右/下移动增大
-        newWidth = Math.max(280, Math.min(600, resizeStartRef.current.width - deltaX));
-        newHeight = Math.max(240, Math.min(600, resizeStartRef.current.height - deltaY));
-
-        // 基于初始位置计算新位置，保持右下角固定
-        const widthDelta = newWidth - resizeStartRef.current.width;
-        const heightDelta = newHeight - resizeStartRef.current.height;
-
-        setSize({ width: newWidth, height: newHeight });
-        setWindowPosition({
-          right: Math.max(16, resizeStartRef.current.right - widthDelta),
-          bottom: Math.max(16, resizeStartRef.current.bottom - heightDelta),
-        });
-      }
-    };
-
-    const handleMouseUp = () => {
-      setIsResizing(false);
-    };
-
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [isResizing]);
+  }, [active]);
 
   const isGeneral = state.mode === "general";
   const rowsKey: RowsKey = isGeneral ? "lines" : "extras";
@@ -543,7 +365,7 @@ export function Calculator({
   // Enter 跳到下一个数值框，最后一行回车新增一行
   const handleValueKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Escape") {
-      setIsOpen(false);
+      onClose();
       return;
     }
     if (e.key !== "Enter") return;
@@ -613,35 +435,6 @@ export function Calculator({
           .join(" + ")
       : "";
 
-  // 计算窗口的安全位置，确保在可视范围内
-  const getWindowStyle = useCallback(() => {
-    if (typeof window === "undefined") {
-      return { right: windowPosition.right, bottom: windowPosition.bottom };
-    }
-
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-
-    // 计算窗口右下角的位置
-    let right = windowPosition.right;
-    let bottom = windowPosition.bottom;
-
-    // 确保窗口不会超出左边界
-    if (right > viewportWidth - size.width) {
-      right = viewportWidth - size.width - 16;
-    }
-
-    // 确保窗口不会超出上边界
-    if (bottom > viewportHeight - size.height) {
-      bottom = viewportHeight - size.height - 16;
-    }
-
-    // 确保不小于 0
-    right = Math.max(16, right);
-    bottom = Math.max(16, bottom);
-
-    return { right, bottom };
-  }, [windowPosition, size]);
 
   const valueInputClass = (invalid: boolean) =>
     `w-full min-w-0 rounded-md border bg-zinc-800 py-1.5 pl-2.5 ${isGeneral ? "pr-20" : "pr-14"} text-sm tabular-nums text-zinc-100 outline-none transition-colors placeholder:text-zinc-600 focus:border-zinc-400 ${
@@ -700,6 +493,519 @@ export function Calculator({
 
   return (
     <>
+    {/* 标题栏 - 可拖拽 */}
+    <div
+      className={`flex items-center justify-between border-b border-zinc-700 bg-zinc-800 px-3 py-1.5 ${headerClassName}`}
+      onMouseDown={onHeaderMouseDown}
+      data-tauri-drag-region={onHeaderMouseDown ? undefined : ""}
+    >
+      <div
+        className="flex rounded-md bg-zinc-900/70 p-0.5 text-xs"
+        onMouseDown={(e) => e.stopPropagation()}
+      >
+        {MODE_OPTIONS.map((option) => (
+          <button
+            key={option.value}
+            type="button"
+            onClick={() => setMode(option.value)}
+            className={`rounded px-2.5 py-1 outline-none transition-colors focus-visible:underline ${
+              state.mode === option.value
+                ? "bg-zinc-700 text-zinc-100"
+                : "text-zinc-500 hover:text-zinc-300"
+            }`}
+          >
+            {option.label}
+          </button>
+        ))}
+      </div>
+      <div className="flex gap-1" onMouseDown={(e) => e.stopPropagation()}>
+        <button
+          onClick={resetCurrent}
+          className="rounded p-1 text-zinc-500 hover:bg-zinc-700 hover:text-zinc-300"
+          title="清空当前页"
+        >
+          <Eraser className="h-4 w-4" />
+        </button>
+        <button
+          onClick={onClose}
+          className="rounded p-1 text-zinc-500 hover:bg-zinc-700 hover:text-zinc-300"
+          title="关闭 (Esc)"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      </div>
+    </div>
+
+    {/* 输入区 */}
+    <div ref={bodyRef} className="flex-1 space-y-1.5 overflow-y-auto p-3">
+      {isGeneral ? (
+        lineValues.map((line) =>
+          renderRow(
+            line,
+            typeof line.value === "number" ? `= ${formatNumber(line.value, 4)}` : "",
+            "_ 引用上一行",
+          ),
+        )
+      ) : (
+        <>
+          <div className="mb-2.5 flex items-center gap-1.5">
+            <span className="mr-0.5 text-xs text-zinc-500">触发</span>
+            {CONDITION_OPTIONS.filter((option) => isZoneVisible(option.value, state.zones)).map((option) => {
+              const active = state.conditions[option.value];
+              return (
+                <button
+                  key={option.value}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => toggleCondition(option.value)}
+                  className={`rounded border px-2 py-0.5 text-xs outline-none transition-colors focus-visible:underline ${
+                    active
+                      ? "border-amber-500/40 bg-amber-500/10 text-amber-200"
+                      : "border-zinc-700 text-zinc-500 hover:text-zinc-300"
+                  }`}
+                >
+                  {option.label}
+                </button>
+              );
+            })}
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-16 shrink-0 px-1 text-sm text-zinc-300" title="武器白值 × 模式攻击力（猎场 500，塔防 400）">
+              基础伤害
+            </span>
+            <div className="relative min-w-0 flex-1">
+              <input
+                data-value
+                type="text"
+                inputMode="decimal"
+                value={state.base}
+                onChange={(e) => setBase(e.target.value)}
+                onKeyDown={handleValueKeyDown}
+                className={valueInputClass(baseValue === null)}
+                placeholder="0.52×500"
+                autoComplete="off"
+                spellCheck={false}
+              />
+              {typeof baseValue === "number" && (
+                <span className="pointer-events-none absolute right-2.5 top-1/2 max-w-[4.5rem] -translate-y-1/2 truncate text-xs tabular-nums text-zinc-400">
+                  = {formatNumber(baseValue, 2)}
+                </span>
+              )}
+            </div>
+            <span className="w-6 shrink-0" />
+          </div>
+          {state.source && (
+            <p className="-mt-0.5 truncate pl-18 text-xs text-zinc-500" title={state.source}>
+              来自 {state.source}
+            </p>
+          )}
+          {zoneValues.filter((zone) => isZoneVisible(zone.id, state.zones)).map((zone) => (
+            <div
+              key={zone.id}
+              className={`flex items-center gap-2 transition-opacity ${zone.active ? "" : "opacity-40"}`}
+            >
+              <span className="w-16 shrink-0 cursor-help px-1 text-sm text-zinc-400" title={zone.note}>
+                {zone.label}
+              </span>
+              <div className="relative min-w-0 flex-1">
+                <input
+                  data-value
+                  type="text"
+                  value={state.zones[zone.id] ?? ""}
+                  onChange={(e) => setZone(zone.id, e.target.value)}
+                  onKeyDown={handleValueKeyDown}
+                  className={valueInputClass(zone.value === null)}
+                  placeholder={zone.placeholder}
+                  title={zone.note}
+                  autoComplete="off"
+                  spellCheck={false}
+                />
+                <span
+                  className={`pointer-events-none absolute right-2.5 top-1/2 max-w-[4.5rem] -translate-y-1/2 truncate text-xs tabular-nums ${
+                    zone.value === null
+                      ? "text-red-400"
+                      : typeof zone.value === "number" && zone.active
+                        ? "text-zinc-400"
+                        : "text-zinc-600"
+                  }`}
+                >
+                  {zone.value === null
+                    ? "无法识别"
+                    : zone.active
+                      ? `×${formatNumber(typeof zone.value === "number" ? zone.value : 1, 4)}`
+                      : "未触发"}
+                </span>
+              </div>
+              {zone.id === "game-mode" ? (
+                <div ref={shopMenuRef} className="relative flex shrink-0 items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setShopMenuOpen((open) => !open)}
+                    aria-haspopup="listbox"
+                    aria-expanded={shopMenuOpen}
+                    title="猎场商店攻击力"
+                    className={`h-[34px] w-20 rounded-md border bg-zinc-800 px-2 text-sm tabular-nums outline-none transition-colors hover:border-zinc-500 focus-visible:underline ${
+                      shopMenuOpen ? "border-zinc-500" : "border-zinc-700"
+                    } ${state.shopAttackLevel > 0 ? "font-semibold text-zinc-100" : "text-zinc-600"}`}
+                  >
+                    {formatShopAttack(shopAttackBonus)}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShopMenuOpen((open) => !open)}
+                    tabIndex={-1}
+                    aria-hidden="true"
+                    className="flex h-6 w-6 items-center justify-center rounded text-zinc-500 transition-colors hover:text-zinc-200"
+                  >
+                    <ChevronDown
+                      className={`h-4 w-4 transition-transform ${shopMenuOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                  {shopMenuOpen && (
+                    <div
+                      role="listbox"
+                      aria-label="猎场商店攻击力"
+                      className="absolute right-8 top-full z-20 mt-1 max-h-52 w-20 overflow-y-auto rounded-md border border-zinc-700 bg-zinc-800 py-1 shadow-xl"
+                    >
+                      {SHOP_ATTACK.rows.map((row) => {
+                        const selected = row.level === state.shopAttackLevel;
+                        return (
+                          <button
+                            key={row.level}
+                            type="button"
+                            role="option"
+                            aria-selected={selected}
+                            onClick={() => setShopAttackLevel(row.level)}
+                            className={`block w-full px-2 py-1 text-center text-sm tabular-nums outline-none transition-colors focus-visible:underline ${
+                              selected
+                                ? "bg-zinc-700 text-zinc-100"
+                                : "text-zinc-400 hover:bg-zinc-700/50 hover:text-zinc-200"
+                            }`}
+                          >
+                            {formatShopAttack(row.bonus)}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <span className="w-6 shrink-0" />
+              )}
+            </div>
+          ))}
+          {extraValues.map((row) =>
+            renderRow(
+              row,
+              `×${formatNumber(typeof row.value === "number" ? row.value : 1, 4)}`,
+              "20%",
+            ),
+          )}
+        </>
+      )}
+
+      <button
+        type="button"
+        onClick={addRow}
+        className="ml-18 flex items-center gap-1 rounded px-1 py-1 text-xs text-zinc-500 outline-none transition-colors hover:text-zinc-300 focus-visible:underline"
+      >
+        <Plus className="h-3.5 w-3.5" />
+        {isGeneral ? "添加一行" : "自定义乘区"}
+      </button>
+    </div>
+
+    {/* 结果 */}
+    <div className="border-t border-zinc-800 bg-zinc-950 px-3 py-2.5">
+      {isGeneral ? (
+        <>
+          <div className="flex items-baseline justify-between gap-3">
+            <span className="text-xs text-zinc-500">
+              {validLines.length > 1 ? `合计 · ${validLines.length} 项` : "结果"}
+            </span>
+            <span className="text-xl font-semibold tabular-nums text-amber-200">
+              {formatNumber(lineSum, 4)}
+            </span>
+          </div>
+          <div className="mt-0.5 truncate text-right text-xs tabular-nums text-zinc-600" title={sumFormula}>
+            {sumFormula || "回车算下一行，所有行自动相加"}
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="flex items-baseline justify-between gap-3">
+            <span className="text-xs text-zinc-500">
+              {multiplierResult !== null ? "结果" : "总倍率"}
+              {activeConditionLabel && ` · ${activeConditionLabel}`}
+            </span>
+            <span className="text-xl font-semibold tabular-nums text-amber-200">
+              {multiplierResult !== null
+                ? formatNumber(multiplierResult, 2)
+                : `×${formatNumber(totalMultiplier, 4)}`}
+            </span>
+          </div>
+          <div className="mt-0.5 truncate text-right text-xs tabular-nums text-zinc-600" title={multiplierFormula}>
+            {multiplierFormula || "同乘区加算，% 可省略：30 20 = ×1.5"}
+          </div>
+        </>
+      )}
+    </div>
+    </>
+  );
+}
+
+export function Calculator() {
+  const isDesktop = useIsDesktop();
+  const [nativeUnavailable, setNativeUnavailable] = useState(false);
+  // 桌面端使用壳提供的独立置顶窗口，主窗口隐藏到托盘后仍可浮在游戏上
+  const native = isDesktop && !nativeUnavailable;
+  const [isOpen, setIsOpen] = useState(false);
+  const [iconPosition, setIconPosition] = useState({ right: 16, bottom: 16 });
+  const [windowPosition, setWindowPosition] = useState({ right: 16, bottom: 16 });
+  const [size, setSize] = useState({ width: 380, height: 480 });
+  const [isDragging, setIsDragging] = useState<false | "icon" | "window">(false);
+  const [isResizing, setIsResizing] = useState<false | "nw" | "se">(false);
+  const dragStartRef = useRef({ mouseX: 0, mouseY: 0, right: 0, bottom: 0 });
+  const resizeStartRef = useRef({ mouseX: 0, mouseY: 0, width: 0, height: 0, right: 0, bottom: 0 });
+  const hasDraggedRef = useRef(false);
+
+  const open = useCallback(() => {
+    if (!native) {
+      setIsOpen(true);
+      return;
+    }
+    // 旧版桌面端没有独立计算器窗口，退回站内浮窗
+    invokeDesktop("open_calculator").catch(() => {
+      setNativeUnavailable(true);
+      setIsOpen(true);
+    });
+  }, [native]);
+
+  useEffect(() => {
+    window.addEventListener(CALCULATOR_OPEN_EVENT, open);
+    return () => window.removeEventListener(CALCULATOR_OPEN_EVENT, open);
+  }, [open]);
+
+  // 站内浮窗由面板自己应用导入，这里只负责打开；桌面端转发给独立窗口
+  useEffect(() => {
+    const handleImport = (event: Event) => {
+      if (native) {
+        const channel = new BroadcastChannel(CALCULATOR_CHANNEL);
+        channel.postMessage((event as CustomEvent<CalculatorImport>).detail);
+        channel.close();
+      }
+      open();
+    };
+    window.addEventListener(CALCULATOR_IMPORT_EVENT, handleImport);
+    return () => window.removeEventListener(CALCULATOR_IMPORT_EVENT, handleImport);
+  }, [native, open]);
+
+  useEffect(() => {
+    if (!native) setCalculatorOpen(isOpen);
+  }, [isOpen, native]);
+
+  // 独立窗口的显示状态由壳推送给主窗口
+  useEffect(() => {
+    if (!native) return;
+    const sync = (event: Event) => setCalculatorOpen((event as CustomEvent<boolean>).detail);
+    window.addEventListener(DESKTOP_CALCULATOR_EVENT, sync);
+    invokeDesktop<boolean>("get_calculator_visible").then(setCalculatorOpen).catch(() => {});
+    return () => window.removeEventListener(DESKTOP_CALCULATOR_EVENT, sync);
+  }, [native]);
+
+  // Icon 拖拽开始
+  const handleIconMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      hasDraggedRef.current = false;
+      dragStartRef.current = {
+        mouseX: e.clientX,
+        mouseY: e.clientY,
+        right: iconPosition.right,
+        bottom: iconPosition.bottom,
+      };
+      setIsDragging("icon");
+    },
+    [iconPosition],
+  );
+
+  // 窗口拖拽开始
+  const handleWindowMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      dragStartRef.current = {
+        mouseX: e.clientX,
+        mouseY: e.clientY,
+        right: windowPosition.right,
+        bottom: windowPosition.bottom,
+      };
+      setIsDragging("window");
+    },
+    [windowPosition],
+  );
+
+  // 拖拽移动和结束
+  useEffect(() => {
+    if (!isDragging) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const deltaX = dragStartRef.current.mouseX - e.clientX;
+      const deltaY = dragStartRef.current.mouseY - e.clientY;
+
+      // 如果移动超过 5px，标记为拖拽（仅对 icon 有意义）
+      if (Math.abs(deltaX) > 5 || Math.abs(deltaY) > 5) {
+        hasDraggedRef.current = true;
+      }
+
+      const newRight = Math.max(
+        0,
+        Math.min(window.innerWidth - 60, dragStartRef.current.right + deltaX),
+      );
+      const newBottom = Math.max(
+        0,
+        Math.min(window.innerHeight - 60, dragStartRef.current.bottom + deltaY),
+      );
+
+      if (isDragging === "icon") {
+        setIconPosition({ right: newRight, bottom: newBottom });
+      } else {
+        setWindowPosition({ right: newRight, bottom: newBottom });
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging]);
+
+  // 处理点击打开（区分拖拽和点击）
+  const handleButtonClick = useCallback(() => {
+    if (!hasDraggedRef.current) {
+      open();
+    }
+  }, [open]);
+
+  // 调整大小开始（左上角）
+  const handleResizeNWMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      resizeStartRef.current = {
+        mouseX: e.clientX,
+        mouseY: e.clientY,
+        width: size.width,
+        height: size.height,
+        right: windowPosition.right,
+        bottom: windowPosition.bottom,
+      };
+      setIsResizing("nw");
+    },
+    [size, windowPosition],
+  );
+
+  // 调整大小开始（右下角）
+  const handleResizeSEMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      resizeStartRef.current = {
+        mouseX: e.clientX,
+        mouseY: e.clientY,
+        width: size.width,
+        height: size.height,
+        right: windowPosition.right,
+        bottom: windowPosition.bottom,
+      };
+      setIsResizing("se");
+    },
+    [size, windowPosition],
+  );
+
+  // 调整大小移动和结束
+  useEffect(() => {
+    if (!isResizing) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const deltaX = resizeStartRef.current.mouseX - e.clientX;
+      const deltaY = resizeStartRef.current.mouseY - e.clientY;
+
+      let newWidth: number;
+      let newHeight: number;
+
+      if (isResizing === "nw") {
+        // 左上角：鼠标向左/上移动增大
+        newWidth = Math.max(280, Math.min(600, resizeStartRef.current.width + deltaX));
+        newHeight = Math.max(240, Math.min(600, resizeStartRef.current.height + deltaY));
+        setSize({ width: newWidth, height: newHeight });
+      } else {
+        // 右下角：鼠标向右/下移动增大
+        newWidth = Math.max(280, Math.min(600, resizeStartRef.current.width - deltaX));
+        newHeight = Math.max(240, Math.min(600, resizeStartRef.current.height - deltaY));
+
+        // 基于初始位置计算新位置，保持右下角固定
+        const widthDelta = newWidth - resizeStartRef.current.width;
+        const heightDelta = newHeight - resizeStartRef.current.height;
+
+        setSize({ width: newWidth, height: newHeight });
+        setWindowPosition({
+          right: Math.max(16, resizeStartRef.current.right - widthDelta),
+          bottom: Math.max(16, resizeStartRef.current.bottom - heightDelta),
+        });
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsResizing(false);
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isResizing]);
+
+  // 计算窗口的安全位置，确保在可视范围内
+  const getWindowStyle = useCallback(() => {
+    if (typeof window === "undefined") {
+      return { right: windowPosition.right, bottom: windowPosition.bottom };
+    }
+
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    // 计算窗口右下角的位置
+    let right = windowPosition.right;
+    let bottom = windowPosition.bottom;
+
+    // 确保窗口不会超出左边界
+    if (right > viewportWidth - size.width) {
+      right = viewportWidth - size.width - 16;
+    }
+
+    // 确保窗口不会超出上边界
+    if (bottom > viewportHeight - size.height) {
+      bottom = viewportHeight - size.height - 16;
+    }
+
+    // 确保不小于 0
+    right = Math.max(16, right);
+    bottom = Math.max(16, bottom);
+
+    return { right, bottom };
+  }, [windowPosition, size]);
+
+  return (
+    <>
       {/* 折叠按钮 - 可拖拽 */}
       <div
         className={`hidden md:block fixed z-50 ${isDragging === "icon" ? "select-none" : ""}`}
@@ -723,289 +1029,39 @@ export function Calculator({
         </div>
       </div>
 
-      {/* 展开的计算器 - 独立定位 */}
-      <div
-        className={`hidden md:flex fixed z-50 flex-col overflow-hidden rounded-lg bg-zinc-900 shadow-2xl ring-1 ring-zinc-700 ${
-          isOpen
-            ? "scale-100 opacity-100"
-            : "pointer-events-none scale-75 opacity-0"
-        } ${isDragging || isResizing ? "select-none" : ""} ${!isDragging && !isResizing ? "transition-all duration-300 ease-out" : ""}`}
-        style={{ width: size.width, height: size.height, ...getWindowStyle() }}
-      >
-        {/* 左上角调整大小手柄 - 四分之一圆弧 */}
+      {!native && (
         <div
-          className="absolute left-1 top-1 w-4 h-4 cursor-nwse-resize z-10 group"
-          onMouseDown={handleResizeNWMouseDown}
+          className={`hidden md:flex fixed z-50 flex-col overflow-hidden rounded-lg bg-zinc-900 shadow-2xl ring-1 ring-zinc-700 ${
+            isOpen
+              ? "scale-100 opacity-100"
+              : "pointer-events-none scale-75 opacity-0"
+          } ${isDragging || isResizing ? "select-none" : ""} ${!isDragging && !isResizing ? "transition-all duration-300 ease-out" : ""}`}
+          style={{ width: size.width, height: size.height, ...getWindowStyle() }}
         >
-          <div className="absolute left-0 top-0 w-3 h-3 border-l-2 border-t-2 border-zinc-600 rounded-tl-md opacity-40 group-hover:opacity-80 transition-opacity" />
-        </div>
-
-        {/* 右下角调整大小手柄 - 四分之一圆弧 */}
-        <div
-          className="absolute right-1 bottom-1 w-4 h-4 cursor-nwse-resize z-10 group"
-          onMouseDown={handleResizeSEMouseDown}
-        >
-          <div className="absolute right-0 bottom-0 w-3 h-3 border-r-2 border-b-2 border-zinc-600 rounded-br-md opacity-40 group-hover:opacity-80 transition-opacity" />
-        </div>
-
-        {/* 标题栏 - 可拖拽 */}
-        <div
-          className={`flex items-center justify-between border-b border-zinc-700 bg-zinc-800 px-3 py-1.5 ${
-            isDragging === "window" ? "cursor-grabbing" : "cursor-grab"
-          }`}
-          onMouseDown={handleWindowMouseDown}
-        >
+          {/* 左上角调整大小手柄 - 四分之一圆弧 */}
           <div
-            className="flex rounded-md bg-zinc-900/70 p-0.5 text-xs"
-            onMouseDown={(e) => e.stopPropagation()}
+            className="absolute left-1 top-1 w-4 h-4 cursor-nwse-resize z-10 group"
+            onMouseDown={handleResizeNWMouseDown}
           >
-            {MODE_OPTIONS.map((option) => (
-              <button
-                key={option.value}
-                type="button"
-                onClick={() => setMode(option.value)}
-                className={`rounded px-2.5 py-1 outline-none transition-colors focus-visible:underline ${
-                  state.mode === option.value
-                    ? "bg-zinc-700 text-zinc-100"
-                    : "text-zinc-500 hover:text-zinc-300"
-                }`}
-              >
-                {option.label}
-              </button>
-            ))}
+            <div className="absolute left-0 top-0 w-3 h-3 border-l-2 border-t-2 border-zinc-600 rounded-tl-md opacity-40 group-hover:opacity-80 transition-opacity" />
           </div>
-          <div className="flex gap-1" onMouseDown={(e) => e.stopPropagation()}>
-            <button
-              onClick={resetCurrent}
-              className="rounded p-1 text-zinc-500 hover:bg-zinc-700 hover:text-zinc-300"
-              title="清空当前页"
-            >
-              <Eraser className="h-4 w-4" />
-            </button>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="rounded p-1 text-zinc-500 hover:bg-zinc-700 hover:text-zinc-300"
-              title="关闭 (Esc)"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
 
-        {/* 输入区 */}
-        <div ref={bodyRef} className="flex-1 space-y-1.5 overflow-y-auto p-3">
-          {isGeneral ? (
-            lineValues.map((line) =>
-              renderRow(
-                line,
-                typeof line.value === "number" ? `= ${formatNumber(line.value, 4)}` : "",
-                "_ 引用上一行",
-              ),
-            )
-          ) : (
-            <>
-              <div className="mb-2.5 flex items-center gap-1.5">
-                <span className="mr-0.5 text-xs text-zinc-500">触发</span>
-                {CONDITION_OPTIONS.filter((option) => isZoneVisible(option.value, state.zones)).map((option) => {
-                  const active = state.conditions[option.value];
-                  return (
-                    <button
-                      key={option.value}
-                      type="button"
-                      aria-pressed={active}
-                      onClick={() => toggleCondition(option.value)}
-                      className={`rounded border px-2 py-0.5 text-xs outline-none transition-colors focus-visible:underline ${
-                        active
-                          ? "border-amber-500/40 bg-amber-500/10 text-amber-200"
-                          : "border-zinc-700 text-zinc-500 hover:text-zinc-300"
-                      }`}
-                    >
-                      {option.label}
-                    </button>
-                  );
-                })}
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-16 shrink-0 px-1 text-sm text-zinc-300" title="武器白值 × 模式攻击力（猎场 500，塔防 400）">
-                  基础伤害
-                </span>
-                <div className="relative min-w-0 flex-1">
-                  <input
-                    data-value
-                    type="text"
-                    inputMode="decimal"
-                    value={state.base}
-                    onChange={(e) => setBase(e.target.value)}
-                    onKeyDown={handleValueKeyDown}
-                    className={valueInputClass(baseValue === null)}
-                    placeholder="0.52×500"
-                    autoComplete="off"
-                    spellCheck={false}
-                  />
-                  {typeof baseValue === "number" && (
-                    <span className="pointer-events-none absolute right-2.5 top-1/2 max-w-[4.5rem] -translate-y-1/2 truncate text-xs tabular-nums text-zinc-400">
-                      = {formatNumber(baseValue, 2)}
-                    </span>
-                  )}
-                </div>
-                <span className="w-6 shrink-0" />
-              </div>
-              {state.source && (
-                <p className="-mt-0.5 truncate pl-18 text-xs text-zinc-500" title={state.source}>
-                  来自 {state.source}
-                </p>
-              )}
-              {zoneValues.filter((zone) => isZoneVisible(zone.id, state.zones)).map((zone) => (
-                <div
-                  key={zone.id}
-                  className={`flex items-center gap-2 transition-opacity ${zone.active ? "" : "opacity-40"}`}
-                >
-                  <span className="w-16 shrink-0 cursor-help px-1 text-sm text-zinc-400" title={zone.note}>
-                    {zone.label}
-                  </span>
-                  <div className="relative min-w-0 flex-1">
-                    <input
-                      data-value
-                      type="text"
-                      value={state.zones[zone.id] ?? ""}
-                      onChange={(e) => setZone(zone.id, e.target.value)}
-                      onKeyDown={handleValueKeyDown}
-                      className={valueInputClass(zone.value === null)}
-                      placeholder={zone.placeholder}
-                      title={zone.note}
-                      autoComplete="off"
-                      spellCheck={false}
-                    />
-                    <span
-                      className={`pointer-events-none absolute right-2.5 top-1/2 max-w-[4.5rem] -translate-y-1/2 truncate text-xs tabular-nums ${
-                        zone.value === null
-                          ? "text-red-400"
-                          : typeof zone.value === "number" && zone.active
-                            ? "text-zinc-400"
-                            : "text-zinc-600"
-                      }`}
-                    >
-                      {zone.value === null
-                        ? "无法识别"
-                        : zone.active
-                          ? `×${formatNumber(typeof zone.value === "number" ? zone.value : 1, 4)}`
-                          : "未触发"}
-                    </span>
-                  </div>
-                  {zone.id === "game-mode" ? (
-                    <div ref={shopMenuRef} className="relative flex shrink-0 items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => setShopMenuOpen((open) => !open)}
-                        aria-haspopup="listbox"
-                        aria-expanded={shopMenuOpen}
-                        title="猎场商店攻击力"
-                        className={`h-[34px] w-20 rounded-md border bg-zinc-800 px-2 text-sm tabular-nums outline-none transition-colors hover:border-zinc-500 focus-visible:underline ${
-                          shopMenuOpen ? "border-zinc-500" : "border-zinc-700"
-                        } ${state.shopAttackLevel > 0 ? "font-semibold text-zinc-100" : "text-zinc-600"}`}
-                      >
-                        {formatShopAttack(shopAttackBonus)}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setShopMenuOpen((open) => !open)}
-                        tabIndex={-1}
-                        aria-hidden="true"
-                        className="flex h-6 w-6 items-center justify-center rounded text-zinc-500 transition-colors hover:text-zinc-200"
-                      >
-                        <ChevronDown
-                          className={`h-4 w-4 transition-transform ${shopMenuOpen ? "rotate-180" : ""}`}
-                        />
-                      </button>
-                      {shopMenuOpen && (
-                        <div
-                          role="listbox"
-                          aria-label="猎场商店攻击力"
-                          className="absolute right-8 top-full z-20 mt-1 max-h-52 w-20 overflow-y-auto rounded-md border border-zinc-700 bg-zinc-800 py-1 shadow-xl"
-                        >
-                          {SHOP_ATTACK.rows.map((row) => {
-                            const selected = row.level === state.shopAttackLevel;
-                            return (
-                              <button
-                                key={row.level}
-                                type="button"
-                                role="option"
-                                aria-selected={selected}
-                                onClick={() => setShopAttackLevel(row.level)}
-                                className={`block w-full px-2 py-1 text-center text-sm tabular-nums outline-none transition-colors focus-visible:underline ${
-                                  selected
-                                    ? "bg-zinc-700 text-zinc-100"
-                                    : "text-zinc-400 hover:bg-zinc-700/50 hover:text-zinc-200"
-                                }`}
-                              >
-                                {formatShopAttack(row.bonus)}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <span className="w-6 shrink-0" />
-                  )}
-                </div>
-              ))}
-              {extraValues.map((row) =>
-                renderRow(
-                  row,
-                  `×${formatNumber(typeof row.value === "number" ? row.value : 1, 4)}`,
-                  "20%",
-                ),
-              )}
-            </>
-          )}
-
-          <button
-            type="button"
-            onClick={addRow}
-            className="ml-18 flex items-center gap-1 rounded px-1 py-1 text-xs text-zinc-500 outline-none transition-colors hover:text-zinc-300 focus-visible:underline"
+          {/* 右下角调整大小手柄 - 四分之一圆弧 */}
+          <div
+            className="absolute right-1 bottom-1 w-4 h-4 cursor-nwse-resize z-10 group"
+            onMouseDown={handleResizeSEMouseDown}
           >
-            <Plus className="h-3.5 w-3.5" />
-            {isGeneral ? "添加一行" : "自定义乘区"}
-          </button>
-        </div>
+            <div className="absolute right-0 bottom-0 w-3 h-3 border-r-2 border-b-2 border-zinc-600 rounded-br-md opacity-40 group-hover:opacity-80 transition-opacity" />
+          </div>
 
-        {/* 结果 */}
-        <div className="border-t border-zinc-800 bg-zinc-950 px-3 py-2.5">
-          {isGeneral ? (
-            <>
-              <div className="flex items-baseline justify-between gap-3">
-                <span className="text-xs text-zinc-500">
-                  {validLines.length > 1 ? `合计 · ${validLines.length} 项` : "结果"}
-                </span>
-                <span className="text-xl font-semibold tabular-nums text-amber-200">
-                  {formatNumber(lineSum, 4)}
-                </span>
-              </div>
-              <div className="mt-0.5 truncate text-right text-xs tabular-nums text-zinc-600" title={sumFormula}>
-                {sumFormula || "回车算下一行，所有行自动相加"}
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="flex items-baseline justify-between gap-3">
-                <span className="text-xs text-zinc-500">
-                  {multiplierResult !== null ? "结果" : "总倍率"}
-                  {activeConditionLabel && ` · ${activeConditionLabel}`}
-                </span>
-                <span className="text-xl font-semibold tabular-nums text-amber-200">
-                  {multiplierResult !== null
-                    ? formatNumber(multiplierResult, 2)
-                    : `×${formatNumber(totalMultiplier, 4)}`}
-                </span>
-              </div>
-              <div className="mt-0.5 truncate text-right text-xs tabular-nums text-zinc-600" title={multiplierFormula}>
-                {multiplierFormula || "同乘区加算，% 可省略：30 20 = ×1.5"}
-              </div>
-            </>
-          )}
+          <CalculatorPanel
+            active={isOpen}
+            onClose={() => setIsOpen(false)}
+            onHeaderMouseDown={handleWindowMouseDown}
+            headerClassName={isDragging === "window" ? "cursor-grabbing" : "cursor-grab"}
+          />
         </div>
-      </div>
+      )}
     </>
   );
 }

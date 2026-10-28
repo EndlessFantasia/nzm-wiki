@@ -1,7 +1,10 @@
 import { useSyncExternalStore } from "react";
 
-// 页面与浮动计算器之间的联动：共享打开状态，并通过窗口事件导入伤害来源
+// 页面与浮动计算器之间的联动：共享打开状态，并通过窗口事件打开计算器、导入伤害来源
 export const CALCULATOR_IMPORT_EVENT = "nzm-wiki:calculator-import";
+export const CALCULATOR_OPEN_EVENT = "nzm-wiki:calculator-open";
+// 桌面端主窗口把导入转发给独立计算器窗口
+export const CALCULATOR_CHANNEL = "nzm-wiki:calculator";
 
 export interface CalculatorImport {
   source: string;
@@ -30,6 +33,10 @@ function subscribe(listener: () => void): () => void {
 
 export function useCalculatorOpen(): boolean {
   return useSyncExternalStore(subscribe, () => calculatorOpen, () => false);
+}
+
+export function openCalculator(): void {
+  window.dispatchEvent(new Event(CALCULATOR_OPEN_EVENT));
 }
 
 export function importToCalculator(payload: CalculatorImport): void {

@@ -22,7 +22,7 @@ declare global {
   }
 }
 
-export type DesktopShortcutAction = "toggle_window" | "toggle_pin";
+export type DesktopShortcutAction = "toggle_window" | "toggle_pin" | "toggle_calculator";
 
 export type DesktopShortcut = {
   action: DesktopShortcutAction;
@@ -48,6 +48,8 @@ export type DesktopSettingsState = {
 };
 
 export const DESKTOP_SETTINGS_PATH = "/desktop/settings";
+// 桌面端独立计算器窗口加载的页面，不渲染站点顶栏和侧栏
+export const DESKTOP_CALCULATOR_PATH = "/desktop/calculator";
 export const DESKTOP_PINNED_EVENT = "nzm-desktop:pinned-changed";
 export const DESKTOP_MAXIMIZED_EVENT = "nzm-desktop:maximized-changed";
 // 发现桌面端新版本（detail 为 DesktopAppUpdate）与下载进度（detail 为 { downloaded, total }）
@@ -59,6 +61,8 @@ export const DESKTOP_CHECK_UPDATE_QUERY = "check-update";
 export const DESKTOP_CACHE_EVENT = "nzm-desktop:cache-changed";
 // 窗口隐藏到托盘或重新呼出（detail 为是否可见）
 export const DESKTOP_VISIBILITY_EVENT = "nzm-desktop:visibility-changed";
+// 独立计算器窗口显示或隐藏（detail 为是否可见），只派发给主窗口
+export const DESKTOP_CALCULATOR_EVENT = "nzm-desktop:calculator-changed";
 // 自动重载前派发；有未保存编辑的页面调用 preventDefault 阻止
 export const DESKTOP_BEFORE_AUTO_RELOAD_EVENT = "nzm-desktop:before-auto-reload";
 
