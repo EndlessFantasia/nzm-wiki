@@ -37,7 +37,7 @@ const ZONES: ZoneDefinition[] = [
   { id: "element", label: "元素", kind: "bonus", placeholder: "5%", note: "本次伤害对应元素的增伤" },
   { id: "weakness", label: "弱点增伤", kind: "bonus", placeholder: "50%", condition: "weak", note: "与弱点倍率独立互乘" },
   { id: "critical", label: "暴伤", kind: "bonus", placeholder: "50%", defaultExpr: "50%", condition: "crit", note: "角色基础暴伤 50%，其余暴伤加成写在后面" },
-  { id: "super-critical", label: "会心", kind: "direct", placeholder: "2", defaultExpr: "2", condition: "superCrit", note: "暴击后触发会心，当前会心倍率为 2 倍" },
+  { id: "super-critical", label: "会心", kind: "bonus", placeholder: "200%", defaultExpr: "200%", condition: "superCrit", note: "暴击后触发会心，会心加成 +200%，即 ×3" },
   { id: "correction", label: "特殊修正", kind: "bonus", placeholder: "0%", note: "作用于具体伤害事件，可增可减" },
   { id: "vulnerability", label: "易伤", kind: "bonus", placeholder: "5%", note: "目标承受伤害增加" },
   { id: "element-vulnerability", label: "元素易伤", kind: "bonus", placeholder: "5%", note: "目标对应元素承伤增加" },
@@ -146,10 +146,13 @@ function loadState(): CalculatorState | null {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as Partial<CalculatorState>;
+    const zones = { ...DEFAULT_ZONES, ...parsed.zones };
+    // 旧版会心按倍率保存为 "2"，现在按加成计算
+    if (zones["super-critical"] === "2") zones["super-critical"] = DEFAULT_ZONES["super-critical"];
     return {
       mode: parsed.mode === "multiplier" ? "multiplier" : "general",
       base: typeof parsed.base === "string" ? parsed.base : "",
-      zones: { ...DEFAULT_ZONES, ...parsed.zones },
+      zones,
       conditions: { ...DEFAULT_CONDITIONS, ...parsed.conditions },
       shopAttackLevel: SHOP_ATTACK.rows.some((row) => row.level === parsed.shopAttackLevel)
         ? (parsed.shopAttackLevel as number)
