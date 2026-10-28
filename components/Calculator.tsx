@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { flushSync } from "react-dom";
-import { Calculator as CalculatorIcon, Eraser, Plus, X } from "lucide-react";
+import { Calculator as CalculatorIcon, ChevronDown, Eraser, Plus, X } from "lucide-react";
+import { HUNTING_GROWTH } from "@/lib/hunting-growth";
 
 const STORAGE_KEY = "nzm-multiplier-calculator";
 
@@ -31,7 +32,7 @@ interface ZoneDefinition {
 // 顺序与「游戏乘区」页的伤害公式一致
 const ZONES: ZoneDefinition[] = [
   { id: "weakpoint", label: "弱点倍率", kind: "direct", placeholder: "1.8", condition: "weak", note: "武器类型自带：狙 1.8，射手/激光/弓 1.5，步冲机手 1.3，霰弹/近战 1.2，榴弹/喷射 1.1" },
-  { id: "game-mode", label: "游戏模式", kind: "bonus", placeholder: "30%", note: "猎场商店攻击力、超限猎场羁绊增伤等" },
+  { id: "game-mode", label: "游戏模式", kind: "bonus", placeholder: "30%", note: "右侧选猎场商店攻击力等级；输入框填超限羁绊等其他加成，两者相加" },
   { id: "dilution", label: "大稀释", kind: "bonus", placeholder: "40% 25%", note: "全伤害、武器伤害、射击/爆炸/技能伤害等，同类加算" },
   { id: "element", label: "元素", kind: "bonus", placeholder: "5%", note: "本次伤害对应元素的增伤" },
   { id: "weakness", label: "弱点增伤", kind: "bonus", placeholder: "50%", condition: "weak", note: "与弱点倍率独立互乘" },
@@ -53,6 +54,7 @@ interface CalculatorState {
   base: string;
   zones: Record<string, string>;
   conditions: Record<ZoneCondition, boolean>;
+  shopAttackLevel: number;
   extras: CalculatorRow[];
   lines: CalculatorRow[];
 }
@@ -71,11 +73,19 @@ const DEFAULT_LINES: CalculatorRow[] = [
   { id: 1, label: "", expr: "", placeholder: "12*(1-30%)" },
 ];
 
+// 猎场商店攻击力（ModifierID 190100006），计入游戏模式乘区
+const SHOP_ATTACK = HUNTING_GROWTH.attack;
+
+function formatShopAttack(bonus: number): string {
+  return bonus > 0 ? `+${Math.round(bonus * 100)}%` : "0%";
+}
+
 const DEFAULT_STATE: CalculatorState = {
   mode: "general",
   base: "",
   zones: DEFAULT_ZONES,
   conditions: DEFAULT_CONDITIONS,
+  shopAttackLevel: 0,
   extras: [],
   lines: DEFAULT_LINES,
 };
@@ -141,6 +151,9 @@ function loadState(): CalculatorState | null {
       base: typeof parsed.base === "string" ? parsed.base : "",
       zones: { ...DEFAULT_ZONES, ...parsed.zones },
       conditions: { ...DEFAULT_CONDITIONS, ...parsed.conditions },
+      shopAttackLevel: SHOP_ATTACK.rows.some((row) => row.level === parsed.shopAttackLevel)
+        ? (parsed.shopAttackLevel as number)
+        : 0,
       extras: Array.isArray(parsed.extras) ? parsed.extras : [],
       lines: Array.isArray(parsed.lines) && parsed.lines.length > 0 ? parsed.lines : DEFAULT_LINES,
     };
@@ -163,13 +176,15 @@ export function Calculator({
   const [loaded, setLoaded] = useState(false);
   const [iconPosition, setIconPosition] = useState({ right: 16, bottom: 16 });
   const [windowPosition, setWindowPosition] = useState({ right: 16, bottom: 16 });
-  const [size, setSize] = useState({ width: 340, height: 480 });
+  const [size, setSize] = useState({ width: 380, height: 480 });
   const [isDragging, setIsDragging] = useState<false | "icon" | "window">(false);
   const [isResizing, setIsResizing] = useState<false | "nw" | "se">(false);
   const dragStartRef = useRef({ mouseX: 0, mouseY: 0, right: 0, bottom: 0 });
   const resizeStartRef = useRef({ mouseX: 0, mouseY: 0, width: 0, height: 0, right: 0, bottom: 0 });
   const hasDraggedRef = useRef(false);
   const bodyRef = useRef<HTMLDivElement>(null);
+  const [shopMenuOpen, setShopMenuOpen] = useState(false);
+  const shopMenuRef = useRef<HTMLDivElement>(null);
 
   // 支持外部控制和内部控制
   const isOpen = externalOpen !== undefined ? externalOpen : internalOpen;
@@ -392,7 +407,14 @@ export function Calculator({
     setState((prev) =>
       prev.mode === "general"
         ? { ...prev, lines: DEFAULT_LINES }
-        : { ...prev, base: "", zones: DEFAULT_ZONES, conditions: DEFAULT_CONDITIONS, extras: [] },
+        : {
+            ...prev,
+            base: "",
+            zones: DEFAULT_ZONES,
+            conditions: DEFAULT_CONDITIONS,
+            shopAttackLevel: 0,
+            extras: [],
+          },
     );
     focusFirstValueInput();
   };
@@ -401,6 +423,31 @@ export function Calculator({
 
   const setZone = (id: string, expr: string) =>
     setState((prev) => ({ ...prev, zones: { ...prev.zones, [id]: expr } }));
+
+  const setShopAttackLevel = (shopAttackLevel: number) => {
+    setState((prev) => ({ ...prev, shopAttackLevel }));
+    setShopMenuOpen(false);
+  };
+
+  // 商店攻击力菜单：点外部或 Esc 关闭，打开时滚动到当前选项
+  useEffect(() => {
+    if (!shopMenuOpen) return;
+    shopMenuRef.current
+      ?.querySelector<HTMLElement>("[aria-selected='true']")
+      ?.scrollIntoView({ block: "nearest" });
+    const handleMouseDown = (e: MouseEvent) => {
+      if (!shopMenuRef.current?.contains(e.target as Node)) setShopMenuOpen(false);
+    };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setShopMenuOpen(false);
+    };
+    document.addEventListener("mousedown", handleMouseDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleMouseDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [shopMenuOpen]);
 
   const toggleCondition = (condition: ZoneCondition) =>
     setState((prev) => ({
@@ -451,11 +498,19 @@ export function Calculator({
 
   // 乘区模式：未触发条件的乘区按 ×1 处理
   const baseValue = parseExpression(state.base);
-  const zoneValues = ZONES.map((zone) => ({
-    ...zone,
-    active: !zone.condition || state.conditions[zone.condition],
-    value: parseZone(state.zones[zone.id] ?? "", zone.kind),
-  }));
+  const shopAttackBonus =
+    SHOP_ATTACK.rows.find((row) => row.level === state.shopAttackLevel)?.bonus ?? 0;
+  const zoneValues = ZONES.map((zone) => {
+    const value = parseZone(state.zones[zone.id] ?? "", zone.kind);
+    return {
+      ...zone,
+      active: !zone.condition || state.conditions[zone.condition],
+      value:
+        zone.id === "game-mode" && shopAttackBonus > 0 && value !== null
+          ? (value ?? 1) + shopAttackBonus
+          : value,
+    };
+  });
   const extraValues = state.extras.map((row) => ({ ...row, value: parseZone(row.expr, "bonus") }));
   const validFactors = [
     ...zoneValues.filter((zone) => zone.active),
@@ -772,7 +827,62 @@ export function Calculator({
                           : "未触发"}
                     </span>
                   </div>
-                  <span className="w-6 shrink-0" />
+                  {zone.id === "game-mode" ? (
+                    <div ref={shopMenuRef} className="relative flex shrink-0 items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setShopMenuOpen((open) => !open)}
+                        aria-haspopup="listbox"
+                        aria-expanded={shopMenuOpen}
+                        title="猎场商店攻击力"
+                        className={`h-[34px] w-20 rounded-md border bg-zinc-800 px-2 text-sm tabular-nums outline-none transition-colors hover:border-zinc-500 focus-visible:underline ${
+                          shopMenuOpen ? "border-zinc-500" : "border-zinc-700"
+                        } ${state.shopAttackLevel > 0 ? "font-semibold text-zinc-100" : "text-zinc-600"}`}
+                      >
+                        {formatShopAttack(shopAttackBonus)}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setShopMenuOpen((open) => !open)}
+                        tabIndex={-1}
+                        aria-hidden="true"
+                        className="flex h-6 w-6 items-center justify-center rounded text-zinc-500 transition-colors hover:text-zinc-200"
+                      >
+                        <ChevronDown
+                          className={`h-4 w-4 transition-transform ${shopMenuOpen ? "rotate-180" : ""}`}
+                        />
+                      </button>
+                      {shopMenuOpen && (
+                        <div
+                          role="listbox"
+                          aria-label="猎场商店攻击力"
+                          className="absolute right-8 top-full z-20 mt-1 max-h-52 w-20 overflow-y-auto rounded-md border border-zinc-700 bg-zinc-800 py-1 shadow-xl"
+                        >
+                          {SHOP_ATTACK.rows.map((row) => {
+                            const selected = row.level === state.shopAttackLevel;
+                            return (
+                              <button
+                                key={row.level}
+                                type="button"
+                                role="option"
+                                aria-selected={selected}
+                                onClick={() => setShopAttackLevel(row.level)}
+                                className={`block w-full px-2 py-1 text-center text-sm tabular-nums outline-none transition-colors focus-visible:underline ${
+                                  selected
+                                    ? "bg-zinc-700 text-zinc-100"
+                                    : "text-zinc-400 hover:bg-zinc-700/50 hover:text-zinc-200"
+                                }`}
+                              >
+                                {formatShopAttack(row.bonus)}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <span className="w-6 shrink-0" />
+                  )}
                 </div>
               ))}
               {extraValues.map((row) =>
