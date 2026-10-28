@@ -21,9 +21,9 @@ export default function PagesLayout({
 
   return (
     <div
-      className={`relative min-h-[calc(100dvh-3.5rem)] bg-background ${
+      className={`relative min-h-[calc(100dvh-var(--site-header-height))] bg-background ${
         isFullSeasonTalentDetail
-          ? "overflow-x-clip lg:h-[calc(100dvh-3.5rem)] lg:overflow-hidden"
+          ? "overflow-x-clip lg:h-[calc(100dvh-var(--site-header-height))] lg:overflow-hidden"
           : ""
       }`}
     >
@@ -32,9 +32,9 @@ export default function PagesLayout({
           isSeasonTalentsLanding ? "" : "xl:-left-8 2xl:-left-14"
         } ${
           isFullSeasonTalentDetail
-            ? "max-w-[1600px] px-4 py-3 sm:px-6 lg:h-[calc(100dvh-3.5rem)] xl:w-[calc(100%-4rem)] xl:px-12"
+            ? "max-w-[1600px] px-4 py-3 sm:px-6 lg:h-[calc(100dvh-var(--site-header-height))] xl:w-[calc(100%-4rem)] xl:px-12"
             : isSeasonTalentsLanding
-              ? "max-w-none p-0 lg:h-[calc(100dvh-3.5rem)]"
+              ? "max-w-none p-0 lg:h-[calc(100dvh-var(--site-header-height))]"
             : isSeasonTalentDetail
             ? "max-w-[1600px] px-4 py-4 sm:px-6 xl:w-[calc(100%-4rem)] xl:px-12"
             : isBuildsLanding

@@ -32,8 +32,36 @@
 }
 
 html {
+  --site-header-height: 3.5rem;
+  --site-sidebar-width: 0px;
   overflow-y: auto;
   scrollbar-gutter: stable;
+}
+
+/* 侧栏 ≥1024px 常驻，更窄时收进抽屉 */
+@media (width >= 64rem) {
+  html {
+    --site-sidebar-width: 11.5rem;
+  }
+}
+
+/* 桌面端（data-desktop 由 Tauri 壳注入）：顶栏兼任标题栏，压低高度；不常驻预留滚动条槽位，避免无滚动页面右侧留白 */
+html[data-desktop] {
+  --site-header-height: 2.75rem;
+  scrollbar-gutter: auto;
+}
+
+/* 按 data-desktop 切换网页端/桌面端专属内容；标记在水合前注入，不会闪烁 */
+html:not([data-desktop]) .desktop-only,
+html[data-desktop] .web-only {
+  display: none;
+}
+
+/* 桌面端窄窗口要给窗口按钮让位 */
+@media (width < 40rem) {
+  html[data-desktop] .desktop-compact-hidden {
+    display: none;
+  }
 }
 
 body {

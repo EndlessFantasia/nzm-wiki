@@ -21,7 +21,7 @@
 .branch p { font-size: 13px; color: #bcbcc0; margin-top: 10px; }
 
 .builder { height: 100%; min-height: 0; display: flex; flex-direction: column; gap: 12px; }
-.builderScene { position: fixed; inset: 56px 0 0; z-index: -1; opacity: .28; }
+.builderScene { position: fixed; inset: var(--site-header-height, 56px) 0 0; z-index: -1; opacity: .28; }
 .treeSection { display: flex; flex-direction: column; height: 100%; min-height: 0; }
 .tree { display: grid; grid-template-columns: 34fr 54fr; gap: 12px; flex: 1; min-height: 0; scroll-margin-top: 72px; }
 .treeRegion { position: relative; min-width: 0; min-height: 0; container-type: size; border-top: 1px solid #b3b8bb66; background: #b3b8bb06; }

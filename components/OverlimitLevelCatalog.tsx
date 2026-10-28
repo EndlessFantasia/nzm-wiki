@@ -192,21 +192,21 @@ function DesktopLevelTable({
         </colgroup>
         <thead>
           <tr className="border-b border-zinc-700">
-            <th className="sticky top-14 z-10 bg-zinc-800/95 px-3 py-3 text-center font-medium text-zinc-300 backdrop-blur">
+            <th className="sticky top-(--site-header-height) z-10 bg-zinc-800/95 px-3 py-3 text-center font-medium text-zinc-300 backdrop-blur">
               等级
             </th>
             {QUALITY_ORDER.map((quality) => (
               <th
                 key={quality}
-                className="sticky top-14 z-10 bg-zinc-800/95 px-3 py-3 text-center font-medium backdrop-blur"
+                className="sticky top-(--site-header-height) z-10 bg-zinc-800/95 px-3 py-3 text-center font-medium backdrop-blur"
               >
                 <QualityLabel quality={quality} />
               </th>
             ))}
-            <th className="sticky top-14 z-10 bg-zinc-800/95 px-3 py-3 text-center font-medium text-zinc-300 backdrop-blur">
+            <th className="sticky top-(--site-header-height) z-10 bg-zinc-800/95 px-3 py-3 text-center font-medium text-zinc-300 backdrop-blur">
               四插池概率
             </th>
-            <th className="sticky top-14 z-10 bg-zinc-800/95 px-3 py-3 text-center font-medium text-zinc-300 backdrop-blur">
+            <th className="sticky top-(--site-header-height) z-10 bg-zinc-800/95 px-3 py-3 text-center font-medium text-zinc-300 backdrop-blur">
               2x 暴击概率
             </th>
           </tr>

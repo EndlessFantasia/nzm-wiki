@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "逆战未来维基",
+  "version": "0.1.0",
+  "identifier": "com.nzm-wiki.desktop",
+  "build": {
+    "frontendDist": "https://nzm-wiki.com/",
+    "devUrl": "http://localhost:3000",
+    "beforeDevCommand": {
+      "script": "node scripts/ensure-site-dev.mjs",
+      "wait": false
+    }
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.ico"
+    ]
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDVBQjdCNEU2NkY3RTU0N0IKUldSN1ZINXY1clMzV2g2aGZCSEJDZHp5UkdjQ1l5cER5Yk8zcFZDMjh6SWQvTVdTM2hWVjVaL0MK",
+      "endpoints": [
+        "https://github.com/EndlessFantasia/nzm-wiki/releases/latest/download/latest.json"
+      ],
+      "windows": {
+        "installMode": "passive"
+      }
+    }
+  }
+}

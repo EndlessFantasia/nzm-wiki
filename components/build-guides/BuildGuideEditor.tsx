@@ -22,6 +22,7 @@ import type {
 import type {
   BuildGuideSource,
 } from "@/lib/build-guides";
+import { DESKTOP_BEFORE_AUTO_RELOAD_EVENT } from "@/lib/desktop";
 import { getAssetPath } from "@/lib/path";
 import { matchPinyin } from "@/lib/pinyin";
 
@@ -431,8 +432,16 @@ export function BuildGuideEditor({
       if (!dirty) return;
       event.preventDefault();
     };
+    // 桌面端发现新部署时不自动重载有未保存编辑的页面
+    const preventAutoReload = (event: Event) => {
+      if (dirty) event.preventDefault();
+    };
     window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener(DESKTOP_BEFORE_AUTO_RELOAD_EVENT, preventAutoReload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener(DESKTOP_BEFORE_AUTO_RELOAD_EVENT, preventAutoReload);
+    };
   }, [dirty]);
 
   const updateSource = <K extends keyof BuildGuideSource>(
@@ -580,9 +589,9 @@ export function BuildGuideEditor({
   );
 
   return (
-    <div className="min-h-[calc(100dvh-3.5rem)] bg-background text-zinc-100">
+    <div className="min-h-[calc(100dvh-var(--site-header-height))] bg-background text-zinc-100">
       <form onSubmit={handleSave}>
-        <header className="sticky top-14 z-30 border-b border-zinc-800 bg-background/95 backdrop-blur-sm">
+        <header className="sticky top-(--site-header-height) z-30 border-b border-zinc-800 bg-background/95 backdrop-blur-sm">
           <div className="mx-auto flex max-w-[1600px] flex-wrap items-center gap-3 px-4 py-3 sm:px-6 xl:px-8">
             <a
               href={getAssetPath("/editor")}
