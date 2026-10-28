@@ -33,8 +33,16 @@
 
 html {
   --site-header-height: 3.5rem;
+  --site-sidebar-width: 0px;
   overflow-y: auto;
   scrollbar-gutter: stable;
+}
+
+/* 侧栏 ≥1280px 常驻，更窄时收进抽屉 */
+@media (width >= 80rem) {
+  html {
+    --site-sidebar-width: 11.5rem;
+  }
 }
 
 /* 桌面端（data-desktop 由 Tauri 壳注入）：顶栏兼任标题栏，压低高度；不常驻预留滚动条槽位，避免无滚动页面右侧留白 */

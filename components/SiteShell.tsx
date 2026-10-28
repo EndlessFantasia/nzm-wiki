@@ -23,15 +23,6 @@ import {
 } from "@/lib/site-navigation";
 
 const GITHUB_REPO = "https://github.com/EndlessFantasia/nzm-wiki";
-const DEFAULT_SIDEBAR_WIDTH = 184;
-const MIN_SIDEBAR_WIDTH = 184;
-const MAX_SIDEBAR_WIDTH = 320;
-const SIDEBAR_WIDTH_STORAGE_KEY = "nzm-wiki:sidebar-width";
-
-function clampSidebarWidth(width: number) {
-  return Math.min(MAX_SIDEBAR_WIDTH, Math.max(MIN_SIDEBAR_WIDTH, width));
-}
-
 function getMobileBackLink(pathname: string) {
   if (pathname.startsWith("/enemies/lc/monsters/")) {
     return { href: "/enemies/lc/monsters", label: "返回猎场怪物" };
@@ -163,140 +154,9 @@ function SiteNavigation({
   );
 }
 
-function SidebarResizeHandle({
-  width,
-  onWidthChange,
-  onWidthCommit,
-}: {
-  width: number;
-  onWidthChange: (width: number) => void;
-  onWidthCommit: (width: number) => void;
-}) {
-  const draggingRef = useRef(false);
-  const widthRef = useRef(width);
-  const bodyStylesRef = useRef<{ cursor: string; userSelect: string } | null>(
-    null,
-  );
-  const [isDragging, setIsDragging] = useState(false);
-
-  useEffect(() => {
-    widthRef.current = width;
-  }, [width]);
-
-  const updateWidth = useCallback(
-    (nextWidth: number) => {
-      const clampedWidth = clampSidebarWidth(nextWidth);
-      widthRef.current = clampedWidth;
-      onWidthChange(clampedWidth);
-      return clampedWidth;
-    },
-    [onWidthChange],
-  );
-
-  const finishDragging = useCallback(() => {
-    if (!draggingRef.current) return;
-    draggingRef.current = false;
-    setIsDragging(false);
-    onWidthCommit(widthRef.current);
-
-    if (bodyStylesRef.current) {
-      document.body.style.cursor = bodyStylesRef.current.cursor;
-      document.body.style.userSelect = bodyStylesRef.current.userSelect;
-      bodyStylesRef.current = null;
-    }
-  }, [onWidthCommit]);
-
-  useEffect(() => finishDragging, [finishDragging]);
-
-  const handleKeyboardResize = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    let nextWidth = widthRef.current;
-
-    switch (event.key) {
-      case "ArrowLeft":
-        nextWidth -= 8;
-        break;
-      case "ArrowRight":
-        nextWidth += 8;
-        break;
-      case "PageDown":
-        nextWidth -= 32;
-        break;
-      case "PageUp":
-        nextWidth += 32;
-        break;
-      case "Home":
-        nextWidth = MIN_SIDEBAR_WIDTH;
-        break;
-      case "End":
-        nextWidth = MAX_SIDEBAR_WIDTH;
-        break;
-      default:
-        return;
-    }
-
-    event.preventDefault();
-    onWidthCommit(updateWidth(nextWidth));
-  };
-
+function SiteSidebar({ activeItemId }: { activeItemId: SiteNavItem["id"] | null }) {
   return (
-    <div
-      role="separator"
-      aria-label="调整侧栏宽度"
-      aria-orientation="vertical"
-      aria-valuemin={MIN_SIDEBAR_WIDTH}
-      aria-valuemax={MAX_SIDEBAR_WIDTH}
-      aria-valuenow={width}
-      aria-valuetext={`${width} 像素`}
-      tabIndex={0}
-      title="拖动调整侧栏宽度，双击恢复默认"
-      onDoubleClick={() => onWidthCommit(updateWidth(DEFAULT_SIDEBAR_WIDTH))}
-      onKeyDown={handleKeyboardResize}
-      onPointerDown={(event) => {
-        if (event.button !== 0) return;
-        event.preventDefault();
-        event.currentTarget.setPointerCapture(event.pointerId);
-        draggingRef.current = true;
-        setIsDragging(true);
-        bodyStylesRef.current = {
-          cursor: document.body.style.cursor,
-          userSelect: document.body.style.userSelect,
-        };
-        document.body.style.cursor = "col-resize";
-        document.body.style.userSelect = "none";
-      }}
-      onPointerMove={(event) => {
-        if (draggingRef.current) updateWidth(event.clientX);
-      }}
-      onPointerUp={finishDragging}
-      onPointerCancel={finishDragging}
-      onLostPointerCapture={finishDragging}
-      className="group absolute inset-y-0 -right-1.5 z-10 w-3 cursor-col-resize touch-none focus-visible:outline-none"
-    >
-      <span
-        aria-hidden="true"
-        className={`absolute inset-y-0 left-1/2 w-px -translate-x-1/2 transition-colors duration-150 motion-reduce:transition-none ${
-          isDragging
-            ? "bg-amber-400"
-            : "bg-transparent group-hover:bg-zinc-500 group-focus-visible:bg-amber-400"
-        }`}
-      />
-    </div>
-  );
-}
-
-function SiteSidebar({
-  activeItemId,
-  width,
-  onWidthChange,
-  onWidthCommit,
-}: {
-  activeItemId: SiteNavItem["id"] | null;
-  width: number;
-  onWidthChange: (width: number) => void;
-  onWidthCommit: (width: number) => void;
-}) {
-  return (
-    <aside className="fixed inset-y-0 left-0 z-40 hidden w-[var(--site-sidebar-width)] flex-col border-r border-zinc-700 bg-surface-1 shadow-[8px_0_28px_rgba(0,0,0,0.14)] xl:flex">
+    <aside className="fixed inset-y-0 left-0 z-40 hidden w-(--site-sidebar-width) flex-col border-r border-zinc-700 bg-surface-1 shadow-[8px_0_28px_rgba(0,0,0,0.14)] xl:flex">
       <div
         data-tauri-drag-region="deep"
         className="flex h-(--site-header-height) shrink-0 items-center border-b border-zinc-700 px-4"
@@ -304,11 +164,6 @@ function SiteSidebar({
         <Brand />
       </div>
       <SiteNavigation activeItemId={activeItemId} />
-      <SidebarResizeHandle
-        width={width}
-        onWidthChange={onWidthChange}
-        onWidthCommit={onWidthCommit}
-      />
     </aside>
   );
 }
@@ -474,27 +329,6 @@ function SiteShellContent({ children }: { children: React.ReactNode }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [hash, setHash] = useState("");
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [sidebarWidth, setSidebarWidth] = useState(DEFAULT_SIDEBAR_WIDTH);
-
-  useEffect(() => {
-    const storedWidth = Number.parseInt(
-      window.localStorage.getItem(SIDEBAR_WIDTH_STORAGE_KEY) ?? "",
-      10,
-    );
-    if (!Number.isFinite(storedWidth)) return;
-    // The persisted value is browser-only state and is restored after hydration.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setSidebarWidth(clampSidebarWidth(storedWidth));
-  }, []);
-
-  const commitSidebarWidth = useCallback((width: number) => {
-    const clampedWidth = clampSidebarWidth(width);
-    setSidebarWidth(clampedWidth);
-    window.localStorage.setItem(
-      SIDEBAR_WIDTH_STORAGE_KEY,
-      String(clampedWidth),
-    );
-  }, []);
 
   const closeDrawer = useCallback(() => {
     const dialog = dialogRef.current;
@@ -548,19 +382,9 @@ function SiteShellContent({ children }: { children: React.ReactNode }) {
   const resolvedNavigation = resolveSiteNavigation({ pathname, hash });
 
   return (
-    <div
-      className="min-h-dvh"
-      style={
-        { "--site-sidebar-width": `${sidebarWidth}px` } as React.CSSProperties
-      }
-    >
-      <SiteSidebar
-        activeItemId={resolvedNavigation?.activeItemId ?? null}
-        width={sidebarWidth}
-        onWidthChange={setSidebarWidth}
-        onWidthCommit={commitSidebarWidth}
-      />
-      <div className="min-w-0 xl:pl-[var(--site-sidebar-width)] xl:[container-type:inline-size]">
+    <div className="min-h-dvh">
+      <SiteSidebar activeItemId={resolvedNavigation?.activeItemId ?? null} />
+      <div className="min-w-0 xl:pl-(--site-sidebar-width) xl:[container-type:inline-size]">
         <SiteHeader
           pathname={pathname}
           sectionLabel={resolvedNavigation?.sectionLabel ?? null}
