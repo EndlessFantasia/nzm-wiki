@@ -23,6 +23,7 @@ use tauri::{
     menu::{CheckMenuItem, Menu, MenuItem, PredefinedMenuItem},
     tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
     webview::{NewWindowResponse, PageLoadEvent},
+    window::Color,
     AppHandle, Manager, Url, WebviewUrl, WebviewWindow, WebviewWindowBuilder, WindowEvent, Wry,
 };
 use tauri_plugin_global_shortcut::ShortcutState;
@@ -36,6 +37,9 @@ const SETTINGS_PATH: &str = "/desktop/settings";
 const CHECK_UPDATE_QUERY: &str = "check-update";
 const MAIN_WINDOW: &str = "main";
 const SPLASH_WINDOW: &str = "splash";
+// 独立计算器窗口：置顶浮在游戏上，与主窗口的显示/隐藏互不影响
+const CALCULATOR_WINDOW: &str = "calculator";
+const CALCULATOR_PATH: &str = "/desktop/calculator";
 // 悬浮滚动条不占宽度，顶栏可铺满窗口；前半段是 wry 的默认参数，设置后会被覆盖，需保留。
 // 同一数据目录下的 WebView2 参数必须一致，启动画面与主窗口共用
 const BROWSER_ARGS: &str =
@@ -62,6 +66,7 @@ const DESKTOP_INIT_SCRIPT: &str = r#"(() => {
 struct TrayItems {
     toggle: MenuItem<Wry>,
     pin: CheckMenuItem<Wry>,
+    calculator: MenuItem<Wry>,
     update: MenuItem<Wry>,
 }
 
@@ -173,6 +178,68 @@ fn update_tray_accelerators(app: &AppHandle) {
     if items.pin.set_accelerator(pin_keys.as_deref()).is_err() {
         let _ = items.pin.set_accelerator(None::<&str>);
     }
+    let calculator_keys = shortcuts.keys(Action::ToggleCalculator);
+    if items.calculator.set_accelerator(calculator_keys.as_deref()).is_err() {
+        let _ = items.calculator.set_accelerator(None::<&str>);
+    }
+}
+
+fn calculator_window(app: &AppHandle) -> Option<WebviewWindow> {
+    app.get_webview_window(CALCULATOR_WINDOW)
+}
+
+// 主窗口据此显示武器详情的「导入计算器」按钮（lib/calculator-bridge.ts）
+fn notify_calculator(app: &AppHandle, visible: bool) {
+    if let Some(window) = main_window(app) {
+        let _ = window.eval(format!(
+            "window.dispatchEvent(new CustomEvent('nzm-desktop:calculator-changed', {{ detail: {visible} }}))"
+        ));
+    }
+}
+
+fn show_calculator(app: &AppHandle) {
+    if let Some(window) = calculator_window(app) {
+        reveal_calculator(app, &window);
+        return;
+    }
+    // 在主线程（IPC 回调、托盘菜单、热键）里同步创建 WebView2 窗口会卡住，新窗口只剩空白，统一放到后台线程
+    let app = app.clone();
+    thread::spawn(move || {
+        if let Ok(window) = build_calculator_window(&app) {
+            reveal_calculator(&app, &window);
+        }
+    });
+}
+
+fn reveal_calculator(app: &AppHandle, window: &WebviewWindow) {
+    let _ = window.unminimize();
+    let _ = window.show();
+    let _ = window.set_focus();
+    notify_calculator(app, true);
+}
+
+fn hide_calculator(app: &AppHandle) {
+    if let Some(window) = calculator_window(app) {
+        let _ = window.hide();
+        notify_calculator(app, false);
+    }
+}
+
+fn calculator_visible(app: &AppHandle) -> bool {
+    calculator_window(app)
+        .and_then(|window| window.is_visible().ok())
+        .unwrap_or(false)
+}
+
+fn toggle_calculator(app: &AppHandle) {
+    let focused = calculator_window(app)
+        .and_then(|window| window.is_focused().ok())
+        .unwrap_or(false);
+    if calculator_visible(app) && focused {
+        hide_calculator(app);
+    } else {
+        show_calculator(app);
+    }
 }
 
 // 只清空 HTTP 磁盘缓存后重新加载，Cookie 与 localStorage 中的站点偏好保留
@@ -246,6 +313,16 @@ fn get_settings_state(app: AppHandle) -> SettingsState {
 #[tauri::command]
 fn set_pinned(app: AppHandle, pinned: bool) {
     apply_pinned(&app, pinned);
+}
+
+#[tauri::command]
+fn open_calculator(app: AppHandle) {
+    show_calculator(&app);
+}
+
+#[tauri::command]
+fn get_calculator_visible(app: AppHandle) -> bool {
+    calculator_visible(&app)
 }
 
 #[tauri::command]
@@ -450,6 +527,9 @@ fn build_main_window(app: &AppHandle) -> tauri::Result<WebviewWindow> {
             if app.state::<Preferences>().desktop_cache() {
                 api.prevent_close();
                 hide_window(app);
+            } else if let Some(calculator) = calculator_window(app) {
+                // 关闭即退出：隐藏着的计算器窗口不能让进程继续留着
+                let _ = calculator.destroy();
             }
         }
         _ => {}
@@ -457,9 +537,57 @@ fn build_main_window(app: &AppHandle) -> tauri::Result<WebviewWindow> {
     Ok(window)
 }
 
+// 首次打开时创建，之后关闭只隐藏，输入状态与窗口位置保留
+fn build_calculator_window(app: &AppHandle) -> tauri::Result<WebviewWindow> {
+    let nav_app = app.clone();
+    let popup_app = app.clone();
+    let url = site_url().join(CALCULATOR_PATH).map_err(tauri::Error::InvalidUrl)?;
+    let window = WebviewWindowBuilder::new(app, CALCULATOR_WINDOW, WebviewUrl::External(url))
+        .title("计算器")
+        .inner_size(380.0, 480.0)
+        .min_inner_size(300.0, 320.0)
+        .center()
+        .decorations(false)
+        .always_on_top(true)
+        .skip_taskbar(true)
+        .maximizable(false)
+        // 与页面底色一致，站点加载完成前不闪白
+        .background_color(Color(24, 24, 27, 255))
+        .additional_browser_args(BROWSER_ARGS)
+        .initialization_script(DESKTOP_INIT_SCRIPT)
+        .on_navigation(move |url| match url.scheme() {
+            "http" | "https" if !is_site_url(url) => {
+                open_external(&nav_app, url);
+                false
+            }
+            "http" | "https" | "about" | "data" | "blob" => true,
+            _ => {
+                open_external(&nav_app, url);
+                false
+            }
+        })
+        .on_new_window(move |url, _features| {
+            if !is_site_url(&url) {
+                open_external(&popup_app, &url);
+            }
+            NewWindowResponse::Deny
+        })
+        .build()?;
+
+    let observed = window.clone();
+    window.on_window_event(move |event| {
+        if let WindowEvent::CloseRequested { api, .. } = event {
+            api.prevent_close();
+            hide_calculator(observed.app_handle());
+        }
+    });
+    Ok(window)
+}
+
 fn build_tray(app: &AppHandle) -> tauri::Result<()> {
     let toggle = MenuItem::with_id(app, "toggle", "显示/隐藏", true, None::<&str>)?;
     let pin = CheckMenuItem::with_id(app, "pin", "窗口置顶", true, false, None::<&str>)?;
+    let calculator = MenuItem::with_id(app, "calculator", "计算器", true, None::<&str>)?;
     let home = MenuItem::with_id(app, "home", "回到首页", true, None::<&str>)?;
     let reload = MenuItem::with_id(app, "reload", "刷新", true, None::<&str>)?;
     let clear_cache = MenuItem::with_id(app, "refresh-cache", "刷新缓存", true, None::<&str>)?;
@@ -471,6 +599,7 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
         &[
             &toggle,
             &pin,
+            &calculator,
             &PredefinedMenuItem::separator(app)?,
             &home,
             &reload,
@@ -481,7 +610,7 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
             &quit,
         ],
     )?;
-    app.manage(TrayItems { toggle, pin, update });
+    app.manage(TrayItems { toggle, pin, calculator, update });
     update_tray_accelerators(app);
 
     let mut tray = TrayIconBuilder::with_id("main")
@@ -495,6 +624,7 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
                 let pinned = app.state::<TrayItems>().pin.is_checked().unwrap_or(false);
                 apply_pinned(app, pinned);
             }
+            "calculator" => toggle_calculator(app),
             "home" => {
                 if let Some(window) = main_window(app) {
                     let _ = window.navigate(site_url());
@@ -560,6 +690,7 @@ fn main() {
                     match app.state::<Shortcuts>().action_for(shortcut) {
                         Some(Action::ToggleWindow) => toggle_window(app),
                         Some(Action::TogglePin) => toggle_pinned(app),
+                        Some(Action::ToggleCalculator) => toggle_calculator(app),
                         None => {}
                     }
                 })
@@ -571,6 +702,8 @@ fn main() {
             set_pinned,
             set_desktop_cache,
             refresh_site_cache,
+            open_calculator,
+            get_calculator_visible,
             check_app_update,
             install_app_update,
             set_shortcut,

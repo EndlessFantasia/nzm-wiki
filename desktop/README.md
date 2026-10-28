@@ -4,8 +4,8 @@ Tauri 2 壳，直接加载线上站点 `https://nzm-wiki.com/`，不打包 `out/
 
 ## 功能
 
-- 全局快捷键：默认 `Ctrl+Alt+N` 显示/隐藏窗口，切换置顶默认不绑定；可在设置页修改或清除，须含 Ctrl/Alt（单独 F1–F24 除外），保存在 `%APPDATA%\com.nzm-wiki.desktop\settings.json`
-- 托盘菜单：显示/隐藏、窗口置顶、回到首页、刷新、刷新缓存、设置、退出；左键单击托盘图标切换显示
+- 全局快捷键：默认 `Ctrl+Alt+N` 显示/隐藏窗口，切换置顶和显示/隐藏计算器默认不绑定；可在设置页修改或清除，须含 Ctrl/Alt（单独 F1–F24 除外），保存在 `%APPDATA%\com.nzm-wiki.desktop\settings.json`
+- 托盘菜单：显示/隐藏、窗口置顶、计算器、回到首页、刷新、刷新缓存、设置、退出；左键单击托盘图标切换显示
 - 刷新缓存（托盘菜单或设置页）：只清空 WebView2 磁盘缓存并重新加载，Cookie 和 localStorage 中的站点偏好保留
 - 设置页：站内路由 `/desktop/settings`（`components/DesktopSettings.tsx`），从站点顶栏齿轮（仅桌面端渲染）或托盘菜单进入
 - 无系统标题栏：站点顶栏兼任标题栏（`data-tauri-drag-region="deep"`），右侧窗口按钮由 `components/DesktopWindowControls.tsx` 在桌面端渲染；壳在文档创建时给 `<html>` 加 `data-desktop`，供站点 CSS 区分桌面端
@@ -13,6 +13,7 @@ Tauri 2 壳，直接加载线上站点 `https://nzm-wiki.com/`，不打包 `out/
 - 桌面端缓存（默认开启，设置页可关）：关闭按钮只隐藏窗口，进程常驻托盘，再次呼出无需重新加载，退出走托盘菜单；配合下面的站点更新检查保持页面为最新部署。关闭后与 Edge 打开站点一致：关闭即退出，不做额外检查
 - 站点更新检查（`components/DesktopUpdateNotice.tsx`）：构建时 `scripts/build-static.ts` 生成版本号，注入页面并写出 `site-version.json`；隐藏在托盘时每 10 分钟、呼出时（间隔 ≥1 分钟）检查，发现新部署直接重载；前台使用时每 30 分钟或站内跳转（间隔 ≥5 分钟）检查，只在顶栏提示，下次点站内链接改为整页加载。有未保存编辑的页面通过取消 `nzm-desktop:before-auto-reload` 事件阻止自动重载
 - 自动更新（`src-tauri/src/app_update.rs`）：启动 20 秒后及常驻期间每 6 小时检查 GitHub Release 上的 `latest.json`，也可从托盘「检查更新…」或设置页手动检查；发现新版本时顶栏齿轮标点、托盘显示「安装更新」，在设置页确认后下载、校验签名并以 passive 模式安装，完成后自动重启
+- 独立计算器窗口：站点右下角计算器球、命令面板和托盘菜单都打开独立的无边框置顶小窗（站内路由 `/desktop/calculator`，`components/DesktopCalculator.tsx`），主窗口隐藏到托盘后仍可浮在游戏上；首次打开时创建，关闭只隐藏，输入状态保存在共用的 localStorage。武器详情的「导入计算器」经 `BroadcastChannel` 从主窗口转发，壳通过 `nzm-desktop:calculator-changed` 通知主窗口计算器是否可见。旧版桌面端缺少该命令时站点退回站内浮窗
 - 记住窗口位置和尺寸；重复启动时聚焦已有窗口
 - 站外链接和 `target="_blank"` 的站外链接交给系统浏览器打开
 

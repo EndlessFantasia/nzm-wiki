@@ -13,22 +13,24 @@ const CONFIG_KEY: &str = "shortcuts";
 pub enum Action {
     ToggleWindow,
     TogglePin,
+    ToggleCalculator,
 }
 
 impl Action {
-    const ALL: [Action; 2] = [Action::ToggleWindow, Action::TogglePin];
+    const ALL: [Action; 3] = [Action::ToggleWindow, Action::TogglePin, Action::ToggleCalculator];
 
     fn label(self) -> &'static str {
         match self {
             Action::ToggleWindow => "显示/隐藏窗口",
             Action::TogglePin => "切换窗口置顶",
+            Action::ToggleCalculator => "显示/隐藏计算器",
         }
     }
 
     pub fn default_keys(self) -> Option<&'static str> {
         match self {
             Action::ToggleWindow => Some("Ctrl+Alt+N"),
-            Action::TogglePin => None,
+            Action::TogglePin | Action::ToggleCalculator => None,
         }
     }
 }

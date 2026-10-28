@@ -1,0 +1,10 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "calculator",
+  "description": "独立计算器窗口只需拖动和关闭（关闭由壳改为隐藏）；不开放站点命令",
+  "windows": ["calculator"],
+  "remote": {
+    "urls": ["https://nzm-wiki.com/*", "https://*.nzm-wiki.com/*", "http://localhost:3000/*"]
+  },
+  "permissions": ["core:window:allow-start-dragging", "core:window:allow-close"]
+}

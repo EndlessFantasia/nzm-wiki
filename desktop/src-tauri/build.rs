@@ -7,6 +7,8 @@ fn main() {
             "set_pinned",
             "set_desktop_cache",
             "refresh_site_cache",
+            "open_calculator",
+            "get_calculator_visible",
             "check_app_update",
             "install_app_update",
             "set_shortcut",
