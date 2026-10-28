@@ -29,7 +29,7 @@ export type DesktopShortcut = {
   label: string;
   // null 表示未绑定
   keys: string | null;
-  defaultKeys: string;
+  defaultKeys: string | null;
   registered: boolean;
 };
 

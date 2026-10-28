@@ -21,10 +21,10 @@ impl Action {
         }
     }
 
-    pub fn default_keys(self) -> &'static str {
+    pub fn default_keys(self) -> Option<&'static str> {
         match self {
-            Action::ToggleWindow => "Ctrl+Alt+N",
-            Action::TogglePin => "Ctrl+Alt+T",
+            Action::ToggleWindow => Some("Ctrl+Alt+N"),
+            Action::TogglePin => None,
         }
     }
 }
@@ -35,7 +35,7 @@ pub struct ShortcutInfo {
     action: Action,
     label: &'static str,
     keys: Option<String>,
-    default_keys: &'static str,
+    default_keys: Option<&'static str>,
     registered: bool,
 }
 
@@ -86,9 +86,9 @@ fn default_bindings() -> Vec<Binding> {
         .into_iter()
         .map(|action| Binding {
             action,
-            bound: Some(Bound {
-                keys: action.default_keys().into(),
-                shortcut: parse_keys(action.default_keys()).unwrap(),
+            bound: action.default_keys().map(|keys| Bound {
+                keys: keys.into(),
+                shortcut: parse_keys(keys).unwrap(),
             }),
             registered: false,
         })
@@ -107,7 +107,7 @@ impl Shortcuts {
         for action in Action::ALL {
             let keys = match config.shortcuts.get(&action) {
                 Some(saved) => saved.clone(),
-                None => Some(action.default_keys().to_string()),
+                None => action.default_keys().map(String::from),
             };
             let bound = keys.and_then(|keys| {
                 let shortcut = parse_keys(&keys).ok()?;
