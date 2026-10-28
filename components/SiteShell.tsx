@@ -118,10 +118,10 @@ function SiteNavigation({
         href={href}
         aria-current={active ? "page" : undefined}
         onClick={onNavigate}
-        className={`relative flex min-h-11 touch-manipulation items-center rounded-md border px-4 text-sm transition-colors duration-200 focus-visible:outline-none focus-visible:underline focus-visible:decoration-2 focus-visible:underline-offset-4 motion-reduce:transition-none ${
+        className={`relative flex min-h-11 touch-manipulation items-center rounded-md px-4 text-sm transition-colors duration-200 focus-visible:outline-none focus-visible:underline focus-visible:decoration-2 focus-visible:underline-offset-4 motion-reduce:transition-none ${
           active
-            ? "border-zinc-600 bg-zinc-800 text-white"
-            : "border-transparent text-zinc-300 hover:bg-zinc-800/65 hover:text-white"
+            ? "bg-zinc-800 text-white"
+            : "text-zinc-300 hover:bg-zinc-800/65 hover:text-white"
         }`}
       >
         {active && (
