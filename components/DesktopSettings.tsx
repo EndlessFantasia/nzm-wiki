@@ -272,6 +272,21 @@ function DesktopSettingsPanel() {
               hint="关闭窗口后常驻托盘，后台保持页面为最新部署，再次打开无需重新加载；关闭后与 Edge 打开站点一致，关闭即退出"
               onChange={setDesktopCache}
             />
+            <div className="flex items-center justify-between gap-4 px-4 py-3">
+              <span>
+                <span className="block text-zinc-200">刷新缓存</span>
+                <span className="mt-0.5 block text-sm text-zinc-500">
+                  清空本地磁盘缓存并重新加载页面，站点里的偏好设置不受影响；也可从托盘菜单使用
+                </span>
+              </span>
+              <button
+                type="button"
+                onClick={() => void invokeDesktop("refresh_site_cache").catch(() => {})}
+                className={textButtonClass}
+              >
+                刷新
+              </button>
+            </div>
           </div>
         </section>
       )}

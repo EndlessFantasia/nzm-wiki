@@ -169,6 +169,51 @@ fn update_tray_accelerators(app: &AppHandle) {
     }
 }
 
+// 只清空 HTTP 磁盘缓存后重新加载，Cookie 与 localStorage 中的站点偏好保留
+fn refresh_cache(app: &AppHandle) {
+    let Some(window) = main_window(app) else { return };
+    let reload = window.clone();
+    let _ = window.with_webview(move |webview| {
+        let after_clear = reload.clone();
+        let cleared = unsafe {
+            clear_disk_cache(&webview, move || {
+                let _ = after_clear.eval("location.reload()");
+            })
+        };
+        if cleared.is_err() {
+            let _ = reload.eval("location.reload()");
+        }
+    });
+}
+
+#[cfg(windows)]
+unsafe fn clear_disk_cache(
+    webview: &tauri::webview::PlatformWebview,
+    on_cleared: impl FnOnce() + 'static,
+) -> windows_core::Result<()> {
+    use webview2_com::{
+        ClearBrowsingDataCompletedHandler,
+        Microsoft::Web::WebView2::Win32::{
+            ICoreWebView2Profile2, ICoreWebView2_13, COREWEBVIEW2_BROWSING_DATA_KINDS_DISK_CACHE,
+        },
+    };
+    use windows_core::Interface;
+
+    let profile = webview
+        .controller()
+        .CoreWebView2()?
+        .cast::<ICoreWebView2_13>()?
+        .Profile()?
+        .cast::<ICoreWebView2Profile2>()?;
+    profile.ClearBrowsingData(
+        COREWEBVIEW2_BROWSING_DATA_KINDS_DISK_CACHE,
+        &ClearBrowsingDataCompletedHandler::create(Box::new(move |_| {
+            on_cleared();
+            Ok(())
+        })),
+    )
+}
+
 fn show_settings(app: &AppHandle) {
     if let (Some(window), Ok(url)) = (main_window(app), site_url().join(SETTINGS_PATH)) {
         let _ = window.navigate(url);
@@ -189,6 +234,11 @@ fn get_settings_state(app: AppHandle) -> SettingsState {
 #[tauri::command]
 fn set_pinned(app: AppHandle, pinned: bool) {
     apply_pinned(&app, pinned);
+}
+
+#[tauri::command]
+fn refresh_site_cache(app: AppHandle) {
+    refresh_cache(&app);
 }
 
 #[tauri::command]
@@ -390,6 +440,7 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
     let pin = CheckMenuItem::with_id(app, "pin", "窗口置顶", true, false, None::<&str>)?;
     let home = MenuItem::with_id(app, "home", "回到首页", true, None::<&str>)?;
     let reload = MenuItem::with_id(app, "reload", "刷新", true, None::<&str>)?;
+    let clear_cache = MenuItem::with_id(app, "refresh-cache", "刷新缓存", true, None::<&str>)?;
     let settings = MenuItem::with_id(app, "settings", "设置…", true, None::<&str>)?;
     let quit = MenuItem::with_id(app, "quit", "退出", true, None::<&str>)?;
     let menu = Menu::with_items(
@@ -400,6 +451,7 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
             &PredefinedMenuItem::separator(app)?,
             &home,
             &reload,
+            &clear_cache,
             &PredefinedMenuItem::separator(app)?,
             &settings,
             &quit,
@@ -430,6 +482,7 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
                     let _ = window.eval("location.reload()");
                 }
             }
+            "refresh-cache" => refresh_cache(app),
             "settings" => show_settings(app),
             "quit" => app.exit(0),
             _ => {}
@@ -491,6 +544,7 @@ fn main() {
             get_settings_state,
             set_pinned,
             set_desktop_cache,
+            refresh_site_cache,
             set_shortcut,
             reset_shortcuts,
             set_shortcuts_paused

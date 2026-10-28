@@ -6,6 +6,7 @@ fn main() {
             "get_settings_state",
             "set_pinned",
             "set_desktop_cache",
+            "refresh_site_cache",
             "set_shortcut",
             "reset_shortcuts",
             "set_shortcuts_paused",

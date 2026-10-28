@@ -5,7 +5,8 @@ Tauri 2 壳，直接加载线上站点 `https://nzm-wiki.com/`，不打包 `out/
 ## 功能
 
 - 全局快捷键：默认 `Ctrl+Alt+N` 显示/隐藏窗口，切换置顶默认不绑定；可在设置页修改或清除，须含 Ctrl/Alt（单独 F1–F24 除外），保存在 `%APPDATA%\com.nzm-wiki.desktop\settings.json`
-- 托盘菜单：显示/隐藏、窗口置顶、回到首页、刷新、设置、退出；左键单击托盘图标切换显示
+- 托盘菜单：显示/隐藏、窗口置顶、回到首页、刷新、刷新缓存、设置、退出；左键单击托盘图标切换显示
+- 刷新缓存（托盘菜单或设置页）：只清空 WebView2 磁盘缓存并重新加载，Cookie 和 localStorage 中的站点偏好保留
 - 设置页：站内路由 `/desktop/settings`（`components/DesktopSettings.tsx`），从站点顶栏齿轮（仅桌面端渲染）或托盘菜单进入
 - 无系统标题栏：站点顶栏兼任标题栏（`data-tauri-drag-region="deep"`），右侧窗口按钮由 `components/DesktopWindowControls.tsx` 在桌面端渲染；壳在文档创建时给 `<html>` 加 `data-desktop`，供站点 CSS 区分桌面端
 - 启动画面：主窗口隐藏加载站点，期间显示内置的 `src-tauri/splash/index.html`（自定义协议 `splash`，不走网络）；加载完成后至少停留 0.5 秒再淡出，10 秒仍未完成则直接显示主窗口
