@@ -5,7 +5,7 @@ fn main() {
         tauri_build::AppManifest::new().commands(&[
             "get_settings_state",
             "set_pinned",
-            "set_close_to_tray",
+            "set_desktop_cache",
             "set_shortcut",
             "reset_shortcuts",
             "set_shortcuts_paused",

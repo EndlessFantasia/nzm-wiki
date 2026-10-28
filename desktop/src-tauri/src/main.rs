@@ -65,7 +65,7 @@ struct TrayItems {
 struct SettingsState {
     version: String,
     pinned: bool,
-    close_to_tray: bool,
+    desktop_cache: bool,
     shortcuts: Vec<ShortcutInfo>,
 }
 
@@ -181,7 +181,7 @@ fn get_settings_state(app: AppHandle) -> SettingsState {
     SettingsState {
         version: app.package_info().version.to_string(),
         pinned: app.state::<TrayItems>().pin.is_checked().unwrap_or(false),
-        close_to_tray: app.state::<Preferences>().close_to_tray(),
+        desktop_cache: app.state::<Preferences>().desktop_cache(),
         shortcuts: app.state::<Shortcuts>().infos(),
     }
 }
@@ -192,8 +192,13 @@ fn set_pinned(app: AppHandle, pinned: bool) {
 }
 
 #[tauri::command]
-fn set_close_to_tray(app: AppHandle, enabled: bool) {
-    app.state::<Preferences>().set_close_to_tray(&app, enabled);
+fn set_desktop_cache(app: AppHandle, enabled: bool) {
+    app.state::<Preferences>().set_desktop_cache(&app, enabled);
+    if let Some(window) = main_window(&app) {
+        let _ = window.eval(format!(
+            "window.dispatchEvent(new CustomEvent('nzm-desktop:cache-changed', {{ detail: {enabled} }}))"
+        ));
+    }
 }
 
 // 快捷键命令保持同步执行（主线程），注册热键与热键回调不会交错
@@ -367,10 +372,10 @@ fn build_main_window(app: &AppHandle) -> tauri::Result<WebviewWindow> {
                 ));
             }
         }
-        // 关闭按钮默认只隐藏到托盘，进程常驻，下次呼出无需重新加载站点
+        // 开启桌面端缓存时关闭按钮只隐藏到托盘，进程常驻，下次呼出无需重新加载站点
         WindowEvent::CloseRequested { api, .. } => {
             let app = observed.app_handle();
-            if app.state::<Preferences>().close_to_tray() {
+            if app.state::<Preferences>().desktop_cache() {
                 api.prevent_close();
                 hide_window(app);
             }
@@ -485,7 +490,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             get_settings_state,
             set_pinned,
-            set_close_to_tray,
+            set_desktop_cache,
             set_shortcut,
             reset_shortcuts,
             set_shortcuts_paused

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useIsDesktop } from "@/hooks/useIsDesktop";
 import {
+  DESKTOP_CACHE_EVENT,
   DESKTOP_PINNED_EVENT,
   invokeDesktop,
   shortcutFromKeyEvent,
@@ -208,8 +209,16 @@ function DesktopSettingsPanel() {
       const pinned = (event as CustomEvent<boolean>).detail;
       setSettings((current) => (current ? { ...current, pinned } : current));
     };
+    const onCacheChange = (event: Event) => {
+      const desktopCache = (event as CustomEvent<boolean>).detail;
+      setSettings((current) => (current ? { ...current, desktopCache } : current));
+    };
     window.addEventListener(DESKTOP_PINNED_EVENT, onPinnedChange);
-    return () => window.removeEventListener(DESKTOP_PINNED_EVENT, onPinnedChange);
+    window.addEventListener(DESKTOP_CACHE_EVENT, onCacheChange);
+    return () => {
+      window.removeEventListener(DESKTOP_PINNED_EVENT, onPinnedChange);
+      window.removeEventListener(DESKTOP_CACHE_EVENT, onCacheChange);
+    };
   }, []);
 
   const setShortcuts = useCallback((shortcuts: DesktopShortcut[]) => {
@@ -223,10 +232,10 @@ function DesktopSettingsPanel() {
     );
   };
 
-  const setCloseToTray = (closeToTray: boolean) => {
-    setSettings((current) => (current ? { ...current, closeToTray } : current));
-    invokeDesktop("set_close_to_tray", { enabled: closeToTray }).catch(() =>
-      setSettings((current) => (current ? { ...current, closeToTray: !closeToTray } : current)),
+  const setDesktopCache = (desktopCache: boolean) => {
+    setSettings((current) => (current ? { ...current, desktopCache } : current));
+    invokeDesktop("set_desktop_cache", { enabled: desktopCache }).catch(() =>
+      setSettings((current) => (current ? { ...current, desktopCache: !desktopCache } : current)),
     );
   };
 
@@ -243,23 +252,29 @@ function DesktopSettingsPanel() {
     <div className="space-y-8">
       <section>
         <SectionTitle>窗口</SectionTitle>
-        <div className="divide-y divide-zinc-800 rounded-lg border border-zinc-800 bg-zinc-900/60">
+        <div className="rounded-lg border border-zinc-800 bg-zinc-900/60">
           <Switch
             checked={settings.pinned}
             label="窗口置顶"
             hint="游戏需使用窗口化或无边框模式，独占全屏下无法覆盖游戏画面"
             onChange={setPinned}
           />
-          {settings.closeToTray !== undefined && (
-            <Switch
-              checked={settings.closeToTray}
-              label="关闭时最小化到托盘"
-              hint="窗口常驻托盘，再次打开无需重新加载；彻底退出请用托盘菜单"
-              onChange={setCloseToTray}
-            />
-          )}
         </div>
       </section>
+
+      {settings.desktopCache !== undefined && (
+        <section>
+          <SectionTitle>缓存</SectionTitle>
+          <div className="divide-y divide-zinc-800 rounded-lg border border-zinc-800 bg-zinc-900/60">
+            <Switch
+              checked={settings.desktopCache}
+              label="桌面端缓存"
+              hint="关闭窗口后常驻托盘，后台保持页面为最新部署，再次打开无需重新加载；关闭后与 Edge 打开站点一致，关闭即退出"
+              onChange={setDesktopCache}
+            />
+          </div>
+        </section>
+      )}
 
       <ShortcutSettings shortcuts={settings.shortcuts} onChange={setShortcuts} />
 

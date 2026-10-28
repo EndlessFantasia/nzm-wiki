@@ -4,7 +4,13 @@ import { RefreshCw } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useIsDesktop } from "@/hooks/useIsDesktop";
-import { DESKTOP_BEFORE_AUTO_RELOAD_EVENT, DESKTOP_VISIBILITY_EVENT } from "@/lib/desktop";
+import {
+  DESKTOP_BEFORE_AUTO_RELOAD_EVENT,
+  DESKTOP_CACHE_EVENT,
+  DESKTOP_VISIBILITY_EVENT,
+  invokeDesktop,
+  type DesktopSettingsState,
+} from "@/lib/desktop";
 import { getAssetPath } from "@/lib/path";
 
 // 构建时由 scripts/build-static.ts 注入，与线上 site-version.json 对比判断是否有新部署；开发模式下为空，不检查
@@ -130,8 +136,32 @@ function UpdateWatcher({ currentVersion }: { currentVersion: string }) {
   );
 }
 
+// 关闭桌面端缓存后与 Edge 打开站点一致，不做额外的更新检查
+function useDesktopCacheEnabled(isDesktop: boolean) {
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    if (!isDesktop) return;
+    let active = true;
+    invokeDesktop<DesktopSettingsState>("get_settings_state")
+      .then((settings) => {
+        if (active) setEnabled(settings.desktopCache ?? true);
+      })
+      .catch(() => {});
+    const onChange = (event: Event) => setEnabled((event as CustomEvent<boolean>).detail);
+    window.addEventListener(DESKTOP_CACHE_EVENT, onChange);
+    return () => {
+      active = false;
+      window.removeEventListener(DESKTOP_CACHE_EVENT, onChange);
+    };
+  }, [isDesktop]);
+
+  return enabled;
+}
+
 export default function DesktopUpdateNotice() {
   const isDesktop = useIsDesktop();
-  if (!isDesktop || !SITE_VERSION) return null;
+  const cacheEnabled = useDesktopCacheEnabled(isDesktop);
+  if (!isDesktop || !SITE_VERSION || !cacheEnabled) return null;
   return <UpdateWatcher currentVersion={SITE_VERSION} />;
 }

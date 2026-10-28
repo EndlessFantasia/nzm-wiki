@@ -37,13 +37,15 @@ export type DesktopSettingsState = {
   version: string;
   pinned: boolean;
   // 旧版桌面端没有该字段
-  closeToTray?: boolean;
+  desktopCache?: boolean;
   shortcuts: DesktopShortcut[];
 };
 
 export const DESKTOP_SETTINGS_PATH = "/desktop/settings";
 export const DESKTOP_PINNED_EVENT = "nzm-desktop:pinned-changed";
 export const DESKTOP_MAXIMIZED_EVENT = "nzm-desktop:maximized-changed";
+// 桌面端缓存开关变化（detail 为是否开启）
+export const DESKTOP_CACHE_EVENT = "nzm-desktop:cache-changed";
 // 窗口隐藏到托盘或重新呼出（detail 为是否可见）
 export const DESKTOP_VISIBILITY_EVENT = "nzm-desktop:visibility-changed";
 // 自动重载前派发；有未保存编辑的页面调用 preventDefault 阻止

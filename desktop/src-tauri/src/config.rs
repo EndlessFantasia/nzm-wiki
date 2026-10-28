@@ -31,24 +31,25 @@ pub fn write(app: &AppHandle, key: &str, value: Value) {
     }
 }
 
-const CLOSE_TO_TRAY: &str = "closeToTray";
+// 桌面端缓存：关闭窗口时常驻托盘，站点在后台检测新部署并刷新；关闭后行为与 Edge 打开站点一致
+const DESKTOP_CACHE: &str = "desktopCache";
 
 pub struct Preferences {
-    close_to_tray: AtomicBool,
+    desktop_cache: AtomicBool,
 }
 
 impl Preferences {
     pub fn load(app: &AppHandle) -> Self {
-        let close_to_tray = read(app).get(CLOSE_TO_TRAY).and_then(Value::as_bool).unwrap_or(true);
-        Self { close_to_tray: AtomicBool::new(close_to_tray) }
+        let desktop_cache = read(app).get(DESKTOP_CACHE).and_then(Value::as_bool).unwrap_or(true);
+        Self { desktop_cache: AtomicBool::new(desktop_cache) }
     }
 
-    pub fn close_to_tray(&self) -> bool {
-        self.close_to_tray.load(Ordering::Relaxed)
+    pub fn desktop_cache(&self) -> bool {
+        self.desktop_cache.load(Ordering::Relaxed)
     }
 
-    pub fn set_close_to_tray(&self, app: &AppHandle, enabled: bool) {
-        self.close_to_tray.store(enabled, Ordering::Relaxed);
-        write(app, CLOSE_TO_TRAY, Value::Bool(enabled));
+    pub fn set_desktop_cache(&self, app: &AppHandle, enabled: bool) {
+        self.desktop_cache.store(enabled, Ordering::Relaxed);
+        write(app, DESKTOP_CACHE, Value::Bool(enabled));
     }
 }
