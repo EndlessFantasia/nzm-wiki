@@ -1,8 +1,12 @@
-use std::{collections::HashMap, fs, path::PathBuf, sync::Mutex};
+use std::{collections::HashMap, sync::Mutex};
 
 use serde::{Deserialize, Serialize};
-use tauri::{AppHandle, Manager};
+use tauri::AppHandle;
 use tauri_plugin_global_shortcut::{GlobalShortcutExt, Modifiers, Shortcut};
+
+use crate::config;
+
+const CONFIG_KEY: &str = "shortcuts";
 
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
@@ -56,13 +60,6 @@ impl Binding {
     }
 }
 
-// 配置中缺省的动作使用默认键，值为 null 表示用户取消了绑定
-#[derive(Default, Serialize, Deserialize)]
-struct Config {
-    #[serde(default)]
-    shortcuts: HashMap<Action, Option<String>>,
-}
-
 // 只接受带 Ctrl/Alt 的组合或单独的功能键，避免站点把普通打字按键注册成全局热键
 fn parse_keys(keys: &str) -> Result<Shortcut, String> {
     let shortcut: Shortcut = keys.parse().map_err(|_| format!("无法识别的组合键：{keys}"))?;
@@ -75,10 +72,6 @@ fn parse_keys(keys: &str) -> Result<Shortcut, String> {
         return Err("组合键需要包含 Ctrl 或 Alt，功能键 F1–F24 除外".into());
     }
     Ok(shortcut)
-}
-
-fn config_path(app: &AppHandle) -> Option<PathBuf> {
-    app.path().app_config_dir().ok().map(|dir| dir.join("settings.json"))
 }
 
 fn default_bindings() -> Vec<Binding> {
@@ -98,14 +91,15 @@ fn default_bindings() -> Vec<Binding> {
 pub struct Shortcuts(Mutex<Vec<Binding>>);
 
 impl Shortcuts {
+    // 配置中缺省的动作使用默认键，值为 null 表示用户取消了绑定
     pub fn load(app: &AppHandle) -> Self {
-        let config: Config = config_path(app)
-            .and_then(|path| fs::read_to_string(path).ok())
-            .and_then(|text| serde_json::from_str(&text).ok())
+        let saved: HashMap<Action, Option<String>> = config::read(app)
+            .remove(CONFIG_KEY)
+            .and_then(|value| serde_json::from_value(value).ok())
             .unwrap_or_default();
         let mut bindings: Vec<Binding> = Vec::new();
         for action in Action::ALL {
-            let keys = match config.shortcuts.get(&action) {
+            let keys = match saved.get(&action) {
                 Some(saved) => saved.clone(),
                 None => action.default_keys().map(String::from),
             };
@@ -210,21 +204,15 @@ impl Shortcuts {
     }
 
     fn save(&self, app: &AppHandle) {
-        let Some(path) = config_path(app) else { return };
-        let config = Config {
-            shortcuts: self
-                .0
-                .lock()
-                .unwrap()
-                .iter()
-                .map(|binding| (binding.action, binding.bound.as_ref().map(|bound| bound.keys.clone())))
-                .collect(),
-        };
-        if let Some(dir) = path.parent() {
-            let _ = fs::create_dir_all(dir);
-        }
-        if let Ok(text) = serde_json::to_string_pretty(&config) {
-            let _ = fs::write(path, text);
+        let saved: HashMap<Action, Option<String>> = self
+            .0
+            .lock()
+            .unwrap()
+            .iter()
+            .map(|binding| (binding.action, binding.bound.as_ref().map(|bound| bound.keys.clone())))
+            .collect();
+        if let Ok(value) = serde_json::to_value(saved) {
+            config::write(app, CONFIG_KEY, value);
         }
     }
 }
