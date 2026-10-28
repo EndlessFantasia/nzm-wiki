@@ -27,5 +27,16 @@
       "icons/128x128@2x.png",
       "icons/icon.ico"
     ]
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDVBQjdCNEU2NkY3RTU0N0IKUldSN1ZINXY1clMzV2g2aGZCSEJDZHp5UkdjQ1l5cER5Yk8zcFZDMjh6SWQvTVdTM2hWVjVaL0MK",
+      "endpoints": [
+        "https://github.com/EndlessFantasia/nzm-wiki/releases/latest/download/latest.json"
+      ],
+      "windows": {
+        "installMode": "passive"
+      }
+    }
   }
 }

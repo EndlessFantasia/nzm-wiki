@@ -33,17 +33,28 @@ export type DesktopShortcut = {
   registered: boolean;
 };
 
+export type DesktopAppUpdate = {
+  version: string;
+  notes: string | null;
+};
+
 export type DesktopSettingsState = {
   version: string;
   pinned: boolean;
-  // 旧版桌面端没有该字段
+  // 以下字段旧版桌面端没有
   desktopCache?: boolean;
+  appUpdate?: DesktopAppUpdate | null;
   shortcuts: DesktopShortcut[];
 };
 
 export const DESKTOP_SETTINGS_PATH = "/desktop/settings";
 export const DESKTOP_PINNED_EVENT = "nzm-desktop:pinned-changed";
 export const DESKTOP_MAXIMIZED_EVENT = "nzm-desktop:maximized-changed";
+// 发现桌面端新版本（detail 为 DesktopAppUpdate）与下载进度（detail 为 { downloaded, total }）
+export const DESKTOP_APP_UPDATE_EVENT = "nzm-desktop:app-update-available";
+export const DESKTOP_APP_UPDATE_PROGRESS_EVENT = "nzm-desktop:app-update-progress";
+// 托盘「检查更新」打开设置页时带上的查询参数
+export const DESKTOP_CHECK_UPDATE_QUERY = "check-update";
 // 桌面端缓存开关变化（detail 为是否开启）
 export const DESKTOP_CACHE_EVENT = "nzm-desktop:cache-changed";
 // 窗口隐藏到托盘或重新呼出（detail 为是否可见）

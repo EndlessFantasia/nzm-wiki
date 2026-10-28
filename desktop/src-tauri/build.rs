@@ -7,6 +7,8 @@ fn main() {
             "set_pinned",
             "set_desktop_cache",
             "refresh_site_cache",
+            "check_app_update",
+            "install_app_update",
             "set_shortcut",
             "reset_shortcuts",
             "set_shortcuts_paused",

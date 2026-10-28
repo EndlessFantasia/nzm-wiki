@@ -1,5 +1,6 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod app_update;
 mod config;
 mod shortcuts;
 
@@ -13,6 +14,7 @@ use std::{
     time::{Duration, Instant},
 };
 
+use app_update::{AppUpdateInfo, PendingUpdate};
 use config::Preferences;
 use serde::Serialize;
 use shortcuts::{Action, ShortcutInfo, Shortcuts};
@@ -30,6 +32,8 @@ use tauri_plugin_window_state::StateFlags;
 const SITE_URL: &str = "https://nzm-wiki.com/";
 const SITE_HOST: &str = "nzm-wiki.com";
 const SETTINGS_PATH: &str = "/desktop/settings";
+// 设置页带上该查询参数时进入页面即检查桌面端更新
+const CHECK_UPDATE_QUERY: &str = "check-update";
 const MAIN_WINDOW: &str = "main";
 const SPLASH_WINDOW: &str = "splash";
 // 悬浮滚动条不占宽度，顶栏可铺满窗口；前半段是 wry 的默认参数，设置后会被覆盖，需保留。
@@ -58,6 +62,7 @@ const DESKTOP_INIT_SCRIPT: &str = r#"(() => {
 struct TrayItems {
     toggle: MenuItem<Wry>,
     pin: CheckMenuItem<Wry>,
+    update: MenuItem<Wry>,
 }
 
 #[derive(Serialize)]
@@ -66,6 +71,7 @@ struct SettingsState {
     version: String,
     pinned: bool,
     desktop_cache: bool,
+    app_update: Option<AppUpdateInfo>,
     shortcuts: Vec<ShortcutInfo>,
 }
 
@@ -214,11 +220,16 @@ unsafe fn clear_disk_cache(
     )
 }
 
-fn show_settings(app: &AppHandle) {
-    if let (Some(window), Ok(url)) = (main_window(app), site_url().join(SETTINGS_PATH)) {
+fn show_settings(app: &AppHandle, query: Option<&str>) {
+    if let (Some(window), Ok(mut url)) = (main_window(app), site_url().join(SETTINGS_PATH)) {
+        url.set_query(query);
         let _ = window.navigate(url);
         show_window(app);
     }
+}
+
+fn on_update_found(app: &AppHandle, info: &AppUpdateInfo) {
+    let _ = app.state::<TrayItems>().update.set_text(format!("安装更新 v{}…", info.version()));
 }
 
 #[tauri::command]
@@ -227,6 +238,7 @@ fn get_settings_state(app: AppHandle) -> SettingsState {
         version: app.package_info().version.to_string(),
         pinned: app.state::<TrayItems>().pin.is_checked().unwrap_or(false),
         desktop_cache: app.state::<Preferences>().desktop_cache(),
+        app_update: app.state::<PendingUpdate>().info(),
         shortcuts: app.state::<Shortcuts>().infos(),
     }
 }
@@ -234,6 +246,16 @@ fn get_settings_state(app: AppHandle) -> SettingsState {
 #[tauri::command]
 fn set_pinned(app: AppHandle, pinned: bool) {
     apply_pinned(&app, pinned);
+}
+
+#[tauri::command]
+async fn check_app_update(app: AppHandle) -> Result<Option<AppUpdateInfo>, String> {
+    app_update::check(&app, |info| on_update_found(&app, info)).await
+}
+
+#[tauri::command]
+async fn install_app_update(app: AppHandle) -> Result<(), String> {
+    app_update::install(&app).await
 }
 
 #[tauri::command]
@@ -441,6 +463,7 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
     let home = MenuItem::with_id(app, "home", "回到首页", true, None::<&str>)?;
     let reload = MenuItem::with_id(app, "reload", "刷新", true, None::<&str>)?;
     let clear_cache = MenuItem::with_id(app, "refresh-cache", "刷新缓存", true, None::<&str>)?;
+    let update = MenuItem::with_id(app, "check-update", "检查更新…", true, None::<&str>)?;
     let settings = MenuItem::with_id(app, "settings", "设置…", true, None::<&str>)?;
     let quit = MenuItem::with_id(app, "quit", "退出", true, None::<&str>)?;
     let menu = Menu::with_items(
@@ -453,11 +476,12 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
             &reload,
             &clear_cache,
             &PredefinedMenuItem::separator(app)?,
+            &update,
             &settings,
             &quit,
         ],
     )?;
-    app.manage(TrayItems { toggle, pin });
+    app.manage(TrayItems { toggle, pin, update });
     update_tray_accelerators(app);
 
     let mut tray = TrayIconBuilder::with_id("main")
@@ -483,7 +507,8 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
                 }
             }
             "refresh-cache" => refresh_cache(app),
-            "settings" => show_settings(app),
+            "check-update" => show_settings(app, Some(CHECK_UPDATE_QUERY)),
+            "settings" => show_settings(app, None),
             "quit" => app.exit(0),
             _ => {}
         })
@@ -525,6 +550,7 @@ fn main() {
                 .open_js_links_on_click(false)
                 .build(),
         )
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(
             tauri_plugin_global_shortcut::Builder::new()
                 .with_handler(|app, shortcut, event| {
@@ -545,6 +571,8 @@ fn main() {
             set_pinned,
             set_desktop_cache,
             refresh_site_cache,
+            check_app_update,
+            install_app_update,
             set_shortcut,
             reset_shortcuts,
             set_shortcuts_paused
@@ -559,9 +587,11 @@ fn main() {
             build_splash_window(handle)?;
             app.manage(Shortcuts::load(handle));
             app.manage(Preferences::load(handle));
+            app.manage(PendingUpdate::default());
             build_tray(handle)?;
             build_main_window(handle)?;
             app.state::<Shortcuts>().register_all(handle);
+            app_update::spawn_background_checks(handle.clone(), on_update_found);
             Ok(())
         })
         .run(tauri::generate_context!())

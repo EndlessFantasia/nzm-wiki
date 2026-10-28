@@ -3,10 +3,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { useIsDesktop } from "@/hooks/useIsDesktop";
 import {
+  DESKTOP_APP_UPDATE_EVENT,
+  DESKTOP_APP_UPDATE_PROGRESS_EVENT,
   DESKTOP_CACHE_EVENT,
+  DESKTOP_CHECK_UPDATE_QUERY,
   DESKTOP_PINNED_EVENT,
   invokeDesktop,
   shortcutFromKeyEvent,
+  type DesktopAppUpdate,
   type DesktopSettingsState,
   type DesktopShortcut,
   type DesktopShortcutAction,
@@ -293,30 +297,113 @@ function DesktopSettingsPanel() {
 
       <ShortcutSettings shortcuts={settings.shortcuts} onChange={setShortcuts} />
 
-      <AboutSettings version={settings.version} />
+      <AboutSettings version={settings.version} initialUpdate={settings.appUpdate} />
     </div>
   );
 }
 
-// 检查更新暂为占位，接入 updater 后替换点击逻辑
-function AboutSettings({ version }: { version: string }) {
-  const [notice, setNotice] = useState<string | null>(null);
+type UpdateStatus =
+  | { kind: "idle" }
+  | { kind: "checking" }
+  | { kind: "latest" }
+  | { kind: "error"; phase: "check" | "install"; message: string }
+  | { kind: "downloading"; percent: number | null }
+  | { kind: "installing" };
+
+function updateStatusText(status: UpdateStatus, update: DesktopAppUpdate | null) {
+  switch (status.kind) {
+    case "checking":
+      return "正在检查…";
+    case "latest":
+      return "已是最新版本";
+    case "error":
+      return status.phase === "check" ? "检查失败，请检查网络后重试" : `安装失败：${status.message}`;
+    case "downloading":
+      return status.percent === null ? "正在下载…" : `正在下载 ${status.percent}%`;
+    case "installing":
+      return "正在安装，完成后自动重启";
+    case "idle":
+      return update ? `发现新版本 v${update.version}` : null;
+  }
+}
+
+// initialUpdate 为 undefined 表示桌面端版本过旧、没有内置更新功能
+function AboutSettings({
+  version,
+  initialUpdate,
+}: {
+  version: string;
+  initialUpdate: DesktopAppUpdate | null | undefined;
+}) {
+  const [update, setUpdate] = useState(initialUpdate ?? null);
+  const [status, setStatus] = useState<UpdateStatus>({ kind: "idle" });
+  const busy = status.kind === "checking" || status.kind === "downloading" || status.kind === "installing";
+
+  const check = useCallback(() => {
+    setStatus({ kind: "checking" });
+    invokeDesktop<DesktopAppUpdate | null>("check_app_update")
+      .then((next) => {
+        setUpdate(next);
+        setStatus(next ? { kind: "idle" } : { kind: "latest" });
+      })
+      .catch((err: unknown) => setStatus({ kind: "error", phase: "check", message: String(err) }));
+  }, []);
+
+  const install = () => {
+    setStatus({ kind: "downloading", percent: null });
+    invokeDesktop("install_app_update").catch((err: unknown) =>
+      setStatus({ kind: "error", phase: "install", message: String(err) }),
+    );
+  };
+
+  useEffect(() => {
+    if (initialUpdate === undefined) return;
+    const onAvailable = (event: Event) => setUpdate((event as CustomEvent<DesktopAppUpdate>).detail);
+    const onProgress = (event: Event) => {
+      const { downloaded, total } = (event as CustomEvent<{ downloaded: number; total: number | null }>).detail;
+      const percent = total ? Math.min(100, Math.floor((downloaded / total) * 100)) : null;
+      setStatus(percent === 100 ? { kind: "installing" } : { kind: "downloading", percent });
+    };
+    window.addEventListener(DESKTOP_APP_UPDATE_EVENT, onAvailable);
+    window.addEventListener(DESKTOP_APP_UPDATE_PROGRESS_EVENT, onProgress);
+    const autoCheck = new URLSearchParams(window.location.search).has(DESKTOP_CHECK_UPDATE_QUERY)
+      ? window.setTimeout(check, 0)
+      : undefined;
+    return () => {
+      window.removeEventListener(DESKTOP_APP_UPDATE_EVENT, onAvailable);
+      window.removeEventListener(DESKTOP_APP_UPDATE_PROGRESS_EVENT, onProgress);
+      window.clearTimeout(autoCheck);
+    };
+  }, [initialUpdate, check]);
+
+  const statusText = updateStatusText(status, update);
 
   return (
     <section>
       <SectionTitle>关于</SectionTitle>
-      <div className="flex items-center justify-between gap-4 rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3">
-        <span>
-          <span className="block text-zinc-200">桌面端版本</span>
-          <span className="mt-0.5 block text-sm text-zinc-500">v{version}{notice && ` · ${notice}`}</span>
-        </span>
-        <button
-          type="button"
-          onClick={() => setNotice("自动更新暂未接入")}
-          className={textButtonClass}
-        >
-          检查更新
-        </button>
+      <div className="rounded-lg border border-zinc-800 bg-zinc-900/60 px-4 py-3">
+        <div className="flex items-center justify-between gap-4">
+          <span>
+            <span className="block text-zinc-200">桌面端版本</span>
+            <span
+              title={status.kind === "error" ? status.message : undefined}
+              className={`mt-0.5 block text-sm ${status.kind === "error" ? "text-red-400" : "text-zinc-500"}`}
+            >
+              v{version}
+              {statusText && ` · ${statusText}`}
+            </span>
+          </span>
+          {initialUpdate !== undefined && (
+            <button type="button" onClick={update ? install : check} disabled={busy} className={textButtonClass}>
+              {update ? "安装更新" : "检查更新"}
+            </button>
+          )}
+        </div>
+        {update?.notes && (
+          <p className="mt-2 whitespace-pre-line border-t border-zinc-800 pt-2 text-sm text-zinc-400">
+            {update.notes}
+          </p>
+        )}
       </div>
     </section>
   );
