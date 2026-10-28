@@ -38,8 +38,8 @@ const BROWSER_ARGS: &str =
     "--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection --enable-features=OverlayScrollbar";
 const SPLASH_HTML: &[u8] = include_bytes!("../splash/index.html");
 const SPLASH_AVATAR: &[u8] = include_bytes!("../icons/128x128@2x.png");
-// 站点秒开时也让动画完整播一轮；站点迟迟加载不完则到时直接显示主窗口
-const SPLASH_MIN: Duration = Duration::from_millis(1200);
+// 站点很快加载完时也让启动画面完整淡入，避免一闪而过；站点迟迟加载不完则到时直接显示主窗口
+const SPLASH_MIN: Duration = Duration::from_millis(500);
 const SPLASH_TIMEOUT: Duration = Duration::from_secs(10);
 const SPLASH_FADE: Duration = Duration::from_millis(220);
 
