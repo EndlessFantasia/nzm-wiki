@@ -38,6 +38,13 @@ html {
   scrollbar-gutter: stable;
 }
 
+/* 左半屏右滑是抽屉手势：关掉横向 overscroll，
+   否则浏览器会把它当成"后退"手势，整页直接跳走（Chrome 上会退到 about:blank） */
+html,
+body {
+  overscroll-behavior-x: none;
+}
+
 /* 侧栏 ≥1024px 常驻，更窄时收进抽屉 */
 @media (width >= 64rem) {
   html {
@@ -111,17 +118,30 @@ dialog[open] {
 /* 移动端导航抽屉从左侧滑入 */
 .site-nav-dialog {
   scale: 1;
-  translate: -1rem 0;
+  /* ⚠️ 收起态必须整块停在屏幕外（-100%），不能只挪 -1rem：
+     抽屉宽度是 84vw，-1rem 时面板还有大半露在可视区里。
+     手势收起结束时会 `close()`，如果那一刻面板只偏移 16px，
+     就会在淡出过程中从屏幕外"弹"回左边缘闪一下（用户报的闪烁）。 */
+  translate: -100% 0;
+  /* 只保留纵向滚动，横向留给「向左滑动收起」手势 */
+  touch-action: pan-y;
 }
 
 .site-nav-dialog[open] {
   translate: 0 0;
 }
 
+/* 拖动跟手期间：遮罩浓度交给手势控制（--site-nav-drag 是 0..1 的展开比例），
+   否则抽屉还在屏幕外时背景就已经暗下来了 */
+.site-nav-dialog[data-dragging]::backdrop {
+  opacity: var(--site-nav-drag, 0);
+  transition: none;
+}
+
 @starting-style {
   .site-nav-dialog[open] {
     scale: 1;
-    translate: -1rem 0;
+    translate: -100% 0;
   }
 }
 
