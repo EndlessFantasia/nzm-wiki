@@ -38,6 +38,61 @@ html {
   scrollbar-gutter: stable;
 }
 
+/* 宿主客户端（App 内嵌 WebView）：顶栏由宿主自己画，页面不再为它留高度。
+   标记由宿主在文档创建时打上（`data-client`），所以这里不会闪。
+   `--app-chrome-top` 是宿主原生顶栏的高度，由宿主用 JS 写到 <html> 上。 */
+html[data-client] {
+  /* 顶栏高度直接取宿主原生顶栏的高度：全屏页的
+     `calc(100dvh - var(--site-header-height))`、粘性头的 top、抽屉让位
+     全都跟着这一个变量走，不会出现"body 加了 padding、页面还按整屏算"的溢出。 */
+  --site-header-height: var(--app-chrome-top, 0px);
+  /* 宿主有自己的导航入口，常驻侧栏不该再占宽度 */
+  --site-sidebar-width: 0px;
+  /* 左半屏右滑是宿主内的抽屉手势：只在这个状态下关掉横向 overscroll，
+     桌面浏览器（含触摸板）的横滑后退不受影响 */
+  overscroll-behavior-x: none;
+}
+
+/* 宽屏（平板/横屏）下站点会露出常驻侧栏、并把抽屉设成 lg:hidden，
+   宿主模式下统一成"只有抽屉" —— 否则宿主的侧栏按钮点了没反应 */
+html[data-client] aside[data-site-sidebar] {
+  display: none;
+}
+
+html[data-client] dialog.site-nav-dialog[open] {
+  display: block;
+}
+
+html[data-client] header[data-site-header] {
+  display: none;
+}
+
+html[data-client] body {
+  padding-top: var(--app-chrome-top, 0px);
+}
+
+/* body 让出宿主顶栏后，整页外壳还得跟着少一截，
+   否则 `min-h-dvh` 会让页面比视口高出一个顶栏（赛季天赋这类全屏页最明显） */
+html[data-client] [data-site-shell] {
+  min-height: calc(100dvh - var(--app-chrome-top, 0px));
+}
+
+/* 首页的背景画在 main.home-page 自己身上（body 只有纯色），
+   让位必须挪到 main，否则顶部会切出一条灰边 */
+html[data-client] body:has(.home-page) {
+  padding-top: 0;
+}
+
+html[data-client] main.home-page {
+  padding-top: var(--app-chrome-top, 0px);
+  height: 100dvh;
+}
+
+/* 抽屉是 fixed 全高，自己也得给宿主的顶栏让位 */
+html[data-client] dialog.site-nav-dialog {
+  padding-top: var(--app-chrome-top, 0px);
+}
+
 /* 侧栏 ≥1024px 常驻，更窄时收进抽屉 */
 @media (width >= 64rem) {
   html {
