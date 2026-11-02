@@ -110,7 +110,7 @@ export default function Home() {
         </div>
 
         {/* 社区维护信息 */}
-        <section className="home-community w-full max-w-[26rem] shrink-0 rounded-xl border border-zinc-700/90 bg-zinc-900/60 px-4 py-3">
+        <section className="home-community w-full max-w-md shrink-0 rounded-xl border border-zinc-700/90 bg-zinc-900/60 px-4 py-3">
           <div className="flex items-start justify-between gap-4">
             <div className="flex min-w-0 items-start gap-3">
               <GitBranch aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-zinc-400" />
