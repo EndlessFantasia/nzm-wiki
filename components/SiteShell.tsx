@@ -298,11 +298,15 @@ function MobileNavigationDialog({
     const drag = dragRef.current;
     if (!drag.active) return;
     drag.active = false;
-    // 只是点了一下（比如点遮罩关闭）：不能写内联 transition，
-    // 那会把 dialog 自带的 opacity / display 过渡一起覆盖掉，抽屉会瞬间消失
-    if (drag.dx === 0) return;
     const dialog = dialogRef.current;
     if (!dialog) return;
+    // 没往左拖（点一下、往右划、拖回起点）：不能写内联 transition，
+    // 那会把 dialog 自带的 opacity / display 过渡一起覆盖掉，抽屉会瞬间消失；
+    // touchmove 可能已经写过 transition: none，这里一并清掉
+    if (drag.dx === 0) {
+      resetDialogDragStyles(dialog);
+      return;
+    }
 
     // 拖过三成宽度，或者向左甩得够快，就收起
     const close =
@@ -678,7 +682,8 @@ function SiteShellContent({ children }: { children: React.ReactNode }) {
           if (!current) return;
           // 交回 CSS 的打开态，之后的收起手势照旧
           resetDialogDragStyles(current);
-          setDrawerOpen(true);
+          // 吸附期间可能已被点遮罩 / 换页关掉，再置 true 会让 body 一直锁滚动
+          if (current.open) setDrawerOpen(true);
         }, DRAWER_SWIPE_OUT_MS);
         return;
       }
