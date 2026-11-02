@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Calculator, Search, Github, Pencil, History } from "lucide-react";
+import { registerClientAction } from "@/lib/client-host";
 import { usePresence } from "@/hooks/usePresence";
 
 // GitHub 仓库基础 URL
@@ -181,6 +182,16 @@ export function CommandPalette({ commands }: CommandPaletteProps) {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, openPalette]);
+
+  // 宿主（App）要开命令面板时走这里，不用再合成 Ctrl+Shift+P
+  useEffect(
+    () =>
+      registerClientAction("openCommandPalette", () => {
+        if (isOpen) setIsOpen(false);
+        else openPalette();
+      }),
+    [isOpen, openPalette],
+  );
 
   // 打开时聚焦
   useEffect(() => {

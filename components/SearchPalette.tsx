@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Search, FileText, ArrowRight } from "lucide-react";
 import { getAssetPath } from "@/lib/path";
+import { registerClientAction } from "@/lib/client-host";
 import { usePresence } from "@/hooks/usePresence";
 
 interface SearchItem {
@@ -171,6 +172,9 @@ export function SearchPalette() {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
+
+  // 宿主（App）要开搜索时走这里，不用再合成 Ctrl+P
+  useEffect(() => registerClientAction("openSearch", () => setIsOpen((prev) => !prev)), []);
 
   // 打开时聚焦
   useEffect(() => {

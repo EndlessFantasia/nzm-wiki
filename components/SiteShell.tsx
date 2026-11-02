@@ -14,6 +14,7 @@ import DesktopSettingsButton from "@/components/DesktopSettingsButton";
 import DesktopUpdateNotice from "@/components/DesktopUpdateNotice";
 import DesktopWindowControls from "@/components/DesktopWindowControls";
 import { canReturnToCatalog } from "@/lib/catalog-navigation";
+import { installClientActions, isClientHost, registerClientAction } from "@/lib/client-host";
 import { DESKTOP_CALCULATOR_PATH } from "@/lib/desktop";
 import { getAssetPath } from "@/lib/path";
 import {
@@ -25,6 +26,55 @@ import {
 } from "@/lib/site-navigation";
 
 const GITHUB_REPO = "https://github.com/EndlessFantasia/nzm-wiki";
+// 手势方向判定：横向位移超过它才开始"拉起"抽屉，之前的位移只用来分辨横竖
+const DRAWER_DRAG_START = 8;
+// 松手时展开比例超过它就算打开（配合快速的甩动）；取四成，
+// 拖到一半反悔还能轻松收回去
+const DRAWER_OPEN_RATIO = 0.4;
+// 收起门槛比打开低一点：关掉一个东西总该比打开更容易
+const DRAWER_CLOSE_RATIO = 0.3;
+// 甩动判定的速度阈值，单位 px/ms
+const DRAWER_FLING_VELOCITY = 0.5;
+// 抽屉吸附到打开 / 收起时的动画时长
+const DRAWER_SWIPE_OUT_MS = 180;
+// close() 之后 opacity 淡出的时长；内联位移要撑到它结束才能清
+const DRAWER_FADE_MS = 160;
+
+/**
+ * 把手势期间写进 dialog 的内联位移和遮罩浓度清掉，交回 CSS 的开关状态。
+ *
+ * ⚠️ 必须和 `openDrawer()` 共用：手势中途被返回键 / 点遮罩关掉时，
+ * `translate: -100%` 会留在元素上，下一次正常打开就会停在屏幕外。
+ */
+function resetDialogDragStyles(dialog: HTMLDialogElement) {
+  dialog.style.transition = "";
+  dialog.style.translate = "";
+  dialog.style.removeProperty("--site-nav-drag");
+  delete dialog.dataset.dragging;
+}
+
+/** 原生滑块（BUFF 卡里的 range）等控件要自己吃横向拖动，不能抢来开抽屉。 */
+function isFromRangeControl(target: EventTarget | null) {
+  const element = target instanceof Element ? target : null;
+  return !!element?.closest("input[type='range'], [role='slider'], [data-no-drawer-swipe]");
+}
+
+// 手势起点若落在横向可滚动容器（筛选条等）里，交给它自己滚动，不当作呼出抽屉
+function isInsideHorizontalScroller(target: EventTarget | null) {
+  let node = target instanceof Element ? target : null;
+  while (node && node !== document.body) {
+    const style = window.getComputedStyle(node);
+    if (
+      (style.overflowX === "auto" || style.overflowX === "scroll") &&
+      node.scrollWidth > node.clientWidth + 8
+    ) {
+      return true;
+    }
+    node = node.parentElement;
+  }
+  return false;
+}
+
 function getMobileBackLink(pathname: string) {
   if (pathname.startsWith("/enemies/lc/monsters/")) {
     return { href: "/enemies/lc/monsters", label: "返回猎场怪物" };
@@ -158,7 +208,10 @@ function SiteNavigation({
 
 function SiteSidebar({ activeItemId }: { activeItemId: SiteNavItem["id"] | null }) {
   return (
-    <aside className="fixed inset-y-0 left-0 z-40 hidden w-(--site-sidebar-width) flex-col border-r border-zinc-700 bg-surface-1 shadow-[8px_0_28px_rgba(0,0,0,0.14)] lg:flex">
+    <aside
+      data-site-sidebar=""
+      className="fixed inset-y-0 left-0 z-40 hidden w-(--site-sidebar-width) flex-col border-r border-zinc-700 bg-surface-1 shadow-[8px_0_28px_rgba(0,0,0,0.14)] lg:flex"
+    >
       <div
         data-tauri-drag-region="deep"
         className="flex h-(--site-header-height) shrink-0 items-center border-b border-zinc-700 px-4"
@@ -179,10 +232,119 @@ function MobileNavigationDialog({
   activeItemId: SiteNavItem["id"] | null;
   onClose: () => void;
 }) {
+  // 抽屉内向左拖动收起：拖动期直接改内联 translate，松手后再交回 CSS 过渡
+  const dragRef = useRef({
+    active: false,
+    startX: 0,
+    startY: 0,
+    dx: 0,
+    width: 1,
+    lastX: 0,
+    lastAt: 0,
+    velocity: 0,
+  });
+
+  const handleTouchStart = (event: React.TouchEvent<HTMLDialogElement>) => {
+    if (event.touches.length !== 1) {
+      dragRef.current.active = false;
+      return;
+    }
+    const touch = event.touches[0];
+    const width = dialogRef.current?.getBoundingClientRect().width ?? 0;
+    dragRef.current = {
+      active: true,
+      startX: touch.clientX,
+      startY: touch.clientY,
+      dx: 0,
+      // 收起阈值按"拖掉多少比例"算，抽屉在窄屏上也能有一样的手感
+      width: width > 0 ? width : 1,
+      lastX: touch.clientX,
+      lastAt: performance.now(),
+      velocity: 0,
+    };
+  };
+
+  const handleTouchMove = (event: React.TouchEvent<HTMLDialogElement>) => {
+    const drag = dragRef.current;
+    if (!drag.active || event.touches.length !== 1) return;
+    const touch = event.touches[0];
+    const dx = touch.clientX - drag.startX;
+    const dy = touch.clientY - drag.startY;
+    // 没位移就没有速度，也就没有"拖"这回事
+    if (dx === 0) return;
+    // 首个移动若以竖直为主，说明用户在滚动导航，退出本次拖动
+    if (drag.dx === 0 && Math.abs(dy) > Math.abs(dx)) {
+      drag.active = false;
+      return;
+    }
+    const dt = performance.now() - drag.lastAt;
+    if (dt > 0) {
+      // 最近一次移动的瞬时速度：停住再松手时它会自然衰减，不会误判成甩动
+      drag.velocity = (touch.clientX - drag.lastX) / dt;
+      drag.lastX = touch.clientX;
+      drag.lastAt = performance.now();
+    }
+    drag.dx = Math.min(0, dx);
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    const remaining = Math.min(1, Math.max(0, 1 + drag.dx / drag.width));
+    dialog.style.transition = "none";
+    dialog.style.translate = `${drag.dx}px 0`;
+    dialog.style.setProperty("--site-nav-drag", String(remaining));
+    dialog.dataset.dragging = "";
+  };
+
+  const handleTouchEnd = () => {
+    const drag = dragRef.current;
+    if (!drag.active) return;
+    drag.active = false;
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    // 没往左拖（点一下、往右划、拖回起点）：不能写内联 transition，
+    // 那会把 dialog 自带的 opacity / display 过渡一起覆盖掉，抽屉会瞬间消失；
+    // touchmove 可能已经写过 transition: none，这里一并清掉
+    if (drag.dx === 0) {
+      resetDialogDragStyles(dialog);
+      return;
+    }
+
+    // 拖过三成宽度，或者向左甩得够快，就收起
+    const close =
+      drag.dx <= -drag.width * DRAWER_CLOSE_RATIO ||
+      drag.velocity <= -DRAWER_FLING_VELOCITY;
+    dialog.style.transition = `translate ${DRAWER_SWIPE_OUT_MS}ms ${
+      close ? "ease-in" : "cubic-bezier(0.16, 1, 0.3, 1)"
+    }`;
+
+    if (close) {
+      // 先滑出屏幕再关闭，避免直接 close 时从 -1rem 处弹回
+      dialog.style.translate = "-100% 0";
+      dialog.style.setProperty("--site-nav-drag", "0");
+      window.setTimeout(() => {
+        const current = dialogRef.current;
+        if (!current) return;
+        if (current.open) current.close();
+        // ⚠️ 淡出还没走完就先别清：CSS 的关闭态只偏移 -1rem，
+        // 这时候清掉内联的 -100%，面板会在淡出里从屏幕外弹回左缘闪一下。
+        window.setTimeout(() => resetDialogDragStyles(current), DRAWER_FADE_MS);
+      }, DRAWER_SWIPE_OUT_MS);
+      return;
+    }
+
+    // 没到阈值：吸附回打开态，然后交回 CSS
+    dialog.style.translate = "0px 0";
+    dialog.style.setProperty("--site-nav-drag", "1");
+    window.setTimeout(() => resetDialogDragStyles(dialog), DRAWER_SWIPE_OUT_MS);
+  };
+
   return (
     <dialog
       ref={dialogRef}
       aria-label="全站导航"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
       onCancel={(event) => {
         event.preventDefault();
         onClose();
@@ -231,6 +393,7 @@ function SiteHeader({
 
   return (
     <header
+      data-site-header=""
       data-tauri-drag-region="deep"
       className="sticky top-0 z-40 h-(--site-header-height) border-b border-zinc-700 bg-surface-1/95 backdrop-blur"
     >
@@ -341,10 +504,38 @@ function SiteShellContent({ children }: { children: React.ReactNode }) {
 
   const openDrawer = useCallback(() => {
     const dialog = dialogRef.current;
-    if (!dialog || dialog.open) return;
+    if (!dialog) return;
+    if (dialog.open) {
+      // 手势中途被打断（来电、切后台、渲染进程被回收）可能把它留在屏幕外，
+      // 而 dialog 又是模态的 —— 那时点按钮、搜索、计算器全都没反应。
+      // 所以「已经 open」不代表不用管：先把手势残留清掉，再同步一次状态。
+      resetDialogDragStyles(dialog);
+      setDrawerOpen(true);
+      return;
+    }
+    // 清掉上一次手势留下的内联位移，否则再次打开会停在屏幕外
+    resetDialogDragStyles(dialog);
     dialog.showModal();
     setDrawerOpen(true);
   }, []);
+
+  // 被 App 嵌着跑时，把「开关侧栏」交给宿主，并广播一次 ready。
+  // 宿主没打 data-client 时这几段整个不生效，网页端行为不变。
+  useEffect(() => {
+    if (!isClientHost()) return;
+    const unregister = registerClientAction("toggleSidebar", () => {
+      if (dialogRef.current?.open) closeDrawer();
+      else openDrawer();
+    });
+    installClientActions();
+    return unregister;
+  }, [openDrawer, closeDrawer]);
+
+  // 开合状态回灌：宿主原生顶栏那颗按钮要能跟状态变
+  useEffect(() => {
+    if (!isClientHost()) return;
+    window.dispatchEvent(new CustomEvent("nzm:sidebar-change", { detail: drawerOpen }));
+  }, [drawerOpen]);
 
   useEffect(() => {
     const syncHash = () => setHash(window.location.hash);
@@ -382,10 +573,148 @@ function SiteShellContent({ children }: { children: React.ReactNode }) {
     return () => desktopQuery.removeEventListener("change", closeAtDesktop);
   }, [closeDrawer]);
 
+  // 侧栏收进抽屉后，在左半边屏幕向右滑可以「把抽屉拉出来」：
+  // 方向确认后立刻把抽屉挂到屏幕外，之后的位移全部交给手指，
+  // 松手时按展开比例 / 甩动速度吸附到打开或收起 —— 拖到一半反悔也能收回去。
+  // ⚠️ 只在 App 内嵌（`data-client`）时挂：普通浏览器里有自己的横滑/滚动语义，
+  // 抢过来会把页面滑动和触摸板手势一起弄坏。
+  useEffect(() => {
+    if (drawerOpen || !isClientHost()) return;
+    const desktopQuery = window.matchMedia("(min-width: 1024px)");
+    const gesture = {
+      tracking: false,
+      dragging: false,
+      startX: 0,
+      startY: 0,
+      lastX: 0,
+      lastAt: 0,
+      velocity: 0,
+      width: 1,
+      progress: 0,
+    };
+
+    const onTouchStart = (event: TouchEvent) => {
+      gesture.tracking = false;
+      gesture.dragging = false;
+      gesture.progress = 0;
+      gesture.velocity = 0;
+      if (event.touches.length !== 1 || desktopQuery.matches) return;
+      const touch = event.touches[0];
+      if (touch.clientX > window.innerWidth / 2) return;
+      // 其他弹层（搜索、图片查看等）打开时不抢手势
+      if (document.querySelector("dialog[open]")) return;
+      if (isInsideHorizontalScroller(event.target)) return;
+      if (isFromRangeControl(event.target)) return;
+      gesture.startX = touch.clientX;
+      gesture.startY = touch.clientY;
+      gesture.lastX = touch.clientX;
+      gesture.lastAt = performance.now();
+      gesture.tracking = true;
+    };
+
+    const onTouchMove = (event: TouchEvent) => {
+      if (!gesture.tracking || event.touches.length !== 1) return;
+      const touch = event.touches[0];
+      const dx = touch.clientX - gesture.startX;
+      const dy = touch.clientY - gesture.startY;
+
+      if (!gesture.dragging) {
+        // 竖直方向优先，交还给页面滚动
+        if (Math.abs(dy) > Math.abs(dx)) {
+          gesture.tracking = false;
+          return;
+        }
+        // 位移还太小：先不把抽屉挂上来，免得轻轻一划就闪一下
+        if (dx < DRAWER_DRAG_START) return;
+        const dialog = dialogRef.current;
+        if (!dialog || dialog.open) {
+          gesture.tracking = false;
+          return;
+        }
+        // ⚠️ 先关掉过渡、停在屏幕外再 showModal：直接 showModal 会先播一遍
+        // CSS 入场动画，手指位置和抽屉就对不上了
+        dialog.style.transition = "none";
+        dialog.style.translate = "-100% 0";
+        dialog.style.setProperty("--site-nav-drag", "0");
+        dialog.dataset.dragging = "";
+        dialog.showModal();
+        gesture.width = dialog.getBoundingClientRect().width || 1;
+        gesture.dragging = true;
+      }
+
+      const dt = performance.now() - gesture.lastAt;
+      if (dt > 0) {
+        gesture.velocity = (touch.clientX - gesture.lastX) / dt;
+        gesture.lastX = touch.clientX;
+        gesture.lastAt = performance.now();
+      }
+
+      const dialog = dialogRef.current;
+      if (!dialog) return;
+      const progress = Math.min(1, Math.max(0, dx / gesture.width));
+      gesture.progress = progress;
+      dialog.style.translate = `${-gesture.width * (1 - progress)}px 0`;
+      // 遮罩浓度也按展开比例走：抽屉还在外面时背景不该先暗下来
+      dialog.style.setProperty("--site-nav-drag", String(progress));
+    };
+
+    const onTouchEnd = () => {
+      gesture.tracking = false;
+      if (!gesture.dragging) return;
+      gesture.dragging = false;
+      const dialog = dialogRef.current;
+      // 手势途中可能被返回键 / 点遮罩关掉：已经关了就别再往里写位移
+      if (!dialog?.open) return;
+
+      // 拉过三成宽度，或者向右甩得够快，就打开
+      const open =
+        gesture.progress >= DRAWER_OPEN_RATIO ||
+        gesture.velocity >= DRAWER_FLING_VELOCITY;
+      dialog.style.transition = `translate ${DRAWER_SWIPE_OUT_MS}ms ${
+        open ? "cubic-bezier(0.16, 1, 0.3, 1)" : "ease-in"
+      }`;
+
+      if (open) {
+        dialog.style.translate = "0px 0";
+        dialog.style.setProperty("--site-nav-drag", "1");
+        window.setTimeout(() => {
+          const current = dialogRef.current;
+          if (!current) return;
+          // 交回 CSS 的打开态，之后的收起手势照旧
+          resetDialogDragStyles(current);
+          // 吸附期间可能已被点遮罩 / 换页关掉，再置 true 会让 body 一直锁滚动
+          if (current.open) setDrawerOpen(true);
+        }, DRAWER_SWIPE_OUT_MS);
+        return;
+      }
+
+      // 没到阈值：滑回屏幕外再关，别让它从半途弹回来
+      dialog.style.translate = "-100% 0";
+      dialog.style.setProperty("--site-nav-drag", "0");
+      window.setTimeout(() => {
+        const current = dialogRef.current;
+        if (!current) return;
+        if (current.open) current.close();
+        window.setTimeout(() => resetDialogDragStyles(current), DRAWER_FADE_MS);
+      }, DRAWER_SWIPE_OUT_MS);
+    };
+
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("touchcancel", onTouchEnd, { passive: true });
+    return () => {
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("touchcancel", onTouchEnd);
+    };
+  }, [drawerOpen]);
+
   const resolvedNavigation = resolveSiteNavigation({ pathname, hash });
 
   return (
-    <div className="min-h-dvh">
+    <div className="min-h-dvh" data-site-shell="">
       <SiteSidebar activeItemId={resolvedNavigation?.activeItemId ?? null} />
       <div className="min-w-0 lg:pl-(--site-sidebar-width) lg:[container-type:inline-size]">
         <SiteHeader
