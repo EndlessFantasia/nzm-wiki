@@ -167,10 +167,19 @@ dialog[open] {
 .site-nav-dialog {
   scale: 1;
   translate: -1rem 0;
+  /* 只保留纵向滚动，横向留给「向左滑动收起」手势 */
+  touch-action: pan-y;
 }
 
 .site-nav-dialog[open] {
   translate: 0 0;
+}
+
+/* 拖动跟手期间：遮罩浓度交给手势控制（--site-nav-drag 是 0..1 的展开比例），
+   否则抽屉还在屏幕外时背景就已经暗下来了 */
+.site-nav-dialog[data-dragging]::backdrop {
+  opacity: var(--site-nav-drag, 0);
+  transition: none;
 }
 
 @starting-style {
