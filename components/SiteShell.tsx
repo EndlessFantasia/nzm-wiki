@@ -14,6 +14,7 @@ import DesktopSettingsButton from "@/components/DesktopSettingsButton";
 import DesktopUpdateNotice from "@/components/DesktopUpdateNotice";
 import DesktopWindowControls from "@/components/DesktopWindowControls";
 import { canReturnToCatalog } from "@/lib/catalog-navigation";
+import { installClientActions, isClientHost, registerClientAction } from "@/lib/client-host";
 import { DESKTOP_CALCULATOR_PATH } from "@/lib/desktop";
 import { getAssetPath } from "@/lib/path";
 import {
@@ -158,7 +159,9 @@ function SiteNavigation({
 
 function SiteSidebar({ activeItemId }: { activeItemId: SiteNavItem["id"] | null }) {
   return (
-    <aside className="fixed inset-y-0 left-0 z-40 hidden w-(--site-sidebar-width) flex-col border-r border-zinc-700 bg-surface-1 shadow-[8px_0_28px_rgba(0,0,0,0.14)] lg:flex">
+    <aside
+      data-site-sidebar=""
+      className="fixed inset-y-0 left-0 z-40 hidden w-(--site-sidebar-width) flex-col border-r border-zinc-700 bg-surface-1 shadow-[8px_0_28px_rgba(0,0,0,0.14)] lg:flex">
       <div
         data-tauri-drag-region="deep"
         className="flex h-(--site-header-height) shrink-0 items-center border-b border-zinc-700 px-4"
@@ -231,6 +234,7 @@ function SiteHeader({
 
   return (
     <header
+      data-site-header=""
       data-tauri-drag-region="deep"
       className="sticky top-0 z-40 h-(--site-header-height) border-b border-zinc-700 bg-surface-1/95 backdrop-blur"
     >
@@ -345,6 +349,24 @@ function SiteShellContent({ children }: { children: React.ReactNode }) {
     dialog.showModal();
     setDrawerOpen(true);
   }, []);
+
+  // 被 App 嵌着跑时，把「开关侧栏」交给宿主，并广播一次 ready。
+  // 宿主没打 data-client 时这几段整个不生效，网页端行为不变。
+  useEffect(() => {
+    if (!isClientHost()) return;
+    const unregister = registerClientAction("toggleSidebar", () => {
+      if (dialogRef.current?.open) closeDrawer();
+      else openDrawer();
+    });
+    installClientActions();
+    return unregister;
+  }, [openDrawer, closeDrawer]);
+
+  // 开合状态回灌：宿主原生顶栏那颗按钮要能跟状态变
+  useEffect(() => {
+    if (!isClientHost()) return;
+    window.dispatchEvent(new CustomEvent("nzm:sidebar-change", { detail: drawerOpen }));
+  }, [drawerOpen]);
 
   useEffect(() => {
     const syncHash = () => setHash(window.location.hash);
