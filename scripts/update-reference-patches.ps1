@@ -121,12 +121,19 @@ try {
     [IO.Directory]::CreateDirectory($OutputRoot) | Out-Null
     $assets = @{}
     foreach ($name in $Container | Sort-Object -Unique) {
-        $options = $optionsType.GetMethod('Parse').Invoke($null, [object[]]@(,[string[]]@('list','--profile',$ProfilePath,'--container',$name,'--limit','200')))
-        $listing = $session.ListContainer($options)
-        if ($listing.total -gt 200) { throw 'Container exceeds the bounded single-page selection; use a narrower asset workflow.' }
+        $entries = @()
+        $listing = $null
+        for ($offset = 0; ; $offset += 200) {
+            $options = $optionsType.GetMethod('Parse').Invoke($null, [object[]]@(,[string[]]@('list','--profile',$ProfilePath,'--container',$name,'--limit','200','--offset',"$offset")))
+            $page = $session.ListContainer($options)
+            if (!$listing) { $listing = $page }
+            $entries += @($page.assets)
+            if ($entries.Count -ge $page.total -or !@($page.assets).Count) { break }
+        }
+        if ($entries.Count -ne $listing.total) { throw "Container listing incomplete: $name" }
         $manifest.containers += $listing.container
-        $listing | ConvertTo-Json -Depth 10 | Set-Content -LiteralPath (SafePath $OutputRoot ($listing.container.name + '.list.json')) -Encoding utf8
-        foreach ($item in $listing.assets) {
+        [ordered]@{container=$listing.container; total=$listing.total; assets=$entries} | ConvertTo-Json -Depth 10 | Set-Content -LiteralPath (SafePath $OutputRoot ($listing.container.name + '.list.json')) -Encoding utf8
+        foreach ($item in $entries) {
             if ($selected.Count -gt 0) {
                 $logicalPath = $item.path -replace '\.(uexp|ubulk|uptnl)$', '.uasset'
                 if (!$selected.Contains($logicalPath)) {
