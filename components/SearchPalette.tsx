@@ -25,6 +25,7 @@ const DEFAULT_ENTRIES = [
   { title: "塔防图鉴", path: "/tower-defense", category: "导航" },
   { title: "超限图鉴", path: "/overlimit", category: "导航" },
   { title: "原点图鉴", path: "/origin", category: "导航" },
+  { title: "生存战图鉴", path: "/survival", category: "导航" },
   { title: "赛季天赋", path: "/season-talents", category: "导航" },
   { title: "游戏乘区", path: "/multiplier", category: "导航" },
   { title: "搭配攻略", path: "/builds", category: "导航" },

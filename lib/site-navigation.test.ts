@@ -18,7 +18,7 @@ test("站点导航配置保持预期分组和顺序", () => {
     })),
     [
       { label: "图鉴", items: ["武器图鉴", "插件图鉴", "敌人图鉴"] },
-      { label: "玩法", items: ["塔防图鉴", "超限图鉴", "原点图鉴"] },
+      { label: "玩法", items: ["塔防图鉴", "超限图鉴", "原点图鉴", "生存战图鉴"] },
       {
         label: "攻略资料",
         items: ["游戏乘区", "赛季天赋", "搭配攻略", "攻略文章"],
@@ -38,6 +38,7 @@ test("首页和普通图鉴路由解析到正确入口", () => {
   assert.equal(active("/overlimit/example"), "overlimit");
   assert.equal(active("/origin"), "origin");
   assert.equal(active("/origin/example"), "origin");
+  assert.equal(active("/survival"), "survival");
   assert.equal(active("/credits/"), "credits");
 });
 

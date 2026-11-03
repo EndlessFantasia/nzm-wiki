@@ -14,6 +14,7 @@ import { getOverlimitCatalog, getOverlimitPreviewCatalog } from "../lib/overlimi
 import type { OverlimitCatalog } from "../lib/overlimit-catalog";
 import { getStatusEffectSearchDocuments } from "../lib/status-effects";
 import { getSummonSearchDocuments } from "../lib/summons";
+import { SURVIVAL_CODEX } from "../lib/survival-codex";
 import { getAllResolvedWeapons } from "../lib/weapons";
 import { getAllPublishedPerks, getPerkDocument } from "../lib/perks";
 import { getPerkPreviewCatalog } from "../lib/perk-preview";
@@ -758,6 +759,23 @@ export function generateSearchIndex(weapons: readonly ResolvedWeapon[]) {
     pinyin: [...new Set(talentKeywords.flatMap((text) =>
       (["pinyin", "first"] as const).map((pattern) =>
         pinyin(text, { pattern, toneType: "none", type: "array" }).join("").toLowerCase())))] });
+
+  const survivalKeywords = ["生存战", "生存战图鉴", "时空猎场", "战术技能", "终极进化"];
+  items.push({ title: "生存战图鉴", slug: "survival", path: "/survival",
+    category: "生存战图鉴", keywords: survivalKeywords, pinyin: buildPinyin(survivalKeywords) });
+  const survivalEntries = [
+    ...SURVIVAL_CODEX.skills.map((skill) => ({ kind: "skill", id: skill.id, name: skill.name,
+      keywords: [skill.ultimate.name, ...skill.tags.map((tag) => tag.text)] })),
+    ...SURVIVAL_CODEX.passives.map((passive) => ({ kind: "passive", id: passive.id, name: passive.name,
+      keywords: passive.tags.map((tag) => tag.text) })),
+    ...SURVIVAL_CODEX.specials.map((special) => ({ kind: "special", id: special.id, name: special.name,
+      keywords: special.tags.map((tag) => tag.text) })),
+  ];
+  for (const entry of survivalEntries) {
+    const keywords = ["生存战", entry.name, ...entry.keywords];
+    items.push({ title: entry.name, slug: `survival/${entry.kind}-${entry.id}`, path: `/survival#${entry.kind}-${entry.id}`,
+      category: "生存战图鉴", keywords, pinyin: buildPinyin(keywords) });
+  }
 
   items.push(...getAllOverlimitCards().map(card => createOverlimitCardSearchItem(card)));
   const overlimitPreview = getOverlimitPreviewCatalog();

@@ -5,6 +5,7 @@ export type SiteNavItemId =
   | "tower-defense"
   | "overlimit"
   | "origin"
+  | "survival"
   | "season-talents"
   | "builds"
   | "multiplier"
@@ -58,6 +59,7 @@ export const SITE_NAV_SECTIONS: readonly SiteNavSection[] = [
       },
       { id: "overlimit", label: "超限图鉴", href: "/overlimit" },
       { id: "origin", label: "原点图鉴", href: "/origin" },
+      { id: "survival", label: "生存战图鉴", href: "/survival" },
     ],
   },
   {
@@ -190,6 +192,10 @@ export function resolveSiteNavigation({
 
   if (isPath(normalizedPathname, "/origin")) {
     return resolveItem("origin");
+  }
+
+  if (isPath(normalizedPathname, "/survival")) {
+    return resolveItem("survival");
   }
 
   if (normalizedPathname === "/credits") {
