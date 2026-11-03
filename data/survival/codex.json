@@ -1,0 +1,3655 @@
+{
+  "schemaVersion": 1,
+  "numericalStatus": "display-only",
+  "skills": [
+    {
+      "id": 1001,
+      "name": "机枪哨卫",
+      "tagKeys": [
+        "Summon",
+        "Cooldown"
+      ],
+      "tags": [
+        {
+          "text": "召唤",
+          "style": "E008",
+          "color": "#FFE473"
+        },
+        {
+          "text": "冷却",
+          "style": "E015",
+          "color": "#86ACFF"
+        }
+      ],
+      "mge": {
+        "id": "1511003001",
+        "blueprint": "MGE_1511003001_Drone"
+      },
+      "levels": [
+        {
+          "id": 1001,
+          "name": "机枪哨卫 I",
+          "description": "每20秒召唤1架的跟随你的机枪哨卫，持续10秒",
+          "currentLevelDescription": "每20秒召唤1架的跟随你的机枪哨卫，持续10秒",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_006.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "AddMGE",
+            "params": [
+              "1511003001",
+              "1"
+            ]
+          },
+          "prerequisites": [],
+          "weight": 1000,
+          "reduceWeight": 250
+        },
+        {
+          "id": 2001,
+          "name": "机枪哨卫II",
+          "description": "哨卫数量 1 → 2",
+          "currentLevelDescription": "召唤哨卫数量：2 \n持续10秒  冷却20秒",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_006.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511003001",
+              "1"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                1001
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2002,
+          "name": "机枪哨卫III",
+          "description": "哨卫数量 2 → 3",
+          "currentLevelDescription": "召唤哨卫数量：3 \n持续10秒  冷却20秒",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_006.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511003001",
+              "2"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2001
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2003,
+          "name": "机枪哨卫IV",
+          "description": "哨卫攻速增加10%",
+          "currentLevelDescription": "召唤哨卫数量：3 哨卫攻速+10%\n持续10秒  冷却20秒",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_006.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511003001",
+              "3"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2002
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2004,
+          "name": "机枪哨卫V",
+          "description": "哨卫攻速增加 10% → 25%",
+          "currentLevelDescription": "召唤哨卫数量：3 哨卫攻速+25%\n持续10秒  冷却20秒",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_006.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511003001",
+              "4"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2003
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        }
+      ],
+      "ultimate": {
+        "id": 2005,
+        "name": "超载哨卫群",
+        "description": "哨卫数量3→4，永久跟随",
+        "currentLevelDescription": "哨卫数量：4 哨卫攻速+25%\n永久跟随",
+        "icon": "/icons/survival/T_Icons_Skill_Survival_005.webp",
+        "attributeDisplays": [],
+        "effect": {
+          "type": "LevelUpRogueLikeBuff",
+          "params": [
+            "1511003001",
+            "5",
+            "1511005010"
+          ]
+        },
+        "prerequisites": [
+          {
+            "type": "HaveBuff",
+            "ids": [
+              2004,
+              6011
+            ]
+          }
+        ],
+        "weight": 0,
+        "reduceWeight": 0
+      },
+      "passiveId": 6011,
+      "atlas": {
+        "id": 1,
+        "sortOrder": 100
+      }
+    },
+    {
+      "id": 1002,
+      "name": "毁灭者",
+      "tagKeys": [
+        "Summon",
+        "Time"
+      ],
+      "tags": [
+        {
+          "text": "召唤",
+          "style": "E008",
+          "color": "#FFE473"
+        },
+        {
+          "text": "持续",
+          "style": "E014",
+          "color": "#A3F56C"
+        }
+      ],
+      "mge": {
+        "id": "1511010001",
+        "blueprint": "MGE_1511010001_Turret"
+      },
+      "levels": [
+        {
+          "id": 1002,
+          "name": "毁灭者 I",
+          "description": "每30秒在附近召唤一座毁灭者炮台，攻击2个目标，持续24秒",
+          "currentLevelDescription": "每30秒在附近召唤一座毁灭者炮台，攻击2个目标，持续24秒",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_011.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "AddMGE",
+            "params": [
+              "1511010001",
+              "1"
+            ]
+          },
+          "prerequisites": [],
+          "weight": 1000,
+          "reduceWeight": 250
+        },
+        {
+          "id": 2011,
+          "name": "毁灭者II",
+          "description": "毁灭者攻击目标  2 → 4",
+          "currentLevelDescription": "目标数：4 持续24秒  冷却30秒",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_011.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511010001",
+              "1"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                1002
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2012,
+          "name": "毁灭者III",
+          "description": "每隔1秒伤害增加24%，5秒后进入毁灭模式增伤120%，持续5秒",
+          "currentLevelDescription": "目标数：4 持续24秒  冷却30秒 \n每秒增伤24%，满5层增伤120%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_011.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511010001",
+              "2"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2011
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2013,
+          "name": "毁灭者IV",
+          "description": "毁灭者伤害增加25%",
+          "currentLevelDescription": "目标数：4 持续24秒  冷却30秒 伤害+25%\n每秒增伤24%，满5层增伤120%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_011.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511010001",
+              "3"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2012
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2014,
+          "name": "毁灭者V",
+          "description": "毁灭者伤害增加 25% → 65%",
+          "currentLevelDescription": "目标数：4 持续24秒  冷却30秒 伤害+65%\n每秒增伤24%，满5层增伤120%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_011.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511010001",
+              "4"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2013
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        }
+      ],
+      "ultimate": {
+        "id": 2015,
+        "name": "高能毁灭者",
+        "description": "永久处于毁灭模式，且增伤变为600%",
+        "currentLevelDescription": "目标数：4 持续24秒  冷却30秒\n伤害+665%",
+        "icon": "/icons/survival/T_Icons_Skill_Survival_001.webp",
+        "attributeDisplays": [],
+        "effect": {
+          "type": "LevelUpRogueLikeBuff",
+          "params": [
+            "1511010001",
+            "5",
+            "1511005010"
+          ]
+        },
+        "prerequisites": [
+          {
+            "type": "HaveBuff",
+            "ids": [
+              2014,
+              6031
+            ]
+          }
+        ],
+        "weight": 0,
+        "reduceWeight": 0
+      },
+      "passiveId": 6031,
+      "atlas": {
+        "id": 2,
+        "sortOrder": 200
+      }
+    },
+    {
+      "id": 1003,
+      "name": "回旋猎刃",
+      "tagKeys": [
+        "Kinetic",
+        "Bullet"
+      ],
+      "tags": [
+        {
+          "text": "物理",
+          "style": "E009",
+          "color": "#75DFFF"
+        },
+        {
+          "text": "子弹",
+          "style": "E011",
+          "color": "#5DD7AC"
+        }
+      ],
+      "mge": {
+        "id": "1511004001",
+        "blueprint": "MGE_1511004001_Boomerang"
+      },
+      "levels": [
+        {
+          "id": 1003,
+          "name": "回旋猎刃 I",
+          "description": "每3秒向前方发射1柄回旋猎刃，造成物理伤害",
+          "currentLevelDescription": "每3秒向前方发射1柄回旋猎刃，造成物理伤害",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_010.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "AddMGE",
+            "params": [
+              "1511004001",
+              "1"
+            ]
+          },
+          "prerequisites": [],
+          "weight": 1000,
+          "reduceWeight": 250
+        },
+        {
+          "id": 2021,
+          "name": "回旋猎刃II",
+          "description": "猎刃发射数量 1 → 2",
+          "currentLevelDescription": "猎刃数量：2 冷却3秒",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_010.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511004001",
+              "1"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                1003
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2022,
+          "name": "回旋猎刃III",
+          "description": "猎刃飞行速度增加40%\n冷却时间减少40%",
+          "currentLevelDescription": "猎刃数量：2 冷却1.8秒\n飞行速度+40%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_010.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511004001",
+              "2"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2021
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2023,
+          "name": "回旋猎刃IV",
+          "description": "回旋猎刃伤害增加 10%",
+          "currentLevelDescription": "猎刃数量：2 冷却1.8秒\n飞行速度+40% 伤害+10%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_010.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511004001",
+              "3"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2022
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2024,
+          "name": "回旋猎刃V",
+          "description": "回旋猎刃伤害增加 10% → 25%",
+          "currentLevelDescription": "猎刃数量：2 冷却1.8秒\n飞行速度+40% 伤害+25%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_010.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511004001",
+              "4"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2023
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        }
+      ],
+      "ultimate": {
+        "id": 2025,
+        "name": "回旋猎杀者",
+        "description": "猎刃数量2→3 每击中一人增伤10%\n受击敌人易伤40%，持续5秒",
+        "currentLevelDescription": "猎刃数量：3 冷却1.8秒\n速度+40% 击中增伤10% 易伤40%",
+        "icon": "/icons/survival/T_Icons_Skill_Survival_009.webp",
+        "attributeDisplays": [],
+        "effect": {
+          "type": "LevelUpRogueLikeBuff",
+          "params": [
+            "1511004001",
+            "5",
+            "1511005010"
+          ]
+        },
+        "prerequisites": [
+          {
+            "type": "HaveBuff",
+            "ids": [
+              2024,
+              6006
+            ]
+          }
+        ],
+        "weight": 0,
+        "reduceWeight": 0
+      },
+      "passiveId": 6006,
+      "atlas": {
+        "id": 3,
+        "sortOrder": 300
+      }
+    },
+    {
+      "id": 1004,
+      "name": "减速球",
+      "tagKeys": [
+        "Element",
+        "Bullet"
+      ],
+      "tags": [
+        {
+          "text": "元素",
+          "style": "E007",
+          "color": "#FD7070"
+        },
+        {
+          "text": "子弹",
+          "style": "E011",
+          "color": "#5DD7AC"
+        }
+      ],
+      "mge": {
+        "id": "1511005001",
+        "blueprint": "MGE_1511005001_IceBomb"
+      },
+      "levels": [
+        {
+          "id": 1004,
+          "name": "减速球 I",
+          "description": "枪械每命中25次向前发射减速球，接触敌人后爆炸造成减速和元素伤害",
+          "currentLevelDescription": "枪械每命中25次向前发射减速球，接触敌人后爆炸造成减速和元素伤害",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_008.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "AddMGE",
+            "params": [
+              "1511005001",
+              "1"
+            ]
+          },
+          "prerequisites": [],
+          "weight": 1000,
+          "reduceWeight": 250
+        },
+        {
+          "id": 2031,
+          "name": "减速球II",
+          "description": "减速球体积和爆炸范围增加50%",
+          "currentLevelDescription": "球体积+50% 爆炸范围+50%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_008.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511005001",
+              "1"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                1004
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2032,
+          "name": "减速球III",
+          "description": "减速球伤害增加100%\n减速效果 30% → 40%",
+          "currentLevelDescription": "球体积+50% 爆炸范围+50%\n伤害+100% 减速40%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_008.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511005001",
+              "2"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2031
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2033,
+          "name": "减速球IV",
+          "description": "减速球体积和爆炸范围增加 50% → 100%",
+          "currentLevelDescription": "球体积+50% 爆炸范围+100%\n伤害+100% 减速40%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_008.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511005001",
+              "3"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2032
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2034,
+          "name": "减速球V",
+          "description": "减速球伤害增加100% → 200%\n减速效果40% → 50%",
+          "currentLevelDescription": "球体积+50% 爆炸范围+100%\n伤害+200% 减速50%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_008.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511005001",
+              "4"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2033
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        }
+      ],
+      "ultimate": {
+        "id": 2035,
+        "name": "冰霜新星",
+        "description": "连续发射2颗减速球，间隔0.5秒",
+        "currentLevelDescription": "球体积+50%爆炸范围+100%\n伤害+200% 减速50% 数量2",
+        "icon": "/icons/survival/T_Icons_Skill_Survival_007.webp",
+        "attributeDisplays": [],
+        "effect": {
+          "type": "LevelUpRogueLikeBuff",
+          "params": [
+            "1511005001",
+            "5",
+            "1511005010"
+          ]
+        },
+        "prerequisites": [
+          {
+            "type": "HaveBuff",
+            "ids": [
+              2034,
+              6016
+            ]
+          }
+        ],
+        "weight": 0,
+        "reduceWeight": 0
+      },
+      "passiveId": 6016,
+      "atlas": {
+        "id": 4,
+        "sortOrder": 400
+      }
+    },
+    {
+      "id": 1005,
+      "name": "烈焰轰炸",
+      "tagKeys": [
+        "Element",
+        "Cooldown"
+      ],
+      "tags": [
+        {
+          "text": "元素",
+          "style": "E007",
+          "color": "#FD7070"
+        },
+        {
+          "text": "冷却",
+          "style": "E015",
+          "color": "#86ACFF"
+        }
+      ],
+      "mge": {
+        "id": "1511001001",
+        "blueprint": "MGE_1511001001_AutoBoom"
+      },
+      "levels": [
+        {
+          "id": 1005,
+          "name": "烈焰轰炸 I",
+          "description": "每6秒呼叫1次烈焰轰炸，对固定区域造成元素伤害",
+          "currentLevelDescription": "每6秒呼叫1次烈焰轰炸，对固定区域造成元素伤害",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_029.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "AddMGE",
+            "params": [
+              "1511001001",
+              "1"
+            ]
+          },
+          "prerequisites": [],
+          "weight": 1000,
+          "reduceWeight": 250
+        },
+        {
+          "id": 2041,
+          "name": "烈焰轰炸II",
+          "description": "烈焰轰炸伤害增加15%\n轰炸范围扩大30%",
+          "currentLevelDescription": "轰炸间隔6秒 投弹数：1\n轰炸伤害+15% 范围+30%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_029.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511001001",
+              "1"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                1005
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2042,
+          "name": "烈焰轰炸III",
+          "description": "每轮轰炸榴弹数量增加 1 → 2",
+          "currentLevelDescription": "轰炸间隔6秒 投弹数：2\n轰炸伤害+15% 范围+30%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_029.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511001001",
+              "2"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2041
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2043,
+          "name": "烈焰轰炸IV",
+          "description": "轰炸范围扩大 30% → 50%",
+          "currentLevelDescription": "轰炸间隔6秒 投弹数：2\n轰炸伤害+15% 范围+50%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_029.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511001001",
+              "3"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2042
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2044,
+          "name": "烈焰轰炸V",
+          "description": "烈焰轰炸伤害增加 15% → 45%",
+          "currentLevelDescription": "轰炸间隔6秒 投弹数：2\n轰炸伤害+45% 范围+50%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_029.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511001001",
+              "4"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2043
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        }
+      ],
+      "ultimate": {
+        "id": 2045,
+        "name": "联盟千岁",
+        "description": "进化为联盟千岁\n伤害大幅增加 范围+300%",
+        "currentLevelDescription": "轰炸间隔15秒 投弹数：1\n轰炸伤害大幅增加 范围+300%",
+        "icon": "/icons/survival/T_Icons_Skill_Survival_016.webp",
+        "attributeDisplays": [],
+        "effect": {
+          "type": "LevelUpRogueLikeBuff",
+          "params": [
+            "1511001001",
+            "5",
+            "1511005010"
+          ]
+        },
+        "prerequisites": [
+          {
+            "type": "HaveBuff",
+            "ids": [
+              2044,
+              6021
+            ]
+          }
+        ],
+        "weight": 0,
+        "reduceWeight": 0
+      },
+      "passiveId": 6021,
+      "atlas": {
+        "id": 5,
+        "sortOrder": 500
+      }
+    },
+    {
+      "id": 1006,
+      "name": "绝影飞刃",
+      "tagKeys": [
+        "Critical",
+        "Bullet"
+      ],
+      "tags": [
+        {
+          "text": "暴击",
+          "style": "E012",
+          "color": "#8080FF"
+        },
+        {
+          "text": "子弹",
+          "style": "E011",
+          "color": "#5DD7AC"
+        }
+      ],
+      "mge": {
+        "id": "1511006001",
+        "blueprint": "MGE_1511006001_Knife"
+      },
+      "levels": [
+        {
+          "id": 1006,
+          "name": "绝影飞刃 I",
+          "description": "暴击率+15%，暴击触发飞刃\n穿透2个敌人，触发冷却0.5秒",
+          "currentLevelDescription": "暴击率+15%，暴击触发3柄飞刃\n可穿透2个敌人，触发冷却0.5秒",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_013.webp",
+          "attributeDisplays": [
+            {
+              "label": "暴击率",
+              "value": 15
+            }
+          ],
+          "effect": {
+            "type": "AddMGE",
+            "params": [
+              "1511006001",
+              "1"
+            ]
+          },
+          "prerequisites": [],
+          "weight": 1000,
+          "reduceWeight": 250
+        },
+        {
+          "id": 2051,
+          "name": "绝影飞刃II",
+          "description": "飞刃伤害增加20%\n飞刃数量 3 → 5",
+          "currentLevelDescription": "飞刃数：5 穿透数：2 触发间隔0.5秒\n暴击+15% 飞刃伤害+20%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_013.webp",
+          "attributeDisplays": [
+            {
+              "label": "暴击率",
+              "value": 15
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511006001",
+              "1"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                1006
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2052,
+          "name": "绝影飞刃III",
+          "description": "飞刃伤害增加 20% → 70%\n飞刃穿透数量 2 → 3",
+          "currentLevelDescription": "飞刃数：5 穿透数：3 触发间隔0.5秒\n暴击+15% 飞刃伤害+70%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_013.webp",
+          "attributeDisplays": [
+            {
+              "label": "暴击率",
+              "value": 15
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511006001",
+              "2"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2051
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2053,
+          "name": "绝影飞刃IV",
+          "description": "飞刃伤害增加 70% → 100%",
+          "currentLevelDescription": "飞刃数：5 穿透数：3 触发间隔0.5秒\n暴击+15% 飞刃伤害翻倍",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_013.webp",
+          "attributeDisplays": [
+            {
+              "label": "暴击率",
+              "value": 15
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511006001",
+              "3"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2052
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2054,
+          "name": "绝影飞刃V",
+          "description": "飞刃穿透数量 3 → 5",
+          "currentLevelDescription": "飞刃数：5 穿透数：5 触发间隔0.5秒\n暴击+15% 飞刃伤害翻倍",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_013.webp",
+          "attributeDisplays": [
+            {
+              "label": "暴击率",
+              "value": 15
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511006001",
+              "4"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2053
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        }
+      ],
+      "ultimate": {
+        "id": 2055,
+        "name": "爆伤刀扇",
+        "description": "触发间隔-60%，飞刃数量5→7\n暴伤+100%，飞刃每穿透1次增伤25%",
+        "currentLevelDescription": "数量：7 穿透：5 触发间隔0.2秒\n暴击+15% 暴伤+100% 伤害翻倍",
+        "icon": "/icons/survival/T_Icons_Skill_Survival_012.webp",
+        "attributeDisplays": [
+          {
+            "label": "暴击率",
+            "value": 15
+          }
+        ],
+        "effect": {
+          "type": "LevelUpRogueLikeBuff",
+          "params": [
+            "1511006001",
+            "5",
+            "1511005010"
+          ]
+        },
+        "prerequisites": [
+          {
+            "type": "HaveBuff",
+            "ids": [
+              2054,
+              6056
+            ]
+          }
+        ],
+        "weight": 0,
+        "reduceWeight": 0
+      },
+      "passiveId": 6056,
+      "atlas": {
+        "id": 6,
+        "sortOrder": 600
+      }
+    },
+    {
+      "id": 1007,
+      "name": "冲击环",
+      "tagKeys": [
+        "Kinetic",
+        "ForceField"
+      ],
+      "tags": [
+        {
+          "text": "物理",
+          "style": "E009",
+          "color": "#75DFFF"
+        },
+        {
+          "text": "力场",
+          "style": "E010",
+          "color": "#DB85FF"
+        }
+      ],
+      "mge": {
+        "id": "1511020001",
+        "blueprint": "MGE_1511020001_ShakeWave"
+      },
+      "levels": [
+        {
+          "id": 1007,
+          "name": "冲击环 I",
+          "description": "每3秒，以自身为中心生成扩散冲击环，造成物理伤害",
+          "currentLevelDescription": "每3秒，以自身为中心生成扩散冲击环，造成物理伤害",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_015.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "AddMGE",
+            "params": [
+              "1511020001",
+              "1"
+            ]
+          },
+          "prerequisites": [],
+          "weight": 1000,
+          "reduceWeight": 250
+        },
+        {
+          "id": 2061,
+          "name": "冲击环II",
+          "description": "冲击环伤害增加 40%\n扩散加速 20%，范围扩大70%",
+          "currentLevelDescription": "冲击间隔3秒\n冲击伤害+40% 范围+70%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_015.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511020001",
+              "1"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                1007
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2062,
+          "name": "冲击环III",
+          "description": "冲击环冷却时间减少40%",
+          "currentLevelDescription": "冲击间隔1.8秒\n冲击伤害+40% 范围+70%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_015.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511020001",
+              "2"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2061
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2063,
+          "name": "冲击环IV",
+          "description": "冲击环伤害增加  40% → 60%",
+          "currentLevelDescription": "冲击间隔1.8秒\n冲击伤害+60% 范围+70%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_015.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511020001",
+              "3"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2062
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2064,
+          "name": "冲击环V",
+          "description": "冲击环伤害增加  60% → 100%",
+          "currentLevelDescription": "冲击间隔1.8秒\n冲击伤害+100% 范围+70%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_015.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511020001",
+              "4"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2063
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        }
+      ],
+      "ultimate": {
+        "id": 2065,
+        "name": "冲击力场",
+        "description": "冲击永久存在，持续造成伤害",
+        "currentLevelDescription": "冲击环永久持续\n范围+70%",
+        "icon": "/icons/survival/T_Icons_Skill_Survival_014.webp",
+        "attributeDisplays": [],
+        "effect": {
+          "type": "LevelUpRogueLikeBuff",
+          "params": [
+            "1511020001",
+            "5",
+            "1511005010"
+          ]
+        },
+        "prerequisites": [
+          {
+            "type": "HaveBuff",
+            "ids": [
+              2064,
+              6026
+            ]
+          }
+        ],
+        "weight": 0,
+        "reduceWeight": 0
+      },
+      "passiveId": 6026,
+      "atlas": {
+        "id": 7,
+        "sortOrder": 700
+      }
+    },
+    {
+      "id": 1008,
+      "name": "电磁轰炸",
+      "tagKeys": [
+        "Element",
+        "Critical"
+      ],
+      "tags": [
+        {
+          "text": "元素",
+          "style": "E007",
+          "color": "#FD7070"
+        },
+        {
+          "text": "暴击",
+          "style": "E012",
+          "color": "#8080FF"
+        }
+      ],
+      "mge": {
+        "id": "1511002001",
+        "blueprint": "MGE_1511002001_AutoElectromagneticStrike"
+      },
+      "levels": [
+        {
+          "id": 1008,
+          "name": "电磁轰炸 I",
+          "description": "每5秒，锁定附近的高威胁敌人进行1次电磁轰炸打击，造成元素伤害",
+          "currentLevelDescription": "每5秒，锁定附近的高威胁敌人进行1次电磁轰炸打击，造成元素伤害",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_004.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "AddMGE",
+            "params": [
+              "1511002001",
+              "1"
+            ]
+          },
+          "prerequisites": [],
+          "weight": 1000,
+          "reduceWeight": 250
+        },
+        {
+          "id": 2071,
+          "name": "电磁轰炸II",
+          "description": "每轮电磁轰炸次数 1 → 2",
+          "currentLevelDescription": "间隔5秒 轰炸2次",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_004.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511002001",
+              "1"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                1008
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2072,
+          "name": "电磁轰炸III",
+          "description": "锁定敌人后附加标记，枪械命中标记敌人立即触发1次轰炸，冷却5秒",
+          "currentLevelDescription": "间隔5秒 轰炸2次\n5秒附加标记",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_004.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511002001",
+              "2"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2071
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2073,
+          "name": "电磁轰炸IV",
+          "description": "电磁轰炸伤害增加25%",
+          "currentLevelDescription": "间隔5秒 轰炸2次 伤害+25%\n5秒附加标记",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_004.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511002001",
+              "3"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2072
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 2074,
+          "name": "电磁轰炸V",
+          "description": "标记的冷却时间减少3秒",
+          "currentLevelDescription": "间隔5秒 轰炸2次 伤害+25%\n2秒附加标记",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_004.webp",
+          "attributeDisplays": [],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511002001",
+              "4"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                2073
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        }
+      ],
+      "ultimate": {
+        "id": 2075,
+        "name": "超电磁炮",
+        "description": "每轮电磁轰炸次数2→ 4\n破韧效率增加300%",
+        "currentLevelDescription": "间隔5秒 轰炸4次 伤害+25%\n2秒附加标记 破韧效率+300%",
+        "icon": "/icons/survival/T_Icons_Skill_Survival_003.webp",
+        "attributeDisplays": [],
+        "effect": {
+          "type": "LevelUpRogueLikeBuff",
+          "params": [
+            "1511002001",
+            "5",
+            "1511005010"
+          ]
+        },
+        "prerequisites": [
+          {
+            "type": "HaveBuff",
+            "ids": [
+              2074,
+              6001
+            ]
+          }
+        ],
+        "weight": 0,
+        "reduceWeight": 0
+      },
+      "passiveId": 6001,
+      "atlas": {
+        "id": 8,
+        "sortOrder": 800
+      }
+    }
+  ],
+  "passives": [
+    {
+      "id": 6036,
+      "name": "自愈",
+      "tags": [],
+      "mge": {
+        "id": "1511017001",
+        "blueprint": "MGE_1511017001_Mushroom"
+      },
+      "levels": [
+        {
+          "id": 6036,
+          "name": "自愈 I",
+          "description": "跳跃时回复生命3点，冷却时间5秒",
+          "currentLevelDescription": "跳跃时回复生命3点，冷却时间5秒",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_017.webp",
+          "attributeDisplays": [
+            {
+              "label": "跳跃回血",
+              "value": 3
+            }
+          ],
+          "effect": {
+            "type": "AddMGE",
+            "params": [
+              "1511017001",
+              "1"
+            ]
+          },
+          "prerequisites": [],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6037,
+          "name": "自愈II",
+          "description": "跳跃时回复生命 3 →6点，冷却时间5秒",
+          "currentLevelDescription": "跳跃时回复生命6点，冷却时间5秒",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_017.webp",
+          "attributeDisplays": [
+            {
+              "label": "跳跃回血",
+              "value": 6
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511017001",
+              "1"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6036
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6038,
+          "name": "自愈III",
+          "description": "跳跃时回复生命 6 →9点，冷却时间5秒",
+          "currentLevelDescription": "跳跃时回复生命9点，冷却时间5秒",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_017.webp",
+          "attributeDisplays": [
+            {
+              "label": "跳跃回血",
+              "value": 9
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511017001",
+              "2"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6037
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6039,
+          "name": "自愈IV",
+          "description": "跳跃时回复生命 9 →12点，冷却时间5秒",
+          "currentLevelDescription": "跳跃时回复生命12点，冷却时间5秒",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_017.webp",
+          "attributeDisplays": [
+            {
+              "label": "跳跃回血",
+              "value": 12
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511017001",
+              "3"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6038
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6040,
+          "name": "自愈V",
+          "description": "跳跃时回复生命 12 →20点，冷却时间5秒",
+          "currentLevelDescription": "跳跃时回复生命20点，冷却时间5秒",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_017.webp",
+          "attributeDisplays": [
+            {
+              "label": "跳跃回血",
+              "value": 20
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511017001",
+              "4"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6039
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        }
+      ],
+      "combinesWithSkillId": null,
+      "atlas": {
+        "id": 9,
+        "sortOrder": 2080
+      }
+    },
+    {
+      "id": 6041,
+      "name": "铁壁",
+      "tags": [],
+      "mge": {
+        "id": "1511018001",
+        "blueprint": "MGE_1511018001_AddDefense"
+      },
+      "levels": [
+        {
+          "id": 6041,
+          "name": "铁壁 I",
+          "description": "受到的伤害减少 5%",
+          "currentLevelDescription": "受到的伤害减少5%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_024.webp",
+          "attributeDisplays": [
+            {
+              "label": "受到伤害降低",
+              "value": 5
+            }
+          ],
+          "effect": {
+            "type": "AddMGE",
+            "params": [
+              "1511018001",
+              "1"
+            ]
+          },
+          "prerequisites": [],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6042,
+          "name": "铁壁II",
+          "description": "受到的伤害减少 5% → 10%",
+          "currentLevelDescription": "受到的伤害减少10%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_024.webp",
+          "attributeDisplays": [
+            {
+              "label": "受到伤害降低",
+              "value": 10
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511018001",
+              "1"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6041
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6043,
+          "name": "铁壁III",
+          "description": "受到的伤害减少 10% → 15%",
+          "currentLevelDescription": "受到的伤害减少15%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_024.webp",
+          "attributeDisplays": [
+            {
+              "label": "受到伤害降低",
+              "value": 15
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511018001",
+              "2"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6042
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6044,
+          "name": "铁壁IV",
+          "description": "受到的伤害减少 15% → 20%",
+          "currentLevelDescription": "受到的伤害减少20%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_024.webp",
+          "attributeDisplays": [
+            {
+              "label": "受到伤害降低",
+              "value": 20
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511018001",
+              "3"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6043
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6045,
+          "name": "铁壁V",
+          "description": "受到的伤害减少 20% → 40%",
+          "currentLevelDescription": "受到的伤害减少40%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_024.webp",
+          "attributeDisplays": [
+            {
+              "label": "受到伤害降低",
+              "value": 40
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511018001",
+              "4"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6044
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        }
+      ],
+      "combinesWithSkillId": null,
+      "atlas": {
+        "id": 10,
+        "sortOrder": 2090
+      }
+    },
+    {
+      "id": 6046,
+      "name": "潜能激发",
+      "tags": [],
+      "mge": null,
+      "levels": [
+        {
+          "id": 6046,
+          "name": "潜能激发 I",
+          "description": "获取经验增加 10%",
+          "currentLevelDescription": "获取经验增加10%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_022.webp",
+          "attributeDisplays": [
+            {
+              "label": "获取经验",
+              "value": 10
+            }
+          ],
+          "effect": {
+            "type": "ExpRateModifier",
+            "params": [
+              "10"
+            ]
+          },
+          "prerequisites": [],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6047,
+          "name": "潜能激发II",
+          "description": "获取经验增加 10% → 25%",
+          "currentLevelDescription": "获取经验增加25%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_022.webp",
+          "attributeDisplays": [
+            {
+              "label": "获取经验",
+              "value": 25
+            }
+          ],
+          "effect": {
+            "type": "ExpRateModifier",
+            "params": [
+              "15"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6046
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6048,
+          "name": "潜能激发III",
+          "description": "获取经验增加 25% → 45%",
+          "currentLevelDescription": "获取经验增加45%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_022.webp",
+          "attributeDisplays": [
+            {
+              "label": "获取经验",
+              "value": 45
+            }
+          ],
+          "effect": {
+            "type": "ExpRateModifier",
+            "params": [
+              "20"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6047
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6049,
+          "name": "潜能激发IV",
+          "description": "获取经验增加 45% → 70%",
+          "currentLevelDescription": "获取经验增加70%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_022.webp",
+          "attributeDisplays": [
+            {
+              "label": "获取经验",
+              "value": 70
+            }
+          ],
+          "effect": {
+            "type": "ExpRateModifier",
+            "params": [
+              "25"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6048
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6050,
+          "name": "潜能激发V",
+          "description": "获取经验增加 70% → 110%",
+          "currentLevelDescription": "获取经验增加110%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_022.webp",
+          "attributeDisplays": [
+            {
+              "label": "获取经验",
+              "value": 110
+            }
+          ],
+          "effect": {
+            "type": "ExpRateModifier",
+            "params": [
+              "40"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6049
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        }
+      ],
+      "combinesWithSkillId": null,
+      "atlas": {
+        "id": 11,
+        "sortOrder": 2100
+      }
+    },
+    {
+      "id": 6051,
+      "name": "狂暴",
+      "tags": [],
+      "mge": {
+        "id": "1511013001",
+        "blueprint": "MGE_1511013001_AddAllDamage"
+      },
+      "levels": [
+        {
+          "id": 6051,
+          "name": "狂暴 I",
+          "description": "所有伤害增加 5%",
+          "currentLevelDescription": "所有伤害增加 5%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_021.webp",
+          "attributeDisplays": [
+            {
+              "label": "所有伤害",
+              "value": 5
+            }
+          ],
+          "effect": {
+            "type": "AddMGE",
+            "params": [
+              "1511013001",
+              "1"
+            ]
+          },
+          "prerequisites": [],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6052,
+          "name": "狂暴II",
+          "description": "所有伤害增加 5% → 10%",
+          "currentLevelDescription": "所有伤害增加 10%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_021.webp",
+          "attributeDisplays": [
+            {
+              "label": "所有伤害",
+              "value": 10
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511013001",
+              "1"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6051
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6053,
+          "name": "狂暴III",
+          "description": "所有伤害增加 10% → 15%",
+          "currentLevelDescription": "所有伤害增加 15%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_021.webp",
+          "attributeDisplays": [
+            {
+              "label": "所有伤害",
+              "value": 15
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511013001",
+              "2"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6052
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6054,
+          "name": "狂暴IV",
+          "description": "所有伤害增加 15% → 20%",
+          "currentLevelDescription": "所有伤害增加 20%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_021.webp",
+          "attributeDisplays": [
+            {
+              "label": "所有伤害",
+              "value": 20
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511013001",
+              "3"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6053
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6055,
+          "name": "狂暴V",
+          "description": "所有伤害增加 20% → 40%",
+          "currentLevelDescription": "所有伤害增加 40%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_021.webp",
+          "attributeDisplays": [
+            {
+              "label": "所有伤害",
+              "value": 40
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511013001",
+              "4"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6054
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        }
+      ],
+      "combinesWithSkillId": null,
+      "atlas": {
+        "id": 12,
+        "sortOrder": 2110
+      }
+    },
+    {
+      "id": 6001,
+      "name": "元素增伤",
+      "tags": [
+        {
+          "text": "元素",
+          "style": "E007",
+          "color": "#FD7070"
+        }
+      ],
+      "mge": {
+        "id": "1511009001",
+        "blueprint": "MGE_1511009001_AddElementDamage"
+      },
+      "levels": [
+        {
+          "id": 6001,
+          "name": "元素增伤 I",
+          "description": "元素类战术技能伤害增加15%",
+          "currentLevelDescription": "元素类战术技能伤害增加15%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_027.webp",
+          "attributeDisplays": [
+            {
+              "label": "元素伤害",
+              "value": 15
+            }
+          ],
+          "effect": {
+            "type": "AddMGE",
+            "params": [
+              "1511009001",
+              "1"
+            ]
+          },
+          "prerequisites": [],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6002,
+          "name": "元素增伤II",
+          "description": "元素类战术技能伤害增加 15% →30%",
+          "currentLevelDescription": "元素类战术技能伤害增加30%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_027.webp",
+          "attributeDisplays": [
+            {
+              "label": "元素伤害",
+              "value": 30
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511009001",
+              "1"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6001
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6003,
+          "name": "元素增伤III",
+          "description": "元素类战术技能伤害增加 30% →45%",
+          "currentLevelDescription": "元素类战术技能伤害增加45%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_027.webp",
+          "attributeDisplays": [
+            {
+              "label": "元素伤害",
+              "value": 45
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511009001",
+              "2"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6002
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6004,
+          "name": "元素增伤IV",
+          "description": "元素类战术技能伤害增加 45% →60%",
+          "currentLevelDescription": "元素类战术技能伤害增加60%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_027.webp",
+          "attributeDisplays": [
+            {
+              "label": "元素伤害",
+              "value": 60
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511009001",
+              "3"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6003
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6005,
+          "name": "元素增伤V",
+          "description": "元素类战术技能伤害增加 60% →100%",
+          "currentLevelDescription": "元素类战术技能伤害增加100%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_027.webp",
+          "attributeDisplays": [
+            {
+              "label": "元素伤害",
+              "value": 100
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511009001",
+              "4"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6004
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        }
+      ],
+      "combinesWithSkillId": 1008,
+      "atlas": null
+    },
+    {
+      "id": 6006,
+      "name": "强攻",
+      "tags": [
+        {
+          "text": "物理",
+          "style": "E009",
+          "color": "#75DFFF"
+        }
+      ],
+      "mge": {
+        "id": "1511016001",
+        "blueprint": "MGE_1511016001_AddKineticDamage"
+      },
+      "levels": [
+        {
+          "id": 6006,
+          "name": "强攻 I",
+          "description": "物理类战术技能伤害增加15%",
+          "currentLevelDescription": "物理类战术技能伤害增加15%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_023.webp",
+          "attributeDisplays": [
+            {
+              "label": "物理伤害",
+              "value": 15
+            }
+          ],
+          "effect": {
+            "type": "AddMGE",
+            "params": [
+              "1511016001",
+              "1"
+            ]
+          },
+          "prerequisites": [],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6007,
+          "name": "强攻II",
+          "description": "物理类战术技能伤害增加 15% →30%",
+          "currentLevelDescription": "物理类战术技能伤害增加30%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_023.webp",
+          "attributeDisplays": [
+            {
+              "label": "物理伤害",
+              "value": 30
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511016001",
+              "1"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6006
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6008,
+          "name": "强攻III",
+          "description": "物理类战术技能伤害增加 30% →45%",
+          "currentLevelDescription": "物理类战术技能伤害增加45%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_023.webp",
+          "attributeDisplays": [
+            {
+              "label": "物理伤害",
+              "value": 45
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511016001",
+              "2"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6007
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6009,
+          "name": "强攻IV",
+          "description": "物理类战术技能伤害增加 45% →60%",
+          "currentLevelDescription": "物理类战术技能伤害增加60%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_023.webp",
+          "attributeDisplays": [
+            {
+              "label": "物理伤害",
+              "value": 60
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511016001",
+              "3"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6008
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6010,
+          "name": "强攻V",
+          "description": "物理类战术技能伤害增加 60% →100%",
+          "currentLevelDescription": "物理类战术技能伤害增加100%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_023.webp",
+          "attributeDisplays": [
+            {
+              "label": "物理伤害",
+              "value": 100
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511016001",
+              "4"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6009
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        }
+      ],
+      "combinesWithSkillId": 1003,
+      "atlas": null
+    },
+    {
+      "id": 6011,
+      "name": "召唤物增伤",
+      "tags": [
+        {
+          "text": "召唤",
+          "style": "E008",
+          "color": "#FFE473"
+        }
+      ],
+      "mge": {
+        "id": "1511011001",
+        "blueprint": "MGE_1511011001_AddSummonDamage"
+      },
+      "levels": [
+        {
+          "id": 6011,
+          "name": "召唤物增伤 I",
+          "description": "召唤类战术技能伤害增加15%",
+          "currentLevelDescription": "召唤类战术技能伤害增加15%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_028.webp",
+          "attributeDisplays": [
+            {
+              "label": "召唤物伤害",
+              "value": 15
+            }
+          ],
+          "effect": {
+            "type": "AddMGE",
+            "params": [
+              "1511011001",
+              "1"
+            ]
+          },
+          "prerequisites": [],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6012,
+          "name": "召唤物增伤II",
+          "description": "召唤类战术技能伤害增加 15% →30%",
+          "currentLevelDescription": "召唤类战术技能伤害增加30%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_028.webp",
+          "attributeDisplays": [
+            {
+              "label": "召唤物伤害",
+              "value": 30
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511011001",
+              "1"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6011
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6013,
+          "name": "召唤物增伤III",
+          "description": "召唤类战术技能伤害增加 30% →45%",
+          "currentLevelDescription": "召唤类战术技能伤害增加45%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_028.webp",
+          "attributeDisplays": [
+            {
+              "label": "召唤物伤害",
+              "value": 45
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511011001",
+              "2"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6012
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6014,
+          "name": "召唤物增伤IV",
+          "description": "召唤类战术技能伤害增加 45% →60%",
+          "currentLevelDescription": "召唤类战术技能伤害增加60%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_028.webp",
+          "attributeDisplays": [
+            {
+              "label": "召唤物伤害",
+              "value": 60
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511011001",
+              "3"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6013
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6015,
+          "name": "召唤物增伤V",
+          "description": "召唤类战术技能伤害增加 60% →100%",
+          "currentLevelDescription": "召唤类战术技能伤害增加 100%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_028.webp",
+          "attributeDisplays": [
+            {
+              "label": "召唤物伤害",
+              "value": 100
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511011001",
+              "4"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6014
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        }
+      ],
+      "combinesWithSkillId": 1001,
+      "atlas": null
+    },
+    {
+      "id": 6016,
+      "name": "重型子弹",
+      "tags": [
+        {
+          "text": "子弹",
+          "style": "E011",
+          "color": "#5DD7AC"
+        }
+      ],
+      "mge": {
+        "id": "1511014001",
+        "blueprint": "MGE_1511014001_AddBulletSize"
+      },
+      "levels": [
+        {
+          "id": 6016,
+          "name": "重型子弹 I",
+          "description": "战术技能投射物体积增加10%",
+          "currentLevelDescription": "战术技能投射物体积增加10%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_002.webp",
+          "attributeDisplays": [
+            {
+              "label": "投射物体积",
+              "value": 10
+            }
+          ],
+          "effect": {
+            "type": "AddMGE",
+            "params": [
+              "1511014001",
+              "1"
+            ]
+          },
+          "prerequisites": [],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6017,
+          "name": "重型子弹II",
+          "description": "战术技能投射物体积增加 10% →15%",
+          "currentLevelDescription": "战术技能投射物体积增加15%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_002.webp",
+          "attributeDisplays": [
+            {
+              "label": "投射物体积",
+              "value": 15
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511014001",
+              "1"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6016
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6018,
+          "name": "重型子弹III",
+          "description": "战术技能投射物体积增加 15% →20%",
+          "currentLevelDescription": "战术技能投射物体积增加20%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_002.webp",
+          "attributeDisplays": [
+            {
+              "label": "投射物体积",
+              "value": 20
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511014001",
+              "2"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6017
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6019,
+          "name": "重型子弹IV",
+          "description": "战术技能投射物体积增加 20% →25%",
+          "currentLevelDescription": "战术技能投射物体积增加25%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_002.webp",
+          "attributeDisplays": [
+            {
+              "label": "投射物体积",
+              "value": 25
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511014001",
+              "3"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6018
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6020,
+          "name": "重型子弹V",
+          "description": "战术技能投射物体积增加 25% →50%",
+          "currentLevelDescription": "战术技能投射物体积增加50%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_002.webp",
+          "attributeDisplays": [
+            {
+              "label": "投射物体积",
+              "value": 50
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511014001",
+              "4"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6019
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        }
+      ],
+      "combinesWithSkillId": 1004,
+      "atlas": null
+    },
+    {
+      "id": 6021,
+      "name": "急速冷却",
+      "tags": [
+        {
+          "text": "冷却",
+          "style": "E015",
+          "color": "#86ACFF"
+        }
+      ],
+      "mge": {
+        "id": "1511008001",
+        "blueprint": "MGE_1511008001_ReduceInterval"
+      },
+      "levels": [
+        {
+          "id": 6021,
+          "name": "急速冷却 I",
+          "description": "战术技能冷却时间减少5%",
+          "currentLevelDescription": "战术技能冷却时间减少5%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_020.webp",
+          "attributeDisplays": [
+            {
+              "label": "技能冷却",
+              "value": 5
+            }
+          ],
+          "effect": {
+            "type": "AddMGE",
+            "params": [
+              "1511008001",
+              "1"
+            ]
+          },
+          "prerequisites": [],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6022,
+          "name": "急速冷却II",
+          "description": "战术技能冷却时间减少 5% →10%",
+          "currentLevelDescription": "战术技能冷却时间减少10%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_020.webp",
+          "attributeDisplays": [
+            {
+              "label": "技能冷却",
+              "value": 10
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511008001",
+              "1"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6021
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6023,
+          "name": "急速冷却III",
+          "description": "战术技能冷却时间减少 10% →15%",
+          "currentLevelDescription": "战术技能冷却时间减少15%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_020.webp",
+          "attributeDisplays": [
+            {
+              "label": "技能冷却",
+              "value": 15
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511008001",
+              "2"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6022
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6024,
+          "name": "急速冷却IV",
+          "description": "战术技能冷却时间减少 15% →20%",
+          "currentLevelDescription": "战术技能冷却时间减少20%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_020.webp",
+          "attributeDisplays": [
+            {
+              "label": "技能冷却",
+              "value": 20
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511008001",
+              "3"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6023
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6025,
+          "name": "急速冷却V",
+          "description": "战术技能冷却时间减少 20% →40%",
+          "currentLevelDescription": "战术技能冷却时间减少40%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_020.webp",
+          "attributeDisplays": [
+            {
+              "label": "技能冷却",
+              "value": 40
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511008001",
+              "4"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6024
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        }
+      ],
+      "combinesWithSkillId": 1005,
+      "atlas": null
+    },
+    {
+      "id": 6026,
+      "name": "超频结算",
+      "tags": [
+        {
+          "text": "力场",
+          "style": "E010",
+          "color": "#DB85FF"
+        }
+      ],
+      "mge": {
+        "id": "1511019001",
+        "blueprint": "MGE_1511019001_AddForceFieldRate"
+      },
+      "levels": [
+        {
+          "id": 6026,
+          "name": "超频结算 I",
+          "description": "力场类战术技能结算频率提高10%",
+          "currentLevelDescription": "力场类战术技能结算频率提高10%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_019.webp",
+          "attributeDisplays": [
+            {
+              "label": "结算频率",
+              "value": 10
+            }
+          ],
+          "effect": {
+            "type": "AddMGE",
+            "params": [
+              "1511019001",
+              "1"
+            ]
+          },
+          "prerequisites": [],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6027,
+          "name": "超频结算II",
+          "description": "力场类战术技能结算频率提高 10% →20%",
+          "currentLevelDescription": "力场类战术技能结算频率提高20%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_019.webp",
+          "attributeDisplays": [
+            {
+              "label": "结算频率",
+              "value": 20
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511019001",
+              "1"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6026
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6028,
+          "name": "超频结算III",
+          "description": "力场类战术技能结算频率提高 20% →30%",
+          "currentLevelDescription": "力场类战术技能结算频率提高30%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_019.webp",
+          "attributeDisplays": [
+            {
+              "label": "结算频率",
+              "value": 30
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511019001",
+              "2"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6027
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6029,
+          "name": "超频结算IV",
+          "description": "力场类战术技能结算频率提高 30% →40%",
+          "currentLevelDescription": "力场类战术技能结算频率提高40%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_019.webp",
+          "attributeDisplays": [
+            {
+              "label": "结算频率",
+              "value": 40
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511019001",
+              "3"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6028
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6030,
+          "name": "超频结算V",
+          "description": "力场类战术技能结算频率提高 40% →60%",
+          "currentLevelDescription": "力场类战术技能结算频率提高60%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_019.webp",
+          "attributeDisplays": [
+            {
+              "label": "结算频率",
+              "value": 60
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511019001",
+              "4"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6029
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        }
+      ],
+      "combinesWithSkillId": 1007,
+      "atlas": null
+    },
+    {
+      "id": 6031,
+      "name": "延时",
+      "tags": [
+        {
+          "text": "持续",
+          "style": "E014",
+          "color": "#A3F56C"
+        }
+      ],
+      "mge": {
+        "id": "1511007001",
+        "blueprint": "MGE_1511007001_AddDuration"
+      },
+      "levels": [
+        {
+          "id": 6031,
+          "name": "延时 I",
+          "description": "召唤类战术技能持续时间延长1秒",
+          "currentLevelDescription": "召唤类战术技能持续时间延长1秒",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_025.webp",
+          "attributeDisplays": [
+            {
+              "label": "召唤物持续时间",
+              "value": 1
+            }
+          ],
+          "effect": {
+            "type": "AddMGE",
+            "params": [
+              "1511007001",
+              "1"
+            ]
+          },
+          "prerequisites": [],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6032,
+          "name": "延时II",
+          "description": "召唤类战术技能持续时间延长 1秒 →2秒",
+          "currentLevelDescription": "召唤类战术技能持续时间延长2秒",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_025.webp",
+          "attributeDisplays": [
+            {
+              "label": "召唤物持续时间",
+              "value": 2
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511007001",
+              "1"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6031
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6033,
+          "name": "延时III",
+          "description": "召唤类战术技能持续时间延长 2秒 →3秒",
+          "currentLevelDescription": "召唤类战术技能持续时间延长3秒",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_025.webp",
+          "attributeDisplays": [
+            {
+              "label": "召唤物持续时间",
+              "value": 3
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511007001",
+              "2"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6032
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6034,
+          "name": "延时IV",
+          "description": "召唤类战术技能持续时间延长 3秒 →4秒",
+          "currentLevelDescription": "召唤类战术技能持续时间延长4秒",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_025.webp",
+          "attributeDisplays": [
+            {
+              "label": "召唤物持续时间",
+              "value": 4
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511007001",
+              "3"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6033
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6035,
+          "name": "延时V",
+          "description": "召唤类战术技能持续时间延长 4秒 →6秒",
+          "currentLevelDescription": "召唤类战术技能持续时间延长6秒",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_025.webp",
+          "attributeDisplays": [
+            {
+              "label": "召唤物持续时间",
+              "value": 6
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511007001",
+              "4"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6034
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        }
+      ],
+      "combinesWithSkillId": 1002,
+      "atlas": null
+    },
+    {
+      "id": 6056,
+      "name": "暴击提升",
+      "tags": [
+        {
+          "text": "暴击",
+          "style": "E012",
+          "color": "#8080FF"
+        }
+      ],
+      "mge": {
+        "id": "1511015001",
+        "blueprint": "MGE_1511015001_AddCritical"
+      },
+      "levels": [
+        {
+          "id": 6056,
+          "name": "暴击提升 I",
+          "description": "暴击率增加10%",
+          "currentLevelDescription": "暴击率增加10%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_018.webp",
+          "attributeDisplays": [
+            {
+              "label": "暴击率",
+              "value": 10
+            }
+          ],
+          "effect": {
+            "type": "AddMGE",
+            "params": [
+              "1511015001",
+              "1"
+            ]
+          },
+          "prerequisites": [],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6057,
+          "name": "暴击提升II",
+          "description": "暴击率增加 10% → 15%",
+          "currentLevelDescription": "暴击率增加15%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_018.webp",
+          "attributeDisplays": [
+            {
+              "label": "暴击率",
+              "value": 15
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511015001",
+              "1"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6056
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6058,
+          "name": "暴击提升III",
+          "description": "暴击率增加 15% → 20%",
+          "currentLevelDescription": "暴击率增加20%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_018.webp",
+          "attributeDisplays": [
+            {
+              "label": "暴击率",
+              "value": 20
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511015001",
+              "2"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6057
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6059,
+          "name": "暴击提升IV",
+          "description": "暴击率增加 20% → 25%",
+          "currentLevelDescription": "暴击率增加25%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_018.webp",
+          "attributeDisplays": [
+            {
+              "label": "暴击率",
+              "value": 25
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511015001",
+              "3"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6058
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        },
+        {
+          "id": 6060,
+          "name": "暴击提升V",
+          "description": "暴击率增加 25% → 50%",
+          "currentLevelDescription": "暴击率增加50%",
+          "icon": "/icons/survival/T_Icons_Skill_Survival_018.webp",
+          "attributeDisplays": [
+            {
+              "label": "暴击率",
+              "value": 50
+            }
+          ],
+          "effect": {
+            "type": "LevelUpRogueLikeBuff",
+            "params": [
+              "1511015001",
+              "4"
+            ]
+          },
+          "prerequisites": [
+            {
+              "type": "HaveBuff",
+              "ids": [
+                6059
+              ]
+            }
+          ],
+          "weight": 1000,
+          "reduceWeight": 0
+        }
+      ],
+      "combinesWithSkillId": 1006,
+      "atlas": null
+    }
+  ],
+  "specials": [
+    {
+      "id": 6061,
+      "name": "饱和打击",
+      "kind": "tempBoost",
+      "tags": [
+        {
+          "text": "临时",
+          "style": "E013",
+          "color": "#FF976A"
+        }
+      ],
+      "node": {
+        "id": 6061,
+        "name": "饱和打击",
+        "description": "电磁轰炸、减速球、烈焰轰炸临时进化为超级技能，持续60秒",
+        "currentLevelDescription": "电磁轰炸、减速球、烈焰轰炸临时进化为超级技能，持续60秒",
+        "icon": "/icons/survival/T_Icons_Skill_Survival_031.webp",
+        "attributeDisplays": [],
+        "effect": {
+          "type": "TempLevelBoost",
+          "params": [
+            "1511002001,1511005001,1511001001",
+            "5",
+            "60",
+            "Survaivl_BaoHeDaJi"
+          ]
+        },
+        "prerequisites": [
+          {
+            "type": "HaveAnyBuff",
+            "ids": [
+              1008,
+              1004,
+              1005
+            ]
+          }
+        ],
+        "weight": 230,
+        "reduceWeight": 0
+      },
+      "mge": null,
+      "targetSkillIds": [
+        1008,
+        1004,
+        1005
+      ],
+      "atlas": {
+        "id": 13,
+        "sortOrder": 2130
+      }
+    },
+    {
+      "id": 6062,
+      "name": "绝杀指令",
+      "kind": "tempBoost",
+      "tags": [
+        {
+          "text": "临时",
+          "style": "E013",
+          "color": "#FF976A"
+        }
+      ],
+      "node": {
+        "id": 6062,
+        "name": "绝杀指令",
+        "description": "毁灭者、机枪哨卫临时进化为超级技能，持续60秒",
+        "currentLevelDescription": "毁灭者、机枪哨卫临时进化为超级技能，持续60秒",
+        "icon": "/icons/survival/T_Icons_Skill_Survival_033.webp",
+        "attributeDisplays": [],
+        "effect": {
+          "type": "TempLevelBoost",
+          "params": [
+            "1511003001,1511010001",
+            "5",
+            "60",
+            "Survaivl_JueShaZhiLing"
+          ]
+        },
+        "prerequisites": [
+          {
+            "type": "HaveAnyBuff",
+            "ids": [
+              1001,
+              1002
+            ]
+          }
+        ],
+        "weight": 230,
+        "reduceWeight": 0
+      },
+      "mge": null,
+      "targetSkillIds": [
+        1001,
+        1002
+      ],
+      "atlas": {
+        "id": 14,
+        "sortOrder": 2140
+      }
+    },
+    {
+      "id": 6063,
+      "name": "极致专注",
+      "kind": "tempBoost",
+      "tags": [
+        {
+          "text": "临时",
+          "style": "E013",
+          "color": "#FF976A"
+        }
+      ],
+      "node": {
+        "id": 6063,
+        "name": "极致专注",
+        "description": "回旋猎刃、绝影飞刃、冲击环临时进化为超级技能，持续60秒",
+        "currentLevelDescription": "回旋猎刃、绝影飞刃、冲击环临时进化为超级技能，持续60秒",
+        "icon": "/icons/survival/T_Icons_Skill_Survival_032.webp",
+        "attributeDisplays": [],
+        "effect": {
+          "type": "TempLevelBoost",
+          "params": [
+            "1511004001,1511006001,1511020001",
+            "5",
+            "60",
+            "Survaivl_JiZhiZhuanZhu"
+          ]
+        },
+        "prerequisites": [
+          {
+            "type": "HaveAnyBuff",
+            "ids": [
+              1003,
+              1006,
+              1007
+            ]
+          }
+        ],
+        "weight": 230,
+        "reduceWeight": 0
+      },
+      "mge": null,
+      "targetSkillIds": [
+        1003,
+        1006,
+        1007
+      ],
+      "atlas": {
+        "id": 15,
+        "sortOrder": 2150
+      }
+    },
+    {
+      "id": 6064,
+      "name": "残暴狂热",
+      "kind": "trigger",
+      "tags": [
+        {
+          "text": "特殊",
+          "style": "E012",
+          "color": "#8080FF"
+        }
+      ],
+      "node": {
+        "id": 6064,
+        "name": "残暴狂热",
+        "description": "单次有效伤害突破10000，则追加一次1000%伤害",
+        "currentLevelDescription": "单次有效伤害突破10000，则追加一次1000%伤害",
+        "icon": "/icons/survival/T_Icons_Skill_Survival_030.webp",
+        "attributeDisplays": [],
+        "effect": {
+          "type": "AddMGE",
+          "params": [
+            "1511021001",
+            "1"
+          ]
+        },
+        "prerequisites": [],
+        "weight": 1,
+        "reduceWeight": 0
+      },
+      "mge": {
+        "id": "1511021001",
+        "blueprint": "MGE_1511021001_SingleDamage"
+      },
+      "targetSkillIds": [],
+      "atlas": {
+        "id": 16,
+        "sortOrder": 2160
+      }
+    },
+    {
+      "id": 6065,
+      "name": "三相共振",
+      "kind": "trigger",
+      "tags": [
+        {
+          "text": "特殊",
+          "style": "E012",
+          "color": "#8080FF"
+        }
+      ],
+      "node": {
+        "id": 6065,
+        "name": "三相共振",
+        "description": "3秒内元素/召唤/物理伤害均达5000，获得三相，10秒内伤害×5",
+        "currentLevelDescription": "3秒内元素/召唤/物理伤害均达5000，获得三相，10秒内伤害×5",
+        "icon": "/icons/survival/T_Icons_Skill_Survival_034.webp",
+        "attributeDisplays": [],
+        "effect": {
+          "type": "AddMGE",
+          "params": [
+            "1511022001",
+            "1"
+          ]
+        },
+        "prerequisites": [],
+        "weight": 1,
+        "reduceWeight": 0
+      },
+      "mge": {
+        "id": "1511022001",
+        "blueprint": "MGE_1511022001_TripleDamage"
+      },
+      "targetSkillIds": [],
+      "atlas": {
+        "id": 17,
+        "sortOrder": 2170
+      }
+    },
+    {
+      "id": 9999,
+      "name": "急救包",
+      "kind": "allMaxReward",
+      "tags": [],
+      "node": {
+        "id": 9999,
+        "name": "急救包",
+        "description": "恢复50%生命",
+        "currentLevelDescription": "恢复50%生命",
+        "icon": "/icons/survival/T_Icons_SpaceTimeHunting_Affix_Monster_HealthUp.webp",
+        "attributeDisplays": [],
+        "effect": {
+          "type": "AddMGE",
+          "params": [
+            "1511012001",
+            "1"
+          ]
+        },
+        "prerequisites": [],
+        "weight": 0,
+        "reduceWeight": 0
+      },
+      "mge": {
+        "id": "1511012001",
+        "blueprint": "MGE_1511012001_AddHealth"
+      },
+      "targetSkillIds": [],
+      "atlas": null
+    }
+  ],
+  "rules": {
+    "maxActiveSkillTypes": 4,
+    "maxPassiveBuffTypes": 8,
+    "allMaxLevelSpecialBuffId": 9999,
+    "drawUltimateWeaponPercents": [
+      0.073,
+      0.053,
+      0.033,
+      0.013
+    ],
+    "treasureBoxUltimateWeaponPercents": [
+      0.25,
+      0.21,
+      0.17,
+      0.13
+    ],
+    "ultimateWeaponPercentAdditions": [
+      0.125,
+      0,
+      0,
+      0
+    ],
+    "ultimateWeaponAccumulateStartCount": 20
+  }
+}

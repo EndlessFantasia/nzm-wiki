@@ -81,7 +81,10 @@
     "test:origin-affix-multiplier": "tsx --test lib/origin-affix-multiplier.test.ts",
     "origin-affixes:project": "tsx scripts/origin/project-affixes.ts",
     "origin-affixes:check": "tsx scripts/origin/project-affixes.ts --check",
-    "test:origin-affixes": "tsx --test scripts/origin/project-affixes.test.ts"
+    "test:origin-affixes": "tsx --test scripts/origin/project-affixes.test.ts",
+    "survival-codex:project": "tsx scripts/survival/project-codex.ts",
+    "survival-codex:check": "tsx scripts/survival/project-codex.ts --check",
+    "test:survival-codex": "tsx --test lib/survival-codex.test.ts scripts/survival/project-codex.test.ts"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
