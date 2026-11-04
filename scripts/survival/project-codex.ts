@@ -97,18 +97,20 @@ const ICE_BOMB = `${SPAWNABLE}/BP_Projectile_IceBoom`;
 const SHAKE_WAVE = `${MGE_ASSETS}/MGE_1511020001_ShakeWave`;
 const STRIKE = `${SPAWNABLE}/BP_MW_AutoElectromaneticStrike`;
 
-// 技能或特殊增益 ID → 实际挂载伤害 Numerical 的资产与配置键。投射物同时带旧的 NamedThrowableSettlementConfig，
-// 这里取生存战专用的 TacticalUnitComponent.DefaultNumericalConfigs。资产、键和 Numerical 行在投影时逐项回查。
+// 技能或特殊增益 ID → 实际挂载伤害 Numerical 的资产与配置键。投射物常规命中与 AOE 经 TacticalUnit 结算，
+// 取 TacticalUnitComponent.DefaultNumericalConfigs；旧的 NamedThrowableSettlementConfig 是否另有入口见各条 pending。
+// 资产、键和 Numerical 行在投影时逐项回查。
 export const DAMAGE_SPECS: Record<number, DamageSpec[]> = {
   1001: [
     { asset: DRONE, key: "NormalAttack", label: "普通弹药" },
-    { asset: DRONE, key: "PowerfulAttack", label: "高能弹药", pending: "高能弹药的使用条件未确认" },
+    { asset: DRONE, key: "PowerfulAttack", label: "高能弹药", pending: "开火时按 UsePowerfulAmmo 或 BulletMustBeRed 切到高能槽，两个标志的设置条件未闭合" },
   ],
   1002: [{ asset: TURRET, key: "NormalAttack", label: "激光" }],
   1003: [{ asset: `${SPAWNABLE}/BP_Projectile_Boomerang`, key: "Damage", label: "猎刃" }],
   1004: [
-    { asset: ICE_BOMB, key: "AOEDamage", label: "爆炸" },
-    { asset: ICE_BOMB, key: "MiddleAOEDamage", label: "爆发" },
+    { asset: ICE_BOMB, key: "AOEDamage", label: "爆炸",
+      pending: "飞行 6000 距离事件另按旧配置 Damage（190330001）施放 AOE 1003011001，Native 是否执行待核验" },
+    { asset: ICE_BOMB, key: "MiddleAOEDamage", label: "爆发", pending: "未找到完整的消费链" },
     { asset: ICE_BOMB, key: "Damage", label: "穿透" },
   ],
   1005: [
@@ -122,12 +124,12 @@ export const DAMAGE_SPECS: Record<number, DamageSpec[]> = {
   ],
   1008: [
     { asset: STRIKE, key: "DirectDamage", label: "直击" },
-    { asset: STRIKE, key: "SplashDamage", label: "溅射", pending: "溅射行 HpCalScale 为 0，实际伤害是否由运行时另行计算未确认" },
+    { asset: STRIKE, key: "SplashDamage", label: "溅射", pending: "配置伤害系数与固定值均为 0；可见蓝图未发现补值，Native 结算待核验" },
     { asset: STRIKE, key: "DirectDamage", label: "直击", scope: "ultimate", level: 6,
-      pending: "Numerical 第 6 级对应终极形态是按等级数推断，未核验字节码" },
+      pending: "蓝图按内部等级 +1 设置 Numerical 等级，终极参数 5 的解析与正式服执行来源待核验" },
   ],
   6064: [{ asset: `${MGE_ASSETS}/MGE_1511021001_SingleDamage`, key: "NumericalID", label: "追加伤害", dynamic: true,
-    pending: "CustomDamage 结算，HpCalScale 为 1；描述称追加 1000% 伤害，实际倍率需核验字节码" }],
+    pending: "CalculateDamage ≥ 10000 时以 10 × CalculateDamage 发起追加结算（MGE 参数 ExtraDamageRatio），CustomDamage 后续消费待核验" }],
 };
 
 const ELEMENTS: Record<string, string> = {

@@ -40,9 +40,21 @@ refs/Exports/NZM/Content/DataTables/numerical_config_composite.json  伤害 Nume
 
 ### 伤害来源
 
-`damageSources` 是例外，来自 Numerical 配置真值。`project-codex.ts` 的 `DAMAGE_SPECS` 按技能登记资产与配置键：投射物、轰炸和召唤物读 `TacticalUnitComponent.DefaultNumericalConfigs`，飞刃、冲击环和残暴狂热读 MGE 默认对象上的 `*NumericalID` 属性。投射物上旧的 `NamedThrowableSettlementConfig`（`120300111`、`190330001`）不采用。投影时逐项校验：资产被所属 MGE 引用、键唯一命中非零 ID、`numerical_config_composite` 行存在、只有一个伤害类 Health 结算、元素可识别、`HpCalBase` 与 `ToughnessScale` 为 0；基础形态展示第 1 级，其余等级若有差异必须由终极条目显式认领，否则失败。破韧只在挂有 `Toughness.Base` 结算时投影。
+`damageSources` 是例外，来自 Numerical 配置真值。`project-codex.ts` 的 `DAMAGE_SPECS` 按技能登记资产与配置键：投射物、轰炸和召唤物读 `TacticalUnitComponent.DefaultNumericalConfigs`，飞刃、冲击环和残暴狂热读 MGE 默认对象上的 `*NumericalID` 属性。投射物常规命中经 `BP_MW_ProjectileBase` 调用 `TacticalUnit.ApplySettlementFromHit`，AOE 也从 TacticalUnit 取结算句柄，所以不采用旧的 `NamedThrowableSettlementConfig`（`120300111`、`190330001`）；但减速球在飞行 6000 距离时还有一个按旧配置 `Damage` 施放 AOE `1003011001` 的事件，是否执行记为 pending。回旋猎刃的 3500 距离事件只负责回旋返程，不结算伤害。投影时逐项校验：资产被所属 MGE 引用、键唯一命中非零 ID、`numerical_config_composite` 行存在、只有一个伤害类 Health 结算、元素可识别、`HpCalBase` 与 `ToughnessScale` 为 0；基础形态展示第 1 级，其余等级若有差异必须由终极条目显式认领，否则失败。破韧只在挂有 `Toughness.Base` 结算时投影。
 
-页面按 `HpCalScale × 500` 换算伤害，与猎场独立伤害一致，但生存战基础攻击尚未实测；数值不含升级、被动和临时进化加成。`pending` 记录未闭合的证据：电磁溅射 `HpCalScale` 为 0、终极电磁直击按第 6 级推断、残暴狂热为 `CustomDamage`（显示“动态”，描述的 1000% 未核验）、哨卫高能弹药的使用条件未确认。新增技能或伤害资产变化时先更新 `DAMAGE_SPECS`。
+页面按 `HpCalScale × 500` 换算伤害，不在页面另行标注假定值。500 沿用猎场独立伤害，生存战尚未证实：生存战副本走 `PlayerGameModeConfig` 第 22 行（`HumanBalanceID=1009`），该平衡组没有攻击行；`Attack=500` 只出现在其它平衡组，`SkillDamage` 的最终公式在 Native 中。确认前不要改成 330、1 或其它推测值。数值不含升级、被动和临时进化加成。
+
+`pending` 记录未闭合的证据，2026-11-04 的核验结论见 Kismet 快照 `kismet/unknown/20261104T095647Z-bf2e548c6dd1466e85af8492f6f7bf09/`（来源标记为 unknown，只作执行线索）：
+
+- 电磁溅射：配置系数与固定值均为 0，可见蓝图直接按 `SplashDamage` 结算、未发现补值，Native 待核验。不要写成“溅射无伤害”。
+- 终极电磁直击：蓝图按内部等级 +1 设置 Numerical 等级，终极参数 `5` 对应第 6 行；参数解析的 Native 实现待核验。第 6 行破韧 43.2 是第 1 行的 3 倍（+200%），与描述“破韧效率增加 300%”冲突，以 Numerical 为准。
+- 残暴狂热：`DT_MGEParamConfig_Main#1511021001` 的 `TargetDamage=10000`、`ExtraDamageRatio=10`；蓝图在 `CalculateDamage ≥ 10000` 时以 `10 × CalculateDamage` 发起 `191810016` 追加结算，并排除自身结算再次触发。`CustomDamage` 的后续消费待核验，页面显示“动态”，不能按 `1 × 500` 换算。
+- 哨卫高能弹药：开火时按 `UsePowerfulAmmo` 或 `BulletMustBeRed` 切换到高能武器槽，两个标志的设置条件未闭合，不能归因于终极或临时进化。
+- 减速球：爆炸的旧配置距离事件见上；`MiddleAOEDamage` 未找到完整的消费链。
+
+三相共振不属于独立伤害：`MGE_1511022001_TripleDamage.DamageBuff` → `BuffConfigDatatableNew#Survaivl_TripleDamageOP`（持续 10 秒）→ Modifier `191810016`（`DamageRatio`、`B1`、`BaseValue=5`），即 +500%，单独作用时为 ×6，与描述“伤害×5”冲突，以配置为准。页面目前只展示描述，尚未接入这条 Modifier 引用。
+
+新增技能或伤害资产变化时先更新 `DAMAGE_SPECS`。
 
 ## 刷新与校验
 

@@ -204,7 +204,7 @@
           "critical": true,
           "weakpoint": false,
           "dynamic": false,
-          "pending": "高能弹药的使用条件未确认"
+          "pending": "开火时按 UsePowerfulAmmo 或 BulletMustBeRed 切到高能槽，两个标志的设置条件未闭合"
         }
       ],
       "atlas": {
@@ -786,7 +786,7 @@
           "critical": true,
           "weakpoint": false,
           "dynamic": false,
-          "pending": null
+          "pending": "飞行 6000 距离事件另按旧配置 Damage（190330001）施放 AOE 1003011001，Native 是否执行待核验"
         },
         {
           "label": "爆发",
@@ -802,7 +802,7 @@
           "critical": true,
           "weakpoint": false,
           "dynamic": false,
-          "pending": null
+          "pending": "未找到完整的消费链"
         },
         {
           "label": "穿透",
@@ -1672,7 +1672,7 @@
           "critical": true,
           "weakpoint": false,
           "dynamic": false,
-          "pending": "溅射行 HpCalScale 为 0，实际伤害是否由运行时另行计算未确认"
+          "pending": "配置伤害系数与固定值均为 0；可见蓝图未发现补值，Native 结算待核验"
         },
         {
           "label": "直击",
@@ -1688,7 +1688,7 @@
           "critical": true,
           "weakpoint": false,
           "dynamic": false,
-          "pending": "Numerical 第 6 级对应终极形态是按等级数推断，未核验字节码"
+          "pending": "蓝图按内部等级 +1 设置 Numerical 等级，终极参数 5 的解析与正式服执行来源待核验"
         }
       ],
       "atlas": {
@@ -3827,7 +3827,7 @@
           "critical": false,
           "weakpoint": false,
           "dynamic": true,
-          "pending": "CustomDamage 结算，HpCalScale 为 1；描述称追加 1000% 伤害，实际倍率需核验字节码"
+          "pending": "CalculateDamage ≥ 10000 时以 10 × CalculateDamage 发起追加结算（MGE 参数 ExtraDamageRatio），CustomDamage 后续消费待核验"
         }
       ],
       "atlas": {

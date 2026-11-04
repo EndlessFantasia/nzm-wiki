@@ -20,7 +20,7 @@ type Select = (entry: Entry) => void;
 const LEVELS = ["I", "II", "III", "IV", "V"];
 const SPECIAL_KINDS: Record<SurvivalSpecialKind, string> = { tempBoost: "临时进化", trigger: "触发增益", allMaxReward: "满级奖励" };
 const HOVER = "(hover: hover) and (pointer: fine) and (min-width: 1024px)";
-/** 沿用猎场独立伤害的基础攻击换算；生存战是否同为 500 尚未实测。 */
+/** 沿用猎场独立伤害的基础攻击换算；生存战基础攻击与 SkillDamage 结算公式均未证实。 */
 const BASE_ATTACK = 500;
 const ELEMENT_ICONS = new Map<string, string>(ELEMENT_TYPES.map((element) => [element.type, element.iconSrc]));
 const DAMAGE_COLUMNS = "@lg:grid @lg:grid-cols-[minmax(0,1fr)_5.5rem_4.5rem_3.5rem_4rem_5.5rem] @lg:items-center @lg:gap-x-3";
@@ -106,6 +106,7 @@ function DamageRow({ source, compact }: { source: SurvivalDamageSource; compact:
     ? getHealthSettlementDefinition(source.settlement).label
     : source.settlement;
   const damage = formatDamage(source);
+  const coefficient = `HpCalScale ${source.hpCalScale}`;
   const toughness = source.toughness === null ? "-" : String(source.toughness);
   const permission = <span className="inline-flex gap-x-2">
     <span className={source.critical ? "text-zinc-100" : "text-zinc-500"}>{source.critical ? "暴击" : "无暴击"}</span>
@@ -118,10 +119,10 @@ function DamageRow({ source, compact }: { source: SurvivalDamageSource; compact:
         {source.scope === "ultimate" && <span className="rounded border border-amber-400/40 px-1 py-px text-[11px] font-normal leading-4 text-amber-200/90">终极</span>}
         {compact && source.pending && <span className="rounded border border-zinc-500/50 px-1 py-px text-[11px] font-normal leading-4 text-zinc-400">待核验</span>}
       </span>
-      <span className="shrink-0 text-sm font-semibold leading-6 text-[#e2c38b] tabular-nums @lg:hidden">{damage}</span>
+      <span className="shrink-0 text-sm font-semibold leading-6 text-[#e2c38b] tabular-nums @lg:hidden" title={coefficient}>{damage}</span>
     </div>
     <span className="hidden text-sm leading-6 text-zinc-300 @lg:block">{type}</span>
-    <span className="hidden text-right text-sm font-semibold leading-6 text-[#e2c38b] tabular-nums @lg:block">{damage}</span>
+    <span className="hidden text-right text-sm font-semibold leading-6 text-[#e2c38b] tabular-nums @lg:block" title={coefficient}>{damage}</span>
     <span className="hidden text-right text-sm leading-6 text-zinc-300 tabular-nums @lg:block">{toughness}</span>
     <span className="hidden text-sm leading-6 text-zinc-300 @lg:block"><Element name={source.element} /></span>
     <span className="hidden text-xs leading-6 @lg:block">{permission}</span>
@@ -137,7 +138,7 @@ function DamageRow({ source, compact }: { source: SurvivalDamageSource; compact:
   </li>;
 }
 
-/** 悬停预览用 compact：待核验只留标记，省掉说明与脚注，控制浮窗高度。 */
+/** 悬停预览用 compact：待核验只留标记，省掉说明，控制浮窗高度。 */
 function DamageBlock({ sources, compact }: { sources: SurvivalDamageSource[]; compact: boolean }) {
   if (!sources.length) return null;
   return <Block title="伤害结算">
@@ -151,9 +152,6 @@ function DamageBlock({ sources, compact }: { sources: SurvivalDamageSource[]; co
           source={source} compact={compact} />)}
       </ul>
     </div>
-    {!compact && <p className="mt-2 text-xs leading-5 text-zinc-500">
-      伤害按 HpCalScale × 基础攻击 {BASE_ATTACK} 换算，未计入升级、被动和临时进化加成；生存战基础攻击尚未实测。
-    </p>}
   </Block>;
 }
 
@@ -387,7 +385,7 @@ export default function SurvivalCodexClient({ codex }: { codex: SurvivalCodex })
             <span className="min-w-0 flex-1 space-y-1.5">
               <span className="flex flex-wrap items-baseline justify-between gap-x-2">
                 <span className="card-name break-words text-sm font-semibold leading-5 text-white">{skill.name}</span>
-                {main && <span title={`${main.label} · ${main.element}`}
+                {main && <span title={`${main.label} · ${main.element} · HpCalScale ${main.hpCalScale}`}
                   className="inline-flex items-center gap-1 text-xs font-semibold leading-5 text-[#e2c38b] tabular-nums">
                   {elementIcon && <Image src={getAssetPath(elementIcon)} alt={main.element} width={14} height={14}
                     className="shrink-0 self-center" style={{ width: 14, height: 14 }} />}
