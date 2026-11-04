@@ -6,3 +6,9 @@ allowBuilds:
   esbuild: true
   sharp: true
   unrs-resolver: true
+
+overrides:
+  # Keep remark/rehype's math renderer on the patched version used by the CSS import.
+  katex: 0.18.2
+  # Typography pins an older parser; stay on its compatible v6 API.
+  postcss-selector-parser@<6.1.5: 6.1.5
