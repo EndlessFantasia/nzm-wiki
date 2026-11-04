@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { FadeInImage } from "@/components/FadeInImage";
 import { getAssetPath } from "@/lib/path";
 import { getShanghaiDateKey } from "@/lib/date-key";
-import { getPerkAvailability, getPerkConfiguredAvailability, getS4PerkLaunchGroup, isPerkRecent } from "@/lib/perk-release";
+import { getPerkAvailability, getPerkConfiguredAvailability, getS4PerkLaunchGroup, isPerkRecent, isSuperPerk } from "@/lib/perk-release";
 import { isPreviewSeason } from "@/lib/content-preview";
 import contentVersion from "@/config/content-version.json";
 import { OverlimitVersionNavigation } from "@/components/OverlimitVersionNavigation";
@@ -65,47 +65,6 @@ const RECENT_QUICK_FILTER_OPTION = {
   label: "近期上线",
   highlighted: true,
 };
-
-const SUPER_PERK_NAMES = new Set([
-  "切换手法",
-  "技能魔术",
-  "永动核心",
-  "哑枪",
-  "弱肉强食",
-  "我只射击",
-  "暴走永动",
-  "武器穿透",
-  "物法兼得",
-  "不死狂热",
-  "反弹转化",
-  "弹道过载",
-  "狂战",
-  "狂暴连击",
-  "狂轰乱炸",
-  "致命爆炸",
-  "连发",
-  "游击飞弹",
-  "超强技能",
-  "弱点必暴",
-  "暴击飞弹",
-  "爆炸直击",
-  "飞弹狂射",
-  "暴力切换",
-  "隐匿出击",
-  "爆发",
-  "近战冲击",
-]);
-
-const PREVIEW_SUPER_PERK_NAMES = new Set([
-  ...SUPER_PERK_NAMES,
-  "弹链供给",
-  "战术速装",
-  "积光成辉",
-  "余烬积势",
-  "换弹引爆",
-  "驰射淬锋",
-  "近战衔接",
-]);
 
 const DEFAULT_RARITIES: Rarity[] = ["传说"];
 const DEFAULT_QUICK_FILTER: QuickFilter[] = ["online"];
@@ -286,8 +245,7 @@ export default function PerksPageClient({
         (availability !== "preview" && effectiveQuickFilter.has(availability)) ||
         (effectiveQuickFilter.has("recent") && isPerkRecent(perk, todayKey)) ||
         (launchGroup !== undefined && effectiveQuickFilter.has(launchGroup)) ||
-        (effectiveQuickFilter.has("super") &&
-          (isPreview ? PREVIEW_SUPER_PERK_NAMES : SUPER_PERK_NAMES).has(perk.name));
+        (effectiveQuickFilter.has("super") && isSuperPerk(perk));
       const weaponApplicabilityMatch = matchesWeaponApplicability(
         weaponApplicabilityState.selected,
         perk.weaponType,

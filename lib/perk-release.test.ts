@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import fs from "node:fs";
 import { getShanghaiDateKey, isValidDateKey } from "./date-key";
-import { getPerkAvailability, getPerkConfiguredAvailability, getS4PerkLaunchGroup, isPerkRecent } from "./perk-release";
+import { getPerkAvailability, getPerkConfiguredAvailability, getS4PerkLaunchGroup, isPerkRecent, isSuperPerk } from "./perk-release";
 import { getAllPerks } from "./perks";
 import s4NewPerks from "../data/s4-new-perks.json";
 
@@ -10,6 +10,28 @@ const ONLINE_PERK = {
   collectModItem: 1 as const,
   releaseDate: "2026-07-24",
 };
+
+test("超级插件保留原有条目并补齐 S4 遗漏项", () => {
+  const perks = getAllPerks().filter(isSuperPerk);
+  assert.equal(perks.length, 34);
+  assert.deepEqual([1, 2, 3, 4].map(slot => perks.filter(perk => perk.slot === slot).length), [4, 2, 10, 18]);
+  assert.deepEqual(perks.filter(perk => s4NewPerks.superItemIds.includes(perk.itemId))
+    .map(perk => perk.name).sort(), [
+    "弹链供给", "战术速装", "积光成辉", "余烬积势", "换弹引爆", "驰射淬锋", "近战衔接",
+  ].sort());
+});
+
+test("超级插件按图标分类，不受名称、赛季和上线状态影响", () => {
+  for (const season of ["pending", "s4", "s5-preview"]) {
+    for (const collectModItem of [0, 1] as const) {
+      const perk = { name: "新名称", icon: "1316196001", season, collectModItem };
+      assert.equal(isSuperPerk(perk), true);
+    }
+  }
+  assert.equal(isSuperPerk({}), false);
+  assert.equal(isSuperPerk({ icon: "1316192001" }), false);
+  assert.equal(isSuperPerk({ icon: "1316230001" }), false);
+});
 
 test("S4 上新名单对应预览身份，首发名单固定为正式发布时已上线的新插件", () => {
   const archived = JSON.parse(fs.readFileSync(s4NewPerks.source, "utf8")) as {

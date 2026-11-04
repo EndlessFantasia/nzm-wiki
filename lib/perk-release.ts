@@ -7,6 +7,28 @@ const s4NewItemIds = new Set(s4NewPerks.itemIds);
 const s4SeasonLaunchItemIds = new Set(s4NewPerks.seasonLaunchItemIds);
 const s4SuperItemIds = new Set(s4NewPerks.superItemIds);
 
+// 已核对的超级插件图标，仅用于图鉴分类，不用于推断插件身份。
+const SUPER_PERK_ICONS = new Set([
+  "1313209001",
+  "1313210001",
+  "1314193001",
+  "1314206001",
+  "1315202001",
+  "1315203001",
+  "1315240001",
+  "1315241001",
+  "1316194001",
+  "1316195001",
+  "1316196001",
+  "1316197001",
+  "1316219001",
+  "1316220001",
+]);
+
+export function isSuperPerk(perk: Pick<Perk, "icon">): boolean {
+  return perk.icon !== undefined && SUPER_PERK_ICONS.has(perk.icon);
+}
+
 /** First-launch membership is frozen; unreleased status comes from the live catalog. */
 export function getS4PerkLaunchGroup(
   perk: Pick<Perk, "itemId" | "season" | "collectModItem">,
