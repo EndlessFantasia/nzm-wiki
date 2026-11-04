@@ -81,8 +81,10 @@ function HoverPreviewSurface({
   useLayoutEffect(() => {
     const updatePosition = () => {
       const anchor = anchorRef.current?.getBoundingClientRect();
-      const preview = previewRef.current?.getBoundingClientRect();
-      if (!anchor || !preview) return;
+      const element = previewRef.current;
+      if (!anchor || !element) return;
+      // 入场动画带缩放，getBoundingClientRect 会偏小，贴边时溢出视口；按布局尺寸定位。
+      const preview = { width: element.offsetWidth, height: element.offsetHeight };
 
       const padding = 16;
       const gap = 10;
