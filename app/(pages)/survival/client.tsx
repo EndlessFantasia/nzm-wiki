@@ -4,11 +4,14 @@ import Image from "next/image";
 import { X } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 import { HoverPreviewPanel } from "@/components/HoverPreviewPanel";
+import { ELEMENT_TYPES } from "@/constants/weapons";
 import { revealLocatedTarget } from "@/lib/locate-target";
 import { getAssetPath } from "@/lib/path";
 import type {
-  SurvivalBuffNode, SurvivalCodex, SurvivalPassive, SurvivalSkill, SurvivalSpecial, SurvivalSpecialKind, SurvivalTag,
+  SurvivalBuffNode, SurvivalCodex, SurvivalDamageSource, SurvivalPassive, SurvivalSkill, SurvivalSpecial,
+  SurvivalSpecialKind, SurvivalTag,
 } from "@/lib/survival-codex";
+import { getHealthSettlementDefinition, isWeaponHealthSettlementType } from "@/lib/weapon-health-settlement";
 
 type Kind = "skill" | "passive" | "special";
 interface Entry { kind: Kind; id: number }
@@ -17,6 +20,10 @@ type Select = (entry: Entry) => void;
 const LEVELS = ["I", "II", "III", "IV", "V"];
 const SPECIAL_KINDS: Record<SurvivalSpecialKind, string> = { tempBoost: "临时进化", trigger: "触发增益", allMaxReward: "满级奖励" };
 const HOVER = "(hover: hover) and (pointer: fine) and (min-width: 1024px)";
+/** 沿用猎场独立伤害的基础攻击换算；生存战是否同为 500 尚未实测。 */
+const BASE_ATTACK = 500;
+const ELEMENT_ICONS = new Map<string, string>(ELEMENT_TYPES.map((element) => [element.type, element.iconSrc]));
+const DAMAGE_COLUMNS = "@lg:grid @lg:grid-cols-[minmax(0,1fr)_5.5rem_4.5rem_3.5rem_4rem_5.5rem] @lg:items-center @lg:gap-x-3";
 const cardBase = "flex h-full w-full min-w-0 touch-manipulation rounded-lg border border-zinc-700 bg-zinc-800/50 text-left transition-colors outline-none hover:border-zinc-500 hover:bg-zinc-700/50 focus-visible:[&_.card-name]:underline focus-visible:[&_.card-name]:decoration-2 focus-visible:[&_.card-name]:underline-offset-4";
 
 function parseHash(hash: string): Entry | null {
@@ -82,6 +89,74 @@ function RefItem({ icon, name, note, onClick }: { icon: string; name: string; no
   </button>;
 }
 
+function formatDamage(source: SurvivalDamageSource) {
+  return source.dynamic ? "动态" : String(Math.round(source.hpCalScale * BASE_ATTACK * 10_000) / 10_000);
+}
+
+function Element({ name, size = 16 }: { name: string; size?: number }) {
+  const icon = ELEMENT_ICONS.get(name);
+  return <span className="inline-flex items-center gap-1">
+    {icon && <Image src={getAssetPath(icon)} alt="" width={size} height={size} className="shrink-0" style={{ width: size, height: size }} />}
+    <span>{name}</span>
+  </span>;
+}
+
+function DamageRow({ source, compact }: { source: SurvivalDamageSource; compact: boolean }) {
+  const type = isWeaponHealthSettlementType(source.settlement)
+    ? getHealthSettlementDefinition(source.settlement).label
+    : source.settlement;
+  const damage = formatDamage(source);
+  const toughness = source.toughness === null ? "-" : String(source.toughness);
+  const permission = <span className="inline-flex gap-x-2">
+    <span className={source.critical ? "text-zinc-100" : "text-zinc-500"}>{source.critical ? "暴击" : "无暴击"}</span>
+    <span className={source.weakpoint ? "text-zinc-100" : "text-zinc-500"}>{source.weakpoint ? "弱点" : "无弱点"}</span>
+  </span>;
+  return <li className={`py-2 first:pt-0 last:pb-0 ${DAMAGE_COLUMNS}`}>
+    <div className="flex items-baseline justify-between gap-3">
+      <span className="flex min-w-0 flex-wrap items-center gap-1.5 text-sm font-medium leading-6 text-white">
+        {source.label}
+        {source.scope === "ultimate" && <span className="rounded border border-amber-400/40 px-1 py-px text-[11px] font-normal leading-4 text-amber-200/90">终极</span>}
+        {compact && source.pending && <span className="rounded border border-zinc-500/50 px-1 py-px text-[11px] font-normal leading-4 text-zinc-400">待核验</span>}
+      </span>
+      <span className="shrink-0 text-sm font-semibold leading-6 text-[#e2c38b] tabular-nums @lg:hidden">{damage}</span>
+    </div>
+    <span className="hidden text-sm leading-6 text-zinc-300 @lg:block">{type}</span>
+    <span className="hidden text-right text-sm font-semibold leading-6 text-[#e2c38b] tabular-nums @lg:block">{damage}</span>
+    <span className="hidden text-right text-sm leading-6 text-zinc-300 tabular-nums @lg:block">{toughness}</span>
+    <span className="hidden text-sm leading-6 text-zinc-300 @lg:block"><Element name={source.element} /></span>
+    <span className="hidden text-xs leading-6 @lg:block">{permission}</span>
+    <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs leading-5 text-zinc-300 @lg:hidden">
+      <span>{type}</span>
+      <Element name={source.element} size={14} />
+      <span><span className="text-zinc-500">破韧</span> <span className="tabular-nums">{toughness}</span></span>
+      {permission}
+    </div>
+    {!compact && source.pending && <p className="mt-1 border-l-2 border-amber-400/50 pl-2 text-xs leading-5 text-amber-200/80 @lg:col-span-6">
+      待核验：{source.pending}
+    </p>}
+  </li>;
+}
+
+/** 悬停预览用 compact：待核验只留标记，省掉说明与脚注，控制浮窗高度。 */
+function DamageBlock({ sources, compact }: { sources: SurvivalDamageSource[]; compact: boolean }) {
+  if (!sources.length) return null;
+  return <Block title="伤害结算">
+    <div className="@container">
+      <div aria-hidden="true" className={`mb-1 hidden text-xs text-zinc-500 ${DAMAGE_COLUMNS}`}>
+        <span>来源</span><span>类型</span><span className="text-right">伤害</span><span className="text-right">破韧</span>
+        <span>元素</span><span>暴击/弱点</span>
+      </div>
+      <ul className="divide-y divide-white/[0.06]">
+        {sources.map((source) => <DamageRow key={`${source.scope}-${source.asset}-${source.key}-${source.level}`}
+          source={source} compact={compact} />)}
+      </ul>
+    </div>
+    {!compact && <p className="mt-2 text-xs leading-5 text-zinc-500">
+      伤害按 HpCalScale × 基础攻击 {BASE_ATTACK} 换算，未计入升级、被动和临时进化加成；生存战基础攻击尚未实测。
+    </p>}
+  </Block>;
+}
+
 function DetailHeader({ icon, name, meta, tags, onClose }: {
   icon: string; name: string; meta: string; tags: SurvivalTag[]; onClose?: () => void;
 }) {
@@ -120,8 +195,12 @@ function SkillDetails({ skill, lookup, select, onClose }: DetailProps & { skill:
   const boosts = lookup.codex.specials.filter((special) => special.targetSkillIds.includes(skill.id));
   return <>
     <DetailHeader icon={skill.levels[0].icon} name={skill.name} meta="主动技能" tags={skill.tags} onClose={onClose} />
+    {/* 伤害结算与升级路线同列，和右栏的终极、临时进化保持高度接近，控制浮窗高度。 */}
     <div className="lg:grid lg:grid-cols-2">
-      <Block title="升级路线"><LevelList levels={skill.levels} showCurrent={Boolean(select)} /></Block>
+      <div>
+        <DamageBlock sources={skill.damageSources} compact={!select} />
+        <Block title="升级路线"><LevelList levels={skill.levels} showCurrent={Boolean(select)} /></Block>
+      </div>
       <div className="lg:border-l lg:border-white/10">
         <Block title="终极进化">
           <div className="flex gap-3">
@@ -181,6 +260,7 @@ function SpecialDetails({ special, lookup, select, onClose }: DetailProps & { sp
       <Text>{special.node.description}</Text>
       {current && current !== special.node.description && <Text muted>{current}</Text>}
     </div>
+    <DamageBlock sources={special.damageSources} compact={!select} />
     {targets.length > 0 && <Block title="临时进化技能">
       <p className="mb-2 text-xs leading-5 text-zinc-400">持有其中任一技能时才会出现</p>
       <div className="space-y-2">
@@ -298,15 +378,27 @@ export default function SurvivalCodexClient({ codex }: { codex: SurvivalCodex })
   return <>
     <div className="space-y-8">
       <Section id="survival-skills" title="主动技能" count={codex.skills.length} className="grid-cols-2 lg:grid-cols-4">
-        {codex.skills.map((skill) => <EntryCard key={skill.id} entry={{ kind: "skill", id: skill.id }} lookup={lookup}
-          onOpen={open} className="flex-col items-start gap-2 p-3 sm:flex-row sm:gap-3">
-          <Icon src={skill.levels[0].icon} size={48} />
-          <span className="min-w-0 flex-1 space-y-1.5">
-            <span className="card-name block break-words text-sm font-semibold leading-5 text-white">{skill.name}</span>
-            <Tags tags={skill.tags} />
-            <span className="block break-words text-xs leading-4 text-zinc-400">终极 · {skill.ultimate.name}</span>
-          </span>
-        </EntryCard>)}
+        {codex.skills.map((skill) => {
+          const main = skill.damageSources.find((source) => source.scope === "base");
+          const elementIcon = main && ELEMENT_ICONS.get(main.element);
+          return <EntryCard key={skill.id} entry={{ kind: "skill", id: skill.id }} lookup={lookup}
+            onOpen={open} className="flex-col items-start gap-2 p-3 sm:flex-row sm:gap-3">
+            <Icon src={skill.levels[0].icon} size={48} />
+            <span className="min-w-0 flex-1 space-y-1.5">
+              <span className="flex flex-wrap items-baseline justify-between gap-x-2">
+                <span className="card-name break-words text-sm font-semibold leading-5 text-white">{skill.name}</span>
+                {main && <span title={`${main.label} · ${main.element}`}
+                  className="inline-flex items-center gap-1 text-xs font-semibold leading-5 text-[#e2c38b] tabular-nums">
+                  {elementIcon && <Image src={getAssetPath(elementIcon)} alt={main.element} width={14} height={14}
+                    className="shrink-0 self-center" style={{ width: 14, height: 14 }} />}
+                  {formatDamage(main)}
+                </span>}
+              </span>
+              <Tags tags={skill.tags} />
+              <span className="block break-words text-xs leading-4 text-zinc-400">终极 · {skill.ultimate.name}</span>
+            </span>
+          </EntryCard>;
+        })}
       </Section>
       <Section id="survival-passives" title="被动增益" count={codex.passives.length} className="grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
         {codex.passives.map((passive) => {
