@@ -173,6 +173,40 @@
         "reduceWeight": 0
       },
       "passiveId": 6011,
+      "damageSources": [
+        {
+          "label": "普通弹药",
+          "scope": "base",
+          "asset": "AIBehavior/PlayerDevice/17610052_LSJQSW_TempGunFlyingSentry/BP_AIChar_17610052_LSJQSW_TempGunFlyingSentry",
+          "key": "NormalAttack",
+          "numericalId": 191810005,
+          "level": 1,
+          "settlement": "SkillDamage",
+          "hpCalScale": 1.9,
+          "toughness": 2.85,
+          "element": "物理",
+          "critical": true,
+          "weakpoint": false,
+          "dynamic": false,
+          "pending": null
+        },
+        {
+          "label": "高能弹药",
+          "scope": "base",
+          "asset": "AIBehavior/PlayerDevice/17610052_LSJQSW_TempGunFlyingSentry/BP_AIChar_17610052_LSJQSW_TempGunFlyingSentry",
+          "key": "PowerfulAttack",
+          "numericalId": 191810006,
+          "level": 1,
+          "settlement": "SkillDamage",
+          "hpCalScale": 1.9,
+          "toughness": 2.85,
+          "element": "物理",
+          "critical": true,
+          "weakpoint": false,
+          "dynamic": false,
+          "pending": "高能弹药的使用条件未确认"
+        }
+      ],
       "atlas": {
         "id": 1,
         "sortOrder": 100
@@ -349,6 +383,24 @@
         "reduceWeight": 0
       },
       "passiveId": 6031,
+      "damageSources": [
+        {
+          "label": "激光",
+          "scope": "base",
+          "asset": "AIBehavior/PlayerDevice/LaserTurret_SM/BP_AIChar_17606052_LaserTurret_SM",
+          "key": "NormalAttack",
+          "numericalId": 191810007,
+          "level": 1,
+          "settlement": "SkillDamage",
+          "hpCalScale": 1.6,
+          "toughness": 2.4,
+          "element": "物理",
+          "critical": true,
+          "weakpoint": false,
+          "dynamic": false,
+          "pending": null
+        }
+      ],
       "atlas": {
         "id": 2,
         "sortOrder": 200
@@ -525,6 +577,24 @@
         "reduceWeight": 0
       },
       "passiveId": 6006,
+      "damageSources": [
+        {
+          "label": "猎刃",
+          "scope": "base",
+          "asset": "Blueprints/Affixes/MGE/SurvivalMode/Spawnable/BP_Projectile_Boomerang",
+          "key": "Damage",
+          "numericalId": 191810010,
+          "level": 1,
+          "settlement": "SkillDamage",
+          "hpCalScale": 1.5,
+          "toughness": 2.25,
+          "element": "物理",
+          "critical": true,
+          "weakpoint": false,
+          "dynamic": false,
+          "pending": null
+        }
+      ],
       "atlas": {
         "id": 3,
         "sortOrder": 300
@@ -701,6 +771,56 @@
         "reduceWeight": 0
       },
       "passiveId": 6016,
+      "damageSources": [
+        {
+          "label": "爆炸",
+          "scope": "base",
+          "asset": "Blueprints/Affixes/MGE/SurvivalMode/Spawnable/BP_Projectile_IceBoom",
+          "key": "AOEDamage",
+          "numericalId": 191810011,
+          "level": 1,
+          "settlement": "SkillDamage",
+          "hpCalScale": 1.65,
+          "toughness": 14.85,
+          "element": "寒冷",
+          "critical": true,
+          "weakpoint": false,
+          "dynamic": false,
+          "pending": null
+        },
+        {
+          "label": "爆发",
+          "scope": "base",
+          "asset": "Blueprints/Affixes/MGE/SurvivalMode/Spawnable/BP_Projectile_IceBoom",
+          "key": "MiddleAOEDamage",
+          "numericalId": 191810012,
+          "level": 1,
+          "settlement": "SkillDamage",
+          "hpCalScale": 0.82,
+          "toughness": 7.42,
+          "element": "寒冷",
+          "critical": true,
+          "weakpoint": false,
+          "dynamic": false,
+          "pending": null
+        },
+        {
+          "label": "穿透",
+          "scope": "base",
+          "asset": "Blueprints/Affixes/MGE/SurvivalMode/Spawnable/BP_Projectile_IceBoom",
+          "key": "Damage",
+          "numericalId": 191810013,
+          "level": 1,
+          "settlement": "SkillDamage",
+          "hpCalScale": 1.65,
+          "toughness": 14.85,
+          "element": "寒冷",
+          "critical": true,
+          "weakpoint": false,
+          "dynamic": false,
+          "pending": null
+        }
+      ],
       "atlas": {
         "id": 4,
         "sortOrder": 400
@@ -877,6 +997,40 @@
         "reduceWeight": 0
       },
       "passiveId": 6021,
+      "damageSources": [
+        {
+          "label": "轰炸",
+          "scope": "base",
+          "asset": "Blueprints/Affixes/MGE/SurvivalMode/Spawnable/BP_MW_AutoBomb",
+          "key": "Damage",
+          "numericalId": 191810001,
+          "level": 1,
+          "settlement": "SkillDamage",
+          "hpCalScale": 7.5,
+          "toughness": 11.25,
+          "element": "火焰",
+          "critical": true,
+          "weakpoint": false,
+          "dynamic": false,
+          "pending": null
+        },
+        {
+          "label": "小核弹",
+          "scope": "ultimate",
+          "asset": "Blueprints/Affixes/MGE/SurvivalMode/Spawnable/BP_MW_Nuclear",
+          "key": "KillMonsterAndGPE",
+          "numericalId": 191810002,
+          "level": 1,
+          "settlement": "SkillDamage",
+          "hpCalScale": 96,
+          "toughness": 120,
+          "element": "火焰",
+          "critical": true,
+          "weakpoint": false,
+          "dynamic": false,
+          "pending": null
+        }
+      ],
       "atlas": {
         "id": 5,
         "sortOrder": 500
@@ -1083,6 +1237,24 @@
         "reduceWeight": 0
       },
       "passiveId": 6056,
+      "damageSources": [
+        {
+          "label": "飞刃",
+          "scope": "base",
+          "asset": "Blueprints/Affixes/MGE/SurvivalMode/MGE_1511006001_Knife",
+          "key": "NumericalID",
+          "numericalId": 191810014,
+          "level": 1,
+          "settlement": "SkillDamage",
+          "hpCalScale": 0.265,
+          "toughness": 0.4,
+          "element": "物理",
+          "critical": true,
+          "weakpoint": false,
+          "dynamic": false,
+          "pending": null
+        }
+      ],
       "atlas": {
         "id": 6,
         "sortOrder": 600
@@ -1259,6 +1431,40 @@
         "reduceWeight": 0
       },
       "passiveId": 6026,
+      "damageSources": [
+        {
+          "label": "冲击环",
+          "scope": "base",
+          "asset": "Blueprints/Affixes/MGE/SurvivalMode/MGE_1511020001_ShakeWave",
+          "key": "WaveNumericalID",
+          "numericalId": 191810009,
+          "level": 1,
+          "settlement": "SkillDamage",
+          "hpCalScale": 0.6,
+          "toughness": 0.9,
+          "element": "物理",
+          "critical": true,
+          "weakpoint": false,
+          "dynamic": false,
+          "pending": null
+        },
+        {
+          "label": "冲击力场",
+          "scope": "ultimate",
+          "asset": "Blueprints/Affixes/MGE/SurvivalMode/MGE_1511020001_ShakeWave",
+          "key": "ZoneNumericalID",
+          "numericalId": 191810015,
+          "level": 1,
+          "settlement": "SkillDamage",
+          "hpCalScale": 2.1,
+          "toughness": 3.15,
+          "element": "物理",
+          "critical": true,
+          "weakpoint": false,
+          "dynamic": false,
+          "pending": null
+        }
+      ],
       "atlas": {
         "id": 7,
         "sortOrder": 700
@@ -1435,6 +1641,56 @@
         "reduceWeight": 0
       },
       "passiveId": 6001,
+      "damageSources": [
+        {
+          "label": "直击",
+          "scope": "base",
+          "asset": "Blueprints/Affixes/MGE/SurvivalMode/Spawnable/BP_MW_AutoElectromaneticStrike",
+          "key": "DirectDamage",
+          "numericalId": 191810003,
+          "level": 1,
+          "settlement": "SkillDamage",
+          "hpCalScale": 9.6,
+          "toughness": 14.4,
+          "element": "电弧",
+          "critical": true,
+          "weakpoint": false,
+          "dynamic": false,
+          "pending": null
+        },
+        {
+          "label": "溅射",
+          "scope": "base",
+          "asset": "Blueprints/Affixes/MGE/SurvivalMode/Spawnable/BP_MW_AutoElectromaneticStrike",
+          "key": "SplashDamage",
+          "numericalId": 191810004,
+          "level": 1,
+          "settlement": "SkillDamage",
+          "hpCalScale": 0,
+          "toughness": null,
+          "element": "电弧",
+          "critical": true,
+          "weakpoint": false,
+          "dynamic": false,
+          "pending": "溅射行 HpCalScale 为 0，实际伤害是否由运行时另行计算未确认"
+        },
+        {
+          "label": "直击",
+          "scope": "ultimate",
+          "asset": "Blueprints/Affixes/MGE/SurvivalMode/Spawnable/BP_MW_AutoElectromaneticStrike",
+          "key": "DirectDamage",
+          "numericalId": 191810003,
+          "level": 6,
+          "settlement": "SkillDamage",
+          "hpCalScale": 9.6,
+          "toughness": 43.2,
+          "element": "电弧",
+          "critical": true,
+          "weakpoint": false,
+          "dynamic": false,
+          "pending": "Numerical 第 6 级对应终极形态是按等级数推断，未核验字节码"
+        }
+      ],
       "atlas": {
         "id": 8,
         "sortOrder": 800
@@ -3414,6 +3670,7 @@
         1004,
         1005
       ],
+      "damageSources": [],
       "atlas": {
         "id": 13,
         "sortOrder": 2130
@@ -3463,6 +3720,7 @@
         1001,
         1002
       ],
+      "damageSources": [],
       "atlas": {
         "id": 14,
         "sortOrder": 2140
@@ -3514,6 +3772,7 @@
         1006,
         1007
       ],
+      "damageSources": [],
       "atlas": {
         "id": 15,
         "sortOrder": 2150
@@ -3553,6 +3812,24 @@
         "blueprint": "MGE_1511021001_SingleDamage"
       },
       "targetSkillIds": [],
+      "damageSources": [
+        {
+          "label": "追加伤害",
+          "scope": "base",
+          "asset": "Blueprints/Affixes/MGE/SurvivalMode/MGE_1511021001_SingleDamage",
+          "key": "NumericalID",
+          "numericalId": 191810016,
+          "level": 1,
+          "settlement": "CustomDamage",
+          "hpCalScale": 1,
+          "toughness": null,
+          "element": "物理",
+          "critical": false,
+          "weakpoint": false,
+          "dynamic": true,
+          "pending": "CustomDamage 结算，HpCalScale 为 1；描述称追加 1000% 伤害，实际倍率需核验字节码"
+        }
+      ],
       "atlas": {
         "id": 16,
         "sortOrder": 2160
@@ -3592,6 +3869,7 @@
         "blueprint": "MGE_1511022001_TripleDamage"
       },
       "targetSkillIds": [],
+      "damageSources": [],
       "atlas": {
         "id": 17,
         "sortOrder": 2170
@@ -3625,6 +3903,7 @@
         "blueprint": "MGE_1511012001_AddHealth"
       },
       "targetSkillIds": [],
+      "damageSources": [],
       "atlas": null
     }
   ],

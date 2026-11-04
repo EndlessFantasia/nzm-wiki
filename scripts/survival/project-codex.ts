@@ -3,14 +3,20 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import sharp from "sharp";
 import type {
-  SurvivalAtlasSlot, SurvivalBuffNode, SurvivalCodex, SurvivalCodexRules, SurvivalEffect, SurvivalEffectType,
-  SurvivalMge, SurvivalPassive, SurvivalPrerequisite, SurvivalSkill, SurvivalSpecial, SurvivalTag,
+  SurvivalAtlasSlot, SurvivalBuffNode, SurvivalCodex, SurvivalCodexRules, SurvivalDamageScope, SurvivalDamageSource,
+  SurvivalEffect, SurvivalEffectType, SurvivalMge, SurvivalPassive, SurvivalPrerequisite, SurvivalSkill, SurvivalSpecial,
+  SurvivalTag,
 } from "../../lib/survival-codex";
+import {
+  HEALTH_SETTLEMENT_PREFIX, getHealthSettlementDefinition, isWeaponHealthSettlementType,
+} from "../../lib/weapon-health-settlement";
 
 const ROOT = process.cwd();
 const SOURCE = path.join(ROOT, "refs/Exports/NZM/Content");
 const TABLES = path.join(SOURCE, "DataTables/TimeTravelHunt");
-const MGE_DIR = path.join(SOURCE, "Blueprints/Affixes/MGE/SurvivalMode");
+const MGE_ASSETS = "Blueprints/Affixes/MGE/SurvivalMode";
+const MGE_DIR = path.join(SOURCE, MGE_ASSETS);
+const NUMERICAL_TABLE = "DataTables/numerical_config_composite";
 const TARGET = path.join(ROOT, "data/survival/codex.json");
 const ICONS = path.join(ROOT, "public/icons/survival");
 const ICON_PREFIX = "/Game/UI/UI_Textures/";
@@ -46,6 +52,20 @@ interface RawLimits {
   UltimateWeaponAccumulateStartCount: number;
 }
 
+interface RawNumerical {
+  id: number;
+  Level: number;
+  Settlements: { TagName: string }[];
+  HpCalScale: number;
+  HpCalBase: number;
+  ToughnessBase: number;
+  ToughnessScale: number;
+  ElementType: string;
+  bEnableCriticalDamage: boolean;
+  EnableWeaknessDamage: boolean;
+}
+interface RawExport { Name?: string; Properties?: Record<string, unknown> }
+
 export interface SurvivalSourceTables {
   buffs: Record<string, RawBuff>;
   show: Record<string, RawShow>;
@@ -54,6 +74,143 @@ export interface SurvivalSourceTables {
   mgeBlueprints: Record<string, string>;
   /** NZSlateColorStyleInfoDataTable 样式名 → 十六进制颜色（不含 #）。 */
   colorStyles: Record<string, string>;
+  /** numerical_config_composite 行，键为 `<id>_<level>`。 */
+  numericals: Record<string, RawNumerical>;
+  /** 资产路径（相对 Content，不含扩展名）→ 导出 JSON；含伤害资产和全部生存战 MGE 蓝图。 */
+  damageAssets: Record<string, RawExport[]>;
+}
+
+interface DamageSpec {
+  asset: string;
+  key: string;
+  label: string;
+  scope?: SurvivalDamageScope;
+  level?: number;
+  dynamic?: true;
+  pending?: string;
+}
+
+const SPAWNABLE = `${MGE_ASSETS}/Spawnable`;
+const DRONE = "AIBehavior/PlayerDevice/17610052_LSJQSW_TempGunFlyingSentry/BP_AIChar_17610052_LSJQSW_TempGunFlyingSentry";
+const TURRET = "AIBehavior/PlayerDevice/LaserTurret_SM/BP_AIChar_17606052_LaserTurret_SM";
+const ICE_BOMB = `${SPAWNABLE}/BP_Projectile_IceBoom`;
+const SHAKE_WAVE = `${MGE_ASSETS}/MGE_1511020001_ShakeWave`;
+const STRIKE = `${SPAWNABLE}/BP_MW_AutoElectromaneticStrike`;
+
+// 技能或特殊增益 ID → 实际挂载伤害 Numerical 的资产与配置键。投射物同时带旧的 NamedThrowableSettlementConfig，
+// 这里取生存战专用的 TacticalUnitComponent.DefaultNumericalConfigs。资产、键和 Numerical 行在投影时逐项回查。
+export const DAMAGE_SPECS: Record<number, DamageSpec[]> = {
+  1001: [
+    { asset: DRONE, key: "NormalAttack", label: "普通弹药" },
+    { asset: DRONE, key: "PowerfulAttack", label: "高能弹药", pending: "高能弹药的使用条件未确认" },
+  ],
+  1002: [{ asset: TURRET, key: "NormalAttack", label: "激光" }],
+  1003: [{ asset: `${SPAWNABLE}/BP_Projectile_Boomerang`, key: "Damage", label: "猎刃" }],
+  1004: [
+    { asset: ICE_BOMB, key: "AOEDamage", label: "爆炸" },
+    { asset: ICE_BOMB, key: "MiddleAOEDamage", label: "爆发" },
+    { asset: ICE_BOMB, key: "Damage", label: "穿透" },
+  ],
+  1005: [
+    { asset: `${SPAWNABLE}/BP_MW_AutoBomb`, key: "Damage", label: "轰炸" },
+    { asset: `${SPAWNABLE}/BP_MW_Nuclear`, key: "KillMonsterAndGPE", label: "小核弹", scope: "ultimate" },
+  ],
+  1006: [{ asset: `${MGE_ASSETS}/MGE_1511006001_Knife`, key: "NumericalID", label: "飞刃" }],
+  1007: [
+    { asset: SHAKE_WAVE, key: "WaveNumericalID", label: "冲击环" },
+    { asset: SHAKE_WAVE, key: "ZoneNumericalID", label: "冲击力场", scope: "ultimate" },
+  ],
+  1008: [
+    { asset: STRIKE, key: "DirectDamage", label: "直击" },
+    { asset: STRIKE, key: "SplashDamage", label: "溅射", pending: "溅射行 HpCalScale 为 0，实际伤害是否由运行时另行计算未确认" },
+    { asset: STRIKE, key: "DirectDamage", label: "直击", scope: "ultimate", level: 6,
+      pending: "Numerical 第 6 级对应终极形态是按等级数推断，未核验字节码" },
+  ],
+  6064: [{ asset: `${MGE_ASSETS}/MGE_1511021001_SingleDamage`, key: "NumericalID", label: "追加伤害", dynamic: true,
+    pending: "CustomDamage 结算，HpCalScale 为 1；描述称追加 1000% 伤害，实际倍率需核验字节码" }],
+};
+
+const ELEMENTS: Record<string, string> = {
+  "EElementEffectType::EDamageType_Normal": "物理",
+  "EElementEffectType::EDamageType_Kinetic": "物理",
+  "EElementEffectType::EDamageType_Fire": "火焰",
+  "EElementEffectType::EDamageType_Cryo": "寒冷",
+  "EElementEffectType::EDamageType_Shock": "电弧",
+  "EElementEffectType::EDamageType_Corossive": "腐蚀",
+};
+const TOUGHNESS_SETTLEMENT = "Numerical.SettlementType.Toughness.Base";
+
+function numericalIdIn(exports: RawExport[], key: string, asset: string): number {
+  const found = new Set<number>();
+  for (const item of exports) {
+    const properties = item.Properties ?? {};
+    const configs = properties.DefaultNumericalConfigs as { Key: string; Value: { NumericalId: number } }[] | undefined;
+    for (const config of configs ?? []) if (config.Key === key) found.add(config.Value.NumericalId);
+    if (item.Name?.startsWith("Default__") && typeof properties[key] === "number") found.add(properties[key]);
+  }
+  const [id, ...rest] = found;
+  if (!id || rest.length) throw new Error(`Damage numerical not unique: ${asset} ${key} -> ${[...found].join(", ") || "none"}`);
+  return id;
+}
+
+function damageSources(owner: number, mge: SurvivalMge | null, source: SurvivalSourceTables): SurvivalDamageSource[] {
+  const specs = DAMAGE_SPECS[owner] ?? [];
+  if (specs.length && !mge) throw new Error(`Damage owner without MGE: ${owner}`);
+  const mgePath = mge && `${MGE_ASSETS}/${mge.blueprint}`;
+  const resolved = specs.map((spec) => {
+    const exports = source.damageAssets[spec.asset];
+    if (!exports) throw new Error(`Missing damage asset: ${spec.asset}`);
+    const className = `${path.posix.basename(spec.asset)}_C'`;
+    if (spec.asset !== mgePath && !JSON.stringify(source.damageAssets[mgePath!] ?? []).includes(className)) {
+      throw new Error(`MGE ${mge!.blueprint} does not reference ${spec.asset}`);
+    }
+    return { spec, id: numericalIdIn(exports, spec.key, spec.asset), level: spec.level ?? 1 };
+  });
+  return resolved.map(({ spec, id, level }) => {
+    const row = source.numericals[`${id}_${level}`];
+    if (!row || row.id !== id || row.Level !== level) throw new Error(`Missing damage numerical: ${id}_${level}`);
+    const tags = row.Settlements.map((item) => item.TagName);
+    const health = tags.filter((tag) => tag.startsWith(HEALTH_SETTLEMENT_PREFIX));
+    const settlement = health[0]?.slice(HEALTH_SETTLEMENT_PREFIX.length);
+    if (health.length !== 1 || !settlement || !isWeaponHealthSettlementType(settlement) ||
+      getHealthSettlementDefinition(settlement).kind !== "damage") {
+      throw new Error(`Damage numerical has no single damage settlement: ${id}_${level}`);
+    }
+    const element = ELEMENTS[row.ElementType];
+    if (!element) throw new Error(`Unknown damage element: ${id}_${level} ${row.ElementType}`);
+    if ((!spec.dynamic && row.HpCalBase !== 0) || row.ToughnessScale !== 0) {
+      throw new Error(`Damage numerical uses HpCalBase or ToughnessScale: ${id}_${level}`);
+    }
+    const projected: SurvivalDamageSource = {
+      label: spec.label,
+      scope: spec.scope ?? "base",
+      asset: spec.asset,
+      key: spec.key,
+      numericalId: id,
+      level,
+      settlement,
+      hpCalScale: row.HpCalScale,
+      toughness: tags.includes(TOUGHNESS_SETTLEMENT) ? row.ToughnessBase : null,
+      element,
+      critical: row.bEnableCriticalDamage,
+      weakpoint: row.EnableWeaknessDamage,
+      dynamic: spec.dynamic ?? false,
+      pending: spec.pending ?? null,
+    };
+    if (projected.scope === "base") {
+      // 基础形态只展示第 1 级；其余等级若有变化必须由终极条目显式认领，避免静默隐藏数值差异。
+      const claimed = new Set(resolved.filter((item) => item.id === id && item.spec.scope === "ultimate").map((item) => item.level));
+      const fingerprint = (item: RawNumerical) =>
+        JSON.stringify([item.Settlements, item.HpCalScale, item.HpCalBase, item.ToughnessBase, item.ElementType,
+          item.bEnableCriticalDamage, item.EnableWeaknessDamage]);
+      for (const other of Object.values(source.numericals)) {
+        if (other.id === id && !claimed.has(other.Level) && fingerprint(other) !== fingerprint(row)) {
+          throw new Error(`Damage numerical varies by level without an explicit mapping: ${id}_${other.Level}`);
+        }
+      }
+    }
+    return projected;
+  });
 }
 
 // STH_RoguelikeBuffTable.Type
@@ -194,6 +351,8 @@ export function projectSurvivalCodex(source: SurvivalSourceTables): SurvivalCode
     }
     const skillMge = mge(base);
     if (!skillMge) throw new Error(`Skill without MGE: ${base.ID}`);
+    const skillDamage = damageSources(base.ID, skillMge, source);
+    if (!skillDamage.some((item) => item.scope === "base")) throw new Error(`Skill without damage source: ${base.ID}`);
     skills.push({
       id: base.ID,
       name: text(base.OutsideName, `outside name of ${base.ID}`),
@@ -203,6 +362,7 @@ export function projectSurvivalCodex(source: SurvivalSourceTables): SurvivalCode
       levels,
       ultimate: ultimateNode,
       passiveId: passive.ID,
+      damageSources: skillDamage,
       atlas: entry.slot,
     });
   }
@@ -253,17 +413,22 @@ export function projectSurvivalCodex(source: SurvivalSourceTables): SurvivalCode
         return skillId;
       })
       : [];
+    const specialMge = mge(raw);
     specials.push({
       id: raw.ID,
       name: optionalText(raw.OutsideName) || text(raw.Name, `name of ${raw.ID}`),
       kind: isTempBoost ? "tempBoost" : raw.ID === rules.allMaxLevelSpecialBuffId ? "allMaxReward" : "trigger",
       tags: tagsOf(raw),
       node: node(raw),
-      mge: mge(raw),
+      mge: specialMge,
       targetSkillIds,
+      damageSources: damageSources(raw.ID, specialMge, source),
       atlas: atlas.get(raw.ID)?.slot ?? null,
     });
   }
+  const owners = new Set([...skills, ...specials].map((item) => item.id));
+  const orphanSpecs = Object.keys(DAMAGE_SPECS).filter((id) => !owners.has(Number(id)));
+  if (orphanSpecs.length) throw new Error(`Damage specs without an owner: ${orphanSpecs.join(", ")}`);
 
   for (const [buffId, entry] of atlas) {
     const placed = skills.some((item) => item.id === buffId) || passives.some((item) => item.id === buffId) ||
@@ -312,6 +477,23 @@ function readMgeBlueprints(): Record<string, string> {
   return result;
 }
 
+export function readDamageInputs(
+  content: string,
+  mgeBlueprints: Record<string, string>,
+): Pick<SurvivalSourceTables, "numericals" | "damageAssets"> {
+  const read = (asset: string) => JSON.parse(fs.readFileSync(path.join(content, `${asset}.json`), "utf8"));
+  const table = read(NUMERICAL_TABLE) as { Rows: Record<string, RawNumerical> }[];
+  if (table.length !== 1 || !table[0]?.Rows) throw new Error(`Invalid table: ${NUMERICAL_TABLE}`);
+  const assets = new Set([
+    ...Object.values(DAMAGE_SPECS).flat().map((spec) => spec.asset),
+    ...Object.values(mgeBlueprints).map((name) => `${MGE_ASSETS}/${name}`),
+  ]);
+  return {
+    numericals: table[0].Rows,
+    damageAssets: Object.fromEntries([...assets].map((asset) => [asset, read(asset) as RawExport[]])),
+  };
+}
+
 export function collectIconNames(catalog: SurvivalCodex): string[] {
   const nodes = [
     ...catalog.skills.flatMap((skill) => [...skill.levels, skill.ultimate]),
@@ -333,12 +515,14 @@ function iconSource(buffs: Record<string, RawBuff>): Map<string, string> {
 async function main() {
   const check = process.argv.includes("--check");
   const buffs = readRows<RawBuff>("STH_RoguelikeBuffTable");
+  const mgeBlueprints = readMgeBlueprints();
   const catalog = projectSurvivalCodex({
     buffs,
     show: readRows<RawShow>("Survival_BuffShow"),
     limits: readRows<RawLimits>("STH_RoguelikeBuffLimitTable"),
-    mgeBlueprints: readMgeBlueprints(),
+    mgeBlueprints,
     colorStyles: readColorStyles(),
+    ...readDamageInputs(SOURCE, mgeBlueprints),
   });
   const output = `${JSON.stringify(catalog, null, 2)}\n`;
   if (check) {

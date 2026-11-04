@@ -51,6 +51,30 @@ export interface SurvivalMge {
   blueprint: string;
 }
 
+export type SurvivalDamageScope = "base" | "ultimate";
+
+/** 蓝图引用的一行伤害 Numerical（numerical_config_composite），不含升级与被动加成。 */
+export interface SurvivalDamageSource {
+  label: string;
+  scope: SurvivalDamageScope;
+  /** 引用该 Numerical 的资产（相对 Content，不含扩展名）与配置键。 */
+  asset: string;
+  key: string;
+  numericalId: number;
+  level: number;
+  /** Numerical.SettlementType.Health.* 后缀。 */
+  settlement: string;
+  hpCalScale: number;
+  /** 未挂 Toughness.Base 结算时为 null。 */
+  toughness: number | null;
+  element: string;
+  critical: boolean;
+  weakpoint: boolean;
+  /** 伤害在运行时计算，HpCalScale 不能按基础攻击换算。 */
+  dynamic: boolean;
+  pending: string | null;
+}
+
 export interface SurvivalSkill {
   id: number;
   name: string;
@@ -62,6 +86,7 @@ export interface SurvivalSkill {
   levels: SurvivalBuffNode[];
   ultimate: SurvivalBuffNode;
   passiveId: number;
+  damageSources: SurvivalDamageSource[];
   atlas: SurvivalAtlasSlot;
 }
 
@@ -85,6 +110,7 @@ export interface SurvivalSpecial {
   mge: SurvivalMge | null;
   /** 仅 tempBoost：被临时进化的主动技能。 */
   targetSkillIds: number[];
+  damageSources: SurvivalDamageSource[];
   atlas: SurvivalAtlasSlot | null;
 }
 
@@ -100,7 +126,7 @@ export interface SurvivalCodexRules {
 
 export interface SurvivalCodex {
   schemaVersion: 1;
-  /** 数值全部来自源表展示层，尚未沿 MGE → Numerical 身份链核验。 */
+  /** 描述与属性展示值来自源表展示层，未沿 MGE → Numerical 核验；damageSources 除外。 */
   numericalStatus: "display-only";
   skills: SurvivalSkill[];
   passives: SurvivalPassive[];
@@ -158,12 +184,20 @@ function assertSurvivalCodex(value: unknown): asserts value is SurvivalCodex {
     nodeIds.add(node.id);
   };
 
+  const assertDamage = (sources: SurvivalDamageSource[], owner: string) => {
+    if (!Array.isArray(sources) || sources.some((source) =>
+      !source.label || !Number.isInteger(source.numericalId) || !Number.isFinite(source.hpCalScale) || !source.element)) {
+      fail(`伤害来源 ${owner}`);
+    }
+  };
+
   const skillIds = new Set<number>();
   const passiveIds = new Set<number>();
   for (const skill of data.skills) {
     if (skillIds.has(skill.id) || skill.levels.length < 2 || skill.tagKeys.length !== skill.tags.length) {
       fail(`技能 ${skill.id}`);
     }
+    assertDamage(skill.damageSources, `技能 ${skill.id}`);
     skillIds.add(skill.id);
     skill.levels.forEach((node) => track(node, `技能 ${skill.id}`));
     track(skill.ultimate, `技能 ${skill.id} 终极`);
@@ -185,6 +219,7 @@ function assertSurvivalCodex(value: unknown): asserts value is SurvivalCodex {
     if (!SPECIAL_KINDS.includes(special.kind) || special.targetSkillIds.some((id) => !skillIds.has(id))) {
       fail(`特殊增益 ${special.id}`);
     }
+    assertDamage(special.damageSources, `特殊增益 ${special.id}`);
     track(special.node, `特殊增益 ${special.id}`);
   }
 }

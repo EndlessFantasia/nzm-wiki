@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
 import committed from "../../data/survival/codex.json";
-import { collectIconNames, projectSurvivalCodex, type SurvivalSourceTables } from "./project-codex";
+import { collectIconNames, projectSurvivalCodex, readDamageInputs, type SurvivalSourceTables } from "./project-codex";
 
 const content = path.join(process.cwd(), "refs/Exports/NZM/Content");
 const rows = (name: string) =>
@@ -23,6 +23,7 @@ function load(): SurvivalSourceTables {
     mgeBlueprints,
     colorStyles: Object.fromEntries(Object.entries(colors).map(([name, row]) =>
       [name, (row as { ColorStyle: { SpecifiedColor: { Hex: string } } }).ColorStyle.SpecifiedColor.Hex])),
+    ...readDamageInputs(content, mgeBlueprints),
   };
 }
 
@@ -43,6 +44,36 @@ test("temporary boosts resolve to the skills whose MGE they name", () => {
   const boost = projected.specials.find((special) => special.id === 6062);
   assert.deepEqual(boost?.targetSkillIds, [1001, 1002]);
   assert.equal(boost?.node.effect.params[2], "60");
+});
+
+test("damage sources follow the blueprint numerical configs", () => {
+  const projected = projectSurvivalCodex(load());
+  const strike = projected.skills.find((skill) => skill.id === 1008)!.damageSources;
+  assert.deepEqual(strike.map((source) => [source.scope, source.key, source.numericalId, source.level, source.toughness]), [
+    ["base", "DirectDamage", 191810003, 1, 14.4],
+    ["base", "SplashDamage", 191810004, 1, null],
+    ["ultimate", "DirectDamage", 191810003, 6, 43.2],
+  ]);
+  const frenzy = projected.specials.find((special) => special.id === 6064)!.damageSources;
+  assert.deepEqual(frenzy.map((source) => [source.settlement, source.dynamic]), [["CustomDamage", true]]);
+  assert.ok(projected.skills.every((skill) => skill.damageSources.some((source) => source.scope === "base")));
+});
+
+test("damage drift in blueprints or numerical rows fails the projection", () => {
+  const missingRow = load();
+  delete missingRow.numericals["191810010_1"];
+  assert.throws(() => projectSurvivalCodex(missingRow), /Missing damage numerical: 191810010_1/);
+
+  const renamedKey = load();
+  const boomerang = renamedKey.damageAssets["Blueprints/Affixes/MGE/SurvivalMode/Spawnable/BP_Projectile_Boomerang"];
+  for (const item of boomerang) {
+    for (const config of (item.Properties?.DefaultNumericalConfigs ?? []) as { Key: string }[]) config.Key = "Renamed";
+  }
+  assert.throws(() => projectSurvivalCodex(renamedKey), /Damage numerical not unique: .*BP_Projectile_Boomerang Damage/);
+
+  const levelDrift = load();
+  levelDrift.numericals["191810009_2"] = { ...levelDrift.numericals["191810009_1"], Level: 2, HpCalScale: 9 };
+  assert.throws(() => projectSurvivalCodex(levelDrift), /varies by level without an explicit mapping: 191810009_2/);
 });
 
 test("broken links in the source tables fail the projection", () => {
