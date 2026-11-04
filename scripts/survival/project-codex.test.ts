@@ -59,6 +59,17 @@ test("damage sources follow the blueprint numerical configs", () => {
   assert.ok(projected.skills.every((skill) => skill.damageSources.some((source) => source.scope === "base")));
 });
 
+test("only registered specials expose the buff their MGE actually adds", () => {
+  const projected = projectSurvivalCodex(load());
+  assert.deepEqual(projected.specials.flatMap((special) => special.buff ? [[special.id, special.buff]] : []), [
+    [6065, { name: "Survaivl_TripleDamageOP", duration: 10, modifierIds: [191810016] }],
+  ]);
+
+  const missingBuff = load();
+  delete missingBuff.buffConfigs.Survaivl_TripleDamageOP;
+  assert.throws(() => projectSurvivalCodex(missingBuff), /Missing buff config: Survaivl_TripleDamageOP/);
+});
+
 test("damage drift in blueprints or numerical rows fails the projection", () => {
   const missingRow = load();
   delete missingRow.numericals["191810010_1"];

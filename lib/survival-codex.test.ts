@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   SURVIVAL_CODEX, filterSurvivalSkillsByTag, getSurvivalPassive, getSurvivalSkill, listSurvivalAtlas,
+  resolveSurvivalBuffEffects,
 } from "./survival-codex";
 
 test("the atlas lists active skills first, then passives and specials in game order", () => {
@@ -26,4 +27,13 @@ test("each skill pairs with a passive that points back at it", () => {
 test("tag lookup uses the source enum, not the display text", () => {
   assert.deepEqual(filterSurvivalSkillsByTag("Summon").map((skill) => skill.id), [1001, 1002]);
   assert.deepEqual(filterSurvivalSkillsByTag("Nope"), []);
+});
+
+test("buff effects resolve through the Num Modifier Lock, not the description", () => {
+  const triple = SURVIVAL_CODEX.specials.find((special) => special.id === 6065)!;
+  assert.match(triple.node.description, /×5/);
+  assert.deepEqual(resolveSurvivalBuffEffects(triple.buff!), [
+    { modifierKey: "lc:191810016_1_0", label: "游戏模式乘区", value: "+500%" },
+  ]);
+  assert.throws(() => resolveSurvivalBuffEffects({ name: "Missing", duration: 1, modifierIds: [404] }), /不在 Lock 中/);
 });

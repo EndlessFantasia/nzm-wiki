@@ -3,7 +3,7 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import sharp from "sharp";
 import type {
-  SurvivalAtlasSlot, SurvivalBuffNode, SurvivalCodex, SurvivalCodexRules, SurvivalDamageScope, SurvivalDamageSource,
+  SurvivalAtlasSlot, SurvivalBuff, SurvivalBuffNode, SurvivalCodex, SurvivalCodexRules, SurvivalDamageScope, SurvivalDamageSource,
   SurvivalEffect, SurvivalEffectType, SurvivalMge, SurvivalPassive, SurvivalPrerequisite, SurvivalSkill, SurvivalSpecial,
   SurvivalTag,
 } from "../../lib/survival-codex";
@@ -17,6 +17,7 @@ const TABLES = path.join(SOURCE, "DataTables/TimeTravelHunt");
 const MGE_ASSETS = "Blueprints/Affixes/MGE/SurvivalMode";
 const MGE_DIR = path.join(SOURCE, MGE_ASSETS);
 const NUMERICAL_TABLE = "DataTables/numerical_config_composite";
+const BUFF_TABLE = "DataTables/Buff/BuffConfigDatatableNew";
 const TARGET = path.join(ROOT, "data/survival/codex.json");
 const ICONS = path.join(ROOT, "public/icons/survival");
 const ICON_PREFIX = "/Game/UI/UI_Textures/";
@@ -78,7 +79,10 @@ export interface SurvivalSourceTables {
   numericals: Record<string, RawNumerical>;
   /** 资产路径（相对 Content，不含扩展名）→ 导出 JSON；含伤害资产和全部生存战 MGE 蓝图。 */
   damageAssets: Record<string, RawExport[]>;
+  /** BuffConfigDatatableNew 行，键为 BuffName。 */
+  buffConfigs: Record<string, RawBuffConfig>;
 }
+interface RawBuffConfig { BuffName: string; Duration: number; GPModifyIDs: number[] }
 
 interface DamageSpec {
   asset: string;
@@ -141,6 +145,29 @@ const ELEMENTS: Record<string, string> = {
   "EElementEffectType::EDamageType_Corossive": "腐蚀",
 };
 const TOUGHNESS_SETTLEMENT = "Numerical.SettlementType.Toughness.Base";
+
+// 特殊增益 ID → MGE 默认对象上实际被 AddBuff 使用的 Buff 名属性。残暴狂热的 DamageBuff 未被字节码使用、
+// 指向的 Modifier 191810015 也不存在，不登记。
+export const BUFF_SPECS: Record<number, string> = {
+  6065: "DamageBuff",
+};
+
+function buffOf(owner: number, mge: SurvivalMge | null, source: SurvivalSourceTables): SurvivalBuff | null {
+  const key = BUFF_SPECS[owner];
+  if (!key) return null;
+  if (!mge) throw new Error(`Buff owner without MGE: ${owner}`);
+  const exports = source.damageAssets[`${MGE_ASSETS}/${mge.blueprint}`] ?? [];
+  const names = new Set(exports.flatMap((item) =>
+    item.Name?.startsWith("Default__") && typeof item.Properties?.[key] === "string" ? [item.Properties[key]] : []));
+  const [name, ...rest] = names;
+  if (!name || rest.length) throw new Error(`Buff name not unique: ${mge.blueprint} ${key}`);
+  const row = source.buffConfigs[name];
+  if (!row || row.BuffName !== name) throw new Error(`Missing buff config: ${name}`);
+  if (!row.GPModifyIDs.length || row.GPModifyIDs.some((id) => !Number.isInteger(id) || id <= 0)) {
+    throw new Error(`Buff without modifiers: ${name}`);
+  }
+  return { name, duration: row.Duration, modifierIds: row.GPModifyIDs };
+}
 
 function numericalIdIn(exports: RawExport[], key: string, asset: string): number {
   const found = new Set<number>();
@@ -425,11 +452,12 @@ export function projectSurvivalCodex(source: SurvivalSourceTables): SurvivalCode
       mge: specialMge,
       targetSkillIds,
       damageSources: damageSources(raw.ID, specialMge, source),
+      buff: buffOf(raw.ID, specialMge, source),
       atlas: atlas.get(raw.ID)?.slot ?? null,
     });
   }
   const owners = new Set([...skills, ...specials].map((item) => item.id));
-  const orphanSpecs = Object.keys(DAMAGE_SPECS).filter((id) => !owners.has(Number(id)));
+  const orphanSpecs = [...Object.keys(DAMAGE_SPECS), ...Object.keys(BUFF_SPECS)].filter((id) => !owners.has(Number(id)));
   if (orphanSpecs.length) throw new Error(`Damage specs without an owner: ${orphanSpecs.join(", ")}`);
 
   for (const [buffId, entry] of atlas) {
@@ -482,7 +510,7 @@ function readMgeBlueprints(): Record<string, string> {
 export function readDamageInputs(
   content: string,
   mgeBlueprints: Record<string, string>,
-): Pick<SurvivalSourceTables, "numericals" | "damageAssets"> {
+): Pick<SurvivalSourceTables, "numericals" | "damageAssets" | "buffConfigs"> {
   const read = (asset: string) => JSON.parse(fs.readFileSync(path.join(content, `${asset}.json`), "utf8"));
   const table = read(NUMERICAL_TABLE) as { Rows: Record<string, RawNumerical> }[];
   if (table.length !== 1 || !table[0]?.Rows) throw new Error(`Invalid table: ${NUMERICAL_TABLE}`);
@@ -493,6 +521,7 @@ export function readDamageInputs(
   return {
     numericals: table[0].Rows,
     damageAssets: Object.fromEntries([...assets].map((asset) => [asset, read(asset) as RawExport[]])),
+    buffConfigs: (read(BUFF_TABLE) as { Rows: Record<string, RawBuffConfig> }[])[0].Rows,
   };
 }
 

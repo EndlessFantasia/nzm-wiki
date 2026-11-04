@@ -3671,6 +3671,7 @@
         1005
       ],
       "damageSources": [],
+      "buff": null,
       "atlas": {
         "id": 13,
         "sortOrder": 2130
@@ -3721,6 +3722,7 @@
         1002
       ],
       "damageSources": [],
+      "buff": null,
       "atlas": {
         "id": 14,
         "sortOrder": 2140
@@ -3773,6 +3775,7 @@
         1007
       ],
       "damageSources": [],
+      "buff": null,
       "atlas": {
         "id": 15,
         "sortOrder": 2150
@@ -3830,6 +3833,7 @@
           "pending": "CalculateDamage ≥ 10000 时以 10 × CalculateDamage 发起追加结算（MGE 参数 ExtraDamageRatio），CustomDamage 后续消费待核验"
         }
       ],
+      "buff": null,
       "atlas": {
         "id": 16,
         "sortOrder": 2160
@@ -3870,6 +3874,13 @@
       },
       "targetSkillIds": [],
       "damageSources": [],
+      "buff": {
+        "name": "Survaivl_TripleDamageOP",
+        "duration": 10,
+        "modifierIds": [
+          191810016
+        ]
+      },
       "atlas": {
         "id": 17,
         "sortOrder": 2170
@@ -3904,6 +3915,7 @@
       },
       "targetSkillIds": [],
       "damageSources": [],
+      "buff": null,
       "atlas": null
     }
   ],

@@ -1,4 +1,5 @@
 import rawSurvivalCodex from "@/data/survival/codex.json";
+import { NUM_MODIFIER_RESOLVER } from "@/lib/num-modifier-data";
 
 export type SurvivalEffectType = "AddMGE" | "LevelUpRogueLikeBuff" | "ExpRateModifier" | "TempLevelBoost";
 export type SurvivalPrerequisiteType = "HaveBuff" | "HaveAnyBuff";
@@ -75,6 +76,20 @@ export interface SurvivalDamageSource {
   pending: string | null;
 }
 
+/** MGE 实际添加的 Buff（BuffConfigDatatableNew），效果数值由 Num Modifier Resolver 解析。 */
+export interface SurvivalBuff {
+  name: string;
+  duration: number;
+  modifierIds: number[];
+}
+
+export interface SurvivalBuffEffect {
+  modifierKey: string;
+  /** 乘区分面优先，没有分面时退回属性名。 */
+  label: string;
+  value: string;
+}
+
 export interface SurvivalSkill {
   id: number;
   name: string;
@@ -111,6 +126,7 @@ export interface SurvivalSpecial {
   /** 仅 tempBoost：被临时进化的主动技能。 */
   targetSkillIds: number[];
   damageSources: SurvivalDamageSource[];
+  buff: SurvivalBuff | null;
   atlas: SurvivalAtlasSlot | null;
 }
 
@@ -220,6 +236,9 @@ function assertSurvivalCodex(value: unknown): asserts value is SurvivalCodex {
       fail(`特殊增益 ${special.id}`);
     }
     assertDamage(special.damageSources, `特殊增益 ${special.id}`);
+    if (special.buff !== null && (!special.buff?.name || !Array.isArray(special.buff.modifierIds) || !special.buff.modifierIds.length)) {
+      fail(`特殊增益 ${special.id} 的 Buff`);
+    }
     track(special.node, `特殊增益 ${special.id}`);
   }
 }
@@ -253,4 +272,22 @@ export function listSurvivalAtlas(codex: SurvivalCodex = SURVIVAL_CODEX): Surviv
     if (special.atlas) entries.push({ kind: "special", id: special.id, name: special.name, sortOrder: special.atlas.sortOrder });
   }
   return entries.sort((a, b) => a.sortOrder - b.sortOrder);
+}
+
+export function resolveSurvivalBuffEffects(buff: SurvivalBuff): SurvivalBuffEffect[] {
+  return buff.modifierIds.flatMap((modifierId) => {
+    const rows = NUM_MODIFIER_RESOLVER.getRowsById("lc", modifierId);
+    if (!rows.length) fail(`Buff ${buff.name} 的 Modifier ${modifierId} 不在 Lock 中`);
+    return rows.map((row) => {
+      const referencePath = `survival:buff:${buff.name}:${row.key}`;
+      const expression = { row: row.key, field: row.baseValue !== 0 ? "base" : "coefficient" } as const;
+      const effect = NUM_MODIFIER_RESOLVER.resolveEffect(expression, { recipient: "self" }, referencePath);
+      const format = effect.attribute.quantity === "ratio" ? "signed-percent" : "signed-number";
+      return {
+        modifierKey: row.key,
+        label: effect.facets[0]?.label ?? effect.attribute.label,
+        value: NUM_MODIFIER_RESOLVER.resolveValue(expression, format, referencePath).text,
+      };
+    });
+  });
 }

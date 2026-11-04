@@ -16,9 +16,10 @@ refs/Exports/NZM/Content/DataTables/UMGStyle/
 refs/Exports/NZM/Content/Blueprints/Affixes/MGE/SurvivalMode/   MGE 蓝图存在性校验、伤害资产引用
   Spawnable/ 与 AIBehavior/PlayerDevice/ 召唤物       伤害 Numerical 配置键
 refs/Exports/NZM/Content/DataTables/numerical_config_composite.json  伤害 Numerical 行
+refs/Exports/NZM/Content/DataTables/Buff/BuffConfigDatatableNew.json  特殊增益 Buff 的持续时间与 Modifier ID
   → scripts/survival/project-codex.ts
   → data/survival/codex.json + public/icons/survival/*.webp
-  → lib/survival-codex.ts
+  → lib/survival-codex.ts（Buff 效果经 data/num-modifier-lock.json 解析）
   → app/(pages)/survival/
 ```
 
@@ -28,6 +29,7 @@ refs/Exports/NZM/Content/DataTables/numerical_config_composite.json  伤害 Nume
 - `passives`：12 条被动链（每条 5 级）。`combinesWithSkillId` 非空表示与某主动技能组合触发进化，空表示独立被动；`atlas` 非空表示在游戏图鉴中单独露出（4 条）。
 - `specials`：`tempBoost`（饱和打击等，`targetSkillIds` 由 MGE ID 反查）、`trigger`（残暴狂热、三相共振）、`allMaxReward`（全满级后的急救包，不在图鉴中）。
 - `damageSources`（技能与特殊增益）：蓝图实际挂载的伤害 Numerical 行，`scope` 区分基础形态与终极新增来源。
+- `buff`（特殊增益）：MGE 实际添加的 Buff，保存名称、持续时间和 `GPModifyIDs`；效果值不入库，页面由 Num Modifier Resolver 解析。
 - `rules`：携带上限和终极抽取参数，字段名沿用源表，不做语义改写。
 
 升级链、终极前置、技能与被动互指、MGE 蓝图、图标和条目数量在投影时全部校验，任何一项不符直接失败。
@@ -52,7 +54,7 @@ refs/Exports/NZM/Content/DataTables/numerical_config_composite.json  伤害 Nume
 - 哨卫高能弹药：开火时按 `UsePowerfulAmmo` 或 `BulletMustBeRed` 切换到高能武器槽，两个标志的设置条件未闭合，不能归因于终极或临时进化。
 - 减速球：爆炸的旧配置距离事件见上；`MiddleAOEDamage` 未找到完整的消费链。
 
-三相共振不属于独立伤害：`MGE_1511022001_TripleDamage.DamageBuff` → `BuffConfigDatatableNew#Survaivl_TripleDamageOP`（持续 10 秒）→ Modifier `191810016`（`DamageRatio`、`B1`、`BaseValue=5`），即 +500%，单独作用时为 ×6，与描述“伤害×5”冲突，以配置为准。页面目前只展示描述，尚未接入这条 Modifier 引用。
+三相共振不属于独立伤害：`MGE_1511022001_TripleDamage.DamageBuff` → `BuffConfigDatatableNew#Survaivl_TripleDamageOP`（持续 10 秒）→ Modifier `191810016`（`DamageRatio`、`B1`、`BaseValue=5`），即 +500%，单独作用时为 ×6，与描述“伤害×5”冲突，以配置为准。`BUFF_SPECS` 按条目登记 MGE 上实际被 `AddBuff` 使用的属性，投影时校验 Buff 行存在且挂有 Modifier；`resolveSurvivalBuffEffects()` 经 Resolver 解析为“游戏模式乘区 +500%”，详情的「配置效果」分段与描述并列展示。残暴狂热的 `DamageBuff=Survaivl_SingleDamageOP` 未被字节码使用，指向的 Modifier `191810015` 也不在 Lock 中，不登记。
 
 新增技能或伤害资产变化时先更新 `DAMAGE_SPECS`。
 

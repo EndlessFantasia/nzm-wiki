@@ -8,7 +8,7 @@ import { ELEMENT_TYPES } from "@/constants/weapons";
 import { revealLocatedTarget } from "@/lib/locate-target";
 import { getAssetPath } from "@/lib/path";
 import type {
-  SurvivalBuffNode, SurvivalCodex, SurvivalDamageSource, SurvivalPassive, SurvivalSkill, SurvivalSpecial,
+  SurvivalBuffEffect, SurvivalBuffNode, SurvivalCodex, SurvivalDamageSource, SurvivalPassive, SurvivalSkill, SurvivalSpecial,
   SurvivalSpecialKind, SurvivalTag,
 } from "@/lib/survival-codex";
 import { getHealthSettlementDefinition, isWeaponHealthSettlementType } from "@/lib/weapon-health-settlement";
@@ -176,6 +176,7 @@ function DetailHeader({ icon, name, meta, tags, onClose }: {
 
 interface Lookup {
   codex: SurvivalCodex;
+  buffEffects: Record<number, SurvivalBuffEffect[]>;
   skills: Map<number, SurvivalSkill>;
   passives: Map<number, SurvivalPassive>;
   specials: Map<number, SurvivalSpecial>;
@@ -259,6 +260,19 @@ function SpecialDetails({ special, lookup, select, onClose }: DetailProps & { sp
       {current && current !== special.node.description && <Text muted>{current}</Text>}
     </div>
     <DamageBlock sources={special.damageSources} compact={!select} />
+    {special.buff && <Block title="配置效果">
+      <dl className="flex flex-wrap gap-x-5 gap-y-1 text-sm leading-6">
+        {(lookup.buffEffects[special.id] ?? []).map((effect) => <div key={effect.modifierKey} className="flex gap-1.5">
+          <dt className="text-zinc-400">{effect.label}</dt>
+          <dd className="font-semibold text-[#e2c38b] tabular-nums">{effect.value}</dd>
+        </div>)}
+        <div className="flex gap-1.5">
+          <dt className="text-zinc-400">持续</dt>
+          <dd className="text-zinc-100 tabular-nums">{special.buff.duration} 秒</dd>
+        </div>
+      </dl>
+      {select && <p className="mt-1 text-xs leading-5 text-zinc-500">取自 Modifier 配置，与游戏描述不一致时以此为准。</p>}
+    </Block>}
     {targets.length > 0 && <Block title="临时进化技能">
       <p className="mb-2 text-xs leading-5 text-zinc-400">持有其中任一技能时才会出现</p>
       <div className="space-y-2">
@@ -335,16 +349,20 @@ function TileContent({ icon, name, note }: { icon: string; name: string; note: s
   </>;
 }
 
-export default function SurvivalCodexClient({ codex }: { codex: SurvivalCodex }) {
+export default function SurvivalCodexClient({ codex, buffEffects }: {
+  codex: SurvivalCodex;
+  buffEffects: Record<number, SurvivalBuffEffect[]>;
+}) {
   const [selected, setSelected] = useState<Entry | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
   const lookup = useMemo<Lookup>(() => ({
     codex,
+    buffEffects,
     skills: new Map(codex.skills.map((skill) => [skill.id, skill])),
     passives: new Map(codex.passives.map((passive) => [passive.id, passive])),
     specials: new Map(codex.specials.map((special) => [special.id, special])),
-  }), [codex]);
+  }), [codex, buffEffects]);
 
   useEffect(() => {
     const dialog = dialogRef.current;

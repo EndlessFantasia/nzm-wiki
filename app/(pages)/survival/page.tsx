@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { SURVIVAL_CODEX } from "@/lib/survival-codex";
+import { SURVIVAL_CODEX, resolveSurvivalBuffEffects } from "@/lib/survival-codex";
 import SurvivalCodexClient from "./client";
 
 const { skills, passives, specials, rules } = SURVIVAL_CODEX;
+const buffEffects = Object.fromEntries(specials.flatMap((special) =>
+  special.buff ? [[special.id, resolveSurvivalBuffEffects(special.buff)] as const] : []));
 
 export const metadata: Metadata = {
   title: "生存战图鉴",
@@ -19,7 +21,7 @@ export default function SurvivalPage() {
           最多同时携带 {rules.maxActiveSkillTypes} 种主动技能、{rules.maxPassiveBuffTypes} 种被动增益。主动技能升到 V 级并持有配套被动后，有机会进化为终极技能。
         </p>
       </header>
-      <SurvivalCodexClient codex={SURVIVAL_CODEX} />
+      <SurvivalCodexClient codex={SURVIVAL_CODEX} buffEffects={buffEffects} />
     </main>
   );
 }
