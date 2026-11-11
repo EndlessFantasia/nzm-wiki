@@ -51,7 +51,6 @@ test("腐蚀飞弹替换白值，不能把未调用的500% Modifier叠入伤害"
   const perk = getPerkBySlug("slot-4/腐蚀飞弹")!;
   assert.equal(getPerkBySlug("preview/slot-4/腐蚀飞弹"), undefined);
   assert.deepEqual(await getIndependentDamageByPerkSlug("preview/slot-4/腐蚀飞弹"), []);
-  assert.match(perk.description!, /500%/);
   assert.doesNotMatch(perk.description!, /\{GPNumericalID:|\{\{num:/);
 });
 

@@ -1,0 +1,5282 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-11",
+  "contentRoot": "refs/Exports/NZM/Content",
+  "basis": "Numerical fields audited for all catalog rows. Execution chains and remaining gaps: docs/architecture/trigger-damage-evidence.md. A configuration row is not proof of release or execution.",
+  "files": [
+    {
+      "path": "DataTables/numerical_config_composite.json",
+      "sha256": "e10148a5a6e2c3429f97246745ede8db0d3846baa2a27e9d9ea48de0eb656ccf"
+    },
+    {
+      "path": "DataTables/numerical_config_equip.json",
+      "sha256": "ad5d775f806fb8b2d2c7feb0c7b5788fb9968284a82a779f9ac3866b5445653f"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk04/MGE_1316219001.uasset",
+      "sha256": "d546f2b4dd250b8962dc5c816136b7d82aaf747f8c22f7b93c4aa0c18c73d5ad"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk04/MGE_1316219001.uexp",
+      "sha256": "0ba5124707dd1aeed0b96c97410e20c8768a0f11c9dc99d8e4444abf211dbd41"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk03/MGE_1315237001.uasset",
+      "sha256": "ac23f349df6de49b22c3dbe4c395701a042191aa0b2950da099f5e5b457def3b"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk03/MGE_1315237001.uexp",
+      "sha256": "8bb40264fd2989fe6c5df2c518123bc9f9858b2aac078a037436b77216bd4bc0"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk04/MGE_1316218001.uasset",
+      "sha256": "23b6e2c947b33f2eb9387f7802bd337848524c071e7fc87e0966b8f753772ecd"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk04/MGE_1316218001.uexp",
+      "sha256": "9d95f2ac090beadf7b42e40893e449e4ac0f12b7124dee35c8fbeaad61d84770"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk04/MGE_1316220001.uasset",
+      "sha256": "de06b4f2a0de3d3429817e030acc4919d1920a6ba8e9070450a57552bfaac894"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk04/MGE_1316220001.uexp",
+      "sha256": "be9229368c21ef9b8b293c04d5d881ce6a2d4cbe6ad4755d0c1fa67141f0ce69"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk03/MGE_1315250001.uasset",
+      "sha256": "22d87964beea636be782b9f7bfe5564a78d89bf6e80af070f194464304ee00a0"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk03/MGE_1315250001.uexp",
+      "sha256": "5f3068539dc55262827e3a4597bf96f5c740d717f58df70b095be5107d636f83"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk04/MGE_1317129001.uasset",
+      "sha256": "3687e4c30ae7886fefbfdfcd7b1694c5dedb120fd19e580380daa0566aca6644"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk04/MGE_1317129001.uexp",
+      "sha256": "1d5bf05f9f88549c06517785a1349df48e96a6cdb94b71188977fca1be7993ab"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk04/MGE_1317110001.uasset",
+      "sha256": "2b34a863a1a1f6c0c7cfef4d0183bad8931492c176fb1d322029422fd45d1016"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk04/MGE_1317110001.uexp",
+      "sha256": "e6d8d16d80ea5b580255c25dfbe50943f7f88fbc92882c4b08e46846bc9a6929"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk02/MGE_1317042221.uasset",
+      "sha256": "3bc9e9bc5d4b72f91f47a78e61e57e9cefc97c8a5f6c3b5e7680532217188849"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk02/MGE_1317042221.uexp",
+      "sha256": "32f90c830387bd74c124f40989d7b48e2ec332c20c2e76ba82edd7b87a69f487"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk02/MGE_1316212001.uasset",
+      "sha256": "885aad1e5432802cd09031c43d3ec65812b04e424f1a114493e4963aa0f07faf"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk02/MGE_1316212001.uexp",
+      "sha256": "ae2c8a1743c978293120af64b89003a9db91c667f6b3fe5402afcc9f6b900cbf"
+    },
+    {
+      "path": "Abilities/Build/RoguePerk/S3/MGE_1378030230.uasset",
+      "sha256": "d27555d05311ff1068b1f87a60890eb128b3457c936b53d0865b8cac4d7396f8"
+    },
+    {
+      "path": "Abilities/Build/RoguePerk/S3/MGE_1378030230.uexp",
+      "sha256": "867facce3199340c4c3162e637da300a37338cf5daca9469a0df05178e22d2af"
+    },
+    {
+      "path": "Abilities/Build/RoguePerk/S3/MGE_1378030260.uasset",
+      "sha256": "88f8046c9f381ee4c0f10f1e618af74c6a040737c63f16c74cb2f1d8823836b2"
+    },
+    {
+      "path": "Abilities/Build/RoguePerk/S3/MGE_1378030260.uexp",
+      "sha256": "19d416f265c446ae2833cfab68ced22d49fe85aae670bd4a875c5b4682ba7e08"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk02/MGE_1316210001.uasset",
+      "sha256": "8a3c55652538693d835ddb2ace525649b2cb6ed689861db44e25e95484fc4ca2"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk02/MGE_1316210001.uexp",
+      "sha256": "d79cb4974106cc4e5f03ce8c9fccd6578a6616aa7a4187d6b0bc819bf21adea5"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk02/MGE_1316211001.uasset",
+      "sha256": "840bdda2077b419be580eadb510ce59637668be917ce192e876d2adbf80c5c8f"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk02/MGE_1316211001.uexp",
+      "sha256": "f48f460e1cb9878489983c420d6cb49cfa889398a920903a04aace1450674eed"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk02/MGE_1316213001.uasset",
+      "sha256": "c75b524af22ca611ae3070ec8fc794e31bd5150546c0e87280bd0912a355ed54"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk02/MGE_1316213001.uexp",
+      "sha256": "2e012ae3ef5fd8aca725df396833aeddf2b4751bdfcb3d3366582acbb6be53a4"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk02/MGE_1317229001.uasset",
+      "sha256": "cd398cb92a7de4cadbe9aa5e57eaf559e539094b2ee2b2dfec13c0631ef9b14d"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk02/MGE_1317229001.uexp",
+      "sha256": "5fde3745a52cd4f6265d84bc6e7645da391e5754c2a229ea537e7745b2834d9d"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk02/MGE_1317232001.uasset",
+      "sha256": "31781d0c69c5e155dae92ce38f0415473e44e183ce6ae2e69ec59cd9d248cc2a"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk02/MGE_1317232001.uexp",
+      "sha256": "b36e1a63b0b4e5c65f60d6322cb74d664c25110bcfda627db5b0c84b12149ea5"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk02/MGE_1317234001.uasset",
+      "sha256": "9bc9c032f1a20bdc4c48a75fa2caf67b1ee58dbd06adf3372c2531033de29eb1"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk02/MGE_1317234001.uexp",
+      "sha256": "4823e0132f8d5fcfc66bd4f4566e63974eb63c69584471c247223605c28d065c"
+    },
+    {
+      "path": "AIBehavior/BaseAIBluprints/DataConfig/DataTable/DT_EffectZone.json",
+      "sha256": "61a7bc67a24dcbf5e42955db4f8fd02eda34cbb84bb890d4606eba69ea7aa1c8"
+    },
+    {
+      "path": "DataTables/NZAOEGlobalConfigTable.json",
+      "sha256": "fcf42d97cf8e70ceacc693a39a6d58f4005d05d349b512cc27b16cf215f7e8a1"
+    },
+    {
+      "path": "Abilities/MGE/BP_MGE_ISMProjectile_Base.json",
+      "sha256": "2e403019f6489ef86e41b44e97b953fdd47cb20f12df6a1135b66f12126b41bc"
+    },
+    {
+      "path": "Abilities/MGE/BP_Projectile_Normal_Base.json",
+      "sha256": "675000f1482e77ae49f3058c6fceb0c7028cbf419f82c89c4bce5824ee5840b2"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk02/BP_Projectile_MGE_1316210001.json",
+      "sha256": "8f8f3f44cd335c7b135fc2c635439702ae2f2437d17424ec64391ec0d68066fa"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk02/BP_Projectile_MGE_1317229001.json",
+      "sha256": "f7717efa4d586d1cc94bbcf16bf774f46335c80c1da5f7b582dde47d0e401f3c"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk02/BP_Projectile_MGE_1316212001.json",
+      "sha256": "d078f40c959625e5026ff23c99297fc789042a1c69f53589900559f1cee5df4a"
+    },
+    {
+      "path": "Abilities/Build/CBT3/Perk02/BP_Projectile_MGE_1316213001.json",
+      "sha256": "444408c1846b9d613fd80e7bdea7dd59489dd265d70e1e3c51daa39c489169f3"
+    }
+  ],
+  "exclusions": {
+    "11010051_1": "已有明确赛季天赋归属：破次数盾产生爆炸；不作为无归属插件配置重复收录",
+    "11010061_1": "回能设计的零伤害行，HpCalScale/HpCalBase 均为零；未形成独立伤害证据",
+    "11010130_1": "明确标记占位符，没有可发布的技能身份或执行引用",
+    "11010138_1": "流体护盾击退：HpCalScale/HpCalBase 均为零；破韧不等于生命伤害"
+  },
+  "records": [
+    {
+      "group": "current",
+      "entry": {
+        "name": "烈焰冲击",
+        "href": "/perks/slot-4/烈焰冲击",
+        "perkSlug": "slot-4/烈焰冲击",
+        "overlimitId": "20703040033",
+        "trigger": "使用主动技能后持续 6 秒",
+        "interval": "每 2 秒",
+        "numericalId": "11010041",
+        "damageType": "技能伤害",
+        "damageValue": "187.5",
+        "toughness": 0,
+        "element": "火焰",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010041_1",
+          "id": 11010041,
+          "Level": 1,
+          "HpCalScale": 0.375,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Fire",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "current",
+      "entry": {
+        "name": "追身导弹",
+        "href": "/perks/slot-4/追身导弹",
+        "perkSlug": "slot-4/追身导弹",
+        "trigger": "累计命中 10 次后发射 1 枚导弹",
+        "interval": "2 秒",
+        "numericalId": "11010084",
+        "damageType": "技能伤害",
+        "damageValue": "250",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010084_1",
+          "id": 11010084,
+          "Level": 1,
+          "HpCalScale": 0.5,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "current",
+      "entry": {
+        "name": "连锁电环",
+        "href": "/perks/slot-4/连锁电环",
+        "perkSlug": "slot-4/连锁电环",
+        "trigger": "一次开火命中至少 2 次或至少 2 个目标",
+        "interval": "5 秒",
+        "numericalId": "11010085",
+        "damageType": "技能伤害",
+        "damageValue": "50",
+        "toughness": 0,
+        "element": "电弧",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010085_1",
+          "id": 11010085,
+          "Level": 1,
+          "HpCalScale": 0.1,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "current",
+      "entry": {
+        "name": "释能火环",
+        "href": "/perks/slot-4/释能火环",
+        "perkSlug": "slot-4/释能火环",
+        "trigger": "释放技能",
+        "interval": "3 秒",
+        "numericalId": "11010086",
+        "damageType": "技能伤害",
+        "damageValue": "170",
+        "toughness": 0,
+        "element": "火焰",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010086_1",
+          "id": 11010086,
+          "Level": 1,
+          "HpCalScale": 0.34,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Fire",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "current",
+      "entry": {
+        "name": "霜滞协议",
+        "href": "/perks/slot-4/霜滞协议",
+        "perkSlug": "slot-4/霜滞协议",
+        "trigger": "开火或技能触发多次伤害",
+        "interval": "2 秒",
+        "numericalId": "11010087",
+        "damageType": "技能伤害",
+        "damageValue": "50",
+        "toughness": 0,
+        "element": "寒冷",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010087_1",
+          "id": 11010087,
+          "Level": 1,
+          "HpCalScale": 0.1,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Cryo",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "current",
+      "entry": {
+        "name": "闪电协议",
+        "href": "/perks/slot-4/闪电协议",
+        "perkSlug": "slot-4/闪电协议",
+        "trigger": "单发全部弹丸命中同一敌人",
+        "interval": "3 秒",
+        "numericalId": "11010088",
+        "damageType": "技能伤害",
+        "damageValue": "300",
+        "toughness": 0,
+        "element": "电弧",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010088_1",
+          "id": 11010088,
+          "Level": 1,
+          "HpCalScale": 0.6,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "current",
+      "entry": {
+        "name": "精确导弹",
+        "href": "/perks/slot-4/精确导弹",
+        "perkSlug": "slot-4/精确导弹",
+        "trigger": "弱点命中累计 3 次后发射 2 枚导弹",
+        "interval": "5 秒",
+        "numericalId": "11010089",
+        "damageType": "技能伤害",
+        "damageValue": "180/枚 × 2",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010089_1",
+          "id": 11010089,
+          "Level": 1,
+          "HpCalScale": 0.36,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "current",
+      "entry": {
+        "name": "毒属爆破",
+        "href": "/perks/slot-4/毒属爆破",
+        "perkSlug": "slot-4/毒属爆破",
+        "trigger": "腐蚀武器射击有 3% 概率触发 0.5 米爆炸",
+        "interval": "未见独立冷却",
+        "numericalId": "11010121",
+        "damageType": "技能伤害",
+        "damageValue": "290",
+        "toughness": 0,
+        "element": "腐蚀",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010121_1",
+          "id": 11010121,
+          "Level": 1,
+          "HpCalScale": 0.58,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Corossive",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "current",
+      "entry": {
+        "name": "合圈震荡",
+        "href": "/perks/slot-4/合圈震荡",
+        "perkSlug": "slot-4/合圈震荡",
+        "trigger": "召唤物造成伤害时触发冲击环",
+        "interval": "3 秒",
+        "numericalId": "11010122",
+        "damageType": "技能伤害",
+        "damageValue": "90/环",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010122_1",
+          "id": 11010122,
+          "Level": 1,
+          "HpCalScale": 0.18,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "current",
+      "entry": {
+        "name": "余波扩散",
+        "href": "/perks/slot-3/余波扩散",
+        "perkSlug": "slot-3/余波扩散",
+        "trigger": "武器技能命中后在技能中心生成冲击波",
+        "interval": "3 秒",
+        "numericalId": "11010141",
+        "damageType": "技能伤害",
+        "damageValue": "200",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010141_1",
+          "id": 11010141,
+          "Level": 1,
+          "HpCalScale": 0.4,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "current",
+      "entry": {
+        "name": "双星回响",
+        "href": "/perks/slot-3/双星回响",
+        "perkSlug": "slot-3/双星回响",
+        "trigger": "双星存在期间连续命中同一目标 5 次",
+        "interval": "3 秒",
+        "numericalId": "11010131",
+        "damageType": "技能伤害",
+        "damageValue": "900",
+        "toughness": 10,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "执行资产只有默认属性、没有可读字节码，按同名 Numerical 行收录，引用链待核验"
+      },
+      "rows": [
+        {
+          "key": "11010131_1",
+          "id": 11010131,
+          "Level": 1,
+          "HpCalScale": 1.8,
+          "HpCalBase": 0,
+          "ToughnessBase": 10,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.KnockUp.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Toughness.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "current",
+      "entry": {
+        "name": "黑洞吞噬",
+        "href": "/perks/slot-3/黑洞吞噬",
+        "perkSlug": "slot-3/黑洞吞噬",
+        "trigger": "黑洞结束时在中心生成冲击波",
+        "interval": "每次黑洞结束",
+        "numericalId": "11010132",
+        "damageType": "技能伤害",
+        "damageValue": "170",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "执行资产只有默认属性、没有可读字节码，按同名 Numerical 行收录，引用链待核验"
+      },
+      "rows": [
+        {
+          "key": "11010132_1",
+          "id": 11010132,
+          "Level": 1,
+          "HpCalScale": 0.34,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "current",
+      "entry": {
+        "name": "矩阵湮灭",
+        "href": "/perks/slot-3/矩阵湮灭",
+        "perkSlug": "slot-3/矩阵湮灭",
+        "trigger": "矩阵内每个友方单位发出湮灭；矩阵消失时爆炸",
+        "interval": "湮灭 5 秒",
+        "numericalId": "11010133 / 11010134",
+        "damageType": "技能伤害",
+        "damageValue": "湮灭 265；爆炸 800 起",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "执行资产只有默认属性、没有可读字节码，按同名 Numerical 行收录，引用链待核验"
+      },
+      "rows": [
+        {
+          "key": "11010133_1",
+          "id": 11010133,
+          "Level": 1,
+          "HpCalScale": 0.53,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010134_1",
+          "id": 11010134,
+          "Level": 1,
+          "HpCalScale": 1.6,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "current",
+      "entry": {
+        "name": "战灵余烬",
+        "href": "/perks/slot-3/战灵余烬",
+        "perkSlug": "slot-3/战灵余烬",
+        "trigger": "召唤物消失时消耗余烬能量释放 10 米冲击",
+        "interval": "13 秒",
+        "numericalId": "11010135",
+        "damageType": "技能伤害",
+        "damageValue": "基础 650",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "执行资产只有默认属性、没有可读字节码，按同名 Numerical 行收录，引用链待核验"
+      },
+      "rows": [
+        {
+          "key": "11010135_1",
+          "id": 11010135,
+          "Level": 1,
+          "HpCalScale": 1.3,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "current",
+      "entry": {
+        "name": "瘟疫之源",
+        "href": "/perks/slot-3/瘟疫之源",
+        "perkSlug": "slot-3/瘟疫之源",
+        "trigger": "击杀减速目标后留下持续 5 秒的区域",
+        "interval": "冷却 10 秒；区域每秒结算",
+        "numericalId": "11010136",
+        "damageType": "技能伤害",
+        "damageValue": "100/次",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "note": "毒池名称和特效不改变伤害元素；友方治疗使用另一行 11010137",
+        "pending": "S4_PoisonZone 已核到伤害行；MGE 生成该区域的执行链缺少可读字节码"
+      },
+      "rows": [
+        {
+          "key": "11010136_1",
+          "id": 11010136,
+          "Level": 1,
+          "HpCalScale": 0.2,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "current",
+      "entry": {
+        "name": "爆破强化",
+        "href": "/perks/slot-3/爆破强化",
+        "perkSlug": "slot-3/爆破强化",
+        "trigger": "击杀目标后，以该次结算伤害为输入触发二次爆破",
+        "interval": "1 秒",
+        "numericalId": "11010140",
+        "damageType": "间接伤害",
+        "damageValue": "原伤害 × 33%",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "note": "读取击杀结算的伤害作为输入，不按基础攻击力 500 折算为固定 165"
+      },
+      "rows": [
+        {
+          "key": "11010140_1",
+          "id": 11010140,
+          "Level": 1,
+          "HpCalScale": 0.33,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.IndirectDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "current",
+      "entry": {
+        "name": "疾风残影",
+        "href": "/perks/slot-3/疾风残影",
+        "perkSlug": "slot-3/疾风残影",
+        "trigger": "移动时在身后生成持续 2 秒的小电弧区域",
+        "interval": "生成间隔 2 秒；区域接触触发",
+        "numericalId": "11010142",
+        "damageType": "技能伤害",
+        "damageValue": "200/次",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "note": "S4_ElectricArc 的电弧表现实际使用物理伤害配置"
+      },
+      "rows": [
+        {
+          "key": "11010142_1",
+          "id": 11010142,
+          "Level": 1,
+          "HpCalScale": 0.4,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "overlimit",
+      "entry": {
+        "name": "致命爆炸",
+        "href": "/overlimit/20703040437",
+        "perkSlug": "slot-4/致命爆炸",
+        "overlimitId": "20703040437",
+        "trigger": "武器命中有 5% 概率产生 8 米爆炸",
+        "interval": "0.1 秒",
+        "numericalId": "130103014",
+        "damageType": "技能伤害",
+        "damageValue": "5000",
+        "toughness": 10,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "130103014_1",
+          "id": 130103014,
+          "Level": 1,
+          "HpCalScale": 10,
+          "HpCalBase": 0,
+          "ToughnessBase": 10,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": true,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Toughness.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "overlimit",
+      "entry": {
+        "name": "导弹轰炸",
+        "href": "/overlimit/20703040471",
+        "perkSlug": "slot-3/导弹轰炸",
+        "overlimitId": "20703040471",
+        "trigger": "爆炸命中发 2 枚；仅命中 1 个单位时发 5 枚",
+        "interval": "2 秒",
+        "numericalId": "121800050",
+        "damageType": "技能伤害",
+        "damageValue": "2100/枚",
+        "toughness": 4.2,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "121800050_1",
+          "id": 121800050,
+          "Level": 1,
+          "HpCalScale": 4.2,
+          "HpCalBase": 0,
+          "ToughnessBase": 4.2,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": true,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Toughness.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "overlimit",
+      "entry": {
+        "name": "换弹冲击",
+        "href": "/overlimit/20703040472",
+        "perkSlug": "slot-3/换弹冲击",
+        "overlimitId": "20703040472",
+        "trigger": "弹匣耗尽后每秒释放冲击波，持续 5 秒",
+        "interval": "1 秒周期",
+        "numericalId": "121800060",
+        "damageType": "技能伤害",
+        "damageValue": "基础 1800/次",
+        "toughness": 3.6,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "121800060_1",
+          "id": 121800060,
+          "Level": 1,
+          "HpCalScale": 3.6,
+          "HpCalBase": 0,
+          "ToughnessBase": 3.6,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": true,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Toughness.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "overlimit",
+      "entry": {
+        "name": "万伤掷弹",
+        "href": "/overlimit/20703040473",
+        "perkSlug": "slot-3/万伤掷弹",
+        "overlimitId": "20703040473",
+        "trigger": "累计造成 10000 点伤害后生成 2 枚榴弹",
+        "interval": "0.1 秒",
+        "numericalId": "121800070",
+        "damageType": "技能伤害",
+        "damageValue": "2100/枚 × 2",
+        "toughness": 4.2,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "121800070_1",
+          "id": 121800070,
+          "Level": 1,
+          "HpCalScale": 4.2,
+          "HpCalBase": 0,
+          "ToughnessBase": 4.2,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": true,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Toughness.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "overlimit",
+      "entry": {
+        "name": "爆毒蚀域",
+        "href": "/overlimit/20703040474",
+        "perkSlug": "slot-4/爆毒蚀域",
+        "overlimitId": "20703040474",
+        "trigger": "暴击时投出毒液罐并留下毒池",
+        "interval": "20 秒",
+        "numericalId": "121500071",
+        "damageType": "持续伤害",
+        "damageValue": "350/秒",
+        "toughness": 0.7,
+        "element": "腐蚀",
+        "critical": true,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "表中只列已核到的毒池配置；投射物自身继承的爆炸是否对敌生效尚缺父类执行证据"
+      },
+      "rows": [
+        {
+          "key": "121500071_1",
+          "id": 121500071,
+          "Level": 1,
+          "HpCalScale": 0.7,
+          "HpCalBase": 0,
+          "ToughnessBase": 0.7,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Corossive",
+          "bEnableCriticalDamage": true,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.DebuffDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Toughness.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "overlimit",
+      "entry": {
+        "name": "游击飞弹",
+        "href": "/overlimit/1317229001",
+        "perkSlug": "slot-4/游击飞弹",
+        "overlimitId": "1317229001",
+        "trigger": "每移动 10 米发射 2 枚跟踪弹",
+        "interval": "未见独立冷却",
+        "numericalId": "121800050",
+        "damageType": "技能伤害",
+        "damageValue": "2100/枚 × 2",
+        "toughness": 4.2,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "121800050_1",
+          "id": 121800050,
+          "Level": 1,
+          "HpCalScale": 4.2,
+          "HpCalBase": 0,
+          "ToughnessBase": 4.2,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": true,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Toughness.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "overlimit",
+      "entry": {
+        "name": "飞弹狂射",
+        "href": "/overlimit/1317232001",
+        "perkSlug": "slot-4/飞弹狂射",
+        "overlimitId": "1317232001",
+        "trigger": "累计造成 10 次武器伤害后发射 2 枚",
+        "interval": "1 秒",
+        "numericalId": "121800052",
+        "damageType": "技能伤害",
+        "damageValue": "2100/枚 × 2",
+        "toughness": 4.2,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "121800052_1",
+          "id": 121800052,
+          "Level": 1,
+          "HpCalScale": 4.2,
+          "HpCalBase": 0,
+          "ToughnessBase": 4.2,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": true,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Toughness.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "overlimit",
+      "entry": {
+        "name": "暴击飞弹",
+        "href": "/overlimit/1317234001",
+        "perkSlug": "slot-4/暴击飞弹",
+        "overlimitId": "1317234001",
+        "trigger": "每次暴击发射 1 枚跟踪弹",
+        "interval": "0.5 秒",
+        "numericalId": "121800052",
+        "damageType": "技能伤害",
+        "damageValue": "2100",
+        "toughness": 4.2,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "121800052_1",
+          "id": 121800052,
+          "Level": 1,
+          "HpCalScale": 4.2,
+          "HpCalBase": 0,
+          "ToughnessBase": 4.2,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": true,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Toughness.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "overlimit",
+      "entry": {
+        "name": "近战冲击",
+        "href": "/overlimit/1317240001",
+        "perkSlug": "slot-4/近战冲击",
+        "overlimitId": "1317240001",
+        "trigger": "近战命中有 50% 概率产生 8 米冲击波",
+        "interval": "0.5 秒",
+        "numericalId": "121800080",
+        "damageType": "技能伤害",
+        "damageValue": "1250",
+        "toughness": 2.5,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "121800080_1",
+          "id": 121800080,
+          "Level": 1,
+          "HpCalScale": 2.5,
+          "HpCalBase": 0,
+          "ToughnessBase": 2.5,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": true,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Toughness.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "overlimit",
+      "entry": {
+        "name": "地龙惊破",
+        "href": "/overlimit/20703040202",
+        "perkSlug": "slot-4/地龙惊破",
+        "overlimitId": "20703040202",
+        "trigger": "累计造成 10000 点伤害后连续结算 5 次",
+        "interval": "8 秒",
+        "numericalId": "11010097",
+        "damageType": "技能伤害",
+        "damageValue": "300/次 × 5",
+        "toughness": 0,
+        "element": "火焰",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010097_1",
+          "id": 11010097,
+          "Level": 1,
+          "HpCalScale": 0.6,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Fire",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "overlimit",
+      "entry": {
+        "name": "换弹引爆",
+        "href": "/overlimit/20703040528",
+        "overlimitId": "20703040528",
+        "trigger": "开火施加灼热标记，换弹时产生 5 米冲击波",
+        "interval": "换弹触发",
+        "numericalId": "11010143",
+        "damageType": "技能伤害",
+        "damageValue": "基础 1250",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "note": "本次冲击波技能伤害加成：标记目标每个 +20%，最多计入 5 个；额外卡片层数每层再增加 100% 执行倍率，首张卡不额外加成"
+      },
+      "rows": [
+        {
+          "key": "11010143_1",
+          "id": 11010143,
+          "Level": 1,
+          "HpCalScale": 2.5,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "overlimit",
+      "entry": {
+        "name": "光辉贯穿",
+        "href": "/overlimit/20703040478",
+        "overlimitId": "20703040478",
+        "trigger": "光能叠满 5 层后，下次射击附带贯穿伤害",
+        "interval": "满层触发",
+        "numericalId": "11010149",
+        "damageType": "武器伤害",
+        "damageValue": "175",
+        "toughness": 0,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": true,
+        "weakpointMultiplier": null,
+        "note": "通过虚拟枪结算，最多穿透 3 个目标"
+      },
+      "rows": [
+        {
+          "key": "11010149_1",
+          "id": 11010149,
+          "Level": 1,
+          "HpCalScale": 0.35,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": true,
+          "EnableWeaknessDamage": true,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.WeaponDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "overlimit",
+      "entry": {
+        "name": "死神时刻",
+        "href": "/overlimit/1317110001",
+        "overlimitId": "1317110001",
+        "trigger": "近战重击击杀后释放机械之舞，持续 2 秒",
+        "interval": "攻击频率未确认",
+        "numericalId": "112044020",
+        "damageType": "武器伤害",
+        "damageValue": "基础 1200/次",
+        "toughness": 2.4,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": true,
+        "weakpointMultiplier": null,
+        "note": "每 1% 暴击率提供 1% 机械之舞伤害加成；MGE 将技能的 AttackNumericalID 设为 112044020",
+        "pending": "已确认技能参数覆写；技能内部调用和攻击频率尚缺执行字节码"
+      },
+      "rows": [
+        {
+          "key": "112044020_1",
+          "id": 112044020,
+          "Level": 1,
+          "HpCalScale": 2.4,
+          "HpCalBase": 0,
+          "ToughnessBase": 2.4,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": true,
+          "EnableWeaknessDamage": true,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.WeaponDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Toughness.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "overlimit",
+      "entry": {
+        "name": "二重高伤",
+        "href": "/overlimit/1317129001",
+        "overlimitId": "1317129001",
+        "trigger": "单次伤害达到目标最大生命值的 10% 后追加结算",
+        "interval": "5 秒",
+        "numericalId": "112029001",
+        "damageType": "自定义伤害",
+        "damageValue": "原伤害作为结算输入",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "note": "MGEMakeSettlement 的输入是触发伤害；不能按攻击力 500 写成固定 500 伤害",
+        "pending": "自定义结算的最终倍率尚未核到 Native 实现，不宣称必定复制等量最终伤害"
+      },
+      "rows": [
+        {
+          "key": "112029001_1",
+          "id": 112029001,
+          "Level": 1,
+          "HpCalScale": 1,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.CustomDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "bonds",
+      "entry": {
+        "name": "壁垒四件：破盾冲击",
+        "trigger": "护盾被打破时释放冲击波",
+        "interval": "2 秒",
+        "numericalId": "130103006",
+        "damageType": "技能伤害",
+        "damageValue": "2500",
+        "toughness": 5,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "130103006_1",
+          "id": 130103006,
+          "Level": 1,
+          "HpCalScale": 5,
+          "HpCalBase": 0,
+          "ToughnessBase": 5,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": true,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Toughness.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "bonds",
+      "entry": {
+        "name": "狙击四件：近身爆炸",
+        "trigger": "受到伤害，或 5 米内怪物数达到 5 个时触发",
+        "interval": "20 秒",
+        "numericalId": "130103010",
+        "damageType": "技能伤害",
+        "damageValue": "5000",
+        "toughness": 10,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "note": "配置冷却为 20 秒；旧羁绊描述的 10 秒与执行配置不符"
+      },
+      "rows": [
+        {
+          "key": "130103010_1",
+          "id": 130103010,
+          "Level": 1,
+          "HpCalScale": 10,
+          "HpCalBase": 0,
+          "ToughnessBase": 10,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": true,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.KnockUp.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Toughness.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "offline",
+      "entry": {
+        "name": "出其不意",
+        "href": "/perks/slot-2/出其不意",
+        "perkSlug": "slot-2/出其不意",
+        "trigger": "扔出的枪体命中敌人",
+        "interval": "主动技能充能",
+        "numericalId": "1400110101",
+        "damageType": "武器技能伤害",
+        "damageValue": "250",
+        "toughness": 0.05,
+        "element": "腐蚀",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "1400110101_1",
+          "id": 1400110101,
+          "Level": 1,
+          "HpCalScale": 0.5,
+          "HpCalBase": 0,
+          "ToughnessBase": 0.05,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Corossive",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.WeaponSkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.KnockUp.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Toughness.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "offline",
+      "entry": {
+        "name": "亲密距离",
+        "href": "/perks/slot-4/亲密距离",
+        "perkSlug": "slot-4/亲密距离",
+        "trigger": "单发全部弹片命中同一敌人",
+        "interval": "2 秒",
+        "numericalId": "11010064",
+        "damageType": "技能伤害",
+        "damageValue": "450",
+        "toughness": 0,
+        "element": "电弧",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010064_1",
+          "id": 11010064,
+          "Level": 1,
+          "HpCalScale": 0.9,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "offline",
+      "entry": {
+        "name": "技能扩散",
+        "href": "/perks/slot-4/技能扩散",
+        "perkSlug": "slot-4/技能扩散",
+        "trigger": "主动技能后 15 秒内击杀敌人",
+        "interval": "0.3 秒",
+        "numericalId": "11010046-50",
+        "damageType": "技能伤害",
+        "damageValue": "265.15",
+        "toughness": 0,
+        "element": "随武器元素",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010046_1",
+          "id": 11010046,
+          "Level": 1,
+          "HpCalScale": 0.5303,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010047_1",
+          "id": 11010047,
+          "Level": 1,
+          "HpCalScale": 0.5303,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Fire",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010048_1",
+          "id": 11010048,
+          "Level": 1,
+          "HpCalScale": 0.5303,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Cryo",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010049_1",
+          "id": 11010049,
+          "Level": 1,
+          "HpCalScale": 0.5303,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010050_1",
+          "id": 11010050,
+          "Level": 1,
+          "HpCalScale": 0.5303,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Corossive",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "offline",
+      "entry": {
+        "name": "百万伏特",
+        "href": "/perks/slot-4/百万伏特",
+        "perkSlug": "slot-4/百万伏特",
+        "trigger": "累计造成 100 次伤害，影响 10 米范围",
+        "interval": "未见独立冷却",
+        "numericalId": "11010045",
+        "damageType": "技能伤害",
+        "damageValue": "250",
+        "toughness": 0,
+        "element": "电弧",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010045_1",
+          "id": 11010045,
+          "Level": 1,
+          "HpCalScale": 0.5,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "offline",
+      "entry": {
+        "name": "闪电轰击",
+        "href": "/perks/slot-4/闪电轰击",
+        "perkSlug": "slot-4/闪电轰击",
+        "trigger": "累计命中 5 次",
+        "interval": "5 秒",
+        "numericalId": "11010063",
+        "damageType": "技能伤害",
+        "damageValue": "750",
+        "toughness": 0,
+        "element": "电弧",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010063_1",
+          "id": 11010063,
+          "Level": 1,
+          "HpCalScale": 1.5,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "offline",
+      "entry": {
+        "name": "威慑环爆",
+        "href": "/perks/slot-4/威慑环爆",
+        "perkSlug": "slot-4/威慑环爆",
+        "trigger": "换弹后释放冰环",
+        "interval": "未见独立冷却",
+        "numericalId": "11010069",
+        "damageType": "技能伤害",
+        "damageValue": "150",
+        "toughness": 0,
+        "element": "寒冷",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010069_1",
+          "id": 11010069,
+          "Level": 1,
+          "HpCalScale": 0.3,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Cryo",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "offline",
+      "entry": {
+        "name": "弹容爆破",
+        "href": "/perks/slot-4/弹容爆破",
+        "perkSlug": "slot-4/弹容爆破",
+        "trigger": "换弹后释放冰环",
+        "interval": "未见独立冷却",
+        "numericalId": "11010070",
+        "damageType": "技能伤害",
+        "damageValue": "基础 125",
+        "toughness": 0,
+        "element": "寒冷",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010070_1",
+          "id": 11010070,
+          "Level": 1,
+          "HpCalScale": 0.25,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Cryo",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "offline",
+      "entry": {
+        "name": "坍缩奇点",
+        "href": "/perks/slot-4/坍缩奇点",
+        "perkSlug": "slot-4/坍缩奇点",
+        "trigger": "击杀带有同属性异常的敌人",
+        "interval": "未见独立冷却",
+        "numericalId": "11010071-75",
+        "damageType": "技能伤害",
+        "damageValue": "120-720",
+        "toughness": 0,
+        "element": "随武器元素",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010071_1",
+          "id": 11010071,
+          "Level": 1,
+          "HpCalScale": 0.24,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010072_1",
+          "id": 11010072,
+          "Level": 1,
+          "HpCalScale": 0.24,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Fire",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010073_1",
+          "id": 11010073,
+          "Level": 1,
+          "HpCalScale": 0.24,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Cryo",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010074_1",
+          "id": 11010074,
+          "Level": 1,
+          "HpCalScale": 0.24,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010075_1",
+          "id": 11010075,
+          "Level": 1,
+          "HpCalScale": 0.24,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Corossive",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "offline",
+      "entry": {
+        "name": "追猎齐射",
+        "href": "/perks/slot-4/追猎齐射",
+        "perkSlug": "slot-4/追猎齐射",
+        "trigger": "击破敌人护盾后发射 3 枚飞弹",
+        "interval": "按破盾触发",
+        "numericalId": "160000014",
+        "damageType": "技能伤害",
+        "damageValue": "750/枚 × 3",
+        "toughness": 0.15,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "160000014_1",
+          "id": 160000014,
+          "Level": 1,
+          "HpCalScale": 1.5,
+          "HpCalBase": 0,
+          "ToughnessBase": 0.15,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Toughness.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "offline",
+      "entry": {
+        "name": "闪切霜环",
+        "href": "/perks/slot-4/闪切霜环",
+        "perkSlug": "slot-4/闪切霜环",
+        "trigger": "切换武器",
+        "interval": "2 秒",
+        "numericalId": "11010091",
+        "damageType": "技能伤害",
+        "damageValue": "187.5",
+        "toughness": 0,
+        "element": "寒冷",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010091_1",
+          "id": 11010091,
+          "Level": 1,
+          "HpCalScale": 0.375,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Cryo",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "offline",
+      "entry": {
+        "name": "满盾爆破",
+        "href": "/perks/slot-4/满盾爆破",
+        "perkSlug": "slot-4/满盾爆破",
+        "trigger": "满护盾时射击命中，产生 5 米爆炸",
+        "interval": "5 秒",
+        "numericalId": "11010117",
+        "damageType": "技能伤害",
+        "damageValue": "135",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010117_1",
+          "id": 11010117,
+          "Level": 1,
+          "HpCalScale": 0.27,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "offline",
+      "entry": {
+        "name": "定时震波",
+        "href": "/perks/slot-4/定时震波",
+        "perkSlug": "slot-4/定时震波",
+        "trigger": "召唤物存在时在玩家周围触发",
+        "interval": "每 5 秒",
+        "numericalId": "11010123",
+        "damageType": "技能伤害",
+        "damageValue": "190",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010123_1",
+          "id": 11010123,
+          "Level": 1,
+          "HpCalScale": 0.38,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "offline",
+      "entry": {
+        "name": "连环震波",
+        "href": "/perks/slot-4/连环震波",
+        "perkSlug": "slot-4/连环震波",
+        "trigger": "钩锁命中首领后连续触发 3 次",
+        "interval": "每次间隔 3 秒",
+        "numericalId": "11010125",
+        "damageType": "技能伤害",
+        "damageValue": "500/次 × 3",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010125_1",
+          "id": 11010125,
+          "Level": 1,
+          "HpCalScale": 1,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "offline",
+      "entry": {
+        "name": "击杀掉货",
+        "href": "/perks/slot-4/击杀掉货",
+        "perkSlug": "slot-4/击杀掉货",
+        "trigger": "拾取任意本赛季能量球",
+        "interval": "伤害环 2 秒",
+        "numericalId": "11010126",
+        "damageType": "技能伤害",
+        "damageValue": "100",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010126_1",
+          "id": 11010126,
+          "Level": 1,
+          "HpCalScale": 0.2,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "offline",
+      "entry": {
+        "name": "余烬积势",
+        "href": "/perks/slot-3/余烬积势",
+        "perkSlug": "slot-3/余烬积势",
+        "trigger": "获得暗能后释放 10 米冲击环",
+        "interval": "随暗能获得触发",
+        "numericalId": "11010144",
+        "damageType": "技能伤害",
+        "damageValue": "2500",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010144_1",
+          "id": 11010144,
+          "Level": 1,
+          "HpCalScale": 5,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "闪电命中",
+        "perkSlug": "slot-3/闪电命中",
+        "trigger": "命中 5 次",
+        "interval": "旧稿未注明",
+        "numericalId": "11010065",
+        "damageType": "技能伤害",
+        "damageValue": "300",
+        "toughness": 0,
+        "element": "电弧",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "note": "闪电轰击早期版本"
+      },
+      "rows": [
+        {
+          "key": "11010065_1",
+          "id": 11010065,
+          "Level": 1,
+          "HpCalScale": 0.6,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "超频震爆",
+        "perkSlug": "slot-3/超频震爆",
+        "trigger": "2 秒内命中 10 次",
+        "interval": "旧稿未注明",
+        "numericalId": "11010067",
+        "damageType": "技能伤害",
+        "damageValue": "108",
+        "toughness": 0,
+        "element": "电弧",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "note": "文案与执行资产存在版本错位"
+      },
+      "rows": [
+        {
+          "key": "11010067_1",
+          "id": 11010067,
+          "Level": 1,
+          "HpCalScale": 0.216,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "十万伏特",
+        "perkSlug": "slot-4/十万伏特",
+        "trigger": "累计造成 100 次伤害",
+        "interval": "旧稿未注明",
+        "numericalId": "11010068",
+        "damageType": "技能伤害",
+        "damageValue": "150",
+        "toughness": 0,
+        "element": "电弧",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "note": "百万伏特早期版本"
+      },
+      "rows": [
+        {
+          "key": "11010068_1",
+          "id": 11010068,
+          "Level": 1,
+          "HpCalScale": 0.3,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "冰环疾驰",
+        "perkSlug": "slot-4/电环疾驰",
+        "trigger": "疾跑时周期释放电环",
+        "interval": "周期触发",
+        "numericalId": "11010104",
+        "damageType": "技能伤害",
+        "damageValue": "1000",
+        "toughness": 0,
+        "element": "电弧",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "note": "名称写冰，Numerical 执行为电弧"
+      },
+      "rows": [
+        {
+          "key": "11010104_1",
+          "id": 11010104,
+          "Level": 1,
+          "HpCalScale": 2,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "飞弹支援",
+        "trigger": "技能期间每命中 3 次发射飞弹",
+        "interval": "2 秒",
+        "numericalId": "11010084",
+        "damageType": "技能伤害",
+        "damageValue": "250/枚",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010084_1",
+          "id": 11010084,
+          "Level": 1,
+          "HpCalScale": 0.5,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "妙手强化",
+        "trigger": "主动技能后击杀触发元素爆炸",
+        "interval": "0.3 秒",
+        "numericalId": "11010046-50",
+        "damageType": "技能伤害",
+        "damageValue": "265.15",
+        "toughness": 0,
+        "element": "随武器元素",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "note": "技能扩散旧稿"
+      },
+      "rows": [
+        {
+          "key": "11010046_1",
+          "id": 11010046,
+          "Level": 1,
+          "HpCalScale": 0.5303,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010047_1",
+          "id": 11010047,
+          "Level": 1,
+          "HpCalScale": 0.5303,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Fire",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010048_1",
+          "id": 11010048,
+          "Level": 1,
+          "HpCalScale": 0.5303,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Cryo",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010049_1",
+          "id": 11010049,
+          "Level": 1,
+          "HpCalScale": 0.5303,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010050_1",
+          "id": 11010050,
+          "Level": 1,
+          "HpCalScale": 0.5303,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Corossive",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "装填强化",
+        "trigger": "换弹叠层后每 5 次射击附带爆裂",
+        "interval": "不适用",
+        "numericalId": "-",
+        "damageType": "未形成独立结算",
+        "damageValue": "-",
+        "toughness": "-",
+        "element": "-",
+        "critical": "不适用",
+        "weakpoint": "不适用",
+        "weakpointMultiplier": "-",
+        "note": "执行资产当前只实现伤害 Buff"
+      },
+      "rows": []
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "乘胜追击",
+        "perkSlug": "slot-4/乘胜追击",
+        "trigger": "10 米外弱点命中 20 次后发射飞弹",
+        "interval": "5 秒",
+        "numericalId": "11010084",
+        "damageType": "技能伤害",
+        "damageValue": "250",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010084_1",
+          "id": 11010084,
+          "Level": 1,
+          "HpCalScale": 0.5,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "层积裂变",
+        "perkSlug": "slot-4/层积裂变",
+        "trigger": "同属性异常达到 4 层",
+        "interval": "3 秒",
+        "numericalId": "11010076-80",
+        "damageType": "技能伤害",
+        "damageValue": "180",
+        "toughness": 0,
+        "element": "随异常元素",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010076_1",
+          "id": 11010076,
+          "Level": 1,
+          "HpCalScale": 0.36,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010077_1",
+          "id": 11010077,
+          "Level": 1,
+          "HpCalScale": 0.36,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Fire",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010078_1",
+          "id": 11010078,
+          "Level": 1,
+          "HpCalScale": 0.36,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Cryo",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010079_1",
+          "id": 11010079,
+          "Level": 1,
+          "HpCalScale": 0.36,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010080_1",
+          "id": 11010080,
+          "Level": 1,
+          "HpCalScale": 0.36,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Corossive",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "蜂鸣指令",
+        "perkSlug": "slot-4/蜂鸣指令",
+        "trigger": "射击命中 20 次后发射 2 枚导弹",
+        "interval": "2 秒",
+        "numericalId": "11010090",
+        "damageType": "技能伤害",
+        "damageValue": "225/枚 × 2",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010090_1",
+          "id": 11010090,
+          "Level": 1,
+          "HpCalScale": 0.45,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "星锤百击",
+        "perkSlug": "slot-4/星锤百击",
+        "trigger": "命中 100 次后释放飞虫",
+        "interval": "旧稿未注明",
+        "numericalId": "11010102",
+        "damageType": "技能伤害",
+        "damageValue": "650",
+        "toughness": 0,
+        "element": "腐蚀",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "note": "同时可治疗友方"
+      },
+      "rows": [
+        {
+          "key": "11010102_1",
+          "id": 11010102,
+          "Level": 1,
+          "HpCalScale": 1.3,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Corossive",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "天官破煞",
+        "perkSlug": "slot-4/天官破煞",
+        "trigger": "弱点命中 10 次后爆破",
+        "interval": "旧稿未注明",
+        "numericalId": "11010103",
+        "damageType": "技能伤害",
+        "damageValue": "225",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "note": "同时施加易伤"
+      },
+      "rows": [
+        {
+          "key": "11010103_1",
+          "id": 11010103,
+          "Level": 1,
+          "HpCalScale": 0.45,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "年轮纹波",
+        "perkSlug": "slot-4/年轮纹波",
+        "trigger": "受到治疗或治疗他人",
+        "interval": "旧稿未注明",
+        "numericalId": "11010098",
+        "damageType": "技能伤害",
+        "damageValue": "140",
+        "toughness": 0,
+        "element": "腐蚀",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "note": "以治疗目标为中心"
+      },
+      "rows": [
+        {
+          "key": "11010098_1",
+          "id": 11010098,
+          "Level": 1,
+          "HpCalScale": 0.28,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Corossive",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "超限爆发",
+        "perkSlug": "slot-3/超限爆发",
+        "trigger": "目标异常层数已满时追加",
+        "interval": "每种元素 4 秒",
+        "numericalId": "11010105-08",
+        "damageType": "技能伤害",
+        "damageValue": "230",
+        "toughness": 0,
+        "element": "对应异常元素",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010105_1",
+          "id": 11010105,
+          "Level": 1,
+          "HpCalScale": 0.46,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Cryo",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010106_1",
+          "id": 11010106,
+          "Level": 1,
+          "HpCalScale": 0.46,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Fire",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010107_1",
+          "id": 11010107,
+          "Level": 1,
+          "HpCalScale": 0.46,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Corossive",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010108_1",
+          "id": 11010108,
+          "Level": 1,
+          "HpCalScale": 0.46,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "环震冲击",
+        "perkSlug": "slot-4/环震冲击",
+        "trigger": "添加异常时有 30% 概率触发",
+        "interval": "3 秒",
+        "numericalId": "11010109-12",
+        "damageType": "技能伤害",
+        "damageValue": "67.5",
+        "toughness": 0,
+        "element": "对应异常元素",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010109_1",
+          "id": 11010109,
+          "Level": 1,
+          "HpCalScale": 0.135,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Cryo",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010110_1",
+          "id": 11010110,
+          "Level": 1,
+          "HpCalScale": 0.135,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Fire",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010111_1",
+          "id": 11010111,
+          "Level": 1,
+          "HpCalScale": 0.135,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Corossive",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        },
+        {
+          "key": "11010112_1",
+          "id": 11010112,
+          "Level": 1,
+          "HpCalScale": 0.135,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "持续压制",
+        "perkSlug": "slot-4/持续压制",
+        "trigger": "进入隐身后每 2 秒释放",
+        "interval": "持续 8 秒",
+        "numericalId": "11010113",
+        "damageType": "技能伤害",
+        "damageValue": "100",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010113_1",
+          "id": 11010113,
+          "Level": 1,
+          "HpCalScale": 0.2,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "灰烬元爆",
+        "perkSlug": "slot-4/灰烬元爆",
+        "trigger": "释放炼狱炎臂后下一发命中",
+        "interval": "旧稿未注明",
+        "numericalId": "11010114",
+        "damageType": "技能伤害",
+        "damageValue": "1250",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "note": "同时添加四种异常"
+      },
+      "rows": [
+        {
+          "key": "11010114_1",
+          "id": 11010114,
+          "Level": 1,
+          "HpCalScale": 2.5,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "技能震荡",
+        "perkSlug": "slot-4/技能震荡",
+        "trigger": "使用本武器技能后触发",
+        "interval": "5 秒",
+        "numericalId": "11010116",
+        "damageType": "技能伤害",
+        "damageValue": "40",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "note": "描述仍残留 XX%，数值取执行 Numerical"
+      },
+      "rows": [
+        {
+          "key": "11010116_1",
+          "id": 11010116,
+          "Level": 1,
+          "HpCalScale": 0.08,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.KnockUp.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "冰火引爆",
+        "perkSlug": "slot-4/冰火引爆",
+        "trigger": "火冰异常相遇时产生 5 米爆炸",
+        "interval": "2 秒",
+        "numericalId": "11010117",
+        "damageType": "技能伤害",
+        "damageValue": "135",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      },
+      "rows": [
+        {
+          "key": "11010117_1",
+          "id": 11010117,
+          "Level": 1,
+          "HpCalScale": 0.27,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "亲密间距",
+        "perkSlug": "slot-4/亲密间距",
+        "trigger": "单发全部弹片命中同一敌人",
+        "interval": "旧稿未注明",
+        "numericalId": "11010064",
+        "damageType": "技能伤害",
+        "damageValue": "450",
+        "toughness": 0,
+        "element": "电弧",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "note": "亲密距离重复原型"
+      },
+      "rows": [
+        {
+          "key": "11010064_1",
+          "id": 11010064,
+          "Level": 1,
+          "HpCalScale": 0.9,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "prototype",
+      "entry": {
+        "name": "物法兼得",
+        "perkSlug": "slot-3/物法兼得",
+        "trigger": "技能伤害后 5 秒内，射击追加伤害",
+        "interval": "触发 5 秒；追加 0.25 秒",
+        "numericalId": "130103016",
+        "damageType": "间接伤害",
+        "damageValue": "上次技能伤害 × 35%",
+        "toughness": 0.35,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "note": "S3 超限卡，S4 当期卡池已移除"
+      },
+      "rows": [
+        {
+          "key": "130103016_1",
+          "id": 130103016,
+          "Level": 1,
+          "HpCalScale": 0.35,
+          "HpCalBase": 0,
+          "ToughnessBase": 0.35,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.IndirectDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Toughness.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "通用电击（11010001）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010001",
+        "damageType": "武器技能伤害",
+        "damageValue": "300",
+        "toughness": 0,
+        "element": "电弧",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010001_1",
+          "id": 11010001,
+          "Level": 1,
+          "HpCalScale": 0.3,
+          "HpCalBase": 150,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.WeaponSkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "额外飞弹（11010040）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010040",
+        "damageType": "技能伤害",
+        "damageValue": "217",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010040_1",
+          "id": 11010040,
+          "Level": 1,
+          "HpCalScale": 0.434,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "冰环（11010042）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010042",
+        "damageType": "技能伤害",
+        "damageValue": "252",
+        "toughness": 0,
+        "element": "寒冷",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010042_1",
+          "id": 11010042,
+          "Level": 1,
+          "HpCalScale": 0.504,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Cryo",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "落雷（11010043）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010043",
+        "damageType": "技能伤害",
+        "damageValue": "217",
+        "toughness": 0,
+        "element": "电弧",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010043_1",
+          "id": 11010043,
+          "Level": 1,
+          "HpCalScale": 0.434,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "额外飞弹 2（11010044）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010044",
+        "damageType": "技能伤害",
+        "damageValue": "535.71",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010044_1",
+          "id": 11010044,
+          "Level": 1,
+          "HpCalScale": 1.07142,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "电环 3（11010053）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010053",
+        "damageType": "技能伤害",
+        "damageValue": "250",
+        "toughness": 0,
+        "element": "电弧",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010053_1",
+          "id": 11010053,
+          "Level": 1,
+          "HpCalScale": 0.5,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "冰属性爆炸（11010053_2）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010053_2",
+        "damageType": "技能伤害",
+        "damageValue": "180",
+        "toughness": 0,
+        "element": "寒冷",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010053_2",
+          "id": 11010056,
+          "Level": 1,
+          "HpCalScale": 0.36,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Cryo",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "累计命中电环（11010053_3）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010053_3",
+        "damageType": "技能伤害",
+        "damageValue": "750",
+        "toughness": 0,
+        "element": "电弧",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010053_3",
+          "id": 11010059,
+          "Level": 1,
+          "HpCalScale": 1.5,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "命中落雷（11010054）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010054",
+        "damageType": "技能伤害",
+        "damageValue": "200",
+        "toughness": 0,
+        "element": "电弧",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010054_1",
+          "id": 11010054,
+          "Level": 1,
+          "HpCalScale": 0.4,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "命中火焰爆炸（11010055）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010055",
+        "damageType": "技能伤害",
+        "damageValue": "180",
+        "toughness": 0,
+        "element": "火焰",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010055_1",
+          "id": 11010055,
+          "Level": 1,
+          "HpCalScale": 0.36,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Fire",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "命中腐蚀爆炸（11010057）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010057",
+        "damageType": "技能伤害",
+        "damageValue": "180",
+        "toughness": 0,
+        "element": "腐蚀",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010057_1",
+          "id": 11010057,
+          "Level": 1,
+          "HpCalScale": 0.36,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Corossive",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "受击电环（11010058）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010058",
+        "damageType": "技能伤害",
+        "damageValue": "900",
+        "toughness": 0,
+        "element": "电弧",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010058_1",
+          "id": 11010058,
+          "Level": 1,
+          "HpCalScale": 1.8,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "追踪弹（零基础系数）（11010060）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010060",
+        "damageType": "技能伤害",
+        "damageValue": "0",
+        "toughness": 0,
+        "element": "寒冷",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010060_1",
+          "id": 11010060,
+          "Level": 1,
+          "HpCalScale": 0,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Cryo",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "蓝色插件落雷（11010062）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010062",
+        "damageType": "技能伤害",
+        "damageValue": "300",
+        "toughness": 0,
+        "element": "电弧",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010062_1",
+          "id": 11010062,
+          "Level": 1,
+          "HpCalScale": 0.6,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "追踪弹（11010066）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010066",
+        "damageType": "技能伤害",
+        "damageValue": "180",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010066_1",
+          "id": 11010066,
+          "Level": 1,
+          "HpCalScale": 0.36,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Normal",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "关卡词条 1398001005 持续伤害（11010081）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010081",
+        "damageType": "持续伤害",
+        "damageValue": "50",
+        "toughness": 0,
+        "element": "腐蚀",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010081_1",
+          "id": 11010081,
+          "Level": 1,
+          "HpCalScale": 0.1,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Corossive",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.DebuffDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "关卡词条 1398001006 导弹（11010082）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010082",
+        "damageType": "技能伤害",
+        "damageValue": "200",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010082_1",
+          "id": 11010082,
+          "Level": 1,
+          "HpCalScale": 0.4,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "关卡词条 1398001007 持续伤害（11010083）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010083",
+        "damageType": "持续伤害",
+        "damageValue": "100",
+        "toughness": 0,
+        "element": "火焰",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010083_1",
+          "id": 11010083,
+          "Level": 1,
+          "HpCalScale": 0.2,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Fire",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.DebuffDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "关卡词条 1398001003 范围伤害（11010092）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010092",
+        "damageType": "技能伤害",
+        "damageValue": "1500",
+        "toughness": 0,
+        "element": "火焰",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010092_1",
+          "id": 11010092,
+          "Level": 1,
+          "HpCalScale": 3,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Fire",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "关卡词条 1398001003 单体伤害（11010093）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010093",
+        "damageType": "技能伤害",
+        "damageValue": "500",
+        "toughness": 0,
+        "element": "火焰",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010093_1",
+          "id": 11010093,
+          "Level": 1,
+          "HpCalScale": 1,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Fire",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "关卡词条 1398001015 冰环（11010094）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010094",
+        "damageType": "技能伤害",
+        "damageValue": "3000",
+        "toughness": 0,
+        "element": "寒冷",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010094_1",
+          "id": 11010094,
+          "Level": 1,
+          "HpCalScale": 6,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Cryo",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "关卡词条 1398001015 电环（11010095）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010095",
+        "damageType": "技能伤害",
+        "damageValue": "3000",
+        "toughness": 0,
+        "element": "电弧",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010095_1",
+          "id": 11010095,
+          "Level": 1,
+          "HpCalScale": 6,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Shock",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "关卡词条 1398001020 虫群（11010100）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010100",
+        "damageType": "技能伤害",
+        "damageValue": "250",
+        "toughness": 0,
+        "element": "腐蚀",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010100_1",
+          "id": 11010100,
+          "Level": 1,
+          "HpCalScale": 0.5,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Corossive",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "关卡词条 1398001029 爆炸（11010101）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010101",
+        "damageType": "技能伤害",
+        "damageValue": "43",
+        "toughness": 0,
+        "element": "火焰",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010101_1",
+          "id": 11010101,
+          "Level": 1,
+          "HpCalScale": 0.086,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Fire",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Impulse.Base"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Element.ElementPointAdd"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "Numerical.SettlementType.Hurtable.Base"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "樱花环（11010120）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010120",
+        "damageType": "技能伤害",
+        "damageValue": "135",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010120_1",
+          "id": 11010120,
+          "Level": 1,
+          "HpCalScale": 0.27,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "捡货炸环（11010127）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010127",
+        "damageType": "技能伤害",
+        "damageValue": "500",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010127_1",
+          "id": 11010127,
+          "Level": 1,
+          "HpCalScale": 1,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "泡爆增伤（11010124）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010124",
+        "damageType": "技能伤害",
+        "damageValue": "500",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010124_1",
+          "id": 11010124,
+          "Level": 1,
+          "HpCalScale": 1,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "殉爆连锁（11010145）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010145",
+        "damageType": "爆炸伤害",
+        "damageValue": "90",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010145_1",
+          "id": 11010145,
+          "Level": 1,
+          "HpCalScale": 0.18,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.WeaponExplosionDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "过热咆哮（11010146）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010146",
+        "damageType": "技能伤害",
+        "damageValue": "125",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010146_1",
+          "id": 11010146,
+          "Level": 1,
+          "HpCalScale": 0.25,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "地裂（11010147）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010147",
+        "damageType": "技能伤害",
+        "damageValue": "100",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010147_1",
+          "id": 11010147,
+          "Level": 1,
+          "HpCalScale": 0.2,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "unassigned",
+      "entry": {
+        "name": "裂能烙印（11010148）",
+        "trigger": "未确认现行插件或卡牌归属",
+        "interval": "未确认",
+        "numericalId": "11010148",
+        "damageType": "技能伤害",
+        "damageValue": "600",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "仅展示独立 Numerical 配置；触发条件、执行引用与投放状态未确认，不按同名插件建立关联"
+      },
+      "rows": [
+        {
+          "key": "11010148_1",
+          "id": 11010148,
+          "Level": 1,
+          "HpCalScale": 1.2,
+          "HpCalBase": 0,
+          "ToughnessBase": 0,
+          "ToughnessScale": 0,
+          "ElementType": "EElementEffectType::EDamageType_Kinetic",
+          "bEnableCriticalDamage": false,
+          "EnableWeaknessDamage": false,
+          "WeaknessDamageAddScale": 0,
+          "Settlements": [
+            {
+              "TagName": "Numerical.SettlementType.Health.SkillDamage"
+            },
+            {
+              "TagName": "None"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "group": "historical",
+      "entry": {
+        "name": "核爆（S2 历史）",
+        "trigger": "下一次射击命中至少 35 层元素异常的目标",
+        "interval": "基础描述 8 秒",
+        "numericalId": "执行资产已移除",
+        "damageType": "未确认",
+        "damageValue": "每层 150，上限 18000",
+        "toughness": "未确认",
+        "element": "未确认",
+        "critical": null,
+        "weakpoint": null,
+        "weakpointMultiplier": null
+      },
+      "rows": []
+    }
+  ]
+}

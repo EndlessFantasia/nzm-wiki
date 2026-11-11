@@ -28,7 +28,7 @@ export const independentDamageEntrySchema = z.strictObject({
   trigger: text, interval: text, numericalId: text, damageType: text, damageValue: text,
   toughness: z.union([z.number(), text]), element: text,
   critical: permission, weakpoint: permission,
-  weakpointMultiplier: z.union([z.number(), text, z.null()]).optional(), note: text.optional(),
+  weakpointMultiplier: z.union([z.number(), text, z.null()]).optional(), note: text.optional(), pending: text.optional(),
 }) satisfies z.ZodType<TriggerDamageEntry>;
 const bondName = text;
 const bonds = z.array(z.strictObject({ name: bondName, effects: z.array(z.strictObject({

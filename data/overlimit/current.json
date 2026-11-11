@@ -4,7 +4,7 @@
     "id": "s4",
     "label": "S4",
     "status": "current",
-    "updatedAt": "2026-09-22"
+    "updatedAt": "2026-11-11"
   },
   "provenance": {
     "contentRoot": "refs/Exports/NZM/Content",
@@ -2709,6 +2709,10 @@
       {
         "path": "scripts/overlimit/fatal-explosion-evidence.json",
         "sha256": "0c1b55462225c71f50cb3cb8c6d7dcacb0a4f6de2ad585283b11b5d536fb651d"
+      },
+      {
+        "path": "scripts/trigger-damage/current-evidence.json",
+        "sha256": "17efe77613b849543fe9b1ce4537fc23dd9471926ad77e2504e9aa6c1545b00d"
       }
     ]
   },
@@ -4025,7 +4029,7 @@
       "applicabilityKnown": false,
       "verification": {
         "status": "partial",
-        "note": "持续时间和暴击率转换已核验；机械之舞独立基础伤害待核验。"
+        "note": "已确认技能参数覆写；技能内部调用和攻击频率尚缺执行字节码"
       },
       "weaponType": [],
       "weaponItems": [],
@@ -4774,7 +4778,7 @@
       "applicabilityKnown": false,
       "verification": {
         "status": "partial",
-        "note": "触发阈值、传入原伤害和冷却已核验；额外Numerical结算的最终倍率待核验。"
+        "note": "自定义结算的最终倍率尚未核到 Native 实现，不宣称必定复制等量最终伤害"
       },
       "weaponType": [],
       "weaponItems": [],
@@ -4842,7 +4846,7 @@
       "applicabilityKnown": false,
       "verification": {
         "status": "partial",
-        "note": "移动距离和发射次数已核验；导弹独立伤害待核验。"
+        "note": "已沿投射物或父类配置收录独立伤害；父类内部执行未重新展开。"
       },
       "weaponType": [],
       "weaponItems": [],
@@ -4947,7 +4951,7 @@
       "applicabilityKnown": false,
       "verification": {
         "status": "partial",
-        "note": "触发次数、弹数及冷却已核验；导弹独立伤害待核验。"
+        "note": "已沿投射物或父类配置收录独立伤害；父类内部执行未重新展开。"
       },
       "weaponType": [],
       "weaponItems": [],
@@ -5023,7 +5027,7 @@
       "applicabilityKnown": false,
       "verification": {
         "status": "partial",
-        "note": "弹数和冷却已核验；导弹独立伤害待核验。"
+        "note": "已沿投射物或父类配置收录独立伤害；父类内部执行未重新展开。"
       },
       "weaponType": [],
       "weaponItems": [],
@@ -5164,10 +5168,6 @@
       "icon": "/icons/overlimit/cards/a32bfe95d56a90e2b28e.webp",
       "quality": 5,
       "applicabilityKnown": false,
-      "verification": {
-        "status": "partial",
-        "note": "触发概率、距离检查和冷却已核验；冲击波独立伤害待核验。"
-      },
       "weaponType": [],
       "weaponItems": [],
       "weaponNames": [],
@@ -8692,10 +8692,6 @@
       "quality": 5,
       "slot": 4,
       "applicabilityKnown": false,
-      "verification": {
-        "status": "partial",
-        "note": "换弹速度转换增伤、冲击波间隔与持续时间已核实；冲击波基础伤害仍待核实。"
-      },
       "weaponType": [],
       "weaponItems": [],
       "weaponNames": [],
@@ -8769,7 +8765,7 @@
       "applicabilityKnown": false,
       "verification": {
         "status": "partial",
-        "note": "卡片执行参数尚未完成审定。"
+        "note": "表中只列已核到的毒池配置；投射物自身继承的爆炸是否对敌生效尚缺父类执行证据"
       },
       "weaponType": [],
       "weaponItems": [],
@@ -9109,10 +9105,6 @@
       "quality": 5,
       "slot": 3,
       "applicabilityKnown": false,
-      "verification": {
-        "status": "partial",
-        "note": "爆炸增伤、标记目标和额外卡层加成已核实；冲击波基础伤害仍待核实。"
-      },
       "weaponType": [],
       "weaponItems": [],
       "weaponNames": [],
@@ -9509,7 +9501,7 @@
       "applicabilityKnown": false,
       "verification": {
         "status": "partial",
-        "note": "每层增伤与层数上限已核实；光能贯穿的独立伤害仍待核实。"
+        "note": "基础伤害与虚拟枪引用已核验；实际弱点倍率仍缺关联武器覆写证据。"
       },
       "weaponType": [],
       "weaponItems": [],
@@ -9595,6 +9587,116 @@
     }
   ],
   "independentDamage": {
+    "1317110001": [
+      {
+        "name": "死神时刻",
+        "href": "/overlimit/1317110001",
+        "overlimitId": "1317110001",
+        "trigger": "近战重击击杀后释放机械之舞，持续 2 秒",
+        "interval": "攻击频率未确认",
+        "numericalId": "112044020",
+        "damageType": "武器伤害",
+        "damageValue": "基础 1200/次",
+        "toughness": 2.4,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": true,
+        "weakpointMultiplier": null,
+        "note": "每 1% 暴击率提供 1% 机械之舞伤害加成；MGE 将技能的 AttackNumericalID 设为 112044020",
+        "pending": "已确认技能参数覆写；技能内部调用和攻击频率尚缺执行字节码"
+      }
+    ],
+    "1317129001": [
+      {
+        "name": "二重高伤",
+        "href": "/overlimit/1317129001",
+        "overlimitId": "1317129001",
+        "trigger": "单次伤害达到目标最大生命值的 10% 后追加结算",
+        "interval": "5 秒",
+        "numericalId": "112029001",
+        "damageType": "自定义伤害",
+        "damageValue": "原伤害作为结算输入",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "note": "MGEMakeSettlement 的输入是触发伤害；不能按攻击力 500 写成固定 500 伤害",
+        "pending": "自定义结算的最终倍率尚未核到 Native 实现，不宣称必定复制等量最终伤害"
+      }
+    ],
+    "1317229001": [
+      {
+        "name": "游击飞弹",
+        "href": "/overlimit/1317229001",
+        "perkSlug": "slot-4/游击飞弹",
+        "overlimitId": "1317229001",
+        "trigger": "每移动 10 米发射 2 枚跟踪弹",
+        "interval": "未见独立冷却",
+        "numericalId": "121800050",
+        "damageType": "技能伤害",
+        "damageValue": "2100/枚 × 2",
+        "toughness": 4.2,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      }
+    ],
+    "1317232001": [
+      {
+        "name": "飞弹狂射",
+        "href": "/overlimit/1317232001",
+        "perkSlug": "slot-4/飞弹狂射",
+        "overlimitId": "1317232001",
+        "trigger": "累计造成 10 次武器伤害后发射 2 枚",
+        "interval": "1 秒",
+        "numericalId": "121800052",
+        "damageType": "技能伤害",
+        "damageValue": "2100/枚 × 2",
+        "toughness": 4.2,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      }
+    ],
+    "1317234001": [
+      {
+        "name": "暴击飞弹",
+        "href": "/overlimit/1317234001",
+        "perkSlug": "slot-4/暴击飞弹",
+        "overlimitId": "1317234001",
+        "trigger": "每次暴击发射 1 枚跟踪弹",
+        "interval": "0.5 秒",
+        "numericalId": "121800052",
+        "damageType": "技能伤害",
+        "damageValue": "2100",
+        "toughness": 4.2,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      }
+    ],
+    "1317240001": [
+      {
+        "name": "近战冲击",
+        "href": "/overlimit/1317240001",
+        "perkSlug": "slot-4/近战冲击",
+        "overlimitId": "1317240001",
+        "trigger": "近战命中有 50% 概率产生 8 米冲击波",
+        "interval": "0.5 秒",
+        "numericalId": "121800080",
+        "damageType": "技能伤害",
+        "damageValue": "1250",
+        "toughness": 2.5,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      }
+    ],
     "20703040437": [
       {
         "name": "致命爆炸",
@@ -9611,6 +9713,151 @@
         "critical": true,
         "weakpoint": false,
         "weakpointMultiplier": 1
+      }
+    ],
+    "20703040033": [
+      {
+        "name": "烈焰冲击",
+        "href": "/perks/slot-4/烈焰冲击",
+        "perkSlug": "slot-4/烈焰冲击",
+        "overlimitId": "20703040033",
+        "trigger": "使用主动技能后持续 6 秒",
+        "interval": "每 2 秒",
+        "numericalId": "11010041",
+        "damageType": "技能伤害",
+        "damageValue": "187.5",
+        "toughness": 0,
+        "element": "火焰",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      }
+    ],
+    "20703040471": [
+      {
+        "name": "导弹轰炸",
+        "href": "/overlimit/20703040471",
+        "perkSlug": "slot-3/导弹轰炸",
+        "overlimitId": "20703040471",
+        "trigger": "爆炸命中发 2 枚；仅命中 1 个单位时发 5 枚",
+        "interval": "2 秒",
+        "numericalId": "121800050",
+        "damageType": "技能伤害",
+        "damageValue": "2100/枚",
+        "toughness": 4.2,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      }
+    ],
+    "20703040472": [
+      {
+        "name": "换弹冲击",
+        "href": "/overlimit/20703040472",
+        "perkSlug": "slot-3/换弹冲击",
+        "overlimitId": "20703040472",
+        "trigger": "弹匣耗尽后每秒释放冲击波，持续 5 秒",
+        "interval": "1 秒周期",
+        "numericalId": "121800060",
+        "damageType": "技能伤害",
+        "damageValue": "基础 1800/次",
+        "toughness": 3.6,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      }
+    ],
+    "20703040473": [
+      {
+        "name": "万伤掷弹",
+        "href": "/overlimit/20703040473",
+        "perkSlug": "slot-3/万伤掷弹",
+        "overlimitId": "20703040473",
+        "trigger": "累计造成 10000 点伤害后生成 2 枚榴弹",
+        "interval": "0.1 秒",
+        "numericalId": "121800070",
+        "damageType": "技能伤害",
+        "damageValue": "2100/枚 × 2",
+        "toughness": 4.2,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      }
+    ],
+    "20703040474": [
+      {
+        "name": "爆毒蚀域",
+        "href": "/overlimit/20703040474",
+        "perkSlug": "slot-4/爆毒蚀域",
+        "overlimitId": "20703040474",
+        "trigger": "暴击时投出毒液罐并留下毒池",
+        "interval": "20 秒",
+        "numericalId": "121500071",
+        "damageType": "持续伤害",
+        "damageValue": "350/秒",
+        "toughness": 0.7,
+        "element": "腐蚀",
+        "critical": true,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "pending": "表中只列已核到的毒池配置；投射物自身继承的爆炸是否对敌生效尚缺父类执行证据"
+      }
+    ],
+    "20703040202": [
+      {
+        "name": "地龙惊破",
+        "href": "/overlimit/20703040202",
+        "perkSlug": "slot-4/地龙惊破",
+        "overlimitId": "20703040202",
+        "trigger": "累计造成 10000 点伤害后连续结算 5 次",
+        "interval": "8 秒",
+        "numericalId": "11010097",
+        "damageType": "技能伤害",
+        "damageValue": "300/次 × 5",
+        "toughness": 0,
+        "element": "火焰",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1
+      }
+    ],
+    "20703040528": [
+      {
+        "name": "换弹引爆",
+        "href": "/overlimit/20703040528",
+        "overlimitId": "20703040528",
+        "trigger": "开火施加灼热标记，换弹时产生 5 米冲击波",
+        "interval": "换弹触发",
+        "numericalId": "11010143",
+        "damageType": "技能伤害",
+        "damageValue": "基础 1250",
+        "toughness": 0,
+        "element": "物理",
+        "critical": false,
+        "weakpoint": false,
+        "weakpointMultiplier": 1,
+        "note": "本次冲击波技能伤害加成：标记目标每个 +20%，最多计入 5 个；额外卡片层数每层再增加 100% 执行倍率，首张卡不额外加成"
+      }
+    ],
+    "20703040478": [
+      {
+        "name": "光辉贯穿",
+        "href": "/overlimit/20703040478",
+        "overlimitId": "20703040478",
+        "trigger": "光能叠满 5 层后，下次射击附带贯穿伤害",
+        "interval": "满层触发",
+        "numericalId": "11010149",
+        "damageType": "武器伤害",
+        "damageValue": "175",
+        "toughness": 0,
+        "element": "物理",
+        "critical": true,
+        "weakpoint": true,
+        "weakpointMultiplier": null,
+        "note": "通过虚拟枪结算，最多穿透 3 个目标"
       }
     ]
   },
@@ -9672,7 +9919,7 @@
         },
         {
           "count": 4,
-          "description": "每次受到伤害或者近身超过5个怪物的情况下，会产生一个 1000% 攻击力的范围爆炸伤害并击飞，内置CD 10秒。",
+          "description": "受到伤害，或5米内怪物数达到5个时，产生1000%攻击力的范围爆炸伤害并击飞，配置冷却20秒。",
           "mergeType": "EWeaponModSetMergeType::Stack",
           "overrides": []
         },

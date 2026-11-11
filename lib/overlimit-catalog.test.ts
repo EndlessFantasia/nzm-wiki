@@ -26,7 +26,9 @@ test("reviewed ordinary cards drop stale warnings while real formula and indepen
     assert.equal(card.verification, undefined, id);
     assert.equal(card.applicabilityKnown, false, "numeric verification does not imply known weapon applicability");
   }
-  assert.match(cards.find(card => card.id === "20703040472")!.verification!.note, /冲击波基础伤害/);
+  assert.equal(cards.find(card => card.id === "20703040472")!.verification, undefined);
+  assert.equal(getOverlimitCatalog().independentDamage["20703040472"][0].damageValue, "基础 1800/次");
+  assert.match(cards.find(card => card.id === "1317129001")!.verification!.note, /最终倍率/);
   assert.equal(cards.find(card => card.id === "1317100001")!.verification, undefined);
   assert.match(cards.find(card => card.id === "20703040406")!.verification!.note, /恢复的生命值/);
 });

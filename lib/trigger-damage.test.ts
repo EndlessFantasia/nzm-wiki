@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
+import { getOverlimitCatalog } from "@/lib/overlimit";
 import {
   getTriggerDamageByOverlimitId,
   getTriggerDamageByPerkSlug,
@@ -10,12 +11,45 @@ import {
 } from "@/lib/trigger-damage";
 
 test("触发伤害按 S4 状态分组", () => {
-  assert.equal(TRIGGER_DAMAGE_GROUPS.current.length, 14);
-  assert.equal(TRIGGER_DAMAGE_GROUPS.overlimit.length, 12);
-  assert.equal(TRIGGER_DAMAGE_GROUPS.offline.length, 14);
+  assert.equal(TRIGGER_DAMAGE_GROUPS.current.length, 17);
+  assert.equal(TRIGGER_DAMAGE_GROUPS.overlimit.length, 14);
+  assert.equal(TRIGGER_DAMAGE_GROUPS.bonds.length, 2);
+  assert.equal(TRIGGER_DAMAGE_GROUPS.offline.length, 15);
   assert.equal(TRIGGER_DAMAGE_GROUPS.prototype.length, 21);
   assert.equal(TRIGGER_DAMAGE_GROUPS.historical.length, 1);
-  assert.equal(TRIGGER_DAMAGE_ENTRIES.length, 62);
+  assert.equal(TRIGGER_DAMAGE_GROUPS.unassigned.length, 31);
+  assert.equal(TRIGGER_DAMAGE_ENTRIES.length, 101);
+});
+
+test("全部明确关联的触发伤害发布至超限快照，保留各项证据缺口", () => {
+  const catalog = getOverlimitCatalog();
+  const entries = TRIGGER_DAMAGE_ENTRIES.filter(entry => entry.overlimitId);
+  assert.equal(entries.length, 15);
+  for (const entry of entries) {
+    assert.deepEqual(catalog.independentDamage[entry.overlimitId!], [entry], entry.name);
+  }
+  const sniper = catalog.bonds?.find(bond => bond.name === "狙击")?.effects.find(effect => effect.count === 4);
+  assert.match(sniper?.description ?? "", /达到5个.*20秒/);
+});
+
+test("未归属配置不凭名称关联普通插件或超限卡片", () => {
+  for (const entry of TRIGGER_DAMAGE_GROUPS.unassigned) {
+    assert.equal(entry.perkSlug, undefined);
+    assert.equal(entry.overlimitId, undefined);
+    assert.equal(entry.href, undefined);
+    assert.ok(entry.pending);
+  }
+  assert.equal(getTriggerDamageByPerkSlug("slot-3/泡爆增伤"), undefined);
+  assert.equal(getTriggerDamageByPerkSlug("slot-3/捡货炸环"), undefined);
+});
+
+test("输入型伤害不折算为固定攻击力白值，区域元素服从Numerical", () => {
+  assert.equal(getTriggerDamageByPerkSlug("slot-3/爆破强化")?.damageValue, "原伤害 × 33%");
+  assert.equal(getTriggerDamageByOverlimitId("1317129001")?.damageValue, "原伤害作为结算输入");
+  assert.ok(getTriggerDamageByOverlimitId("1317129001")?.pending);
+  assert.equal(getTriggerDamageByPerkSlug("slot-3/瘟疫之源")?.element, "物理");
+  assert.equal(getTriggerDamageByPerkSlug("slot-3/疾风残影")?.element, "物理");
+  assert.equal(getTriggerDamageByOverlimitId("20703040473")?.interval, "0.1 秒");
 });
 
 test("普通插件映射唯一且全部指向现有详情页", () => {

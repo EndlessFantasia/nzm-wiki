@@ -14,6 +14,7 @@
 | 任务范围 | Required | Optional | 状态 |
 | :--- | :--- | :--- | :---: |
 | 日常内容编辑后的派生数据同步、开发启动 | [`workflows/content-sync.md`](workflows/content-sync.md) | [`architecture/content-evidence-notes.md`](architecture/content-evidence-notes.md) | active |
+| 触发类伤害、超限独立伤害与未归属配置维护 | [`architecture/trigger-damage-evidence.md`](architecture/trigger-damage-evidence.md)、[`standards/perk-data.md`](standards/perk-data.md) | [`workflows/overlimit-season.md`](workflows/overlimit-season.md) | active |
 | 本地 .uasset / .uexp 转 JSON | [Toolkit 接入与本地转换入口](workflows/nzm-toolkit.md) | 已安装 Toolkit 的 `nzm-uasset` | active |
 | pak 更新概览、容器条目或前版对比 | [Toolkit 接入与 pak 分析入口](workflows/nzm-toolkit.md) | 已安装 Toolkit 的 `nzm-assets` | active |
 | Lua 脚本行为或函数版本差异 | [Toolkit 接入与 Lua 分析入口](workflows/nzm-toolkit.md) | 已安装 Toolkit 的 `nzm-assets` | active |

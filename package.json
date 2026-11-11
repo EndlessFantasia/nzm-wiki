@@ -25,7 +25,7 @@
     "test:content-version": "tsx --test scripts/content-versions/*.test.ts",
     "test:overlimit-cards": "tsx --test lib/overlimit-catalog.test.ts scripts/overlimit/*.test.ts",
     "overlimit-effects:audit": "tsx scripts/audit-overlimit-effect-values.ts",
-    "test:independent-damage": "tsx --test lib/independent-damage.test.ts lib/trigger-damage.test.ts lib/perk-preview-damage.test.ts",
+    "test:independent-damage": "tsx --test lib/independent-damage.test.ts lib/trigger-damage.test.ts lib/perk-preview-damage.test.ts scripts/trigger-damage/audit.test.ts",
     "test:weapon-base-damage": "tsx --test lib/weapon-base-damage.test.ts",
     "multiplier-index:check": "tsx scripts/check-multiplier-index.ts",
     "multiplier-providers:audit": "tsx scripts/audit-multiplier-providers.ts",
