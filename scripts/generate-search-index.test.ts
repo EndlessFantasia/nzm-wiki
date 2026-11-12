@@ -16,6 +16,7 @@ import {
   type SearchItem,
 } from "./generate-search-index";
 import { getOverlimitCatalog } from "../lib/overlimit";
+import { ORIGIN_RUNE_CATALOG } from "../lib/origin-rune-catalog";
 
 // Historical S3 examples remain fixed even after the active release is withdrawn.
 const archiveRoot = path.resolve("archives/content-versions/s3/s3.2-final-20260922/files");
@@ -92,6 +93,21 @@ test("S4 official content replaces archived S3 and removes preview search routes
   assert.ok(paths.has("/perks/slot-4/极寒领域"));
   assert.ok(paths.has("/overlimit#bonds"));
   assert.ok(paths.has("/origin#runes"));
+  const runeItems = captured.filter((item) => item.path.startsWith("/origin/runes/"));
+  assert.equal(runeItems.length, ORIGIN_RUNE_CATALOG.runes.length);
+  for (const rune of ORIGIN_RUNE_CATALOG.runes) {
+    const item = runeItems.find((item) => item.path === `/origin/runes/${rune.id}`);
+    assert.ok(item, rune.id);
+    assert.equal(item.title, rune.name);
+    assert.ok(item.keywords.includes(rune.id));
+    assert.ok(item.keywords.includes(rune.category === "special" ? "特殊强化" : "普通强化"));
+    assert.ok(!item.keywords.some((keyword) => keyword.includes("**")));
+    assert.ok(item.pinyin.length > 0);
+    for (const tag of ORIGIN_RUNE_CATALOG.tags.filter((tag) => rune.tagIds.includes(tag.id))) {
+      assert.ok(item.keywords.includes(tag.name), `${rune.id}: ${tag.name}`);
+    }
+  }
+  assert.ok(runeItems.some((item) => item.title === "迅射叠伤" && item.pinyin.includes("xsds")));
   assert.ok(paths.has("/origin#talents"));
   assert.ok(captured.some(item => item.path === "/origin#affixes" && item.keywords.includes("武器词条") && item.pinyin.includes("cttj")));
   assert.ok(captured.some(item => item.path === "/origin#talents" && item.keywords.includes("天赋树") && item.pinyin.includes("ydtf")));

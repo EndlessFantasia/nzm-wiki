@@ -12,6 +12,8 @@ import type { ResolvedWeapon } from "../lib/weapon-resolver";
 import { getAllOverlimitCards } from "../lib/overlimit-cards";
 import { getOverlimitCatalog, getOverlimitPreviewCatalog } from "../lib/overlimit";
 import type { OverlimitCatalog } from "../lib/overlimit-catalog";
+import { ORIGIN_RUNE_CATALOG } from "../lib/origin-rune-catalog";
+import { getOriginRuneHref, ORIGIN_RUNE_QUALITY_STYLES, type OriginRune } from "../lib/origin-runes";
 import { getStatusEffectSearchDocuments } from "../lib/status-effects";
 import { getSummonSearchDocuments } from "../lib/summons";
 import { SURVIVAL_CODEX } from "../lib/survival-codex";
@@ -318,6 +320,25 @@ export function createPerkSearchItem(
     category: "特性",
     keywords,
     pinyin: buildPinyin([perk.name, ...keywords]),
+  };
+}
+
+export function createOriginRuneSearchItem(rune: OriginRune): SearchItem {
+  const keywords = [
+    rune.id,
+    "原点猎场", "原点强化", "强化卡",
+    rune.category === "special" ? "特殊强化" : "普通强化",
+    `${ORIGIN_RUNE_QUALITY_STYLES[rune.quality].label}品质`,
+    cleanSearchText(rune.description),
+    ...ORIGIN_RUNE_CATALOG.tags.filter((tag) => rune.tagIds.includes(tag.id)).map((tag) => tag.name),
+  ];
+  return {
+    title: rune.name,
+    slug: `origin/runes/${rune.id}`,
+    path: getOriginRuneHref(rune.id),
+    category: "原点强化",
+    keywords: [...new Set(keywords)],
+    pinyin: buildPinyin([rune.name, ...keywords]),
   };
 }
 
@@ -745,6 +766,7 @@ export function generateSearchIndex(weapons: readonly ResolvedWeapon[]) {
   }
   items.push({ title: "强化图鉴", slug: "origin/runes", path: "/origin#runes",
     category: "原点图鉴", keywords: originKeywords, pinyin: [...originPinyin] });
+  items.push(...ORIGIN_RUNE_CATALOG.runes.map(createOriginRuneSearchItem));
 
   const affixKeywords = ["原点猎场", "原点图鉴", "词条", "词条图鉴", "武器词条", "特殊词条", "普通词条"];
   items.push({ title: "词条图鉴", slug: "origin/affixes", path: "/origin#affixes",

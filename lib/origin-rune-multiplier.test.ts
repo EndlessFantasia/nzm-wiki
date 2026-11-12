@@ -32,7 +32,7 @@ test("origin rune factors preserve distinct Numerical attributes and reverse lin
     const source = { type: "origin-rune" as const, id };
     const relations = getProviderRelationsForSource(source);
     assert.deepEqual([...new Set(relations.map((relation) => relation.factorId))].sort(), [...expected].sort(), id);
-    assert.equal(resolveMultiplierSourceHref(source), `/origin#rune-${id}`);
+    assert.equal(resolveMultiplierSourceHref(source), `/origin/runes/${id}`);
     for (const relation of relations) {
       assert.ok(getSourcesForModifierType(relation.modifierTypeId).includes(relation), id);
     }

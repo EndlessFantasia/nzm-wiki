@@ -2,6 +2,7 @@ import rawMultiplierData from "@/data/guides/multiplier.json";
 import rawProviderRuntime from "@/data/guides/multiplier-providers-runtime.json";
 import { WEAPON_TYPE_SPRITES } from "@/constants/sprites";
 import { isPreviewSeason } from "@/lib/content-preview";
+import { getOriginRuneHref } from "@/lib/origin-runes";
 import { getModifierAttributesForFacet, getModifierProvider } from "@/lib/modifier-index";
 import { getOverlimitLink, getOverlimitLinksForPerk, hasOverlimitBondStage } from "@/lib/overlimit-links";
 import type { ElementType, WeaponType } from "@/types";
@@ -585,7 +586,7 @@ export function resolveMultiplierSourceHref(source: MultiplierSource): string {
     case "overlimit-card":
       return withAnchor(`/overlimit/${source.season ? "preview/" : ""}${encodeURIComponent(source.id)}`, source.anchor);
     case "origin-rune":
-      return `/origin#rune-${encodeURIComponent(source.id)}`;
+      return withAnchor(getOriginRuneHref(source.id), source.anchor);
     case "origin-affix":
       return `/origin#affix-${encodeURIComponent(source.id)}`;
     case "origin-talent":

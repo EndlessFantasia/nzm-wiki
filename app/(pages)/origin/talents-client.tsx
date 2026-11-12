@@ -1,6 +1,7 @@
 "use client";
 
 import { X } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { MultiplierBadges } from "@/components/MultiplierBadges";
 import {
@@ -27,6 +28,7 @@ import {
   type OriginTalentUnlockedRune,
 } from "@/lib/origin-talents";
 import { getAssetPath } from "@/lib/path";
+import { getOriginRuneHref } from "@/lib/origin-runes";
 
 const branchColors: Record<OriginTalentBranchId, string> = { 1: "#ef8c8c", 2: "#dcc46e", 3: "#7dc6e4", 4: "#e3ac68" };
 const runeColors = { 5: "#ef8d4f", 4: "#e2c38b", 3: "#c57acc" } as const;
@@ -127,9 +129,9 @@ function OriginTalentDetails({ talent, catalog, levels, unlockedRunes, showOpera
       </DetailSection>}
       {unlockedRunes.length > 0 && <DetailSection label="解锁限定强化">
         <div className="flex flex-wrap gap-1.5">
-          {unlockedRunes.map((rune) => <a key={rune.id} href={`#rune-${rune.id}`} className={chipLink}>
+          {unlockedRunes.map((rune) => <Link key={rune.id} href={getOriginRuneHref(rune.id)} prefetch={false} className={chipLink}>
             <RuneMaskIcon rune={rune} />{rune.name}
-          </a>)}
+          </Link>)}
         </div>
       </DetailSection>}
       {(talent.prerequisites.length > 1 || talent.requiredTotalLevels > 0) && <DetailSection label="解锁条件">

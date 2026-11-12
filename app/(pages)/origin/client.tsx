@@ -1,23 +1,19 @@
 "use client";
 
 import { ChevronDown, RotateCcw, Search, X } from "lucide-react";
+import Link from "next/link";
 import { useDeferredValue, useEffect, useId, useMemo, useRef, useState } from "react";
 import { HoverPreviewPanel } from "@/components/HoverPreviewPanel";
 import { renderInlineDescription } from "@/components/InlineDescription";
 import { MultiplierBadges } from "@/components/MultiplierBadges";
 import { getProviderRelationsForSource } from "@/lib/multiplier-data";
-import { filterOriginRunes, resolveOriginRuneSelection,
+import { filterOriginRunes, getOriginRuneHref, ORIGIN_RUNE_QUALITY_STYLES as qualityStyles,
   type OriginRune, type OriginRuneCatalog, type OriginRuneCategory,
   type OriginRuneQuality } from "@/lib/origin-runes";
 import { getAssetPath } from "@/lib/path";
 import { revealLocatedTarget } from "@/lib/locate-target";
 
 const qualityOptions = [5, 4, 3] as const;
-const qualityStyles = {
-  5: { label: "橙色", border: "border-[#d86b32]/65", bg: "bg-[#d86b32]/10", active: "border-[#d86b32]/75 bg-[#d86b32]/15 text-[#f29b63]", text: "text-[#ef8d4f]", dot: "bg-[#d86b32]" },
-  4: { label: "金色", border: "border-[#d1ac69]/65", bg: "bg-[#d1ac69]/10", active: "border-[#d1ac69]/75 bg-[#d1ac69]/15 text-[#e2c38b]", text: "text-[#e2c38b]", dot: "bg-[#d1ac69]" },
-  3: { label: "紫色", border: "border-[#a65aae]/60", bg: "bg-[#a65aae]/10", active: "border-[#a65aae]/70 bg-[#a65aae]/15 text-[#d28ad8]", text: "text-[#c57acc]", dot: "bg-[#a65aae]" },
-} as const;
 const inactiveFilter = "border-zinc-700 bg-zinc-800 text-zinc-300 hover:border-zinc-600 hover:bg-zinc-700/70 hover:text-white";
 const filterButton = "flex min-h-11 touch-manipulation items-center justify-center gap-1 rounded border px-2 py-2 text-sm font-medium transition-colors outline-none focus-visible:underline focus-visible:decoration-2 focus-visible:underline-offset-4 sm:gap-2 sm:px-3";
 
@@ -43,23 +39,18 @@ function toggleSet<T>(current: ReadonlySet<T>, value: T): Set<T> {
   return next;
 }
 
-function RuneDetails({ rune, tagNames, showOperation, onClose }: {
+function RuneDetails({ rune, tagNames, showOperation }: {
   rune: OriginRune;
   tagNames: Map<number, string>;
   showOperation: boolean;
-  onClose?: () => void;
 }) {
   const quality = qualityStyles[rune.quality];
   const relations = getProviderRelationsForSource({ type: "origin-rune", id: rune.id });
   const chip = "inline-flex items-center rounded border px-2 py-1 text-xs";
   return (
     <div className="min-w-0 bg-[#15171b]">
-      <div className={`flex items-center gap-2 border-b border-white/[0.08] bg-white/[0.025] py-3 pl-4 ${onClose ? "pr-1" : "pr-4"}`}>
+      <div className="flex items-center gap-2 border-b border-white/[0.08] bg-white/[0.025] px-4 py-3">
         <h2 className="min-w-0 flex-1 break-words text-sm font-semibold leading-6 text-white">{rune.name}</h2>
-        {onClose && <button type="button" onClick={onClose} aria-label="关闭强化详情" title="关闭"
-          className="-my-2.5 flex h-11 w-11 shrink-0 items-center justify-center text-zinc-400 outline-none hover:text-white focus-visible:bg-zinc-700 focus-visible:text-white">
-          <X aria-hidden="true" className="h-5 w-5" />
-        </button>}
       </div>
       <div className="px-4 py-3.5">
         <div className="mb-2 text-xs font-medium text-zinc-400">强化效果</div>
@@ -81,13 +72,12 @@ function RuneDetails({ rune, tagNames, showOperation, onClose }: {
   );
 }
 
-function RuneCard({ rune, tagNames, showOperation, onOpenMobile }: {
+function RuneCard({ rune, tagNames, showOperation }: {
   rune: OriginRune;
   tagNames: Map<number, string>;
   showOperation: boolean;
-  onOpenMobile: (rune: OriginRune, trigger: HTMLButtonElement) => void;
 }) {
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const linkRef = useRef<HTMLAnchorElement>(null);
   const tooltipId = useId();
   const [isOpen, setIsOpen] = useState(false);
   const quality = qualityStyles[rune.quality];
@@ -96,16 +86,12 @@ function RuneCard({ rune, tagNames, showOperation, onOpenMobile }: {
 
   const showPreview = () => setIsOpen(true);
   return <div id={`rune-${rune.id}`} className="relative min-w-0 scroll-mt-24 transition-transform duration-200 hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
-    <button ref={buttonRef} type="button" aria-describedby={isOpen ? tooltipId : undefined}
+    <Link ref={linkRef} href={getOriginRuneHref(rune.id)} prefetch={false} aria-describedby={isOpen ? tooltipId : undefined}
       onMouseEnter={() => { if (window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 1024px)").matches) showPreview(); }}
       onMouseLeave={() => setIsOpen(false)}
       onFocus={(event) => { if (event.currentTarget.matches(":focus-visible") && window.matchMedia("(min-width: 1024px)").matches) showPreview(); }}
       onBlur={() => setIsOpen(false)}
       onKeyDown={(event) => { if (event.key === "Escape") setIsOpen(false); }}
-      onClick={(event) => {
-        if (window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 1024px)").matches) showPreview();
-        else { setIsOpen(false); onOpenMobile(rune, event.currentTarget); }
-      }}
       className={`group relative flex h-full w-full min-w-0 touch-manipulation flex-col items-center overflow-hidden rounded-lg border-2 p-3 pb-4 text-left transition-colors duration-200 outline-none hover:brightness-110 focus-visible:[&_h3]:underline focus-visible:[&_h3]:decoration-2 focus-visible:[&_h3]:underline-offset-4 ${quality.border} ${quality.bg}`}>
       <span className="sr-only">{quality.label}品质，{rune.category === "special" ? "特殊强化" : "普通强化"}</span>
       <span className={`pointer-events-none absolute inset-x-0.5 top-0.5 flex-wrap gap-0.5 ${relations.length ? (hasMultipleFactors || rune.tagIds.length > 1 ? "hidden" : "hidden sm:flex") : "flex"}`}>
@@ -116,13 +102,13 @@ function RuneCard({ rune, tagNames, showOperation, onOpenMobile }: {
       </span>
       <RuneIcon path={rune.icon} quality={rune.quality} />
       <h3 className="mt-2 w-full break-words text-center text-sm font-medium leading-tight text-white">{rune.name}</h3>
-    </button>
+    </Link>
     {relations.length > 0 && <MultiplierBadges relations={relations} variant="catalog-compact"
       showOperation={showOperation}
       className={`absolute top-1 z-10 [&_a]:min-h-5 [&_a]:min-w-0 [&_a]:justify-center [&_a]:py-0 [&_a]:text-center [&_a]:leading-3 [&_a_span]:break-all ${hasMultipleFactors
         ? "inset-x-1 flex-nowrap gap-0.5 [&_a]:flex-1 [&_a]:px-0.5 [&_a]:text-[9px]"
         : "right-1 max-w-[calc(100%-0.5rem)] justify-end [&_a]:px-1 [&_a]:text-[9px] sm:[&_a]:text-[10px]"}`} />}
-    <HoverPreviewPanel open={isOpen} anchorRef={buttonRef} id={tooltipId}>
+    <HoverPreviewPanel open={isOpen} anchorRef={linkRef} id={tooltipId}>
       <RuneDetails rune={rune} tagNames={tagNames} showOperation={showOperation} />
     </HoverPreviewPanel>
   </div>;
@@ -139,30 +125,16 @@ export default function OriginRunesClient({ catalog, showOperation, onShowOperat
   const [qualities, setQualities] = useState<Set<OriginRuneQuality>>(new Set());
   const [tagIds, setTagIds] = useState<Set<number>>(new Set());
   const [showMobileTags, setShowMobileTags] = useState(false);
-  const [selectedId, setSelectedId] = useState<string | null>(catalog.runes[0]?.id ?? null);
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  const selectedTrigger = useRef<HTMLButtonElement>(null);
   const tagNames = useMemo(() => new Map(catalog.tags.map((tag) => [tag.id, tag.name])), [catalog.tags]);
   const filtered = useMemo(() => filterOriginRunes(catalog.runes, {
     query: deferredQuery, categories, qualities, tagIds,
   }), [catalog.runes, deferredQuery, categories, qualities, tagIds]);
-  const resolvedId = resolveOriginRuneSelection(filtered, selectedId);
-  const selected = filtered.find((rune) => rune.id === resolvedId);
   const hasFilters = Boolean(query || categories.size || qualities.size || tagIds.size);
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (dialogOpen) dialog?.showModal();
-    else if (dialog?.open) dialog.close();
-    return () => { if (dialog?.open) dialog.close(); };
-  }, [dialogOpen]);
 
   useEffect(() => {
     const focusLinkedRune = () => {
       const id = window.location.hash.match(/^#rune-(\d+)$/)?.[1];
       if (!id || !catalog.runes.some((rune) => rune.id === id)) return;
-      setSelectedId(id);
       window.requestAnimationFrame(() => revealLocatedTarget(`rune-${id}`));
     };
     focusLinkedRune();
@@ -172,12 +144,6 @@ export default function OriginRunesClient({ catalog, showOperation, onShowOperat
 
   const resetFilters = () => {
     setQuery(""); setCategories(new Set()); setQualities(new Set()); setTagIds(new Set());
-    setDialogOpen(false);
-  };
-  const selectRune = (rune: OriginRune, trigger: HTMLButtonElement) => {
-    setSelectedId(rune.id);
-    selectedTrigger.current = trigger;
-    setDialogOpen(true);
   };
 
   return (
@@ -187,7 +153,7 @@ export default function OriginRunesClient({ catalog, showOperation, onShowOperat
           <label htmlFor="origin-rune-search" className="sr-only">搜索强化名称或 ID</label>
           <Search aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
           <input id="origin-rune-search" type="search" value={query}
-            onChange={(event) => { setQuery(event.target.value); setDialogOpen(false); }}
+            onChange={(event) => setQuery(event.target.value)}
             placeholder="搜索强化名称或 ID"
             className="min-h-11 w-full rounded border border-zinc-700 bg-zinc-900/80 py-2 pl-10 pr-11 text-base text-zinc-100 outline-none transition-colors placeholder:text-zinc-500 focus-visible:border-zinc-400 focus-visible:underline" />
           {query && <button type="button" onClick={() => setQuery("")} aria-label="清空搜索" title="清空搜索"
@@ -201,7 +167,7 @@ export default function OriginRunesClient({ catalog, showOperation, onShowOperat
             <div className="grid max-w-md grid-cols-2 gap-2">
               {([{ id: "special", label: "特殊强化" }, { id: "normal", label: "普通强化" }] as const).map((item) =>
                 <button key={item.id} type="button" aria-pressed={categories.has(item.id)}
-                  onClick={() => { setCategories(toggleSet(categories, item.id)); setDialogOpen(false); }}
+                  onClick={() => setCategories(toggleSet(categories, item.id))}
                   className={`${filterButton} ${categories.has(item.id) ? "border-zinc-400 bg-zinc-600 text-white" : inactiveFilter}`}>
                   {item.label}
                 </button>)}
@@ -211,7 +177,7 @@ export default function OriginRunesClient({ catalog, showOperation, onShowOperat
             <legend className="mb-3 text-base font-semibold text-zinc-300">强化品质</legend>
             <div className="grid max-w-md grid-cols-3 gap-2">
               {qualityOptions.map((quality) => <button key={quality} type="button" aria-pressed={qualities.has(quality)}
-                onClick={() => { setQualities(toggleSet(qualities, quality)); setDialogOpen(false); }}
+                onClick={() => setQualities(toggleSet(qualities, quality))}
                 className={`${filterButton} ${qualities.has(quality) ? qualityStyles[quality].active : inactiveFilter}`}>
                 <span aria-hidden="true" className={`h-3 w-3 shrink-0 ${qualityStyles[quality].dot}`} />
                 <span className="whitespace-nowrap">{qualityStyles[quality].label}</span>
@@ -228,7 +194,7 @@ export default function OriginRunesClient({ catalog, showOperation, onShowOperat
           </button>
           <div className={`${showMobileTags ? "grid" : "hidden"} grid-cols-3 gap-2 sm:grid-cols-5 lg:grid lg:grid-cols-7`}>
             {catalog.tags.map((tag) => <button key={tag.id} type="button" aria-pressed={tagIds.has(tag.id)}
-              onClick={() => { setTagIds(toggleSet(tagIds, tag.id)); setDialogOpen(false); }}
+              onClick={() => setTagIds(toggleSet(tagIds, tag.id))}
               className={`${filterButton} min-w-0 px-2 ${tagIds.has(tag.id) ? "border-zinc-400 bg-zinc-600 text-white" : inactiveFilter}`}>
               <span className="min-w-0 break-words">{tag.name}</span>
             </button>)}
@@ -250,12 +216,8 @@ export default function OriginRunesClient({ catalog, showOperation, onShowOperat
         </button>}
       </div>
       {filtered.length ? <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8">
-        {filtered.map((rune) => <RuneCard key={rune.id} rune={rune} tagNames={tagNames} showOperation={showOperation} onOpenMobile={selectRune} />)}
+        {filtered.map((rune) => <RuneCard key={rune.id} rune={rune} tagNames={tagNames} showOperation={showOperation} />)}
       </div> : <div className="py-16 text-center text-zinc-400">没有符合条件的强化</div>}
-      <dialog ref={dialogRef} onClose={() => { setDialogOpen(false); selectedTrigger.current?.focus(); }}
-        aria-label="强化详情" className="m-auto max-h-[85dvh] w-[min(92vw,420px)] max-w-none overflow-y-auto border border-zinc-600 bg-zinc-900 p-0 text-white shadow-2xl backdrop:bg-black/70">
-        {selected && <RuneDetails rune={selected} tagNames={tagNames} showOperation={showOperation} onClose={() => dialogRef.current?.close()} />}
-      </dialog>
     </section>
   );
 }

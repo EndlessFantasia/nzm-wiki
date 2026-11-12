@@ -1,6 +1,7 @@
 import { getAllOverlimitCards } from "@/lib/overlimit-cards";
 import { getAllPerks } from "@/lib/perks";
 import { getPerkAvailability } from "@/lib/perk-release";
+import { getOriginRuneHref } from "@/lib/origin-runes";
 import { NUM_MODIFIER_RESOLVER } from "@/lib/num-modifier-data";
 import type { NumModifierValueExpression } from "@/lib/num-modifier";
 import { getResolvedFieldValue } from "@/lib/weapon-consumers";
@@ -56,7 +57,7 @@ const MECHANIC_FIRE_RATE_SOURCES: Record<MechanicFireRateGroup, MechanicFireRate
     {
       id: "origin-rune:1378042240",
       name: "怒战狂暴",
-      href: "/origin#rune-1378042240",
+      href: getOriginRuneHref("1378042240"),
       icon: "/icons/origin/runes/T_Icons_S4_Rouge_SPRunes04_01.webp",
       sourceLabel: "原点强化 · 叠层数值未计射速上限",
       stages: [
@@ -67,7 +68,7 @@ const MECHANIC_FIRE_RATE_SOURCES: Record<MechanicFireRateGroup, MechanicFireRate
     {
       id: "origin-rune:1378044250",
       name: "狂战之力",
-      href: "/origin#rune-1378044250",
+      href: getOriginRuneHref("1378044250"),
       icon: "/icons/origin/runes/T_Icons_S4_Rouge_SPRunes04_03.webp",
       sourceLabel: "原点强化 · 玩家枪械部分",
       stages: [{ condition: "获得强化后", expression: { row: "lc:130044250_1_2", field: "base" } }],

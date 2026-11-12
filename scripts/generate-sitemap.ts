@@ -5,6 +5,8 @@ import { LEGACY_TALENT_CATALOG, legacyTalentHref } from "../lib/s0s1-talent-pres
 import { getOverlimitCatalog, getOverlimitPreviewCatalog } from "../lib/overlimit";
 import { getAllPublishedPerks } from "../lib/perks";
 import { getPerkPreviewCatalog } from "../lib/perk-preview";
+import { ORIGIN_RUNE_CATALOG } from "../lib/origin-rune-catalog";
+import { getOriginRuneHref } from "../lib/origin-runes";
 
 const SITE_URL = "https://nzm-wiki.com";
 const baseDir = path.join(process.cwd(), "data");
@@ -176,6 +178,7 @@ function generateSitemap() {
     ...staticPages,
     ...pages,
     ...overlimitPages,
+    ...ORIGIN_RUNE_CATALOG.runes.map((rune) => ({ url: getOriginRuneHref(rune.id) })),
     ...s4SeasonTalentPages,
   ];
 
