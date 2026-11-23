@@ -46,7 +46,11 @@ import {
 } from "@/components/StatusEffectCatalog";
 import { SummonCompendium } from "@/components/SummonCompendium";
 import { WeeklyBuffGuide } from "@/components/WeeklyBuffGuide";
-import { HuntingTacticalSkillCatalog } from "@/components/HuntingTacticalSkillCatalog";
+import {
+  HuntingTacticalSkillCatalog,
+  StarshipEmpVulnerability,
+  StarshipTacticalItemIntro,
+} from "@/components/HuntingTacticalSkillCatalog";
 import {
   HuntingSpeedrunCardCatalog,
   HuntingSpeedrunTacticalPropCatalog,
@@ -98,6 +102,8 @@ export const mdxComponents = {
   SummonCompendium,
   WeeklyBuffGuide,
   HuntingTacticalSkillCatalog,
+  StarshipTacticalItemIntro,
+  StarshipEmpVulnerability,
   HuntingSpeedrunCardCatalog,
   HuntingSpeedrunTacticalPropCatalog,
   TriggerDamageCatalog,

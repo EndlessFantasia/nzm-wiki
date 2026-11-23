@@ -92,5 +92,35 @@
       "icon": "/webp/icons/skills/hunting-tactical/dada.webp",
       "availability": "limited"
     }
+  ],
+  "starshipItems": [
+    {
+      "id": 40000407,
+      "slug": "space-based-ray",
+      "name": "天基射线",
+      "description": "用准星锁定单个敌人。短暂延迟后，降下激光持续追踪并灼烧目标。",
+      "icon": "/webp/icons/skills/hunting-tactical/space-based-ray.webp"
+    },
+    {
+      "id": 40000408,
+      "slug": "antimatter-missile",
+      "name": "反物质导弹",
+      "description": "轰炸目标区域，对范围内的敌人造成爆炸伤害。",
+      "icon": "/webp/icons/skills/hunting-tactical/antimatter-missile.webp"
+    },
+    {
+      "id": 40000409,
+      "slug": "emp-bomb",
+      "name": "电磁脉冲弹",
+      "description": "引爆电磁脉冲弹，造成电弧伤害并施加易伤，同时使非首领敌人眩晕。",
+      "icon": "/webp/icons/skills/hunting-tactical/emp-bomb.webp"
+    },
+    {
+      "id": 40000410,
+      "slug": "shield-deflector",
+      "name": "护盾偏导器",
+      "description": "空投装置，周期性为范围内的友方提供临时护盾和抗击飞效果。",
+      "icon": "/webp/icons/skills/hunting-tactical/shield-deflector.webp"
+    }
   ]
 }
